@@ -1,0 +1,4 @@
+##PROJECT HỆ THỐNG ĐẤU GIÁ ONLINE
+
+#THÀNH VIÊN THAM GIA:
+Nguyễn Kim Ngọc 20225655
