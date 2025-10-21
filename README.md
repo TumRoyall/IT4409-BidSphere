@@ -3,4 +3,4 @@
 ### THÀNH VIÊN THAM GIA:
 Nguyễn Kim Ngọc 20225655
 Dương Đức Duy 20225828 (Leader)
-Nguyễn Đức Minh 20225885
+Nguyễn Đức Minh 20225885(sup leader)
