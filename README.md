@@ -10,5 +10,5 @@ Lê Nguyễn Minh Đức 20225611
 
 =======
 Dương Đức Duy 20225828 (Leader)
-Nguyễn Đức Minh 20225885(sup leader)
+Nguyễn Đức Minh 20225885
 >>>>>>> bf745c847c0a55310a465d885c973d72ac2fca52
