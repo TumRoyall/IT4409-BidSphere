@@ -301,12 +301,6 @@ npm run dev
 
 ---
 
-## 📞 Support
 
-- **Documentation:** `PROJECT_STRUCTURE.md`
-- **Issues:** Tạo GitHub issue
-- **Questions:** Liên hệ team lead
 
----
 
-**🎉 Chúc các member code vui vẻ!**
