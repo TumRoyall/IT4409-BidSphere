@@ -66,26 +66,26 @@ INSERT INTO "Product" (seller_id, name, categories, description, start_price, es
 INSERT INTO "Product" (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (9, 'Streamlined human-resource pricing structure', 'Nội thất', 'Operation authority everybody. Late sister fine opportunity rule both with.', 507009.96, '633693', 50701.0, 'https://example.com/img/19.jpg', 'cancelled', '2024-04-24 09:22:31');
 INSERT INTO "Product" (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (9, 'Enhanced optimizing ability', 'Sưu tầm', 'Language talk budget affect.', 4819758.42, '7571984', 481975.84, 'https://example.com/img/20.jpg', 'cancelled', '2024-08-23 09:22:31');
 -- (Image)
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (1, 'https://example.com/product_1.jpg', false);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (2, 'https://example.com/product_2.jpg', true);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (3, 'https://example.com/product_3.jpg', true);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (4, 'https://example.com/product_4.jpg', false);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (5, 'https://example.com/product_5.jpg', true);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (6, 'https://example.com/product_6.jpg', false);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (7, 'https://example.com/product_7.jpg', false);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (8, 'https://example.com/product_8.jpg', true);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (9, 'https://example.com/product_9.jpg', true);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (10, 'https://example.com/product_10.jpg', true);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (11, 'https://example.com/product_11.jpg', false);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (12, 'https://example.com/product_12.jpg', false);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (13, 'https://example.com/product_13.jpg', false);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (14, 'https://example.com/product_14.jpg', false);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (15, 'https://example.com/product_15.jpg', false);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (16, 'https://example.com/product_16.jpg', true);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (17, 'https://example.com/product_17.jpg', true);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (18, 'https://example.com/product_18.jpg', false);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (19, 'https://example.com/product_19.jpg', true);
-INSERT INTO "Image" (product_id, image_url, is_thumnail) VALUES (20, 'https://example.com/product_20.jpg', true);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (1, 'https://example.com/product_1.jpg', false);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (2, 'https://example.com/product_2.jpg', true);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (3, 'https://example.com/product_3.jpg', true);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4.jpg', false);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5.jpg', true);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6.jpg', false);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7.jpg', false);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8.jpg', true);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (9, 'https://example.com/product_9.jpg', true);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10.jpg', true);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11.jpg', false);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (12, 'https://example.com/product_12.jpg', false);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (13, 'https://example.com/product_13.jpg', false);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14.jpg', false);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15.jpg', false);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16.jpg', true);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (17, 'https://example.com/product_17.jpg', true);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (18, 'https://example.com/product_18.jpg', false);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (19, 'https://example.com/product_19.jpg', true);
+INSERT INTO "Image" (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20.jpg', true);
 -- (Auction)
 INSERT INTO "Auction" (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (1, '2023-10-03 09:22:31', '2025-11-04 09:22:31', 'cancelled', 3740880, '50000', 18);
 INSERT INTO "Auction" (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (2, '2023-08-10 09:22:31', '2025-10-24 09:22:31', 'open', 2048362, '20000', 7);
@@ -212,3 +212,14 @@ INSERT INTO "AdminLog" (admin_id, action, ip_address, created_at) VALUES (2, 'He
 INSERT INTO "AdminLog" (admin_id, action, ip_address, created_at) VALUES (12, 'Policy good although like often rich television market up.', '189.176.1.143', '2024-06-02 09:22:31');
 INSERT INTO "AdminLog" (admin_id, action, ip_address, created_at) VALUES (10, 'Republican blue laugh several season rise.', '206.147.34.30', '2023-04-03 09:22:31');
 INSERT INTO "AdminLog" (admin_id, action, ip_address, created_at) VALUES (13, 'On drop than source part however idea appear.', '102.2.29.192', '2025-07-09 09:22:31');
+-- (Permission)
+INSERT INTO "Permission" (permission_name, description) VALUES ('Manage Users', 'Quyền quản lý người dùng');
+INSERT INTO "Permission" (permission_name, description) VALUES ('Manage Auctions', 'Quyền quản lý phiên đấu giá');
+INSERT INTO "Permission" (permission_name, description) VALUES ('View Reports', 'Quyền xem báo cáo');
+
+-- (RolePermission)
+INSERT INTO "RolePermission" (role_id, permission_id) VALUES (1, 1);
+INSERT INTO "RolePermission" (role_id, permission_id) VALUES (1, 2);
+INSERT INTO "RolePermission" (role_id, permission_id) VALUES (1, 3);
+INSERT INTO "RolePermission" (role_id, permission_id) VALUES (2, 2);
+INSERT INTO "RolePermission" (role_id, permission_id) VALUES (3, 2);
