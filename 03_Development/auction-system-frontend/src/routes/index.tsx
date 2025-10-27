@@ -1,6 +1,15 @@
-// Routes Configuration
-// TODO: Setup react-router-dom routes
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "@/modules/home/pages/HomePage";
+import MainLayout from "@/layouts/MainLayout";
 
-const routes = [];
-
-export default routes;
+export default function AppRoutes() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<HomePage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
