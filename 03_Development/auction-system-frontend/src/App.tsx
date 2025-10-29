@@ -1,14 +1,6 @@
-import AppRoutes from "./routes";
-import "./index.css"; // hoặc App.css nếu bạn đang dùng
-import { AuthProvider } from "@/contexts/AuthContext"; // nếu AuthContext có sẵn
+import AppRoutes from "@/routes";  // ✅ import routes/index.tsx
 
-function App() {
-  return (
-    // Bọc toàn bộ app trong AuthProvider (để dùng useAuth sau này)
-    <AuthProvider>
-      <AppRoutes />
-    </AuthProvider>
-  );
+export default function App() {
+  console.log("✅ App render");
+  return <AppRoutes />;  // ✅ chỉ cần gọi router vào
 }
-
-export default App;
