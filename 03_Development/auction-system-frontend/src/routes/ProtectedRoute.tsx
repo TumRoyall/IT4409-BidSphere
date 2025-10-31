@@ -1,8 +1,14 @@
-// Protected Route Component
-// TODO: Implement route protection based on authentication
+import { useAuth } from "@/hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = () => {
-  return <div>Protected Route - TODO: Check auth before rendering</div>;
-};
+export default function ProtectedRoute({ children }) {
+  const { user } = useAuth(); // Lấy user từ context (AuthContext)
 
-export default ProtectedRoute;
+  // Nếu chưa có user (chưa đăng nhập)
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Nếu đã login, render trang con
+  return children;
+}
