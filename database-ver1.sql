@@ -179,3 +179,4 @@ ALTER TABLE "RolePermission"
 
 ALTER TABLE "RolePermission"
   ADD FOREIGN KEY ("permission_id") REFERENCES "Permission" ("permission_id");
+
