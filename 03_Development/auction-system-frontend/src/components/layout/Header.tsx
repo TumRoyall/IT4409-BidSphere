@@ -3,7 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { Bell } from "lucide-react";
 import styles from "./layout.module.css";
 import logo from "@/assets/logo.png";
-import { Bell, User } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import NotificationDropdown from "./NotificationDropdown";
 
 export default function Header() {
   const navigate = useNavigate();
