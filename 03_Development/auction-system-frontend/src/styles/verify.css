@@ -1,0 +1,167 @@
+/* 🌐 Layout toàn trang xác thực */
+.verify-layout {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', 'Roboto', sans-serif;
+  color: #1f2937;
+  overflow: hidden;
+}
+
+/* 🌄 Background ảnh + overlay */
+.verify-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1740&q=80');
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.9);
+  transform: scale(1.05);
+  transition: 4s ease;
+  z-index: 0;
+}
+
+.verify-layout:hover .verify-bg {
+  transform: scale(1.08);
+}
+
+.verify-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #0b2b4c 0%, #103c6a 100%);
+  opacity: 0.9;
+  z-index: 1;
+}
+
+/* 📦 Card chính */
+.verify-card {
+  position: relative;
+  z-index: 10;
+  width: 440px;
+  max-width: 90%;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  padding: 2.25rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  animation: fadeInUp 0.8s ease;
+}
+
+/* 📧 Icon + title */
+.verify-icon img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
+.verify-title {
+  color: #0b2b4c;
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.verify-desc {
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+/* 🟦 Nút resend */
+.verify-btn {
+  background: linear-gradient(135deg, #0b2b4c, #103c6a);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 0;
+  cursor: pointer;
+  font-size: 0.95rem;
+  width: 100%;
+  transition: 0.25s ease;
+  box-shadow: 0 3px 8px rgba(11, 43, 76, 0.25);
+}
+
+.verify-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #103c6a, #13508e);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(11, 43, 76, 0.35);
+}
+
+.verify-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background: #d1d5db;
+  color: #4b5563;
+}
+
+/* 💬 Message */
+.verify-msg {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.verify-msg.success {
+  color: #16a34a;
+}
+.verify-msg.error {
+  color: #dc2626;
+}
+.verify-msg.info {
+  color: #2563eb;
+}
+
+/* 🔗 Link */
+.verify-link {
+  display: block;
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+  color: #1f77ff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.25s;
+}
+
+.verify-link:hover {
+  color: #0b2b4c;
+}
+
+/* 📩 Help text */
+.verify-help {
+  position: relative;
+  z-index: 10;
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+}
+
+/* ✨ Animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 📱 Responsive */
+@media (max-width: 480px) {
+  .verify-card {
+    width: 90%;
+    padding: 1.5rem;
+  }
+  .verify-title {
+    font-size: 1.15rem;
+  }
+}

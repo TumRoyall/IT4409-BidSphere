@@ -1,14 +1,14 @@
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { Navigate } from "react-router-dom";
 
-export default function ProtectedRoute({ children }) {
-  const { user } = useAuth(); // Lấy user từ context (AuthContext)
+export default function ProtectedRoute() {
+  const { token } = useAuth();
+  const location = useLocation();
 
-  // Nếu chưa có user (chưa đăng nhập)
-  if (!user) {
-    return <Navigate to="/login" replace />;
+  if (!token) {
+    // Redirect về login nếu chưa đăng nhập
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  // Nếu đã login, render trang con
-  return children;
+  return <Outlet />;
 }

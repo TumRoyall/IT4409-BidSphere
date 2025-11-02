@@ -642,3 +642,19 @@
 .notiMoreBtn:hover {
   background-color: #f3f4f6;
 }
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid transparent;
+}
+
+.avatar[data-gender="male"] {
+  border-color: #007bff; /* xanh đậm */
+}
+
+.avatar[data-gender="female"] {
+  border-color: #ff69b4; /* hồng nhạt */
+}

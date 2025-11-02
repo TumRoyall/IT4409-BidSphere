@@ -5,6 +5,7 @@ import styles from "./layout.module.css";
 import logo from "@/assets/logo.png";
 import { useAuth } from "@/hooks/useAuth";
 import NotificationDropdown from "./NotificationDropdown";
+import { getAvatarUrl } from "@/utils/avatar";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function Header() {
         <div className={styles.topBarLinks}>
           <Link to="/help">Trợ giúp</Link>
           <Link to="/how-to-buy">Hướng dẫn mua</Link>
-          <a href="#">Câu hỏi thường gặp</a>
+          <Link to="/seller">Kênh người bán</Link>
           <a href="#">💬 Trò chuyện</a>
         </div>
       </div>
@@ -51,7 +52,7 @@ export default function Header() {
                   className={styles.userButton}
                 >
                   <img
-                    src={user.avatar_url || "/default-avatar.png"}
+                    src={getAvatarUrl(user.avatar_url, user.gender)}
                     alt="Avatar"
                     className={styles.avatar}
                   />
