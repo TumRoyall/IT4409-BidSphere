@@ -34,10 +34,14 @@ CREATE TABLE User (
   role_id BIGINT,
   balance DECIMAL(18,2) DEFAULT 0,
   status VARCHAR(20),
+  gender VARCHAR(10) DEFAULT 'male',
+  banned_until TIMESTAMP NULL,
+  ban_reason TEXT,
   avatar_url VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   verification_token VARCHAR(255),
   verified_at TIMESTAMP NULL,
+  verification_token_expiry TIMESTAMP NULL,
   FOREIGN KEY (role_id) REFERENCES Role(role_id)
 );
 

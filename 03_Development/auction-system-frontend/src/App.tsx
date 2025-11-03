@@ -1,6 +1,10 @@
-import AppRoutes from "@/routes";  // ✅ import routes/index.tsx
+import AppRoutes from "@/routes";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export default function App() {
-  console.log("✅ App render");
-  return <AppRoutes />;  // ✅ chỉ cần gọi router vào
+  return (
+    <AuthProvider>
+      <AppRoutes />
+    </AuthProvider>
+  );
 }
