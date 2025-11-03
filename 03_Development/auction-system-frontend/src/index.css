@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Custom Global Styles for 1xBid ---------- */
+
+/* 🌐 Font + Base Colors */
+:root {
+  --color-primary: #0b2b4c; /* navy */
+  --color-secondary: #133a66;
+  --color-accent: #1e4e8c;
+  --color-text: #333;
+  --color-gray-light: #f5f6f7;
+  --color-gray-border: #e2e2e2;
+  --transition-fast: all 0.25s ease-in-out;
+}
+
+body {
+  font-family: "Inter", "Roboto", sans-serif;
+  background-color: var(--color-gray-light);
+  color: var(--color-text);
+  overflow-x: hidden;
+}
+
+/* ---------- Buttons ---------- */
+button,
+.btn {
+  transition: var(--transition-fast);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-secondary);
+}
+
+.btn-outline {
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+.btn-outline:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* ---------- Header ---------- */
+header a {
+  transition: var(--transition-fast);
+  text-decoration: none;
+}
+
+header a:hover {
+  color: var(--color-accent);
+}
+
+/* ---------- Search Bar ---------- */
+input[type="text"],
+input[type="search"] {
+  transition: var(--transition-fast);
+}
+
+input[type="text"]:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(11, 43, 76, 0.3);
+}
+
+/* ---------- Category Bar ---------- */
+.category-link {
+  color: #e2e8f0;
+  font-weight: 500;
+  transition: var(--transition-fast);
+}
+
+.category-link:hover {
+  color: #fff;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  color: #f8fafc;
+}
+
+footer a {
+  color: #d1d5db;
+  transition: var(--transition-fast);
+}
+
+footer a:hover {
+  color: white;
+}
+
+/* ---------- Hover animations ---------- */
+.hover-raise {
+  transition: var(--transition-fast);
+}
+
+.hover-raise:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-accent);
+}
+@keyframes fade-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-down {
+  animation: fade-down 0.3s ease-out;
+}

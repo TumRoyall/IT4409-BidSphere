@@ -1,0 +1,221 @@
+/* 🌐 Layout toàn trang */
+.auth-layout {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', 'Roboto', sans-serif;
+  color: #1f2937;
+  overflow: hidden;
+}
+
+/* 🌄 Background + overlay */
+.auth-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1740&q=80');
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.9);
+  transform: scale(1.05);
+  transition: 4s ease;
+  z-index: 0;
+}
+
+.auth-layout:hover .auth-bg {
+  transform: scale(1.08);
+}
+
+.auth-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #0b2b4c 0%, #103c6a 100%);
+  opacity: 0.9;
+  z-index: 1;
+}
+
+/* 🧭 Header logo + title */
+.auth-header {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  margin-bottom: 1rem;
+  user-select: none;
+}
+
+.auth-logo {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: white;
+  padding: 5px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));
+}
+
+.auth-title {
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.75rem;
+  margin-top: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.auth-subtitle {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.9rem;
+}
+
+/* 📦 Form card */
+.auth-card {
+  position: relative;
+  z-index: 10;
+  width: 440px;
+  max-width: 90%;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  padding: 2.25rem;
+  backdrop-filter: blur(10px);
+  animation: fadeInUp 0.8s ease;
+}
+
+/* ✍️ Form */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.auth-group label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.auth-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.25s;
+  font-size: 0.95rem;
+}
+
+.auth-group input:focus {
+  border-color: #1f77ff;
+  box-shadow: 0 0 0 3px rgba(31, 119, 255, 0.2);
+}
+
+/* 🟦 Button */
+.auth-btn {
+  background: linear-gradient(135deg, #0b2b4c, #103c6a);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 0;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: 0.25s ease;
+  box-shadow: 0 3px 8px rgba(11,43,76,0.25);
+}
+
+.auth-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #103c6a, #13508e);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(11,43,76,0.35);
+}
+
+.auth-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ⚠️ Error text */
+.auth-error {
+  color: #ef4444;
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: -0.5rem;
+}
+
+/* 🔗 Switch + links */
+.auth-switch {
+  text-align: center;
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+.auth-link {
+  color: #1f77ff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.auth-link:hover {
+  color: #0b2b4c;
+}
+
+/* ⚓ Footer */
+.auth-footer {
+  position: relative;
+  z-index: 10;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.85rem;
+  margin-top: 2rem;
+  text-align: center;
+  user-select: none;
+}
+
+/* ✨ Animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 📱 Responsive */
+@media (max-width: 480px) {
+  .auth-card {
+    width: 90%;
+    padding: 1.5rem;
+  }
+  .auth-title {
+    font-size: 1.5rem;
+  }
+  .auth-group input {
+    font-size: 0.9rem;
+  }
+}
+
+.gender-options {
+  display: flex;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.gender-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #333;
+}
+
+.gender-options input[type="radio"] {
+  accent-color: #0b2b4c; /* xanh 1xBid */
+  transform: scale(1.1);
+}

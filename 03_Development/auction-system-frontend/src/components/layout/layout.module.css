@@ -1,0 +1,660 @@
+/* 🌐 Layout Components Styles - 1xBid Theme */
+
+/* ======================== */
+/* 🧭 HEADER (3 tầng)       */
+/* ======================== */
+
+/* ---------- Top bar ---------- */
+.topBar {
+  background-color: #0b2b4c;
+  color: #d1d5db;
+  font-size: 12px;
+  padding: 6px 0;
+}
+
+.topBarLinks {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.topBarLinks a {
+  color: #d1d5db;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.topBarLinks a:hover {
+  color: #ffffff;
+}
+
+/* ---------- Main bar ---------- */
+.mainBar {
+  background-color: #ffffff;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.mainInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover img {
+  transform: scale(1.05);
+}
+
+.logo span {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0b2b4c;
+}
+
+/* ---------- Search box ---------- */
+.search {
+  flex: 1;
+  margin: 0 24px;
+  position: relative;
+}
+
+.search input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 40px 8px 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search input:focus {
+  border-color: #0b2b4c;
+  box-shadow: 0 0 0 2px rgba(11, 43, 76, 0.2);
+}
+
+.search button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.search button:hover {
+  color: #0b2b4c;
+}
+
+/* ---------- Right actions ---------- */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.actions a {
+  color: #374151;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.actions a:hover {
+  color: #0b2b4c;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.actions button:hover {
+  transform: scale(1.1);
+}
+
+.loginBtn {
+  border: 1px solid #0b2b4c;
+  color: #0b2b4c;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  background-color: transparent;
+  transition: all 0.25s ease;
+}
+
+.loginBtn:hover {
+  background-color: #0b2b4c;
+  color: #fff;
+}
+
+.registerBtn {
+  background-color: #0b2b4c;
+  color: #0b2b4c;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+  background-color: #133a66;
+}
+
+.registerBtn:hover {
+  background-color: #133a66;
+  color: #fff;
+}
+
+/* ---------- Category bar ---------- */
+.categoryBar {
+  background-color: #133a66;
+  color: #e5e7eb;
+  font-size: 14px;
+  padding: 10px 0;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.categoryList {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.categoryList a {
+  color: #d1d5db;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.categoryList a:hover {
+  color: #ffffff;
+}
+
+/* ======================== */
+/* 🦶 FOOTER                */
+/* ======================== */
+.footer {
+  background: linear-gradient(90deg, #0b2b4c, #133a66);
+  color: #f9fafb;
+  padding-top: 40px;
+  margin-top: 40px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.footerContent {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.footer h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+.footer p,
+.footer a {
+  font-size: 14px;
+  color: #d1d5db;
+  text-decoration: none;
+  line-height: 1.6;
+  transition: color 0.2s ease;
+}
+
+.footer a:hover {
+  color: #ffffff;
+}
+
+.footerLogo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.footerLogo img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.footerLogo span {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.footerBottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  padding: 16px 0;
+  font-size: 13px;
+  color: #e5e7eb;
+  margin-top: 24px;
+}
+
+/* ======================== */
+/* 🦶 FOOTER (1xBid Theme) */
+/* ======================== */
+
+.footer {
+  background: linear-gradient(90deg, #0b2b4c, #133a66);
+  color: #f9fafb;
+  padding-top: 40px;
+  margin-top: 40px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.footerContent {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.footerLogo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.footerLogo img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.footerLogo img:hover {
+  transform: rotate(-5deg) scale(1.05);
+}
+
+.footerLogo span {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.footerText {
+  font-size: 14px;
+  color: #d1d5db;
+  line-height: 1.6;
+  max-width: 320px;
+}
+
+/* --- Footer column titles --- */
+.footerTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+/* --- Footer links --- */
+.footerLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerLinks li {
+  margin-bottom: 8px;
+}
+
+.footerLinks a {
+  font-size: 14px;
+  color: #d1d5db;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footerLinks a:hover {
+  color: #ffffff;
+}
+
+/* --- Contact info --- */
+.footerContact p {
+  font-size: 14px;
+  color: #d1d5db;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.footerContact span {
+  color: #fff;
+  font-weight: 500;
+}
+
+/* --- Bottom copyright bar --- */
+.footerBottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  padding: 16px 0;
+  font-size: 13px;
+  color: #e5e7eb;
+  margin-top: 24px;
+}
+
+.footerBottom span {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* ======================== */
+/* 📢 INTRO / GIỚI THIỆU   */
+/* ======================== */
+.intro {
+  text-align: center;
+  padding: 24px 16px;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.intro h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0b2b4c;
+  margin-bottom: 8px;
+}
+
+.intro p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #374151;
+}
+
+/* ======================== */
+/* 🔥 HOT AUCTIONS          */
+/* ======================== */
+.hotAuctions {
+  max-width: 1280px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.hotAuctions h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #133a66;
+}
+
+.auctionList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.auctionCard {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.auctionCard:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.auctionTitle {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.auctionPrice {
+  display: block;
+  margin-bottom: 10px;
+  color: #e53935;
+  font-weight: 600;
+}
+
+.bidBtn {
+  background: #0b2b4c;
+  color: #fff;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.25s ease, background-color 0.2s ease;
+}
+
+.bidBtn:hover {
+  transform: scale(1.05);
+  background-color: #133a66;
+}
+
+/* ======================== */
+/* 🏆 TOP USERS             */
+/* ======================== */
+.topUsers {
+  background-color: #f3f4f6;
+  padding: 24px 16px;
+  max-width: 1280px;
+  margin: 0 auto 24px auto;
+  border-radius: 8px;
+}
+
+.topUsers h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #0b2b4c;
+}
+
+.topUsers ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.topUsers li {
+  padding: 8px 0;
+  border-bottom: 1px dashed #d1d5db;
+  font-size: 14px;
+  color: #374151;
+}
+.topUsers li:last-child {
+  border-bottom: none;
+}
+
+
+.userMenuWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.userButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dropdownMenu {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  z-index: 50;
+}
+
+.dropdownMenu a,
+.dropdownMenu button {
+  padding: 8px 12px;
+  text-align: left;
+  border: none;
+  background: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdownMenu a:hover,
+.dropdownMenu button:hover {
+  background: #f5f5f5;
+}
+
+
+
+.notiWrapper {
+  position: relative;
+}
+
+.notiButton {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #0b2b4c;
+}
+
+.notiBadge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ef4444;
+  color: white;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 600;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notiDropdown {
+  position: absolute;
+  right: 0;
+  top: 30px;
+  width: 300px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 50;
+}
+
+.notiDropdown h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #0b2b4c;
+}
+
+.notiDropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.notiItem {
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.notiItem:hover {
+  background: #f3f4f6;
+}
+
+.unread {
+  background: #e6f0ff;
+  font-weight: 600;
+}
+
+.read {
+  opacity: 0.7;
+}
+
+.notiMoreBtn {
+  width: 100%;
+  padding: 6px 0;
+  background: none;
+  border: none;
+  color: #0b2b4c;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.notiMoreBtn:hover {
+  background-color: #f3f4f6;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid transparent;
+}
+
+.avatar[data-gender="male"] {
+  border-color: #007bff; /* xanh đậm */
+}
+
+.avatar[data-gender="female"] {
+  border-color: #ff69b4; /* hồng nhạt */
+}
