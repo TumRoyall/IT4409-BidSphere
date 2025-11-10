@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { authApi } from "@/api/modules/auth.api";
 
 interface User {
+  id?: number;
   username: string;
   fullName: string;
   email: string;
@@ -37,8 +38,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     setToken(data.accessToken);
     setUser({
+      id: data.id || data.user_id,
       username: data.username,
-      fullName: data.fullName,
+      fullName: data.fullName || data.full_name,
       email: data.email,
       gender: data.gender,
     });

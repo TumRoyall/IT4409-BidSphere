@@ -1,6 +1,469 @@
-/* Auction Module Styles - Member 3 */
-/* TODO: Add styles for auction list, detail, bidding */
+/* src/styles/create-auction-session.css */
 
-.auction-page {
-  /* TODO: Add styles here */
+/* ==================== CONTAINER & LAYOUT ==================== */
+.create-auction-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+  padding: 1rem;
+}
+
+.create-auction-card {
+  width: 100%;
+  max-width: 700px;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==================== HEADER ==================== */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.close-button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: #f9fafb;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  color: #6b7280;
+}
+
+.close-button:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+/* ==================== CONTENT ==================== */
+.card-content {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.section-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ==================== PRODUCT SELECTOR ==================== */
+.product-selector-container {
+  position: relative;
+}
+
+.search-input-wrapper {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: #f9fafb;
+  font-size: 0.875rem;
+  color: #1f2937;
+  transition: all 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Product Dropdown */
+.product-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 100;
+  animation: dropdownFade 0.2s ease-out;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.product-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.product-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.product-dropdown-item:hover {
+  background: #f9fafb;
+}
+
+.dropdown-product-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 0.375rem;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.dropdown-product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dropdown-product-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1f2937;
+  margin: 0;
+}
+
+.dropdown-product-category {
+  font-size: 0.75rem;
+  color: #10b981;
+  font-weight: 500;
+}
+
+.selected-icon {
+  color: #667eea;
+  flex-shrink: 0;
+}
+
+.no-results {
+  padding: 1.5rem;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+/* Selected Product Card */
+.selected-product-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid #667eea;
+  background: #f9fafb;
+}
+
+.selected-product-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.selected-product-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  flex: 1;
+}
+
+.selected-product-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.selected-product-category {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #10b981;
+}
+
+.selected-product-pricing {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #667eea;
+  margin: 0;
+}
+
+/* ==================== SCHEDULE FORM ==================== */
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.required {
+  color: #ef4444;
+}
+
+.datetime-input,
+.number-input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: #f9fafb;
+  font-size: 0.875rem;
+  color: #1f2937;
+  transition: all 0.2s;
+}
+
+.datetime-input:focus,
+.number-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.input-with-prefix {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-prefix {
+  position: absolute;
+  left: 1rem;
+  color: #6b7280;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.input-with-prefix .number-input {
+  padding-left: 2rem;
+}
+
+.field-hint {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.validation-error,
+.validation-warning {
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.validation-error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.validation-warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* ==================== SESSION PREVIEW ==================== */
+.session-preview {
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(
+    315deg,
+    rgba(102, 126, 234, 0.08) 64.64%,
+    rgba(118, 75, 162, 0.08) 135.36%
+  );
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.preview-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0;
+}
+
+.preview-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.preview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preview-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #9ca3af;
+}
+
+.preview-value {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.preview-value-badge {
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  background: linear-gradient(315deg, #667eea 64.64%, #764ba2 135.36%);
+}
+
+.badge-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+}
+
+.preview-note {
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 0.375rem;
+  border: 1px solid #e5e7eb;
+}
+
+.preview-note p {
+  font-size: 0.8125rem;
+  color: #4b5563;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ==================== FOOTER ==================== */
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.create-session-button {
+  background: linear-gradient(315deg, #667eea 64.64%, #764ba2 135.36%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.create-session-button:hover:not(:disabled) {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.create-session-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 640px) {
+  .card-header,
+  .card-content,
+  .card-footer {
+    padding: 1rem 1.5rem;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .selected-product-card {
+    flex-direction: column;
+  }
+
+  .selected-product-image {
+    width: 100%;
+    height: 200px;
+  }
+
+  .card-footer {
+    flex-direction: column;
+  }
+
+  .card-footer button {
+    width: 100%;
+  }
 }

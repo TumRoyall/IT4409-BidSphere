@@ -13,6 +13,12 @@
     "axios": "^1.13.1",
     "lucide-react": "^0.548.0",
     "react": "^19.1.1",
+    "tailwind-merge": "^2.0.0",
+    "@radix-ui/react-switch": "^1.0.0",
+    "@radix-ui/react-checkbox": "^1.0.0",
+    "@radix-ui/react-label": "^2.0.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.4",
     "react-tsparticles": "^2.12.2"
