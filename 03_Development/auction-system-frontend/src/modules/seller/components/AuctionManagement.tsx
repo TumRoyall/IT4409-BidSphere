@@ -30,28 +30,33 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
   }, [product]);
 
   const fetchAuctions = async () => {
-  try {
-  setLoading(true);
-  setError(null);
-  const response = await auctionApi.getAllAuctions();
-  const auctionsList = Array.isArray(response.data) ? response.data : [];
-  
-  // Filter by product if provided
-  const filtered = product
-  ? auctionsList.filter((a: any) => {
-      const auctionProductId = a.product_id || a.productId;
-        return auctionProductId === product.product_id;
-      })
-      : auctionsList;
-  
-  setAuctions(filtered);
-  } catch (err: any) {
-  setError(err.response?.data?.message || "Failed to load auctions");
-    console.error("Error fetching auctions:", err);
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await auctionApi.getAllAuctions();
+      const auctionsList = Array.isArray(response.data) ? response.data : [];
+      
+      // Filter by product if provided
+      const filtered = product
+        ? auctionsList.filter((a: any) => {
+            const auctionProductId = a.product_id || a.productId;
+            return auctionProductId === product.product_id;
+          })
+        : auctionsList;
+      
+      // Debug logging
+      console.log("Fetched auctions:", auctionsList);
+      console.log("Product filter:", product);
+      console.log("Filtered auctions:", filtered);
+      
+      setAuctions(filtered);
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Failed to load auctions");
+      console.error("Error fetching auctions:", err);
     } finally {
-       setLoading(false);
-     }
-   };
+      setLoading(false);
+    }
+  };
 
   const handleStartAuction = async (auctionId: number) => {
     try {
@@ -359,7 +364,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                       fontWeight: 600,
                       color: "#1a202c"
                     }}>
-                      {auction.product?.name || `Product #${auction.product_id}`}
+                      {auction.product?.name || `Product #${auction.product_id || auction.productId}`}
                     </h3>
                     <p style={{
                       margin: "4px 0 0 0",
