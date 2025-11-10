@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/common/Button";
 import { Input } from "@/components/common/Input";
 import { Textarea } from "@/components/common/TextArea";
-import { Select } from "@/components/common/Select";
-import { Edit2, DollarSign, Tag, FileText } from "lucide-react";
+import CategorySelect from "@/components/common/CategorySelect";
+import { Edit2, DollarSign } from "lucide-react";
 import type { Product } from "../types/seller.types";
 import "@/styles/seller.css";
 
@@ -50,6 +50,13 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     setFormData((prev: any) => ({
       ...prev,
       [name]: name.includes("price") || name === "deposit" ? parseFloat(value) || 0 : value,
+    }));
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      categories: value,
     }));
   };
 
@@ -144,21 +151,13 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
           <label htmlFor="product-category" style={{ fontSize: "13px", fontWeight: 600, marginBottom: "8px", display: "block", color: "#2d3748" }}>
             Category <span style={{ color: "#ef4444" }}>*</span>
           </label>
-          <Select
-            id="product-category"
-            name="categories"
+          <CategorySelect
             value={formData.categories}
-            onChange={handleChange}
+            onChange={handleCategoryChange}
             disabled={isSubmitting}
-            style={{ width: "100%", borderRadius: "6px", borderColor: "#cbd5e0", padding: "10px 12px" }}
-          >
-            <option value="">Select a category</option>
-            {CATEGORIES.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </Select>
+            categories={CATEGORIES}
+            placeholder="Select a category"
+          />
         </div>
 
         <div className="form-group">

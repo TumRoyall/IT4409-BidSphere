@@ -168,6 +168,37 @@
   border-bottom: 2px solid var(--form-gray-100);
 }
 
+/* ===== 🎯 ENHANCED CREATE FORM SECTIONS ===== */
+.create-form-section {
+  margin-bottom: var(--form-spacing-xl);
+}
+
+.create-form-section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--form-spacing-md);
+  margin-bottom: var(--form-spacing-md);
+}
+
+.create-form-section-indicator {
+  width: 4px;
+  height: 24px;
+  background: var(--form-gradient);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.create-form-section-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--form-gray-900);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
 /* ===== 📋 FORM FIELD ===== */
 .form-field {
   display: flex;

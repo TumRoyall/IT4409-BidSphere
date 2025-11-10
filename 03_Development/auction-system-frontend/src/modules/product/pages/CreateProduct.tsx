@@ -5,6 +5,7 @@ import { Upload } from "lucide-react";
 import { FormLayout } from "@/components/form/FormLayout";
 import { Button } from "@/components/common/Button";
 import { Input, Label } from "@/components/common";
+import CategorySelect from "@/components/common/CategorySelect";
 import productApi from "@/api/modules/product.api";
 import { useAuth } from "@/hooks/useAuth";
 import "@/styles/form.css";
@@ -246,8 +247,11 @@ export default function CreateProduct() {
     >
       <form onSubmit={handleSubmit} className="form-submit">
         {/* Basic Information Section */}
-        <div className="form-section">
-          <h2 className="form-section-title">Basic Information</h2>
+        <div className="form-section create-form-section">
+          <div className="create-form-section-header">
+            <div className="create-form-section-indicator"></div>
+            <h2 className="create-form-section-title">Basic Information</h2>
+          </div>
 
           <div className="form-field">
             <Label htmlFor="name" className="form-field-label">
@@ -273,22 +277,15 @@ export default function CreateProduct() {
             <Label htmlFor="category" className="form-field-label">
               Category <span className="form-field-required">*</span>
             </Label>
-            <select
-              id="category"
+            <CategorySelect
               value={formData.category}
-              onChange={(e) =>
-                setFormData({ ...formData, category: e.target.value })
+              onChange={(value) =>
+                setFormData({ ...formData, category: value })
               }
-              className={`form-select ${errors.category ? "input-error" : ""}`}
-              required
-            >
-              <option value="">Select a category</option>
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
+              error={!!errors.category}
+              categories={categories}
+              placeholder="Select a category"
+            />
             {errors.category && (
               <div className="form-validation-error">{errors.category}</div>
             )}
@@ -319,8 +316,11 @@ export default function CreateProduct() {
         </div>
 
         {/* Pricing Section */}
-        <div className="form-section">
-          <h2 className="form-section-title">Pricing</h2>
+        <div className="form-section create-form-section">
+          <div className="create-form-section-header">
+            <div className="create-form-section-indicator"></div>
+            <h2 className="create-form-section-title">Pricing</h2>
+          </div>
 
           <div className="form-row form-row-2">
             <div className="form-field">
@@ -390,8 +390,11 @@ export default function CreateProduct() {
         </div>
 
         {/* Images Section */}
-        <div className="form-section">
-          <h2 className="form-section-title">Product Images</h2>
+        <div className="form-section create-form-section">
+          <div className="create-form-section-header">
+            <div className="create-form-section-indicator"></div>
+            <h2 className="create-form-section-title">Product Images</h2>
+          </div>
 
           <div className="form-image-upload-area">
             <Upload size={32} className="form-image-upload-icon" />
