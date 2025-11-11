@@ -338,23 +338,23 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                   }}
                 />
                 <input
-                  id="auction-product"
-                  type="text"
-                  placeholder={
-                    isLoadingProducts
-                      ? "Loading products..."
-                      : "Search product by name or category..."
-                  }
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    setShowDropdown(true);
-                  }}
-                  onFocus={() => setShowDropdown(true)}
-                  onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                  disabled={isLoadingProducts}
-                  className="form-input"
-                  style={{ paddingLeft: "40px" }}
+                id="auction-product"
+                type="text"
+                placeholder={
+                isLoadingProducts
+                ? "Loading products..."
+                : "Search product by name or category..."
+                }
+                value={searchQuery}
+                onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setShowDropdown(true);
+                }}
+                onFocus={() => setShowDropdown(true)}
+                onBlur={() => setTimeout(() => setShowDropdown(false), 300)}
+                disabled={isLoadingProducts}
+                className="form-input"
+                style={{ paddingLeft: "40px" }}
                 />
               </div>
 
