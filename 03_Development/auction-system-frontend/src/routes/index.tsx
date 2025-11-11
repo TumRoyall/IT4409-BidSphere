@@ -15,10 +15,14 @@ import LoginPage from "@/modules/auth/pages/LoginPage";
 import RegisterPage from "@/modules/auth/pages/RegisterPage";
 import ProtectedRoute from "./ProtectedRoute";
 
+// Admin
+import ProductManagement from "@/modules/admin/pages/ProductManagement";
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
           <Routes>
+            {/* Main routes với Header + Footer */}
             <Route element={<MainLayout />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/help" element={<HelpPage />} />
@@ -26,11 +30,15 @@ export default function AppRoutes() {
               <Route path="/how-to-buy" element={<HowToBuyPage />} />
             </Route>
 
+            {/* Auth routes không có Header + Footer */}
             <Route element={<AuthLayout />}>
               <Route path="/verify-info" element={<VerifyInfoPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
             </Route>
+
+            {/* Admin routes - Chỉ có AdminLayout (sidebar), không có Header + Footer */}
+            <Route path="/admin/products" element={<ProductManagement />} />
           </Routes>
         </BrowserRouter>
   );

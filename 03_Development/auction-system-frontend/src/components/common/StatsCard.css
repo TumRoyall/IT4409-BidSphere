@@ -1,0 +1,27 @@
+.stats-card {
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+}
+
+.stats-value {
+  margin: 0 0 8px 0;
+  font-size: 32px;
+  font-weight: 600;
+  color: #333;
+}
+
+.stats-title {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  font-weight: 400;
+}
+
+.stats-subtitle {
+  margin: 8px 0 0 0;
+  font-size: 12px;
+  color: #999;
+}
