@@ -27,4 +27,12 @@ export const userApi = {
       throw err.response?.data || { message: "Không thể cập nhật hồ sơ" };
     }
   },
+
+  updateAvatar: (formData: FormData) =>
+      axiosClient.put("/users/me/avatar", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      }),
+
+  changePassword: (body: { currentPassword: string; newPassword: string }) =>
+      axiosClient.patch("/users/change-password", body),
 };

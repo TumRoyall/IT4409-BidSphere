@@ -17,17 +17,17 @@ export default function RegisterPage() {
     try {
       await register(formData);
       setType("success");
-      setMessage("🎉 Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.");
+      setMessage("Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.");
 
-      // ✅ Chuyển sang trang xác thực sau 1.5 giây
+      // Chuyển sang trang xác thực sau 1.5 giây
       setTimeout(() => {
         navigate(`/verify-info?email=${encodeURIComponent(formData.email)}`);
       }, 1500);
     } catch (err: any) {
       const msg = err.response?.data?.message || "Đăng ký thất bại!";
-      console.warn("❌ Register error:", msg);
+      console.warn("Register error:", msg);
       setType("error");
-      setMessage(`❌ ${msg}`);
+      setMessage(`${msg}`);
     } finally {
       setLoading(false);
     }

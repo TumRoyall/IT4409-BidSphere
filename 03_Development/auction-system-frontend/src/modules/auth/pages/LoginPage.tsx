@@ -11,7 +11,7 @@ export default function LoginPage() {
   const [message, setMessage] = useState("");
   const [type, setType] = useState<"info" | "error" | "success">("info");
 
-  // 🔑 Xử lý đăng nhập
+  // Xử lý đăng nhập
   const handleLogin = async ({ email, password }: { email: string; password: string }) => {
     setLoading(true);
     setMessage("");
@@ -19,30 +19,30 @@ export default function LoginPage() {
     try {
       await login(email, password);
 
-      // ✅ Thành công → chuyển về trang chủ
+      // Thành công → chuyển về trang chủ
       setType("success");
-      setMessage("🎉 Đăng nhập thành công! Đang chuyển hướng...");
+      setMessage("Đăng nhập thành công! Đang chuyển hướng...");
       setTimeout(() => navigate("/"), 1000);
     } catch (err: any) {
       const msg = err.response?.data?.message || "Đăng nhập thất bại!";
-      console.warn("❌ Login error:", msg);
+      console.warn("Login error:", msg);
 
-      // 🕐 Nếu tài khoản chưa xác thực → sang trang verify-info
+      // Nếu tài khoản chưa xác thực → sang trang verify-info
       if (msg.includes("xác thực")) {
         navigate(`/verify-info?email=${encodeURIComponent(email)}`);
         return;
       }
 
-      // 🚫 Nếu bị khóa tạm thời hoặc vĩnh viễn
+      // Nếu bị khóa tạm thời hoặc vĩnh viễn
       if (msg.includes("khóa đến") || msg.includes("vĩnh viễn")) {
         setType("error");
-        setMessage(`🚫 ${msg}`);
+        setMessage(`${msg}`);
         return;
       }
 
-      // ❌ Mặc định: Sai tài khoản hoặc mật khẩu
+      // Mặc định: Sai tài khoản hoặc mật khẩu
       setType("error");
-      setMessage(`❗ ${msg}`);
+      setMessage(`${msg}`);
     } finally {
       setLoading(false);
     }
@@ -57,7 +57,7 @@ export default function LoginPage() {
 
         <AuthForm mode="login" onSubmit={handleLogin} loading={loading} />
 
-        {/* 🧾 Thông báo */}
+        {/*  Thông báo */}
         {message && (
           <div
             className={`mt-4 text-sm text-center whitespace-pre-line font-medium ${

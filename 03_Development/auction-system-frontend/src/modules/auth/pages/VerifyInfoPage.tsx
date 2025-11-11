@@ -18,16 +18,16 @@ export default function VerifyInfoPage() {
 
   const handleResend = async () => {
     if (!email) {
-      setMessage({ text: "❌ Thiếu email để xác thực.", type: "error" });
+      setMessage({ text: "Thiếu email để xác thực.", type: "error" });
       return;
     }
     try {
       setLoading(true);
       await authApi.resendVerification(email);
-      setMessage({ text: "✅ Email xác thực mới đã được gửi. Vui lòng kiểm tra hộp thư!", type: "success" });
+      setMessage({ text: "Email xác thực mới đã được gửi. Vui lòng kiểm tra hộp thư!", type: "success" });
       setCooldown(60);
     } catch (err: any) {
-      const msg = err.response?.data || "❌ Gửi lại email xác thực thất bại.";
+      const msg = err.response?.data || "Gửi lại email xác thực thất bại.";
       setMessage({ text: msg, type: "error" });
     } finally {
       setLoading(false);
@@ -58,7 +58,7 @@ export default function VerifyInfoPage() {
           disabled={loading || cooldown > 0}
           className="verify-btn"
         >
-          {cooldown > 0 ? `🔒 Gửi lại sau ${cooldown}s` : "🔁 Gửi lại email xác thực"}
+          {cooldown > 0 ? `Gửi lại sau ${cooldown}s` : "Gửi lại email xác thực"}
         </button>
 
         {message.text && (
