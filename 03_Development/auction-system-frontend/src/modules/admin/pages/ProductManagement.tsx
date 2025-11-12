@@ -1,36 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import AdminLayout from '@/layouts/AdminLayout';
 import StatsCard from '@/components/common/StatsCard';
+import adminApi from '@/api/modules/admin.api';
+import type { Product } from '@/types/admin.types';
 import './ProductManagement.css';
 
-interface Product {
-  id: number;
-  name: string;
-  price: string;
-  status: 'Active' | 'Inactive' | 'Pending';
-}
-
-// Mock data
-const mockProducts: Product[] = [
-  { id: 1, name: 'Product A', price: '$100', status: 'Active' },
-  { id: 2, name: 'Product B', price: '$200', status: 'Inactive' },
-  { id: 3, name: 'Product C', price: '$300', status: 'Active' },
-  { id: 4, name: 'Product D', price: '$400', status: 'Pending' },
-];
-
 const ProductManagement: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>(mockProducts);
+  const [products, setProducts] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleDelete = (id: number) => {
-    if (window.confirm('Are you sure you want to delete this product?')) {
-      setProducts(products.filter(p => p.id !== id));
+  // Fetch products từ API
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      const data = await adminApi.getAllProducts();
+      setProducts(data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      alert('Không thể tải danh sách sản phẩm');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleEdit = (id: number) => {
-    alert(`Edit product ${id}`);
+  const handleDelete = async (id: number) => {
+    if (window.confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
+      try {
+        await adminApi.deleteProduct(id);
+        setProducts(products.filter(p => p.productId !== id));
+        alert('Xóa sản phẩm thành công!');
+      } catch (error) {
+        console.error('Error deleting product:', error);
+        alert('Không thể xóa sản phẩm');
+      }
+    }
+  };
+
+  const handleApprove = async (id: number) => {
+    try {
+      await adminApi.approveProduct(id);
+      // Cập nhật lại danh sách
+      await fetchProducts();
+      alert('Duyệt sản phẩm thành công!');
+    } catch (error) {
+      console.error('Error approving product:', error);
+      alert('Không thể duyệt sản phẩm');
+    }
+  };
+
+  const handleReject = async (id: number) => {
+    try {
+      await adminApi.rejectProduct(id);
+      await fetchProducts();
+      alert('Từ chối sản phẩm thành công!');
+    } catch (error) {
+      console.error('Error rejecting product:', error);
+      alert('Không thể từ chối sản phẩm');
+    }
   };
 
   const filteredProducts = products.filter(product =>
@@ -38,8 +70,28 @@ const ProductManagement: React.FC = () => {
   );
 
   const totalProducts = products.length;
-  const activeAuctions = products.filter(p => p.status === 'Active').length;
-  const pendingApproval = products.filter(p => p.status === 'Pending').length;
+  const activeProducts = products.filter(p => p.status === 'ONGOING').length;
+  const pendingProducts = products.filter(p => p.status === 'WAITING').length;
+
+  const getStatusBadgeClass = (status: string) => {
+    const statusMap: Record<string, string> = {
+      'ONGOING': 'status-active',
+      'WAITING': 'status-pending',
+      'SOLD': 'status-inactive',
+      'REJECTED': 'status-inactive'
+    };
+    return statusMap[status] || 'status-pending';
+  };
+
+  if (loading) {
+    return (
+      <AdminLayout>
+        <div className="product-management">
+          <p>Đang tải...</p>
+        </div>
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminLayout>
@@ -51,7 +103,7 @@ const ProductManagement: React.FC = () => {
             <Search size={20} className="search-icon" />
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Tìm kiếm sản phẩm..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -60,51 +112,63 @@ const ProductManagement: React.FC = () => {
 
         {/* Stats Cards */}
         <div className="stats-grid">
-          <StatsCard title="Total Products" value={totalProducts} />
-          <StatsCard title="Active Auctions" value={activeAuctions} />
-          <StatsCard title="Pending Approval" value={pendingApproval} />
+          <StatsCard value={totalProducts} title="Tổng sản phẩm" />
+          <StatsCard value={activeProducts} title="Đang hoạt động" />
+          <StatsCard value={pendingProducts} title="Chờ duyệt" />
         </div>
 
         {/* Products Table */}
         <div className="table-container">
           <div className="table-header">
-            <button className="btn-add">Add Product</button>
+            <h3>Danh sách sản phẩm</h3>
           </div>
           
           <table className="data-table">
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá khởi điểm</th>
+                <th>Giá hiện tại</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
               </tr>
             </thead>
             <tbody>
               {filteredProducts.map((product) => (
-                <tr key={product.id}>
-                  <td>{product.id}</td>
+                <tr key={product.productId}>
+                  <td>{product.productId}</td>
                   <td>{product.name}</td>
-                  <td>{product.price}</td>
+                  <td>{product.startingPrice.toLocaleString()} VND</td>
+                  <td>{product.currentPrice.toLocaleString()} VND</td>
                   <td>
-                    <span className={`status-badge status-${product.status.toLowerCase()}`}>
+                    <span className={`status-badge ${getStatusBadgeClass(product.status)}`}>
                       {product.status}
                     </span>
                   </td>
                   <td>
                     <div className="action-buttons">
-                      <button 
-                        className="btn-edit"
-                        onClick={() => handleEdit(product.id)}
-                      >
-                        Edit
-                      </button>
+                      {product.status === 'WAITING' && (
+                        <>
+                          <button 
+                            className="btn-edit"
+                            onClick={() => handleApprove(product.productId)}
+                          >
+                            Duyệt
+                          </button>
+                          <button 
+                            className="btn-delete"
+                            onClick={() => handleReject(product.productId)}
+                          >
+                            Từ chối
+                          </button>
+                        </>
+                      )}
                       <button 
                         className="btn-delete"
-                        onClick={() => handleDelete(product.id)}
+                        onClick={() => handleDelete(product.productId)}
                       >
-                        Delete
+                        Xóa
                       </button>
                     </div>
                   </td>

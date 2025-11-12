@@ -17,6 +17,9 @@ import ProtectedRoute from "./ProtectedRoute";
 
 // Admin
 import ProductManagement from "@/modules/admin/pages/ProductManagement";
+import OrderManagement from "@/modules/admin/pages/OrderManagement";
+import UserManagement from "@/modules/admin/pages/UserManagement";
+import Settings from "@/modules/admin/pages/Settings";
 
 export default function AppRoutes() {
   return (
@@ -39,6 +42,9 @@ export default function AppRoutes() {
 
             {/* Admin routes - Chỉ có AdminLayout (sidebar), không có Header + Footer */}
             <Route path="/admin/products" element={<ProductManagement />} />
+            <Route path="/admin/orders" element={<OrderManagement />} />
+            <Route path="/admin/customers" element={<UserManagement />} />
+            <Route path="/admin/settings" element={<Settings />} />
           </Routes>
         </BrowserRouter>
   );

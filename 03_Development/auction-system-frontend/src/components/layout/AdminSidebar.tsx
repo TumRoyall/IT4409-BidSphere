@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Package, Users, Settings, ShoppingCart } from 'lucide-react';
 import './AdminSidebar.css';
 
@@ -43,7 +44,8 @@ const menuItems: MenuItem[] = [
 ];
 
 const AdminSidebar: React.FC = () => {
-  const [activeItem, setActiveItem] = useState('products');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <aside className="admin-sidebar">
@@ -54,8 +56,8 @@ const AdminSidebar: React.FC = () => {
         {menuItems.map((item) => (
           <button
             key={item.id}
-            className={`sidebar-item ${activeItem === item.id ? 'active' : ''}`}
-            onClick={() => setActiveItem(item.id)}
+            className={`sidebar-item ${location.pathname === item.path ? 'active' : ''}`}
+            onClick={() => navigate(item.path)}
           >
             <span className="sidebar-icon">{item.icon}</span>
             <span className="sidebar-label">{item.label}</span>

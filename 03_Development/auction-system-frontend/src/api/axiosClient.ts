@@ -5,9 +5,9 @@ const axiosClient = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-// 🧩 Gắn token vào header nếu có
+// Gắn token vào header nếu có
 axiosClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem("access_token"); // ✅ đồng bộ key token
+  const token = localStorage.getItem("access_token"); // đồng bộ key token
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
