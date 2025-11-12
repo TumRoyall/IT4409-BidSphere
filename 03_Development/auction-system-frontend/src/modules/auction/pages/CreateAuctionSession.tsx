@@ -253,7 +253,11 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
 
       console.log("📤 Auction payload:", payload);
       const response = await auctionApi.createAuction(payload);
-      const auctionId = response.data?.id || response.data?.auction_id;
+      const auctionId = response.data?.auctionId || response.data?.id || response.data?.auction_id;
+      
+      if (!auctionId) {
+        throw new Error(`Invalid response: no auctionId found in response.data = ${JSON.stringify(response.data)}`);
+      }
 
       navigate(`/auctions/${auctionId}`, {
         state: { message: "Auction created successfully" },
