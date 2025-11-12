@@ -12,4 +12,9 @@ public interface IProductService {
     void deleteProduct(Long id);
 
     List<ProductResponse> getProductsBySeller(Long sellerId);
+
+    // Thêm các phương thức phục vụ quản trị viên duyệt sản phẩm
+    ProductResponse approveProduct(Long id);
+    ProductResponse rejectProduct(Long id);
+    List<ProductResponse> getPendingProducts();
 }

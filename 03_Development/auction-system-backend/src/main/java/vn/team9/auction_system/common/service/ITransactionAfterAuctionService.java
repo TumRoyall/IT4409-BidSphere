@@ -11,4 +11,13 @@ public interface ITransactionAfterAuctionService {
 
     TransactionAfterAuctionResponse getTransactionByAuction(Long auctionId);
     TransactionAfterAuctionResponse cancelTransaction(Long txnId, String reason);
+
+    // Thêm các hàm còn thiếu để đồng bộ với TransactionController
+    List<TransactionAfterAuctionResponse> getAllTransactions();
+    TransactionAfterAuctionResponse getTransactionById(Long id);
+    TransactionAfterAuctionResponse payTransaction(Long id);
+    TransactionAfterAuctionResponse shipTransaction(Long id);
+    TransactionAfterAuctionResponse confirmTransaction(Long id);
+    List<TransactionAfterAuctionResponse> getTransactionsByBuyer(Long buyerId);
+    List<TransactionAfterAuctionResponse> getTransactionsBySeller(Long sellerId);
 }
