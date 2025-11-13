@@ -136,7 +136,7 @@ const sellerApi = {
    * Upload ảnh cho sản phẩm
    * POST /api/upload
    */
-  uploadProductImages: (productId: number, images: File[]) => {
+  uploadProductImages: (_productId: number, images: File[]) => {
     const formData = new FormData();
     images.forEach((file) => {
       formData.append("file", file);
@@ -205,7 +205,7 @@ const sellerApi = {
    * Hủy phiên đấu giá
    * DELETE /api/auctions/:id
    */
-  cancelAuction: (auctionId: number, reason?: string) => {
+  cancelAuction: (auctionId: number, _reason?: string) => {
     return axiosClient.delete(`/auctions/${auctionId}`);
   },
 

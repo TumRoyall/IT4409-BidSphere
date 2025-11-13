@@ -4,7 +4,7 @@ export { default as AuctionCard } from "./AuctionCard";
 export { default as BidForm } from "./BidForm";
 export { AuctionSessionForm } from "./AuctionSessionForm";
 export { AuctionSessionPreview } from "./AuctionSessionPreview";
-export { ProductSelector } from "./ProductSelector";
+export { default as ProductSelector } from "./ProductSelector";
 export { AuctionValidationError } from "./AuctionValidationError";
 
 // Legacy exports for backward compatibility

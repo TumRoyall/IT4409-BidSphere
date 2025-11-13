@@ -136,7 +136,7 @@ const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
           Cancel
         </Button>
         <Button
-          variant="danger"
+          variant="destructive"
           onClick={handleConfirm}
           disabled={loading}
           style={{

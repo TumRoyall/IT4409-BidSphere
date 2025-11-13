@@ -1,9 +1,8 @@
 // src/modules/seller/components/AuctionManagement.tsx
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/common/Button";
-import { Card, CardContent } from "@/components/common/Card";
 import { Modal } from "@/components/common/Modal";
-import { Clock, Package, DollarSign, Users, X, TrendingUp } from "lucide-react";
+import { Package, X, TrendingUp } from "lucide-react";
 import auctionApi from "@/api/modules/auction.api";
 import BiddingHistory from "./BiddingHistory";
 import type { Product } from "../types/seller.types";
@@ -198,8 +197,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
               alignItems: "center",
               justifyContent: "center",
               borderRadius: "6px",
-              transition: "all 0.2s",
-              hover: { background: "#e2e8f0", color: "#2d3748" }
+              transition: "all 0.2s"
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "#e2e8f0";

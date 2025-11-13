@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Bell } from "lucide-react";
+// import { Bell } from "lucide-react";
 import styles from "./layout.module.css";
 import logo from "@/assets/logo.png";
 import { useAuth } from "@/hooks/useAuth";
@@ -57,7 +57,7 @@ export default function Header() {
                   className={styles.userButton}
                 >
                   <img
-                    src={getAvatarUrl(user.avatarUrl, user.gender)}
+                    src={getAvatarUrl((user as any)?.avatarUrl || (user as any)?.avatar_url || "", (user as any)?.gender)}
                     alt="Avatar"
                     className={styles.avatar}
                   />

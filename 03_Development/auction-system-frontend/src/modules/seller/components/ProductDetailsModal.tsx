@@ -145,7 +145,7 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
               <div className="detail-item">
                 <span className="detail-label">Condition</span>
                 <span className="detail-value">
-                  {product.condition || "Not specified"}
+                  {(product as any)?.condition || "Not specified"}
                 </span>
               </div>
             </div>
@@ -161,11 +161,11 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
                   {formatDate(product.created_at)}
                 </span>
               </div>
-              {product.updated_at && (
+              {(product as any)?.updated_at && (
                 <div className="detail-item">
                   <span className="detail-label">Last Updated</span>
                   <span className="detail-value">
-                    {formatDate(product.updated_at)}
+                    {formatDate((product as any).updated_at)}
                   </span>
                 </div>
               )}

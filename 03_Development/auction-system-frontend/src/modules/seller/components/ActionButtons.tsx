@@ -1,5 +1,5 @@
 // src/modules/seller/components/ActionButtons.tsx
-import React from "react";
+import type { ReactElement } from "react";
 import { Button } from "@/components/common/Button";
 import "@/styles/seller.css";
 
@@ -8,7 +8,7 @@ interface ActionButtonsProps {
   loading?: boolean;
 }
 
-const ActionButtons = ({ onCancel, loading }: ActionButtonsProps): JSX.Element => {
+const ActionButtons = ({ onCancel, loading }: ActionButtonsProps): ReactElement => {
   const handleSubmit = () => {
     // Trigger hidden submit button trong ProductDetails
     const submitButton = document.getElementById("submit-product-form");

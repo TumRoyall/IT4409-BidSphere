@@ -55,7 +55,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           />
           <div className="product-image-overlay">
             <Button
-              variant="primary"
+              variant="default"
               size="sm"
               onClick={() => setIsDetailsModalOpen(true)}
               className="view-details-btn"

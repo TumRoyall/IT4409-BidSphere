@@ -1,13 +1,14 @@
 // src/api/modules/auction.api.ts
 import axiosClient from "../axiosClient";
 
-// ==================== ENUMS ====================
-export enum AuctionStatus {
-  CREATED = "created",
-  OPEN = "open",
-  CLOSED = "closed",
-  CANCELLED = "cancelled",
-}
+// ==================== STATUS (const + type) ====================
+export const AUCTION_STATUS = {
+  CREATED: "created",
+  OPEN: "open",
+  CLOSED: "closed",
+  CANCELLED: "cancelled",
+} as const;
+export type AuctionStatus = typeof AUCTION_STATUS[keyof typeof AUCTION_STATUS];
 
 // ==================== TYPES & INTERFACES ====================
 export interface Product {
@@ -72,6 +73,12 @@ export interface AuctionResponse {
   created_at?: string;
   updated_at?: string;
   winner_id?: number | null;
+  // Optional fields used by UI components
+  productImageUrl?: string;
+  productName?: string;
+  startPrice?: number;
+  highestBid?: number;
+  auctionId?: number;
 }
 
 // ==================== API FUNCTIONS ====================
