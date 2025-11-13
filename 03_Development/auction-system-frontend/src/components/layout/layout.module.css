@@ -735,3 +735,16 @@
 .logoutBtn:hover {
   background-color: #fee2e2 !important;
 }
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+/* Chừa chỗ để nội dung không bị footer đè lên */
+.mainContent {
+  padding-bottom: 120px; /* chiều cao footer (ước lượng) */
+}
