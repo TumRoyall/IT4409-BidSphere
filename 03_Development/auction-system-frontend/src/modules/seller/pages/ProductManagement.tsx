@@ -16,7 +16,7 @@ import { useSellerProducts, useProductActions, useSellerStatistics } from "../ho
 import type { Product } from "../types/seller.types";
 import "@/styles/seller.css";
 
-const ProductManagement = (): JSX.Element => {
+const ProductManagement = (): React.ReactElement => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isCreateAuctionModalOpen, setIsCreateAuctionModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -183,6 +183,7 @@ const ProductManagement = (): JSX.Element => {
           <Modal
           isOpen={isCreateAuctionModalOpen}
           onClose={handleCloseCreateAuctionModal}
+          title="Create Auction Session"
           size="xl"
           >
           <CreateAuctionSession onClose={handleCloseCreateAuctionModal} />

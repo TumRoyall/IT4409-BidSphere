@@ -27,7 +27,7 @@ const MAX_IMAGES = 5;
 const MAX_IMAGE_MB = 10;
 const ACCEPT_TYPES = ["image/png", "image/jpeg", "image/jpg"];
 
-const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): JSX.Element => {
+const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.ReactElement => {
   const { user } = useAuth();
   const [formData, setFormData] = useState<ProductFormData>({
     name: "",
@@ -67,10 +67,14 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): JSX.Element
         if (product?.categories) categorySet.add(String(product.categories));
       });
       const categories = Array.from(categorySet).map((cat) => ({ value: cat, label: cat }));
-      setBackendCategories(categories.length ? categories : PRODUCT_CATEGORIES);
+      setBackendCategories(
+        categories.length
+          ? categories
+          : PRODUCT_CATEGORIES.map((c) => ({ value: c.value, label: c.label }))
+      );
     } catch (error) {
       console.error("Failed to load categories:", error);
-      setBackendCategories(PRODUCT_CATEGORIES);
+      setBackendCategories(PRODUCT_CATEGORIES.map((c) => ({ value: c.value, label: c.label })));
     } finally {
       setCategoriesLoading(false);
     }
@@ -247,9 +251,8 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): JSX.Element
                       setShowCustomCategory(false);
                     }
                   }}
-                  disabled={categoriesLoading}
                 >
-                  <SelectTrigger id="pd-category" className="form-select-trigger">
+                  <SelectTrigger id="pd-category" className="form-select-trigger" disabled={categoriesLoading}>
                     <SelectValue placeholder={categoriesLoading ? "Đang tải..." : "Chọn danh mục"} />
                   </SelectTrigger>
                   <SelectContent>

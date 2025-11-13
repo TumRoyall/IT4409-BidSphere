@@ -3,18 +3,20 @@
 // Re-export product types from product module
 export {
   Product,
-  ProductStatus,
+  type ProductStatus,
   ProductImage,
   ProductFormData,
   ProductFilters,
   PRODUCT_CATEGORIES,
+  PRODUCT_STATUS,
   type ProductCategory,
 } from "@/modules/product/types";
 
 // Re-export auction types
 export {
   Auction,
-  AuctionStatus,
+  type AuctionStatus,
+  AUCTION_STATUS,
 } from "@/modules/product/types";
 
 // ==========================================
