@@ -14,7 +14,7 @@ interface BiddingHistoryProps {
 
 const BiddingHistory: React.FC<BiddingHistoryProps> = ({ auctionId, onClose }) => {
   const [auction, setAuction] = useState<AuctionResponse | null>(null);
-  const [bids, setBids] = useState<any[]>([]);
+  const [bids] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Bell } from "lucide-react";
+// import { Bell } from "lucide-react";
 import styles from "./layout.module.css";
 import logo from "@/assets/logo.png";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,6 +11,11 @@ export default function Header() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [showMenu, setShowMenu] = useState(false);
+
+  const handleNavigate = (path: string) => {
+    navigate(path);
+    setShowMenu(false);
+  };
 
   return (
     <header>
@@ -39,12 +44,12 @@ export default function Header() {
             <button>🔍</button>
           </div>
 
-          {/* Khu vực actions */}
+          {/* Actions bên phải */}
           <div className={styles.actions}>
             <Link to="/auctions">Đấu giá ▾</Link>
             <NotificationDropdown />
 
-            {/* Nếu đã đăng nhập */}
+            {/* ==== Nếu đã đăng nhập ==== */}
             {user ? (
               <div className={styles.userMenuWrapper}>
                 <button
@@ -52,7 +57,7 @@ export default function Header() {
                   className={styles.userButton}
                 >
                   <img
-                    src={getAvatarUrl(user.avatar_url, user.gender)}
+                    src={getAvatarUrl((user as any)?.avatarUrl || (user as any)?.avatar_url || "", (user as any)?.gender)}
                     alt="Avatar"
                     className={styles.avatar}
                   />
@@ -61,24 +66,61 @@ export default function Header() {
 
                 {showMenu && (
                   <div className={styles.dropdownMenu}>
-                    <button onClick={() => navigate("/profile")}>
-                      Thông tin cá nhân
-                    </button>
-                    <button onClick={() => navigate("/balance")}>
-                      Số dư tài khoản
-                    </button>
-                    <button onClick={() => navigate("/my-auctions")}>
-                      Đấu giá của tôi
-                    </button>
+                    <div className={styles.dropdownGroup}>
+                      <p className={styles.menuLabel}>👤 Tài khoản của tôi</p>
+                      <button
+                        onClick={() => handleNavigate("/user/account/profile")}
+                      >
+                        Hồ sơ cá nhân
+                      </button>
+                      <button
+                        onClick={() => handleNavigate("/user/account/payment")}
+                      >
+                        Ví của tôi
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleNavigate("/user/account/reset-password")
+                        }
+                      >
+                        Đổi mật khẩu
+                      </button>
+                    </div>
+
+                    <div className={styles.dropdownGroup}>
+                      <p className={styles.menuLabel}>⚡ Phiên đấu giá</p>
+                      <button
+                        onClick={() =>
+                          handleNavigate("/user/bid/history-bid")
+                        }
+                      >
+                        Lịch sử đấu giá
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleNavigate("/user/bid/auction-current-joined")
+                        }
+                      >
+                        Phiên đang tham gia
+                      </button>
+                    </div>
+
                     <hr />
-                    <button onClick={logout} className={styles.logoutBtn}>
-                      Đăng xuất
+
+                    <button
+                      onClick={() => {
+                        logout();
+                        setShowMenu(false);
+                      }}
+                      className={styles.logoutBtn}
+                    >
+                      🚪 Đăng xuất
                     </button>
                   </div>
                 )}
               </div>
             ) : (
-              // Nếu chưa đăng nhập
+              // ==== Nếu chưa đăng nhập ====
               <div className={styles.authButtons}>
                 <button
                   onClick={() => navigate("/login")}

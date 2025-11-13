@@ -12,7 +12,7 @@ interface StatsOverviewProps {
 }
 
 // ✅ Định nghĩa component trước
-const StatsOverview = ({ stats, loading }: StatsOverviewProps): JSX.Element => {
+const StatsOverview = ({ stats, loading }: StatsOverviewProps): React.ReactElement => {
   // Mock data nếu chưa có từ API
   const statsData = stats || {
     total_products: 0,

@@ -16,7 +16,7 @@ interface EditProductModalProps {
 
 const EditProductModal: React.FC<EditProductModalProps> = ({
   product,
-  loading,
+  loading: _loading,
   onSubmit,
   onCancel,
 }) => {

@@ -30,6 +30,10 @@ export interface ModalProps {
    * Size of the modal. Adjusts width in CSS.
    */
   size?: "sm" | "md" | "lg" | "xl";
+  /**
+   * Optional class applied to the modal container for custom styling.
+   */
+  className?: string;
 }
 
 /**
@@ -44,6 +48,7 @@ export const Modal: React.FC<ModalProps> = ({
   subtitle,
   children,
   size = "lg",
+  className,
 }) => {
   // Prevent body scrolling when the modal is open
   useEffect(() => {
@@ -83,7 +88,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <div className="modal-overlay" onClick={handleOverlayClick}>
-      <div className={`modal-container modal-${size}`} role="dialog" aria-modal="true">
+      <div className={`modal-container modal-${size} ${className ?? ""}`} role="dialog" aria-modal="true">
         {/* Header */}
         <div className="modal-header">
         <div className="modal-header-content">

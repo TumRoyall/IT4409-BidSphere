@@ -194,7 +194,7 @@ export const useProductActions = () => {
     }
   };
 
-  const uploadImages = async (productId: number, images: File[]) => {
+  const uploadImages = async (_productId: number, images: File[]) => {
     try {
       setLoading(true);
       setError(null);

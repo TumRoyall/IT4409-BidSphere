@@ -20,13 +20,16 @@ export interface Product {
   auction?: Auction | null;
 }
 
-export enum ProductStatus {
-  PENDING = "pending",
-  APPROVED = "approved",
-  REJECTED = "rejected",
-  SOLD = "sold",
-  REMOVED = "removed",
-}
+// Runtime-safe constants compatible with "erasableSyntaxOnly"
+export const PRODUCT_STATUS = {
+  PENDING: "pending",
+  APPROVED: "approved",
+  REJECTED: "rejected",
+  SOLD: "sold",
+  REMOVED: "removed",
+} as const;
+
+export type ProductStatus = typeof PRODUCT_STATUS[keyof typeof PRODUCT_STATUS];
 
 export interface ProductImage {
   image_id: number;
@@ -51,12 +54,14 @@ export interface Auction {
   total_bids?: number;
 }
 
-export enum AuctionStatus {
-  SCHEDULED = "scheduled",
-  ACTIVE = "active",
-  ENDED = "ended",
-  CANCELLED = "cancelled",
-}
+export const AUCTION_STATUS = {
+  SCHEDULED: "scheduled",
+  ACTIVE: "active",
+  ENDED: "ended",
+  CANCELLED: "cancelled",
+} as const;
+
+export type AuctionStatus = typeof AUCTION_STATUS[keyof typeof AUCTION_STATUS];
 
 // ==========================================
 // 📝 FORM TYPES

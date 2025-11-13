@@ -1,14 +1,18 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import type { ReactElement, ReactNode } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
-export default function ProtectedRoute() {
+interface ProtectedRouteProps {
+  children: ReactNode;
+}
+
+export default function ProtectedRoute({ children }: ProtectedRouteProps): ReactElement {
   const { token } = useAuth();
   const location = useLocation();
 
   if (!token) {
-    // Redirect về login nếu chưa đăng nhập
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  return <Outlet />;
+  return children as ReactElement;
 }

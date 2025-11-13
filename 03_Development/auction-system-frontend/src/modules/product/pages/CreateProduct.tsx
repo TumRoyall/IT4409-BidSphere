@@ -166,11 +166,10 @@ export default function CreateProduct() {
       const productPayload = {
         name: formData.name,
         description: formData.description,
-        categories: formData.category,
-        startPrice: formData.startPrice,
+        category: formData.category,
+        start_price: formData.startPrice,
         deposit: formData.deposit,
-        images: [{ imageUrl: imageUrl }],
-        sellerId: user?.id,
+        image_url: imageUrl,
       };
 
       console.log("Product payload:", productPayload);

@@ -1,13 +1,25 @@
 package vn.team9.auction_system.common.dto.user;
 
-import vn.team9.auction_system.common.base.BaseRequest;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class UserRequest extends BaseRequest {
+public class UserRequest {
+
+    @Size(max = 100)
+    private String fullName;
+
+    @Size(max = 50)
     private String username;
+
+    @Email
     private String email;
-    private String password;
+
+    @Size(max = 20)
     private String phone;
-    private Long roleId;
+
+    private String gender;
+
+    private String status;
 }

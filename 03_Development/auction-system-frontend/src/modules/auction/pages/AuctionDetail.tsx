@@ -108,7 +108,6 @@ export default function AuctionDetail() {
     );
   }
 
-  const auctionId = auction.auction_id || auction.id;
   const timeRemaining =
     auction.end_time && new Date(auction.end_time) > new Date()
       ? Math.ceil(
