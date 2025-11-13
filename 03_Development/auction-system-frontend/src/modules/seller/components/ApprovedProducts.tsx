@@ -102,7 +102,15 @@ const ApprovedProducts: React.FC<ApprovedProductsProps> = ({
               {/* Product Image */}
               <div className="product-image-wrapper">
                 <img
-                  src={product.image_url || "/placeholder-product.png"}
+                  src={
+                    // Try to get thumbnail image first from images array
+                    product.images?.find((img: any) => img.is_thumbnail)?.image_url ||
+                    // Fallback to first image in array
+                    product.images?.[0]?.image_url ||
+                    // Fallback to product.image_url
+                    product.image_url ||
+                    "/placeholder-product.png"
+                  }
                   alt={product.name}
                   className="product-image"
                   onError={(e) => {
@@ -110,6 +118,12 @@ const ApprovedProducts: React.FC<ApprovedProductsProps> = ({
                       "/placeholder-product.png";
                   }}
                 />
+                {/* Show image count badge if multiple images */}
+                {product.images && product.images.length > 1 && (
+                  <div className="image-count-badge">
+                    +{product.images.length - 1}
+                  </div>
+                )}
               </div>
 
               {/* Product Details */}

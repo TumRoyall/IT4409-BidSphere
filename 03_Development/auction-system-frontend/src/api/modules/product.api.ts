@@ -83,6 +83,19 @@ const productApi = {
       headers: { "Content-Type": "multipart/form-data" },
     });
   },
+
+  // Upload image with is_thumbnail flag
+  uploadImageWithThumbnail: (file: File, productId: number, isThumbnail: boolean = false) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("productId", String(productId));
+    formData.append("is_thumbnail", isThumbnail ? "1" : "0");
+    return axiosClient.post<{ image_url: string; image_id: number; is_thumbnail: boolean }>(
+      "/upload",
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } }
+    );
+  },
 };
 
 export default productApi;

@@ -154,6 +154,36 @@ const sellerApi = {
   },
 
   /**
+   * Upload ảnh cho sản phẩm với is_thumbnail flag
+   * POST /api/upload
+   * @param productId - ID sản phẩm
+   * @param images - Mảng File objects với is_thumbnail flag
+   */
+  uploadProductImagesWithThumbnail: (
+    productId: number,
+    images: Array<{ file: File; isThumbnail: boolean }>
+  ) => {
+    const formData = new FormData();
+    formData.append("productId", String(productId));
+    
+    images.forEach((item, index) => {
+      formData.append("file", item.file);
+      // Append is_thumbnail for each file
+      formData.append(`is_thumbnail_${index}`, item.isThumbnail ? "1" : "0");
+    });
+
+    return axiosClient.post<ImageResponse[]>(
+      `/upload`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+  },
+
+  /**
    * Xóa ảnh sản phẩm
    * DELETE /api/products/:id (marks product as deleted)
    */

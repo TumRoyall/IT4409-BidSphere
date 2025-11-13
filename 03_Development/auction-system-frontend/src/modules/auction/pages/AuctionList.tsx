@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import auctionApi from "@/api/modules/auction.api";
 import type { AuctionResponse } from "@/api/modules/auction.api";
-import "@/styles/seller.css";
 
 export default function AuctionList() {
   const navigate = useNavigate();

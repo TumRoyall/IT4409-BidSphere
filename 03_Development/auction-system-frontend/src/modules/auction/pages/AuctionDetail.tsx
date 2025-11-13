@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import auctionApi from "@/api/modules/auction.api";
 import type { AuctionResponse } from "@/api/modules/auction.api";
 import { useAuth } from "@/hooks/useAuth";
-import "@/styles/seller.css";
 
 export default function AuctionDetail() {
   const { id } = useParams<{ id: string }>();

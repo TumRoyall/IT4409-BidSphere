@@ -1,28 +1,24 @@
 import * as React from "react";
 import { cn } from "./Utils";
 
-/**
- * A flexible button component supporting variant and size customization.
- */
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
   size?: "default" | "sm" | "lg" | "icon";
 }
 
 const VARIANT_STYLES: Record<string, string> = {
-  default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-  destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-  outline: "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
-  secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-  ghost: "hover:bg-accent hover:text-accent-foreground",
-  link: "text-primary underline-offset-4 hover:underline",
+  default: "bg-[#1e3a5f] text-white shadow-md hover:bg-[#2c5282] active:bg-[#1a2f4d] transition-all duration-200",
+  destructive: "bg-[#dc2626] text-white shadow-md hover:bg-[#b91c1c] active:bg-[#991b1b] transition-all duration-200",
+  outline: "border-2 border-[#1e3a5f] bg-white text-[#1e3a5f] shadow-sm hover:bg-[#f0f4f8] active:bg-[#e2e8f0] transition-all duration-200",
+  secondary: "bg-[#64748b] text-white shadow-md hover:bg-[#475569] active:bg-[#334155] transition-all duration-200",
+  ghost: "text-[#1e3a5f] hover:bg-[#f0f4f8] active:bg-[#e2e8f0] transition-all duration-200",
+  link: "text-[#1e3a5f] underline-offset-4 hover:underline hover:text-[#2c5282]",
 };
-
 const SIZE_STYLES: Record<string, string> = {
-  default: "h-9 px-4 py-2",
-  sm: "h-8 rounded-md px-3 text-xs",
-  lg: "h-10 rounded-md px-8",
-  icon: "h-9 w-9",
+  default: "h-10 px-5 py-2.5 text-sm",
+  sm: "h-8 px-3 py-2 text-xs",
+  lg: "h-12 px-8 py-3 text-base",
+  icon: "h-10 w-10",
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({
@@ -39,7 +35,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({
       ref={ref}
       type={type}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e3a5f] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed",
         variantClass,
         sizeClass,
         className

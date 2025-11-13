@@ -1,5 +1,6 @@
 import React from "react";
 import { Search, Package, Gavel } from "lucide-react";
+import { Button, Input } from "@/components/common";
 import "@/styles/seller.css";
 
 type ActionToolBarProps = {
@@ -14,7 +15,7 @@ const ActionToolBar: React.FC<ActionToolBarProps> = ({
   onSearch,
   onCreateProduct,
   onCreateAuction,
-  placeholder = "Search products...",
+  placeholder = "Tìm kiếm sản phẩm...",
   defaultValue = "",
 }) => {
   const [searchValue, setSearchValue] = React.useState(defaultValue);
@@ -48,7 +49,7 @@ const ActionToolBar: React.FC<ActionToolBarProps> = ({
     <div className="action-toolbar">
       <div className="search-container">
         <Search className="search-icon" />
-        <input
+        <Input
           aria-label="Search products"
           type="text"
           className="search-input"
@@ -58,25 +59,23 @@ const ActionToolBar: React.FC<ActionToolBarProps> = ({
         />
       </div>
       <div className="buttons-container">
-      <button
-      type="button"
-      className="primary-button secondary"
-      onClick={onCreateAuction}
-      aria-label="Create new auction session"
-      >
-      <Gavel className="primary-button-icon" />
-      Create Auction
-      </button>
-        <button
-        type="button"
-        className="primary-button"
-        onClick={onCreateProduct}
-        aria-label="Create new product"
+        <Button
+          variant="secondary"
+          onClick={onCreateAuction}
+          aria-label="Create new auction session"
         >
-        <Package className="primary-button-icon" />
-        Create Product
-        </button>
-       </div>
+          <Gavel className="primary-button-icon" />
+          Create Auction
+        </Button>
+        <Button
+          variant="default"
+          onClick={onCreateProduct}
+          aria-label="Create new product"
+        >
+          <Package className="primary-button-icon" />
+          Create Product
+        </Button>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-// src/modules/auction/pages/CreateAuctionSession.tsx
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import auctionApi from "@/api/modules/auction.api";
@@ -7,7 +6,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { Label } from "@/components/common/Label";
 import { Input } from "@/components/common/Input";
 import { Search as SearchIcon, AlertCircle } from "lucide-react";
-import "@/styles/seller.css";
 
 interface FormData {
   productId: string | null;

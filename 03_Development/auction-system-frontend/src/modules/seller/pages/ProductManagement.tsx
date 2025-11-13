@@ -1,5 +1,6 @@
 // src/modules/seller/pages/ProductManagement.tsx
 import React, { useState } from "react";
+import productApi from "@/api/modules/product.api";
 import {
   ActionToolBar,
   StatsOverview,
@@ -41,16 +42,51 @@ const ProductManagement = (): JSX.Element => {
   const handleSubmitProduct = async (formData: any) => {
     try {
       console.log("📤 Sending product payload:", formData);
-      await createProduct(formData);
+
+      // Extract images from formData
+      const images: File[] = formData.images || [];
+      const productDataWithoutImages = { ...formData };
+      delete productDataWithoutImages.images;
+
+      // If there are images, upload them to cloud first to get secure URLs,
+      // then include those URLs in the createProduct payload so backend will persist Image records.
+      let imageRequests: Array<any> | undefined = undefined;
+      if (images.length > 0) {
+        console.log("📸 Uploading files to obtain secure URLs before creating product...");
+        const uploadPromises = images.map((file: File) => productApi.uploadImage(file));
+        const uploadResponses = await Promise.all(uploadPromises);
+
+        imageRequests = uploadResponses.map((res: any, idx: number) => {
+          // backend UploadController returns { image_url: secure_url }
+          const data = res?.data || res;
+          const secureUrl = data?.image_url || data?.secure_url || data?.secureUrl || data?.secureurl;
+          return {
+            secure_url: secureUrl,
+            isThumbnail: idx === 0,
+          };
+        });
+
+        console.log("✅ Obtained secure URLs:", imageRequests.map((i) => i.secure_url));
+      }
+
+      // Prepare final payload including images (if any) and create product
+      const finalPayload = {
+        ...productDataWithoutImages,
+        images: imageRequests,
+      };
+
+      const response = await createProduct(finalPayload);
+      const productId = response?.product_id || response?.id;
+      console.log("✅ Product created with ID:", productId);
 
       // Đóng modal
       handleCloseCreateModal();
-      
+
       // Refresh both products list and statistics immediately
       console.log("🔄 Refreshing products and stats...");
       refresh();
       refreshStats();
-      
+
       console.log("✅ Tạo sản phẩm thành công!");
     } catch (error: any) {
       console.error("❌ Lỗi tạo sản phẩm:", error);
@@ -83,18 +119,41 @@ const ProductManagement = (): JSX.Element => {
 
   const handleSubmitEdit = async (productId: number, data: any) => {
     try {
-      console.log("📤 Updating product:", productId, data);
-      await updateProduct(productId, data);
+  console.log("📤 Updating product:", productId, JSON.stringify(data, null, 2));
+  const resp = await updateProduct(productId, data);
+      console.log("✅ Update API response:", resp);
+
       setIsEditModalOpen(false);
       setSelectedProduct(null);
-      
+
       console.log("🔄 Refreshing products and stats after edit...");
       refresh();
       refreshStats();
-      
+
       console.log("✅ Cập nhật sản phẩm thành công!");
     } catch (error: any) {
       console.error("❌ Lỗi cập nhật sản phẩm:", error);
+      // Show a visible error so users know update failed and we can inspect details
+      const errorMessage = error?.response?.data?.message || 
+                          error?.response?.data?.error || 
+                          error?.message || 
+                          "Unknown error";
+      const errorDetails = error?.response?.data?.details || 
+                          error?.response?.data?.fieldErrors || 
+                          null;
+      
+      let fullMessage = "Lỗi cập nhật sản phẩm: " + errorMessage;
+      if (errorDetails) {
+        fullMessage += "\n\n" + JSON.stringify(errorDetails, null, 2);
+      }
+      
+      alert(fullMessage);
+      console.error("❗ Full error response:", error?.response);
+      try {
+        console.error("❗ Response data:", JSON.stringify(error?.response?.data, null, 2));
+      } catch (e) {
+        console.error("❗ Could not stringify response data", e);
+      }
     }
   };
 
@@ -264,14 +323,70 @@ const ProductManagement = (): JSX.Element => {
            {selectedProduct && (
              <div className="view-details-content">
                <div className="details-image-container">
+                 {/* Main/Thumbnail Image */}
                  <img
-                   src={selectedProduct.image_url || "/placeholder-product.png"}
+                   src={
+                     // Try to get thumbnail image first from images array
+                     selectedProduct.images?.find((img: any) => img.is_thumbnail)?.image_url ||
+                     // Fallback to first image in array
+                     selectedProduct.images?.[0]?.image_url ||
+                     // Fallback to product.image_url
+                     selectedProduct.image_url ||
+                     "/placeholder-product.png"
+                   }
                    alt={selectedProduct.name}
                    className="details-image"
                    onError={(e) => {
                      (e.target as HTMLImageElement).src = "/placeholder-product.png";
                    }}
                  />
+                 
+                 {/* All product images gallery (if multiple images) */}
+                 {selectedProduct.images && selectedProduct.images.length > 1 && (
+                   <div style={{ marginTop: "16px" }}>
+                     <h4 style={{ fontSize: "14px", fontWeight: 600, marginBottom: "8px", color: "#666" }}>
+                       All Images ({selectedProduct.images.length})
+                     </h4>
+                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(80px, 1fr))", gap: "8px" }}>
+                       {selectedProduct.images.map((img: any, idx: number) => (
+                         <div
+                           key={img.image_id || idx}
+                           style={{
+                             position: "relative",
+                             borderRadius: "6px",
+                             overflow: "hidden",
+                             border: img.is_thumbnail ? "2px solid #1e3a5f" : "1px solid #ddd",
+                             aspectRatio: "1",
+                           }}
+                         >
+                           <img
+                             src={img.image_url}
+                             alt={`Product image ${idx + 1}`}
+                             style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                             onError={(e) => {
+                               (e.target as HTMLImageElement).src = "/placeholder-product.png";
+                             }}
+                           />
+                           {img.is_thumbnail && (
+                             <div style={{
+                               position: "absolute",
+                               top: "4px",
+                               right: "4px",
+                               background: "#1e3a5f",
+                               color: "white",
+                               fontSize: "10px",
+                               fontWeight: 700,
+                               padding: "2px 4px",
+                               borderRadius: "3px"
+                             }}>
+                               THUMB
+                             </div>
+                           )}
+                         </div>
+                       ))}
+                     </div>
+                   </div>
+                 )}
                </div>
 
                <div className="details-content">

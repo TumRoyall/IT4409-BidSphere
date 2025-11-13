@@ -147,9 +147,11 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): JSX.Element
         deposit: formData.deposit,
         imageUrl: "",
         sellerId: currentUser.id,
+        images: images, // Include images array in payload
       };
       console.log("📤 Final payload before submit:", payload);
       console.log("✅ Validation passed. Start price:", payload.startPrice, "Category:", payload.categories);
+      console.log("📸 Images to upload:", images.length, "files");
       onSubmit(payload);
     }
   };

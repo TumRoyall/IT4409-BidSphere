@@ -1,12 +1,11 @@
-// src/modules/seller/components/EditProductModal.tsx
 import React, { useState, useEffect } from "react";
+import productApi from "@/api/modules/product.api";
 import { Button } from "@/components/common/Button";
 import { Input } from "@/components/common/Input";
 import { Textarea } from "@/components/common/TextArea";
 import CategorySelect from "@/components/common/CategorySelect";
 import { Edit2, DollarSign } from "lucide-react";
 import type { Product } from "../types/seller.types";
-import "@/styles/seller.css";
 
 interface EditProductModalProps {
   product: Product | null;
@@ -30,7 +29,9 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     deposit: 0,
   });
 
+  const [imagesList, setImagesList] = useState<Array<any>>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     if (product) {
@@ -42,6 +43,15 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
         estimate_price: product.estimate_price || "",
         deposit: product.deposit || 0,
       });
+
+      const initialImages = (product.images || []).map((img: any) => ({
+        image_id: img.image_id,
+        image_url: img.image_url,
+        is_thumbnail: !!img.is_thumbnail,
+        file: null,
+        preview: img.image_url,
+      }));
+      setImagesList(initialImages);
     }
   }, [product]);
 
@@ -66,18 +76,77 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
 
     try {
       setIsSubmitting(true);
-      const payload = {
-        name: formData.name,
-        categories: formData.categories,
-        description: formData.description,
-        startPrice: formData.start_price,
-        estimatePrice: formData.estimate_price,
-        deposit: formData.deposit,
+      setSubmitError(null);
+
+      // Validate required fields
+      if (!formData.name || formData.name.trim() === "") {
+        throw new Error("Product name is required");
+      }
+
+      // Helper to convert values to nullable numbers
+      const toNullableNumber = (v: any) => {
+        if (v === "" || v === null || v === undefined) return null;
+        const n = Number(v);
+        return Number.isNaN(n) ? null : n;
       };
+
+      // Build the basic payload (without images)
+      const payload: any = {
+        sellerId: product.seller_id,
+        name: formData.name.trim(),
+        categories: formData.categories || null,
+        description: formData.description || null,
+        startPrice: toNullableNumber(formData.start_price),
+        estimatePrice: toNullableNumber(formData.estimate_price),
+        deposit: toNullableNumber(formData.deposit),
+      };
+
+      // Handle images only if there are new uploads
+      const uploadable = imagesList.filter((it) => it.file);
+      if (uploadable.length > 0) {
+        console.log("📸 Uploading new images...");
+
+        // Upload new files to get secure URLs
+        const uploadPromises = uploadable.map((it) => productApi.uploadImage(it.file));
+        const responses = await Promise.all(uploadPromises);
+
+        // Build images array with correct field names for backend
+        const imagesPayload = imagesList.map((it) => {
+          if (it.file) {
+            // This is a newly uploaded file
+            const resp = responses.shift();
+            const secureUrl = resp?.data?.image_url || resp?.image_url || "";
+            return {
+              imageUrl: secureUrl,  // Backend expects 'imageUrl'
+              isThumbnail: !!it.is_thumbnail
+            };
+          }
+          // This is an existing image
+          return {
+            imageUrl: it.image_url,  // Backend expects 'imageUrl'
+            isThumbnail: !!it.is_thumbnail
+          };
+        });
+
+        payload.images = imagesPayload;
+      }
+
+      console.log("📤 Submitting product update:", JSON.stringify(payload, null, 2));
       await onSubmit(product.product_id, payload);
       onCancel();
-    } catch (error) {
-      console.error("Error updating product:", error);
+
+    } catch (error: any) {
+      let errorMsg = "Failed to update product";
+
+      if (error?.response?.data?.message) {
+        errorMsg = error.response.data.message;
+      } else if (error?.message) {
+        errorMsg = error.message;
+      }
+
+      console.error("❌ Error updating product:", error);
+      console.error("📋 Error response:", error?.response?.data);
+      setSubmitError(errorMsg);
     } finally {
       setIsSubmitting(false);
     }
@@ -106,7 +175,57 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
 
   return (
     <form onSubmit={handleSubmit} className="edit-product-form" style={{ paddingBottom: "20px" }}>
-      {/* Header with gradient */}
+      {/* Error Alert */}
+      {submitError && (
+        <div style={{
+          background: "linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)",
+          border: "1px solid #fca5a5",
+          borderRadius: "8px",
+          padding: "16px",
+          marginBottom: "20px",
+          display: "flex",
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+          gap: "12px"
+        }}>
+          <div style={{
+            display: "flex",
+            gap: "12px",
+            alignItems: "flex-start",
+            flex: 1
+          }}>
+            <span style={{ fontSize: "18px", marginTop: "2px" }}>⚠️</span>
+            <p style={{
+              margin: 0,
+              fontSize: "13px",
+              color: "#7f1d1d",
+              fontWeight: 500,
+              lineHeight: 1.5
+            }}>
+              {submitError}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setSubmitError(null)}
+            aria-label="Dismiss error"
+            style={{
+              background: "transparent",
+              border: "none",
+              color: "#991b1b",
+              cursor: "pointer",
+              fontSize: "20px",
+              padding: "0",
+              lineHeight: 1,
+              flexShrink: 0
+            }}
+          >
+            ×
+          </button>
+        </div>
+      )}
+
+      {/* Header */}
       <div style={{ marginBottom: "28px", paddingBottom: "20px", borderBottom: "2px solid #e2e8f0", background: "linear-gradient(135deg, #f8fafc 0%, rgba(102, 126, 234, 0.03) 100%)", padding: "16px 16px 20px 16px", marginLeft: "-16px", marginRight: "-16px", marginTop: "-16px", paddingLeft: "16px", paddingRight: "16px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
           <div style={{ background: "#667eea", padding: "8px", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -131,7 +250,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             Basic Information
           </h4>
         </div>
-        
+
         <div className="form-group" style={{ marginBottom: "16px" }}>
           <label htmlFor="product-name" style={{ fontSize: "13px", fontWeight: 600, marginBottom: "8px", display: "block", color: "#2d3748" }}>
             Product Name <span style={{ color: "#ef4444" }}>*</span>
@@ -190,7 +309,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             Pricing Information
           </h4>
         </div>
-        
+
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
           <div className="form-group">
             <label htmlFor="start-price" style={{ fontSize: "13px", fontWeight: 600, marginBottom: "8px", display: "block", color: "#2d3748" }}>

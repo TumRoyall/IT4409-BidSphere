@@ -3,7 +3,6 @@ import { X, Edit2, Trash2, Copy } from "lucide-react";
 import { Button } from "@/components/common";
 import { Modal } from "@/components/common/Modal";
 import type { Product } from "../types/seller.types";
-import "@/styles/seller.css";
 
 interface ProductDetailsModalProps {
   product: Product | null;
@@ -42,10 +41,35 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
 
   if (!product) return null;
 
-  const handleCopyToClipboard = (text: string, field: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedField(field);
-    setTimeout(() => setCopiedField(null), 2000);
+  const handleCopyToClipboard = async (text: string, field: string) => {
+    // Try the modern clipboard API first, fall back to execCommand copy if not available
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        throw new Error("Clipboard API not available");
+      }
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2000);
+    } catch (err) {
+      // Fallback: create a temporary textarea, select and copy
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        // place off-screen
+        ta.style.position = "absolute";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        setCopiedField(field);
+        setTimeout(() => setCopiedField(null), 2000);
+      } catch (e) {
+        // swallow errors silently but you could show a toast here
+        // console.error('Copy failed', e);
+      }
+    }
   };
 
   const STATUS_BADGE_CLASS: Record<string, string> = {
@@ -60,7 +84,7 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title=""
+      title={product.name}
       size="xl"
       className="product-details-modal"
     >

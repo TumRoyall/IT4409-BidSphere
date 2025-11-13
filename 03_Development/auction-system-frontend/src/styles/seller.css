@@ -379,6 +379,7 @@
 
 .product-image-wrapper {
   flex-shrink: 0;
+  position: relative;
 }
 
 .product-image {
@@ -387,6 +388,21 @@
   object-fit: cover;
   border-radius: var(--seller-radius-md);
   background: var(--seller-gray-100);
+}
+
+/* Badge showing additional image count */
+.image-count-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(30, 58, 95, 0.9);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  min-width: 28px;
+  text-align: center;
 }
 
 .product-title-group {

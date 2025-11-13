@@ -1,13 +1,9 @@
--- ============================================
--- ✅ MySQL Auction System Schema (Final)
--- ============================================
-
+-- ================================
+-- ✅ MySQL Auction System Schema
+-- ================================
 CREATE DATABASE IF NOT EXISTS auction_system;
 USE auction_system;
 
--- ========================
--- Roles & Permissions
--- ========================
 CREATE TABLE Role (
   role_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   role_name VARCHAR(200) UNIQUE NOT NULL,
@@ -28,9 +24,6 @@ CREATE TABLE RolePermission (
   FOREIGN KEY (permission_id) REFERENCES Permission(permission_id)
 );
 
--- ========================
--- Users
--- ========================
 CREATE TABLE User (
   user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   full_name VARCHAR(100),
@@ -52,9 +45,6 @@ CREATE TABLE User (
   FOREIGN KEY (role_id) REFERENCES Role(role_id)
 );
 
--- ========================
--- Transactions
--- ========================
 CREATE TABLE AccountTransaction (
   trans_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   user_id BIGINT,
@@ -65,9 +55,6 @@ CREATE TABLE AccountTransaction (
   FOREIGN KEY (user_id) REFERENCES User(user_id)
 );
 
--- ========================
--- Products
--- ========================
 CREATE TABLE Product (
   product_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   seller_id BIGINT,
@@ -83,9 +70,6 @@ CREATE TABLE Product (
   FOREIGN KEY (seller_id) REFERENCES User(user_id)
 );
 
--- ========================
--- Auctions
--- ========================
 CREATE TABLE Auction (
   auction_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   product_id BIGINT,
@@ -99,9 +83,6 @@ CREATE TABLE Auction (
   FOREIGN KEY (winner_id) REFERENCES User(user_id)
 );
 
--- ========================
--- Bids
--- ========================
 CREATE TABLE Bid (
   bid_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   auction_id BIGINT,
@@ -116,9 +97,6 @@ CREATE TABLE Bid (
   FOREIGN KEY (bidder_id) REFERENCES User(user_id)
 );
 
--- ========================
--- Notifications
--- ========================
 CREATE TABLE Notification (
   noti_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   user_id BIGINT,
@@ -129,9 +107,6 @@ CREATE TABLE Notification (
   FOREIGN KEY (user_id) REFERENCES User(user_id)
 );
 
--- ========================
--- Feedback
--- ========================
 CREATE TABLE Feedback (
   feedback_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   auction_id BIGINT,
@@ -143,9 +118,6 @@ CREATE TABLE Feedback (
   FOREIGN KEY (user_id) REFERENCES User(user_id)
 );
 
--- ========================
--- Post-Auction Transactions
--- ========================
 CREATE TABLE TransactionAfterAuction (
   txn_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   auction_id BIGINT,
@@ -159,9 +131,6 @@ CREATE TABLE TransactionAfterAuction (
   FOREIGN KEY (buyer_id) REFERENCES User(user_id)
 );
 
--- ========================
--- Admin Logs
--- ========================
 CREATE TABLE AdminLog (
   log_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   admin_id BIGINT,
@@ -171,9 +140,6 @@ CREATE TABLE AdminLog (
   FOREIGN KEY (admin_id) REFERENCES User(user_id)
 );
 
--- ========================
--- Product Images
--- ========================
 CREATE TABLE Image (
   image_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   product_id BIGINT,
@@ -181,19 +147,3 @@ CREATE TABLE Image (
   is_thumbnail BOOLEAN DEFAULT FALSE,
   FOREIGN KEY (product_id) REFERENCES Product(product_id)
 );
-
--- ========================
--- ✅ Default Roles (sample data)
--- ========================
-INSERT INTO Role (role_name, description) VALUES
-('ADMIN', 'System administrator'),
-('SELLER', 'User who sells products'),
-('BIDDER', 'User who places bids');
-
--- ========================
--- ✅ Default Permissions
--- ========================
-INSERT INTO Permission (permission_name, description) VALUES
-('CREATE_AUCTION', 'Create auction'),
-('PLACE_BID', 'Place bids'),
-('APPROVE_PRODUCT', 'Approve submitted products');
