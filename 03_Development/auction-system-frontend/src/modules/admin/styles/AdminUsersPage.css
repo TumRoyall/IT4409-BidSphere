@@ -1,16 +1,34 @@
+/* Container */
+.admin-users-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
 .admin-users-page h1 {
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 1rem;
 }
 
+/* Search box */
+.admin-users-page input[type="text"] {
+    padding: 6px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+/* Table */
 .admin-users-page table {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
 }
 
-.admin-users-page th, .admin-users-page td {
+.admin-users-page th,
+.admin-users-page td {
     border: 1px solid #d1d5db; /* gray-300 */
     padding: 8px 12px;
     text-align: left;
@@ -24,20 +42,148 @@
     background-color: #f9fafb; /* gray-50 */
 }
 
-.admin-users-page .actions button {
-    margin-right: 5px;
+/* Actions cell */
+.admin-users-page .actions {
+    position: relative;
+}
+
+/* Action button */
+.admin-users-page .actions > button {
     padding: 4px 8px;
     border-radius: 4px;
     border: none;
+    background-color: #3b82f6; /* blue */
     color: white;
     cursor: pointer;
 }
 
-.admin-users-page .actions button:nth-child(1) { background-color: #fbbf24; } /* Ban */
-.admin-users-page .actions button:nth-child(2) { background-color: #10b981; } /* Unban */
-.admin-users-page .actions button:nth-child(3) { background-color: #ef4444; } /* Delete */
+/* Dropdown menu */
+.admin-users-page .actions div {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+    z-index: 10;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
 
+/* Dropdown buttons */
+.admin-users-page .actions div button {
+    padding: 6px 10px;
+    background-color: white;
+    color: #111827; /* gray-900 */
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px; /* khoảng cách icon và text */
+    font-size: 0.9rem;
+}
+
+.admin-users-page .actions div button:hover {
+    background-color: #f3f4f6; /* gray-100 */
+}
+
+/* Icons for buttons */
+.admin-users-page .actions div button.edit::before {
+    content: "✏️"; /* Edit icon */
+}
+
+.admin-users-page .actions div button.ban::before {
+    content: "⛔"; /* Ban icon */
+}
+
+.admin-users-page .actions div button.unban::before {
+    content: "✔️"; /* Unban icon */
+}
+
+.admin-users-page .actions div button.delete::before {
+    content: "🗑️"; /* Delete icon */
+}
+
+/* Inline edit/ban forms */
+.admin-users-page .actions input[type="text"],
+.admin-users-page .actions input[type="email"],
+.admin-users-page .actions input[type="date"] {
+    padding: 4px 6px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+}
+
+.admin-users-page .actions button.save {
+    background-color: #10b981; /* green */
+    color: white;
+    margin-right: 4px;
+}
+
+.admin-users-page .actions button.cancel {
+    background-color: #ef4444; /* red */
+    color: white;
+}
+
+/* Error message */
 .error {
     color: red;
     font-weight: bold;
+    margin-bottom: 10px;
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-content input {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-buttons .save {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-buttons .cancel {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+

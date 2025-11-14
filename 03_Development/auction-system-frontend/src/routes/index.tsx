@@ -23,8 +23,8 @@ import ResetPasswordPage from "@/modules/user/pages/ResetPasswordPage";
 import NotificationPage from "@/modules/user/pages/NotificationPage";
 import HistoryBidPage from "@/modules/user/pages/HistoryBidPage";
 import AuctionCurrentPage from "@/modules/user/pages/AuctionCurrentPage";
-import AdminLayout from "@/layouts/AdminLayout";
-import AdminUsersPage from "@/modules/admin/pages/AdminUsersPage";
+import AdminLayout from "../layouts/AdminLayout";
+import AdminUsersPage from "../modules/admin/pages/AdminUsersPage";
 import AdminDashboardPage from "../modules/admin/pages/AdminDashboardPage.tsx";
 
 export default function AppRoutes() {
