@@ -23,6 +23,9 @@ import ResetPasswordPage from "@/modules/user/pages/ResetPasswordPage";
 import NotificationPage from "@/modules/user/pages/NotificationPage";
 import HistoryBidPage from "@/modules/user/pages/HistoryBidPage";
 import AuctionCurrentPage from "@/modules/user/pages/AuctionCurrentPage";
+import AdminLayout from "@/layouts/AdminLayout";
+import AdminUsersPage from "@/modules/admin/pages/AdminUsersPage";
+import AdminDashboardPage from "../modules/admin/pages/AdminDashboardPage.tsx";
 
 export default function AppRoutes() {
   return (
@@ -41,6 +44,20 @@ export default function AppRoutes() {
         </Route>
         {/* USER AREA (có ProtectedRoute + ProfileLayout) */}
                   <Route
+                    path="/admin"
+                    element={
+                      <ProtectedRoute>
+                        <AdminLayout/>
+                      </ProtectedRoute>
+                    }
+                  >
+                    {/* User management */}
+                    <Route path="users" element={<AdminUsersPage />} />
+                    <Route path="Dashboard" element={<AdminDashboardPage/>} />
+                  </Route>
+
+                  {/* User */}
+                  <Route
                     path="/user"
                     element={
                       <ProtectedRoute>
@@ -48,6 +65,7 @@ export default function AppRoutes() {
                       </ProtectedRoute>
                     }
                   >
+
                     {/* Account */}
                     <Route path="account/profile" element={<ProfilePage />} />
                     <Route path="account/payment" element={<PaymentPage />} />

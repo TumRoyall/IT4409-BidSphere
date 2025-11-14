@@ -1,0 +1,43 @@
+.admin-users-page h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.admin-users-page table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.admin-users-page th, .admin-users-page td {
+    border: 1px solid #d1d5db; /* gray-300 */
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.admin-users-page th {
+    background-color: #e5e7eb; /* gray-200 */
+}
+
+.admin-users-page tr:hover {
+    background-color: #f9fafb; /* gray-50 */
+}
+
+.admin-users-page .actions button {
+    margin-right: 5px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.admin-users-page .actions button:nth-child(1) { background-color: #fbbf24; } /* Ban */
+.admin-users-page .actions button:nth-child(2) { background-color: #10b981; } /* Unban */
+.admin-users-page .actions button:nth-child(3) { background-color: #ef4444; } /* Delete */
+
+.error {
+    color: red;
+    font-weight: bold;
+}
