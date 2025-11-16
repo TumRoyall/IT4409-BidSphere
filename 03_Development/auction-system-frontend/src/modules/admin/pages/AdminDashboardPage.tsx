@@ -8,7 +8,7 @@ const AdminDashboardPage: React.FC = () => {
             <div className="dashboard-cards">
                 <div className="card">
                     <h2>Tổng số Users</h2>
-                    <p>120</p>
+                    <p>24</p>
                 </div>
                 <div className="card">
                     <h2>Users đang bị Ban</h2>

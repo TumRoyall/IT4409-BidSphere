@@ -110,60 +110,63 @@ const AdminUsersPage: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredUsers.map((user) => (
-            <tr key={user.userId}>
-              <td>{user.userId}</td>
-              <td>{user.username}</td>
-              <td>{user.fullName}</td>
-              <td>{user.email}</td>
-              <td>{user.phone}</td>
-              <td>{user.status}</td>
-              <td className="actions">
-  <button onClick={() => setOpenActionId(openActionId === user.userId ? null : user.userId)}>
-    Action
-  </button>
-  {/* Dropdown */}
-  {openActionId === user.userId && (
-    <div>
-      <button
-        className="edit"
-        onClick={() => {
-          setSelectedUser(user);
-          setModalType("edit");
-          setOpenActionId(null);
-        }}
-      >
-        Edit
-      </button>
+          {filteredUsers.map((user) => {
+            const status = user.status?.toLowerCase() ?? "";
+            return (
+              <tr key={user.userId}>
+                <td>{user.userId}</td>
+                <td>{user.username}</td>
+                <td>{user.fullName}</td>
+                <td>{user.email}</td>
+                <td>{user.phone}</td>
+                <td>{user.status}</td>
+                <td className="actions">
+                  <button onClick={() => setOpenActionId(openActionId === user.userId ? null : user.userId)}>
+                    Action
+                  </button>
 
-      {/* Hiện Ban chỉ khi user không bị banned */}
-      {user.status !== "banned" && (
-        <button
-          className="ban"
-          onClick={() => {
-            setSelectedUser(user);
-            setBanReason("");
-            setBanUntil(minBanDate);
-            setModalType("ban");
-            setOpenActionId(null);
-          }}
-        >
-          Ban
-        </button>
-      )}
+                  {/* Dropdown */}
+                  {openActionId === user.userId && (
+                    <div>
+                      <button
+                        className="edit"
+                        onClick={() => {
+                          setSelectedUser(user);
+                          setModalType("edit");
+                          setOpenActionId(null);
+                        }}
+                      >
+                        Edit
+                      </button>
 
-      {/* Hiện Unban chỉ khi user đang bị banned */}
-      {user.status === "banned" && (
-        <button className="unban" onClick={() => handleUnban(user)}>Unban</button>
-      )}
+                      {/* Hiện Ban chỉ khi user status active hoặc pending */}
+                      {["active", "pending"].includes(status) && (
+                        <button
+                          className="ban"
+                          onClick={() => {
+                            setSelectedUser(user);
+                            setBanReason("");
+                            setBanUntil(minBanDate);
+                            setModalType("ban");
+                            setOpenActionId(null);
+                          }}
+                        >
+                          Ban
+                        </button>
+                      )}
 
-      <button className="delete" onClick={() => handleDelete(user.userId)}>Delete</button>
-    </div>
-  )}
-</td>
+                      {/* Hiện Unban chỉ khi user status banned */}
+                      {status === "banned" && (
+                        <button className="unban" onClick={() => handleUnban(user)}>Unban</button>
+                      )}
 
-            </tr>
-          ))}
+                      <button className="delete" onClick={() => handleDelete(user.userId)}>Delete</button>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 
