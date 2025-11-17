@@ -1,9 +1,13 @@
--- ================================
--- ✅ MySQL Auction System Schema
--- ================================
+-- ============================================
+-- ✅ MySQL Auction System Schema (Final)
+-- ============================================
+
 CREATE DATABASE IF NOT EXISTS auction_system;
 USE auction_system;
 
+-- ========================
+-- Roles & Permissions
+-- ========================
 CREATE TABLE Role (
   role_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   role_name VARCHAR(200) UNIQUE NOT NULL,
@@ -24,6 +28,9 @@ CREATE TABLE RolePermission (
   FOREIGN KEY (permission_id) REFERENCES Permission(permission_id)
 );
 
+-- ========================
+-- Users
+-- ========================
 CREATE TABLE User (
   user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   full_name VARCHAR(100),
@@ -33,7 +40,7 @@ CREATE TABLE User (
   phone VARCHAR(20),
   role_id BIGINT,
   balance DECIMAL(18,2) DEFAULT 0,
-  status VARCHAR(20),
+  status VARCHAR(20),   -- ACTIVE, BANNED, PENDING
   gender VARCHAR(10) DEFAULT 'male',
   banned_until TIMESTAMP NULL,
   ban_reason TEXT,
@@ -45,16 +52,22 @@ CREATE TABLE User (
   FOREIGN KEY (role_id) REFERENCES Role(role_id)
 );
 
+-- ========================
+-- Transactions
+-- ========================
 CREATE TABLE AccountTransaction (
   trans_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   user_id BIGINT,
   amount DECIMAL(18,2),
-  type VARCHAR(20),
-  status VARCHAR(20),
+  type VARCHAR(20),  -- DEPOSIT, WITHDRAW, TRANSFER, RECEIVED
+  status VARCHAR(20), -- PENDING, SUCCESS, FAILED
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES User(user_id)
 );
 
+-- ========================
+-- Products
+-- ========================
 CREATE TABLE Product (
   product_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   seller_id BIGINT,
@@ -62,20 +75,23 @@ CREATE TABLE Product (
   categories VARCHAR(50),
   description TEXT,
   start_price DECIMAL(18,2),
-  estimate_price VARCHAR(100),
+  estimate_price DECIMAL(18,2),
   deposit DECIMAL(18,2),
   image_url VARCHAR(255),
-  status VARCHAR(20),
+  status VARCHAR(20), -- CANCELLED, PENDING, SOLD, APPROVED
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (seller_id) REFERENCES User(user_id)
 );
 
+-- ========================
+-- Auctions
+-- ========================
 CREATE TABLE Auction (
   auction_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   product_id BIGINT,
   start_time DATETIME,
   end_time DATETIME,
-  status VARCHAR(20),
+  status VARCHAR(20), -- PENDING, OPEN, CANCELLED, CLOSED
   highest_current_price DECIMAL(18,2),
   bid_step_amount VARCHAR(50),
   winner_id BIGINT,
@@ -83,6 +99,9 @@ CREATE TABLE Auction (
   FOREIGN KEY (winner_id) REFERENCES User(user_id)
 );
 
+-- ========================
+-- Bids
+-- ========================
 CREATE TABLE Bid (
   bid_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   auction_id BIGINT,
@@ -97,16 +116,22 @@ CREATE TABLE Bid (
   FOREIGN KEY (bidder_id) REFERENCES User(user_id)
 );
 
+-- ========================
+-- Notifications
+-- ========================
 CREATE TABLE Notification (
   noti_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   user_id BIGINT,
   message TEXT,
-  type VARCHAR(50),
+  type VARCHAR(50), -- AUCTION, SYSTEM, PAYMENT
   is_read BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES User(user_id)
 );
 
+-- ========================
+-- Feedback
+-- ========================
 CREATE TABLE Feedback (
   feedback_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   auction_id BIGINT,
@@ -118,19 +143,25 @@ CREATE TABLE Feedback (
   FOREIGN KEY (user_id) REFERENCES User(user_id)
 );
 
+-- ========================
+-- Post-Auction Transactions
+-- ========================
 CREATE TABLE TransactionAfterAuction (
   txn_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   auction_id BIGINT,
   seller_id BIGINT,
   buyer_id BIGINT,
   amount DECIMAL(18,2),
-  status VARCHAR(20),
+  status VARCHAR(20), -- PENDING, SHIPPED, PAID, DONE, CANCELLED
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (auction_id) REFERENCES Auction(auction_id),
   FOREIGN KEY (seller_id) REFERENCES User(user_id),
   FOREIGN KEY (buyer_id) REFERENCES User(user_id)
 );
 
+-- ========================
+-- Admin Logs
+-- ========================
 CREATE TABLE AdminLog (
   log_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   admin_id BIGINT,
@@ -140,6 +171,9 @@ CREATE TABLE AdminLog (
   FOREIGN KEY (admin_id) REFERENCES User(user_id)
 );
 
+-- ========================
+-- Product Images
+-- ========================
 CREATE TABLE Image (
   image_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   product_id BIGINT,

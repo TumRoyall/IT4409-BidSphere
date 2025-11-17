@@ -1,0 +1,231 @@
+
+/* Only affects list mode */
+.auction-card.list .participants {
+  margin-top: auto;        /* đẩy xuống dưới cùng trong khối phải */
+  text-align: right;       /* căn phải */
+  justify-content: flex-end;
+}
+
+.auction-card {
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.auction-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+/* ⭐ Favorite */
+.fav-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px; /* hình vuông bo góc */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.fav-btn:hover {
+  background: #fff9d6; /* tone vàng nhạt kiểu yêu thích */
+  border-color: #facc15;
+  transform: translateY(-1px);
+}
+
+.fav-btn.active {
+  background: #ffe369;
+  border-color: #facc15;
+}
+
+.fav-btn.active svg {
+  fill: #facc15;
+  stroke: #ca8a04;
+}
+
+
+/* Image */
+.auction-img-wrapper {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.auction-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Hover Detail Slide Up */
+.hover-detail {
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  transition: 0.25s;
+}
+
+.auction-card:hover .hover-detail {
+  bottom: 0;
+}
+
+/* Arrows */
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.45);
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  cursor: pointer;
+  z-index: 2;
+  border-radius: 4px;
+}
+
+.nav-arrow.left { left: 5px; }
+.nav-arrow.right { right: 5px; }
+
+/* Dot indicators */
+.dot-container {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: #c4c4c4;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: #fff;
+}
+
+/* Badges */
+.badge-live,
+.badge-upcoming {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.badge-live { background: #dc2626; }
+.badge-upcoming { background: #2563eb; }
+
+/* Body */
+.auction-body {
+  padding: 12px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.seller {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.seller-link {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.opening-bid {
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.countdown {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.participants {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #374151;
+}
+
+/* LIST MODE -------------------------------------- */
+
+.auction-card.list {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+
+.list-img {
+  width: 180px !important;
+  height: 140px !important;
+}
+
+.list-body {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+}
+
+/* Two columns */
+.info-col { flex: 2; }
+.auction-col { flex: 1; text-align: right; }
+
+.description {
+  font-size: 13px;
+  color: #555;
+  margin: 6px 0;
+  max-height: 42px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* spacing between list cards */
+.auction-card.list + .auction-card.list {
+  margin-top: 12px;
+}

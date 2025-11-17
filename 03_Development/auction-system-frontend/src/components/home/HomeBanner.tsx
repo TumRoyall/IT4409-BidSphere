@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import "./HomeBanner.css";
-
+import "@/components/styles/HomeBanner.css"
 const mainBanners = [
-  { image: "https://placehold.co/1200x400/ff7b00/ffffff?text=Flash+Sale" },
-  { image: "https://placehold.co/1200x400/0c6efd/ffffff?text=Mega+Sale" },
-  { image: "https://placehold.co/1200x400/f44336/ffffff?text=Deal+0Đ" },
-  { image: "https://placehold.co/1200x400/ff7b00/ffffff?text=Flash+Sale" },
-   { image: "https://placehold.co/1200x400/0c6efd/ffffff?text=1xBid" },
+  { image: "https://placehold.co/1200x400/ff7b00/ffffff?text=Tao" },
+  { image: "https://placehold.co/1200x400/0c6efd/ffffff?text=Là" },
+  { image: "https://placehold.co/1200x400/f44336/ffffff?text=Bố" },
+  { image: "https://placehold.co/1200x400/ff7b00/ffffff?text=Chúng" },
+   { image: "https://placehold.co/1200x400/0c6efd/ffffff?text=Mày" },
 ];
 
 const rightTop = {
