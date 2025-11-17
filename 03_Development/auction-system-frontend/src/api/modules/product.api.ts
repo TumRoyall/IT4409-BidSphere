@@ -4,7 +4,7 @@ import axiosClient from "../axiosClient";
 export interface ProductCreateRequest {
   name: string;
   description: string;
-  category: string;
+  categories: string;
   start_price: number;
   deposit: number;
   image_url?: string;
@@ -13,7 +13,7 @@ export interface ProductCreateRequest {
 export interface ProductUpdateRequest {
   name?: string;
   description?: string;
-  category?: string;
+  categories?: string;
   start_price?: number;
   deposit?: number;
   image_url?: string;
@@ -24,7 +24,7 @@ export interface ProductResponse {
   id?: number;
   name: string;
   description?: string;
-  category?: string;
+  categories?: string;
   start_price?: number;
   deposit: number;
   image_url?: string;

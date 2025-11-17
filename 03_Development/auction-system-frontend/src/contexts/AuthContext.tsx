@@ -33,10 +33,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const res = await authApi.login({ email, password });
     const data = res.data;
 
-    localStorage.setItem("access_token", data.accessToken);
+    // Chuẩn hóa token từ nhiều khóa trả về: accessToken | access_token | token
+    const receivedToken: string | undefined =
+      (data && (data.accessToken || data.access_token || data.token)) || undefined;
+
+    if (!receivedToken) {
+      throw new Error("Không nhận được access token từ máy chủ");
+    }
+
+    localStorage.setItem("access_token", receivedToken);
     localStorage.setItem("user", JSON.stringify(data));
 
-    setToken(data.accessToken);
+    setToken(receivedToken);
     setUser({
       id: data.userId || data.id || data.user_id,
       username: data.username,

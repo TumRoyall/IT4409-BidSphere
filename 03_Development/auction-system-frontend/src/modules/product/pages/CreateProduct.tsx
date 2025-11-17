@@ -58,7 +58,7 @@ export default function CreateProduct() {
           setFormData({
             name: product.name,
             description: product.description || "",
-            category: product.category || "",
+            category: (product as any).category || product.categories || "",
             startPrice: product.start_price || 0,
             deposit: product.deposit || 0,
             images: [],
@@ -166,7 +166,7 @@ export default function CreateProduct() {
       const productPayload = {
         name: formData.name,
         description: formData.description,
-        category: formData.category,
+        categories: formData.category,
         start_price: formData.startPrice,
         deposit: formData.deposit,
         image_url: imageUrl,
