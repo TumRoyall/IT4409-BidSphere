@@ -23,6 +23,8 @@ import ResetPasswordPage from "@/modules/user/pages/ResetPasswordPage";
 import NotificationPage from "@/modules/user/pages/NotificationPage";
 import HistoryBidPage from "@/modules/user/pages/HistoryBidPage";
 import AuctionCurrentPage from "@/modules/user/pages/AuctionCurrentPage";
+import AuctionsPage from "@/modules/auction/pages/AuctionsPage"
+import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage"
 
 export default function AppRoutes() {
   return (
@@ -37,6 +39,21 @@ export default function AppRoutes() {
           <Route path="/help" element={<HelpPage />} />
           <Route path="/help/:id" element={<HelpDetailPage />} />
           <Route path="/how-to-buy" element={<HowToBuyPage />} />
+
+          {/* AUCTION */}
+          <Route path="/auctions" element={<AuctionsPage />} />
+          {/* Auction list vẫn public */}
+            <Route path="/auctions" element={<AuctionsPage />} />
+
+            {/* Auction detail chỉ cho USER */}
+            <Route
+              path="/auctions/:id"
+              element={
+                <ProtectedRoute>
+                  <AuctionDetailPage />
+                </ProtectedRoute>
+              }
+            />
 
         </Route>
         {/* USER AREA (có ProtectedRoute + ProfileLayout) */}

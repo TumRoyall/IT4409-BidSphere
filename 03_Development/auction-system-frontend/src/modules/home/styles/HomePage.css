@@ -1,0 +1,7 @@
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding-bottom: 40px;
+  background: #f9fafb;
+}

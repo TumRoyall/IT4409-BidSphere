@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Bell } from "lucide-react";
-import styles from "./layout.module.css";
+import styles from "@/components/styles/layout.module.css";
 
 export default function NotificationDropdown() {
   const [open, setOpen] = useState(false);

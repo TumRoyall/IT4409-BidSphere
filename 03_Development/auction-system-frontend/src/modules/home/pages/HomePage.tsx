@@ -1,11 +1,16 @@
-import HomeBanner from "@/components/HomeBanner";
+import HomeBanner from "@/components/home/HomeBanner";
+import LiveAuctionsSection from "@/components/home/LiveAuctionsSection";
+import UpcomingAuctionsSection from "@/components/home/UpcomingAuctionsSection";
 
 export default function HomePage() {
   return (
-    <div className="space-y-10">
+    <>
       <HomeBanner />
 
-      {/* Các section khác */}
-    </div>
+      <LiveAuctionsSection />
+      <UpcomingAuctionsSection />
+
+      {/* Sau này tách thêm Recommended Auctions hoặc Trending Auctions */}
+    </>
   );
 }

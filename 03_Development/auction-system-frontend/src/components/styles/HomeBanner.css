@@ -4,7 +4,9 @@
   flex-direction: row !important;
   width: 100%;
   gap: 12px;
+  margin-top: 20px;
 }
+
 
 /* LEFT SLIDER */
 .banner-left {
@@ -101,10 +103,3 @@
   object-fit: cover;
 }
 
-.banner-container {
-  display: flex !important;
-  flex-direction: row !important;
-  width: 100%;
-  gap: 12px;
-  margin-top: 20px;    /* 🔥 đây là cái m cần */
-}
