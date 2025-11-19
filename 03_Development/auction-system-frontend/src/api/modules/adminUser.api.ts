@@ -18,8 +18,6 @@ export const adminUserApi = {
             phone?: string;
             gender?: string;
             status?: string;
-            banReason?: string;
-            bannedUntil?: string;
         }
     ) => axiosClient.put(`/admin/users/${id}`, data),
 

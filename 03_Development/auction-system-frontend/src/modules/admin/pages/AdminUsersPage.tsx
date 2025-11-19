@@ -10,6 +10,8 @@ interface UserResponse {
   phone: string;
   gender?: string;
   status?: string;
+  reason?: string;
+  bannedUntil?: string;
 }
 
 const AdminUsersPage: React.FC = () => {
@@ -106,6 +108,8 @@ const AdminUsersPage: React.FC = () => {
             <th>Email</th>
             <th>Phone</th>
             <th>Status</th>
+            <th>Ban Reason</th>
+            <th>Ban Until</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -120,6 +124,8 @@ const AdminUsersPage: React.FC = () => {
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
                 <td>{user.status}</td>
+                <td>{user.reason}</td>
+                <td>{user.bannedUntil ? user.bannedUntil.toLocaleString('vi-VN'): '—'}</td>
                 <td className="actions">
                   <button onClick={() => setOpenActionId(openActionId === user.userId ? null : user.userId)}>
                     Action
