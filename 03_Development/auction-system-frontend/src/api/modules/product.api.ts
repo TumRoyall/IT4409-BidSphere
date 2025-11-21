@@ -1,22 +1,25 @@
 import axiosClient from "../axiosClient";
 
 // ==================== TYPES & INTERFACES ====================
+export interface ImagePayload {
+  imageUrl: string;
+  isThumbnail?: boolean;
+}
+
 export interface ProductCreateRequest {
   name: string;
-  description: string;
-  categories: string;
-  start_price: number;
-  deposit: number;
-  image_url?: string;
+  description?: string | null;
+  categories?: string | null;
+  startPrice: number;
+  images?: ImagePayload[];
 }
 
 export interface ProductUpdateRequest {
   name?: string;
-  description?: string;
-  categories?: string;
-  start_price?: number;
-  deposit?: number;
-  image_url?: string;
+  description?: string | null;
+  categories?: string | null;
+  startPrice?: number | null;
+  images?: ImagePayload[];
 }
 
 export interface ProductResponse {
@@ -26,7 +29,7 @@ export interface ProductResponse {
   description?: string;
   categories?: string;
   start_price?: number;
-  deposit: number;
+  deposit?: number;
   image_url?: string;
   status?: string;
   seller_id?: number;
@@ -42,6 +45,13 @@ export interface ProductPage {
   currentPage: number;
 }
 
+export interface ProductApprovalRequest {
+  deposit: number;
+  estimatePrice: number;
+  status: "approved" | "rejected";
+  rejectionReason?: string;
+}
+
 // ==================== API FUNCTIONS ====================
 
 const productApi = {
@@ -50,8 +60,8 @@ const productApi = {
     axiosClient.get<ProductResponse[]>("/products"),
 
   // Get products by page (for seller dashboard)
-  getProductsPage: (page: number = 0, limit: number = 10) =>
-    axiosClient.get<ProductPage>("/products/page", { params: { page, limit } }),
+  getProductsPage: (page: number = 0) =>
+    axiosClient.get<ProductPage>("/products/page", { params: { page } }),
 
   // Get product by ID
   getProductById: (productId: number) =>
@@ -61,6 +71,19 @@ const productApi = {
   getProductsBySeller: (sellerId: number) =>
     axiosClient.get<ProductResponse[]>(`/products/seller/${sellerId}`),
 
+  // Get products for current seller (use token to resolve seller) with pagination
+  getProductsBySellerMePage: async (page: number = 0, size: number = 10) => {
+    return axiosClient.get<ProductPage>(`/products/seller/me/page`, { 
+      params: { page, size }
+    });
+  },
+
+  // Get all products with pagination (for bidders)
+  getProductsPage: async (page: number = 0, size: number = 10) => {
+    return axiosClient.get<ProductPage>(`/products/page`, { 
+      params: { page, size }
+    });
+  },
   // Create new product
   createProduct: (data: ProductCreateRequest) =>
     axiosClient.post<ProductResponse>("/products", data),
@@ -96,6 +119,10 @@ const productApi = {
       { headers: { "Content-Type": "multipart/form-data" } }
     );
   },
+
+  // Approve or reject product (admin only)
+  approveProduct: (productId: number, data: ProductApprovalRequest) =>
+    axiosClient.put<ProductResponse>(`/products/${productId}/approve`, data),
 };
 
-export default productApi;
+export default productApi;;

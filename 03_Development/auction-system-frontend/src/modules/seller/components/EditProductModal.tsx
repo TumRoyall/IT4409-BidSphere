@@ -25,8 +25,6 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     categories: "",
     description: "",
     start_price: 0,
-    estimate_price: "",
-    deposit: 0,
   });
 
   const [imagesList, setImagesList] = useState<Array<any>>([]);
@@ -40,8 +38,6 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
         categories: product.categories || "",
         description: product.description || "",
         start_price: product.start_price || 0,
-        estimate_price: product.estimate_price || "",
-        deposit: product.deposit || 0,
       });
 
       const initialImages = (product.images || []).map((img: any) => ({
@@ -59,7 +55,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     const { name, value } = e.target;
     setFormData((prev: any) => ({
       ...prev,
-      [name]: name.includes("price") || name === "deposit" ? parseFloat(value) || 0 : value,
+      [name]: name === "start_price" ? parseFloat(value) || 0 : value,
     }));
   };
 
@@ -90,15 +86,13 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
         return Number.isNaN(n) ? null : n;
       };
 
-      // Build the basic payload (without images)
+      // Build the basic payload (without images) - sellers cannot set deposit/estimate
       const payload: any = {
         sellerId: product.seller_id,
         name: formData.name.trim(),
         categories: formData.categories || null,
         description: formData.description || null,
         startPrice: toNullableNumber(formData.start_price),
-        estimatePrice: toNullableNumber(formData.estimate_price),
-        deposit: toNullableNumber(formData.deposit),
       };
 
       // Handle images only if there are new uploads
@@ -114,17 +108,17 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
         const imagesPayload = imagesList.map((it) => {
           if (it.file) {
             // This is a newly uploaded file
-            const resp = responses.shift();
+            const resp: any = responses.shift();
             const secureUrl = resp?.data?.image_url || resp?.image_url || "";
             return {
               imageUrl: secureUrl,  // Backend expects 'imageUrl'
-              isThumbnail: !!it.is_thumbnail
+              isThumbnail: !!it.is_thumbnail,
             };
           }
           // This is an existing image
           return {
             imageUrl: it.image_url,  // Backend expects 'imageUrl'
-            isThumbnail: !!it.is_thumbnail
+            isThumbnail: !!it.is_thumbnail,
           };
         });
 
@@ -310,7 +304,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
           </h4>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "16px" }}>
           <div className="form-group">
             <label htmlFor="start-price" style={{ fontSize: "13px", fontWeight: 600, marginBottom: "8px", display: "block", color: "#2d3748" }}>
               Start Price (VND) <span style={{ color: "#ef4444" }}>*</span>
@@ -328,48 +322,6 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             {formData.start_price > 0 && (
               <p style={{ fontSize: "12px", color: "#667eea", marginTop: "6px", fontWeight: 600 }}>
                 {formatPrice(formData.start_price)}
-              </p>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="deposit" style={{ fontSize: "13px", fontWeight: 600, marginBottom: "8px", display: "block", color: "#2d3748" }}>
-              Deposit (VND) <span style={{ color: "#ef4444" }}>*</span>
-            </label>
-            <Input
-              id="deposit"
-              name="deposit"
-              type="number"
-              value={formData.deposit}
-              onChange={handleChange}
-              placeholder="0"
-              disabled={isSubmitting}
-              style={{ width: "100%", borderRadius: "6px", borderColor: "#cbd5e0", padding: "10px 12px" }}
-            />
-            {formData.deposit > 0 && (
-              <p style={{ fontSize: "12px", color: "#667eea", marginTop: "6px", fontWeight: 600 }}>
-                {formatPrice(formData.deposit)}
-              </p>
-            )}
-          </div>
-
-          <div className="form-group" style={{ gridColumn: "1 / -1" }}>
-            <label htmlFor="estimate-price" style={{ fontSize: "13px", fontWeight: 600, marginBottom: "8px", display: "block", color: "#2d3748" }}>
-              Estimate Price (VND) <span style={{ fontSize: "11px", color: "#718096", fontWeight: 500 }}>(Optional)</span>
-            </label>
-            <Input
-              id="estimate-price"
-              name="estimate_price"
-              type="number"
-              value={formData.estimate_price}
-              onChange={handleChange}
-              placeholder="0"
-              disabled={isSubmitting}
-              style={{ width: "100%", borderRadius: "6px", borderColor: "#cbd5e0", padding: "10px 12px" }}
-            />
-            {formData.estimate_price > 0 && (
-              <p style={{ fontSize: "12px", color: "#667eea", marginTop: "6px", fontWeight: 600 }}>
-                {formatPrice(formData.estimate_price)}
               </p>
             )}
           </div>

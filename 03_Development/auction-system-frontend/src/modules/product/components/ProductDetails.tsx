@@ -34,8 +34,6 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
     categories: "",
     description: "",
     start_price: 0,
-    estimate_price: "",
-    deposit: 0,
     createAuction: false,
     auctionStartTime: "",
     auctionEndTime: "",
@@ -67,17 +65,18 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
         if (product?.categories) categorySet.add(String(product.categories));
       });
       const categories = Array.from(categorySet).map((cat) => ({ value: cat, label: cat }));
-      setBackendCategories(
-        categories.length
-          ? categories
-          : PRODUCT_CATEGORIES.map((c) => ({ value: c.value, label: c.label }))
-      );
+      setBackendCategories(categories.length ? categories : [...PRODUCT_CATEGORIES]);
     } catch (error) {
       console.error("Failed to load categories:", error);
-      setBackendCategories(PRODUCT_CATEGORIES.map((c) => ({ value: c.value, label: c.label })));
+      setBackendCategories([...PRODUCT_CATEGORIES]);
     } finally {
       setCategoriesLoading(false);
     }
+  };
+
+  const handleChange = (field: keyof ProductFormData, value: any) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
   // Generate & clean preview URLs to avoid memory leaks
@@ -88,11 +87,6 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
       urls.forEach((u) => URL.revokeObjectURL(u));
     };
   }, [images]);
-
-  const handleChange = (field: keyof ProductFormData, value: any) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: "" }));
-  };
 
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -111,10 +105,6 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
 
     if (!formData.start_price || formData.start_price < 1000) {
       newErrors.start_price = "Giá khởi điểm tối thiểu 1.000đ";
-    }
-
-    if (formData.deposit < 0) {
-      newErrors.deposit = "Tiền đặt cọc không được âm";
     }
 
     if (!confirmChecked) {
@@ -147,8 +137,7 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
         categories: formData.categories,
         description: formData.description,
         startPrice: formData.start_price,
-        estimatePrice: formData.estimate_price,
-        deposit: formData.deposit,
+        // deposit and estimatePrice will be assigned by admin upon approval
         imageUrl: "",
         sellerId: currentUser.id,
         images: images, // Include images array in payload
@@ -329,7 +318,7 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
         <h2 className="section-title">Thông Tin Giá</h2>
 
         <div className="form-row">
-          <div className="form-field flex-1">
+          <div className="form-field" style={{ width: "100%" }}>
             <Label className="field-label" htmlFor="pd-startprice">Giá Khởi Điểm (₫) *</Label>
             <Input
               id="pd-startprice"
@@ -339,49 +328,12 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
               placeholder="VD: 1000000"
               className="form-input"
               value={formData.start_price || ""}
-              onChange={(e) =>
-                handleChange("start_price", e.target.value ? Number(e.target.value) : 0)
-              }
+              onChange={(e) => handleChange("start_price", e.target.value ? Number(e.target.value) : 0)}
               aria-invalid={!!errors.start_price}
             />
             {errors.start_price && (
               <span style={{ color: "#ef4444", fontSize: "14px", marginTop: "4px", display: "block" }}>
                 {errors.start_price}
-              </span>
-            )}
-          </div>
-
-          <div className="form-field flex-1">
-            <Label className="field-label" htmlFor="pd-estimate">Giá Ước Tính (tùy chọn)</Label>
-            <Input
-              id="pd-estimate"
-              placeholder="VD: 10000000-15000000"
-              className="form-input"
-              value={formData.estimate_price}
-              onChange={(e) => handleChange("estimate_price", e.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className="form-row">
-          <div className="form-field flex-1">
-            <Label className="field-label" htmlFor="pd-deposit">Tiền Đặt Cọc (₫) *</Label>
-            <Input
-              id="pd-deposit"
-              type="number"
-              min={0}
-              step={1000}
-              placeholder="VD: 500000"
-              className="form-input"
-              value={formData.deposit || ""}
-              onChange={(e) =>
-                handleChange("deposit", e.target.value ? Number(e.target.value) : 0)
-              }
-              aria-invalid={!!errors.deposit}
-            />
-            {errors.deposit && (
-              <span style={{ color: "#ef4444", fontSize: "14px", marginTop: "4px", display: "block" }}>
-                {errors.deposit}
               </span>
             )}
           </div>

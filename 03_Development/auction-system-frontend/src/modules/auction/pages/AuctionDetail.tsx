@@ -109,9 +109,9 @@ export default function AuctionDetail() {
   }
 
   const timeRemaining =
-    auction.end_time && new Date(auction.end_time) > new Date()
+    auction.endTime && new Date(auction.endTime) > new Date()
       ? Math.ceil(
-          (new Date(auction.end_time).getTime() - new Date().getTime()) /
+          (new Date(auction.endTime).getTime() - new Date().getTime()) /
             1000 /
             60
         )
@@ -194,7 +194,7 @@ export default function AuctionDetail() {
               marginBottom: "16px",
             }}
           >
-            {auction.productName || `Product #${auction.product_id}`}
+            {auction.productName || `Product #${auction.productId}`}
           </h1>
 
           {/* Status */}
@@ -268,7 +268,7 @@ export default function AuctionDetail() {
               marginBottom: "24px",
             }}
           >
-            {auction.start_time && (
+            {auction.startTime && (
               <div style={{ marginBottom: "16px" }}>
                 <span style={{ color: "#999", fontSize: "14px" }}>
                   Started
@@ -280,12 +280,12 @@ export default function AuctionDetail() {
                     color: "#1a1a1a",
                   }}
                 >
-                  {new Date(auction.start_time).toLocaleString("vi-VN")}
+                  {new Date(auction.startTime).toLocaleString("vi-VN")}
                 </p>
               </div>
             )}
 
-            {auction.end_time && (
+            {auction.endTime && (
               <div>
                 <span style={{ color: "#999", fontSize: "14px" }}>
                   Ends
@@ -297,7 +297,7 @@ export default function AuctionDetail() {
                     color: "#1a1a1a",
                   }}
                 >
-                  {new Date(auction.end_time).toLocaleString("vi-VN")}
+                  {new Date(auction.endTime).toLocaleString("vi-VN")}
                 </p>
                 {timeRemaining && timeRemaining > 0 && (
                   <p

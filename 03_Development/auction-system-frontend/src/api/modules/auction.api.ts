@@ -115,6 +115,10 @@ const auctionApi = {
   // 📊 Get active auctions
   getActiveAuctions: () =>
     axiosClient.get<AuctionResponse[]>("/auctions/active"),
+
+  // ✅ Approve or reject auction (admin/moderator)
+  approveAuction: (auctionId: number, data: { status: string; startTime?: string; endTime?: string; rejectionReason?: string }) =>
+    axiosClient.put<AuctionResponse>(`/auctions/${auctionId}/approve`, data),
 };
 
 export default auctionApi;

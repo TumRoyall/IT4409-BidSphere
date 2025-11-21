@@ -15,7 +15,6 @@ interface CreateProductFormData {
   description: string;
   category: string;
   startPrice: number;
-  deposit: number;
   images: File[];
   imagePreviews: string[];
 }
@@ -33,7 +32,6 @@ export default function CreateProduct() {
     description: "",
     category: "",
     startPrice: 0,
-    deposit: 0,
     images: [],
     imagePreviews: [],
   });
@@ -60,7 +58,7 @@ export default function CreateProduct() {
             description: product.description || "",
             category: (product as any).category || product.categories || "",
             startPrice: product.start_price || 0,
-            deposit: product.deposit || 0,
+            // deposit assigned by admin on approval
             images: [],
             imagePreviews: product.image_url ? [product.image_url] : [],
           });
@@ -93,9 +91,7 @@ export default function CreateProduct() {
       newErrors.startPrice = "Start price must be greater than 0";
     }
 
-    if (formData.deposit < 0) {
-      newErrors.deposit = "Deposit cannot be negative";
-    }
+    // deposit is assigned by admin; sellers don't set it here
 
     if (formData.images.length === 0) {
       newErrors.images = "At least one product image is required";
@@ -147,35 +143,34 @@ export default function CreateProduct() {
 
     setLoading(true);
     try {
-      let imageUrl = "";
+      if (formData.images.length === 0) throw new Error("Please select at least one image");
 
-      // Upload image if new one is selected
-      if (formData.images.length > 0) {
-        console.log("Uploading image...");
-        const uploadResponse = await productApi.uploadImage(formData.images[0]);
-        imageUrl = uploadResponse.data.image_url;
-        console.log("Image uploaded:", imageUrl);
-        
-        if (!imageUrl) {
-          throw new Error("Failed to get image URL from server");
-        }
-      } else {
-        throw new Error("Please select at least one image");
+      // Upload all selected images and build images payload for backend
+      console.log("Uploading images...");
+      const uploadPromises = formData.images.map((f) => productApi.uploadImage(f));
+      const uploadResponses = await Promise.all(uploadPromises);
+  const uploadedUrls = uploadResponses.map((r) => r?.data?.image_url).filter(Boolean) as string[];
+
+      if (uploadedUrls.length === 0) {
+        throw new Error("Failed to upload images or retrieve URLs");
       }
+
+      // Build images payload; mark first image as thumbnail by default
+      const imagesPayload = uploadedUrls.map((url, idx) => ({ imageUrl: url, isThumbnail: idx === 0 }));
 
       const productPayload = {
         name: formData.name,
-        description: formData.description,
-        categories: formData.category,
-        start_price: formData.startPrice,
-        deposit: formData.deposit,
-        image_url: imageUrl,
+        description: formData.description || null,
+        categories: formData.category || null,
+        startPrice: formData.startPrice || 0,
+        // deposit omitted (assigned by admin on approval)
+        images: imagesPayload,
       };
 
       console.log("Product payload:", productPayload);
 
       if (isEditMode && id) {
-        await productApi.updateProduct(Number(id), productPayload);
+  await productApi.updateProduct(Number(id), productPayload);
         alert("✅ Product updated successfully!");
       } else {
         const response = await productApi.createProduct(productPayload);
@@ -189,7 +184,6 @@ export default function CreateProduct() {
         description: "",
         category: "",
         startPrice: 0,
-        deposit: 0,
         images: [],
         imagePreviews: [],
       });
@@ -354,37 +348,7 @@ export default function CreateProduct() {
               )}
             </div>
 
-            <div className="form-field">
-              <Label htmlFor="deposit" className="form-field-label">
-                Deposit Amount
-              </Label>
-              <div className="form-input-with-prefix">
-                <span className="form-input-prefix">$</span>
-                <Input
-                  id="deposit"
-                  type="number"
-                  placeholder="0.00"
-                  value={formData.deposit}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      deposit: Number(e.target.value),
-                    })
-                  }
-                  className={`form-input ${
-                    errors.deposit ? "input-error" : ""
-                  }`}
-                  step="0.01"
-                  min="0"
-                />
-              </div>
-              {errors.deposit && (
-                <div className="form-validation-error">{errors.deposit}</div>
-              )}
-              <p className="form-field-hint">
-                Required deposit for bidders (optional)
-              </p>
-            </div>
+            {/* Deposit controlled by admin upon approval; sellers cannot set it */}
           </div>
         </div>
 
@@ -466,12 +430,7 @@ export default function CreateProduct() {
                 ${(formData.startPrice ?? 0).toFixed(2)}
               </span>
             </div>
-            <div className="form-preview-item">
-              <span className="form-preview-label">Deposit</span>
-              <span className="form-preview-value">
-                ${(formData.deposit ?? 0).toFixed(2)}
-              </span>
-            </div>
+            {/* Deposit is assigned by admin upon approval; preview omitted for sellers */}
           </div>
 
           <div className="form-preview-note">

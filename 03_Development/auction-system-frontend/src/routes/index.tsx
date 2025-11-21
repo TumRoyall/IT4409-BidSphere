@@ -26,6 +26,10 @@ import FeedbackList from "@/modules/feedback/pages/FeedbackList";
 // import CreateFeedback from "@/modules/feedback/pages/CreateFeedback";
 // import NotificationList from "@/modules/feedback/pages/NotificationList";
 
+// Admin pages
+import AdminProductApprovalPage from "@/modules/admin/pages/ProductApprovalPage";
+import AdminAuctionApprovalPage from "@/modules/admin/pages/AuctionApprovalPage";
+
 // New user area (auth final)
 import ProfileLayout from "@/modules/user/layouts/ProfileLayout";
 import ProfilePage from "@/modules/user/pages/ProfilePage";
@@ -96,6 +100,32 @@ export default function AppRoutes() {
           {/* Auction */}
           <Route path="bid/history-bid" element={<HistoryBidPage />} />
           <Route path="bid/auction-current-joined" element={<AuctionCurrentPage />} />
+        </Route>
+
+        {/* ADMIN AREA (ProtectedRoute + MainLayout) */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="products/approval" element={<AdminProductApprovalPage />} />
+          <Route path="auctions/approval" element={<AdminAuctionApprovalPage />} />
+        </Route>
+
+        {/* MODERATOR AREA (ProtectedRoute + MainLayout) */}
+        <Route
+          path="/moderator"
+          element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="products/approval" element={<AdminProductApprovalPage />} />
+          <Route path="auctions/approval" element={<AdminAuctionApprovalPage />} />
         </Route>
 
         {/* AUTH LAYOUT */}

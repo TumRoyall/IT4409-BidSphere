@@ -44,11 +44,15 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
 
   // Load products
   const loadProducts = useCallback(async () => {
+    if (!user?.id) {
+      console.log("User ID not available yet, skipping product load");
+      return;
+    }
     try {
       setIsLoadingProducts(true);
       const { default: productApi } = await import("@/api/modules/product.api");
       console.log("Loading products for seller:", user?.id);
-      const productsResponse = await productApi.getProductsBySeller(user?.id || 0);
+      const productsResponse = await productApi.getProductsBySeller(user.id);
       console.log("Products loaded:", productsResponse.data);
       
       // Log product IDs for debugging
@@ -77,8 +81,10 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
   }, [user?.id]);
 
   useEffect(() => {
-    loadProducts();
-  }, [loadProducts]);
+    if (user?.id) {
+      loadProducts();
+    }
+  }, [user?.id, loadProducts]);
 
   // Filter products based on search
   const filteredProducts = useMemo(() => {
@@ -247,6 +253,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
         productId,
         startTime: formatDateTime(startDate),
         endTime: formatDateTime(endDate),
+        bidStepAmount: String(formData.minBidIncrement),
       };
 
       console.log("📤 Auction payload:", payload);

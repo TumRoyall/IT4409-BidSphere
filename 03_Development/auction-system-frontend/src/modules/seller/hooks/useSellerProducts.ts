@@ -72,13 +72,31 @@ export const useSellerProducts = (initialFilters?: Partial<ProductFilters>) => {
       setError(null);
       console.log("📦 Fetching products for seller:", user.id);
 
-      // Lấy products của seller hiện tại
-      const response = await productApi.getProductsBySeller(user.id);
+      // Lấy products của seller hiện tại (endpoint mới sử dụng token - /products/seller/me/page)
+      const response = await productApi.getProductsBySellerMePage(filters.page - 1 || 0, filters.limit || 10);
 
-      // Handle array response
-      let productData = Array.isArray(response.data) ? response.data : [];
+      // Backend may return a paged response { content: [...], totalElements, ... } or an array
+      let productData: any[] = [];
+      if (Array.isArray(response.data)) {
+        productData = response.data;
+      } else if (response.data && Array.isArray((response.data as any).content)) {
+        productData = (response.data as any).content;
+      } else {
+        productData = [];
+      }
       
       console.log("📥 Raw response data:", productData);
+
+      // Ensure we only show products belonging to the logged-in seller.
+      // This handles the case where the backend fallback returns all products
+      // (e.g., when /products/seller/me/page is unavailable and we used /products/page).
+      const sellerId = user?.id;
+      if (sellerId) {
+        productData = productData.filter((p: any) => {
+          const pid = p.sellerId ?? p.seller_id ?? p.seller;
+          return Number(pid) === Number(sellerId);
+        });
+      }
       
       // Apply search filter if present
       if (filters.search) {
@@ -95,12 +113,18 @@ export const useSellerProducts = (initialFilters?: Partial<ProductFilters>) => {
 
       setProducts(transformedProducts);
       
-      setPagination({
-        page: 1,
-        limit: productData.length,
-        total: productData.length,
-        totalPages: 1,
-      });
+      // Adjust pagination based on filtered results (client-side when fallback used)
+      const totalFiltered = productData.length;
+      const limit = filters.limit || totalFiltered;
+      const totalPages = Math.max(1, Math.ceil(totalFiltered / limit));
+
+      setPagination((prev) => ({
+        ...prev,
+        page: filters.page || 1,
+        limit,
+        total: (response.data && (response.data as any).totalElements) || totalFiltered,
+        totalPages: (response.data && (response.data as any).totalPages) || totalPages,
+      }));
     } catch (err: any) {
       const errorMsg = err.response?.data?.message || "Không thể tải danh sách sản phẩm";
       setError(errorMsg);
@@ -108,7 +132,7 @@ export const useSellerProducts = (initialFilters?: Partial<ProductFilters>) => {
     } finally {
       setLoading(false);
     }
-  }, [user?.id, filters.search]);
+  }, [user?.id, filters.page, filters.limit, filters.search]);
 
   // Chỉ fetch khi component mount hoặc filter thay đổi
   useEffect(() => {
@@ -250,12 +274,23 @@ export const useSellerStatistics = () => {
       
       // Fetch both products and auctions for statistics
       const [productsResponse, auctionsResponse] = await Promise.all([
-        productApi.getProductsBySeller(user.id),
-        auctionApi.getAllAuctions()
+        productApi.getProductsBySellerMePage(0, 1000),
+        auctionApi.getAllAuctions(),
       ]);
 
-      const rawProducts = Array.isArray(productsResponse.data) ? productsResponse.data : [];
-      const products = transformProducts(rawProducts);
+      const rawProducts = Array.isArray(productsResponse.data)
+        ? productsResponse.data
+        : Array.isArray((productsResponse.data as any)?.content)
+        ? (productsResponse.data as any).content
+        : [];
+
+      // If the backend returned all products (fallback), make sure to filter to current seller
+      const sellerId = user?.id;
+      const filteredRawProducts = sellerId
+        ? rawProducts.filter((p: any) => Number(p.sellerId ?? p.seller_id ?? p.seller) === Number(sellerId))
+        : rawProducts;
+
+      const products = transformProducts(filteredRawProducts);
       const auctions = Array.isArray(auctionsResponse.data) ? auctionsResponse.data : [];
 
       // Filter auctions by products of current seller

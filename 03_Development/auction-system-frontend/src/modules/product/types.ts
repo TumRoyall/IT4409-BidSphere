@@ -72,8 +72,6 @@ export interface ProductFormData {
   categories: string;
   description: string;
   start_price: number;
-  estimate_price: string;
-  deposit: number;
   createAuction: boolean;
   auctionStartTime: string;
   auctionEndTime: string;
