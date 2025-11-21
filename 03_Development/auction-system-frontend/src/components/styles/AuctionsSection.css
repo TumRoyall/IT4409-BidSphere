@@ -1,0 +1,323 @@
+.auction-section {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.section-link {
+  color: #2563eb;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.section-link:hover {
+  text-decoration: underline;
+}
+
+.auction-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2,1fr);
+}
+
+@media (min-width: 640px) {
+  .auction-grid {
+    grid-template-columns: repeat(3,1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .auction-grid {
+    grid-template-columns: repeat(4,1fr);
+  }
+}
+
+.load-more-wrapper {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.load-more-btn {
+  padding: 8px 16px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: .2s;
+}
+
+.load-more-btn:hover {
+  background: #1e40af;
+}
+
+.auction-section {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.loading-text {
+  color: #6b7280;
+  font-size: 14px;
+  padding-left: 4px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.section-link {
+  color: #2563eb;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.auction-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2,1fr);
+}
+
+@media (min-width: 640px) {
+  .auction-grid { grid-template-columns: repeat(3,1fr); }
+}
+
+@media (min-width: 1024px) {
+  .auction-grid { grid-template-columns: repeat(4,1fr); }
+}
+
+.load-more-wrapper {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.load-more-btn {
+  padding: 8px 16px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+/* ========================= */
+/* ⭐ NÚT XEM THÊM           */
+/* ========================= */
+
+.load-more-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+.load-more-btn {
+  background: linear-gradient(90deg, #0b2b4c, #133a66);
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.load-more-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(90deg, #133a66, #1b4f85);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+
+/* ========================= */
+/* ⭐ PAGINATION             */
+/* ========================= */
+
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.page-btn {
+  background: #f1f5f9;
+  border: 1px solid #cfd8e3;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.page-btn:hover {
+  background: #e2e8f0;
+}
+
+.page-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.page-number {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0b2b4c;
+}
+
+/* ========================== */
+/* 📦 WRAPPER CHO TỪNG KHUNG */
+/* ========================== */
+.auction-box {
+  margin-top: 30px;
+  background: #f8fafc; /* màu xám rất nhạt */
+  border: 1px solid #e2e8f0; /* viền nhẹ */
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+
+/* ========================== */
+/* 🏷 HEADER                  */
+/* ========================== */
+.auction-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0b2b4c;
+}
+
+.section-view-all {
+  font-size: 14px;
+  color: #0b2b4c;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.section-view-all:hover {
+  color: #133a66;
+  text-decoration: underline;
+}
+
+
+/* ========================== */
+/* 🔢 PAGINATION PHẢI         */
+/* ========================== */
+.pagination-wrapper {
+  display: flex;
+  justify-content: flex-end;   /* góc phải */
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.page-btn {
+  background: #e2e8f0;
+  border: 1px solid #cbd5e1;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.page-btn:hover {
+  background: #cbd5e1;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0b2b4c;
+}
+
+
+/* ========================== */
+/* ⭐ XEM THÊM                */
+/* ========================== */
+
+.load-more-wrapper {
+  display: flex;
+  justify-content: flex-end;   /* đẩy sang góc phải */
+  margin-top: 16px;
+}
+
+.load-more-btn {
+  background: white;
+  color: #0b2b4c;
+  border: 1.5px solid #0b2b4c;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.load-more-btn:hover {
+  background: #f0f6fc; /* xanh nhạt rất nhẹ */
+  transform: translateY(-1px);
+}
+
+
+.section-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid #0b2b4c;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #0b2b4c;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.section-btn:hover {
+  background: #0b2b4c;
+  color: white;
+  transform: translateY(-1px);
+}
+

@@ -26,6 +26,9 @@ import AuctionCurrentPage from "@/modules/user/pages/AuctionCurrentPage";
 import AdminLayout from "../layouts/AdminLayout";
 import AdminUsersPage from "../modules/admin/pages/AdminUsersPage";
 import AdminDashboardPage from "../modules/admin/pages/AdminDashboardPage.tsx";
+import AuctionsPage from "@/modules/auction/pages/AuctionsPage"
+import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage"
+
 
 export default function AppRoutes() {
   return (
@@ -40,6 +43,21 @@ export default function AppRoutes() {
           <Route path="/help" element={<HelpPage />} />
           <Route path="/help/:id" element={<HelpDetailPage />} />
           <Route path="/how-to-buy" element={<HowToBuyPage />} />
+
+          {/* AUCTION */}
+          <Route path="/auctions" element={<AuctionsPage />} />
+          {/* Auction list vẫn public */}
+            <Route path="/auctions" element={<AuctionsPage />} />
+
+            {/* Auction detail chỉ cho USER */}
+            <Route
+              path="/auctions/:id"
+              element={
+                <ProtectedRoute>
+                  <AuctionDetailPage />
+                </ProtectedRoute>
+              }
+            />
 
         </Route>
         {/* USER AREA (có ProtectedRoute + ProfileLayout) */}

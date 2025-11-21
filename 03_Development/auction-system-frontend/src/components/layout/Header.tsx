@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Bell } from "lucide-react";
-import styles from "./layout.module.css";
+import styles from "@/components/styles/layout.module.css";
 import logo from "@/assets/logo.png";
 import { useAuth } from "@/hooks/useAuth";
 import NotificationDropdown from "./NotificationDropdown";
@@ -49,7 +49,9 @@ export default function Header() {
             <Link to="/auctions">Đấu giá ▾</Link>
             <NotificationDropdown />
 
-            {/* ==== Nếu đã đăng nhập ==== */}
+            {/* =================== */}
+            {/* 🔥 NẾU CÓ USER     */}
+            {/* =================== */}
             {user ? (
               <div className={styles.userMenuWrapper}>
                 <button
@@ -68,39 +70,23 @@ export default function Header() {
                   <div className={styles.dropdownMenu}>
                     <div className={styles.dropdownGroup}>
                       <p className={styles.menuLabel}>👤 Tài khoản của tôi</p>
-                      <button
-                        onClick={() => handleNavigate("/user/account/profile")}
-                      >
+                      <button onClick={() => handleNavigate("/user/account/profile")}>
                         Hồ sơ cá nhân
                       </button>
-                      <button
-                        onClick={() => handleNavigate("/user/account/payment")}
-                      >
+                      <button onClick={() => handleNavigate("/user/account/payment")}>
                         Ví của tôi
                       </button>
-                      <button
-                        onClick={() =>
-                          handleNavigate("/user/account/reset-password")
-                        }
-                      >
+                      <button onClick={() => handleNavigate("/user/account/reset-password")}>
                         Đổi mật khẩu
                       </button>
                     </div>
 
                     <div className={styles.dropdownGroup}>
                       <p className={styles.menuLabel}>⚡ Phiên đấu giá</p>
-                      <button
-                        onClick={() =>
-                          handleNavigate("/user/bid/history-bid")
-                        }
-                      >
+                      <button onClick={() => handleNavigate("/user/bid/history-bid")}>
                         Lịch sử đấu giá
                       </button>
-                      <button
-                        onClick={() =>
-                          handleNavigate("/user/bid/auction-current-joined")
-                        }
-                      >
+                      <button onClick={() => handleNavigate("/user/bid/auction-current-joined")}>
                         Phiên đang tham gia
                       </button>
                     </div>
@@ -120,7 +106,9 @@ export default function Header() {
                 )}
               </div>
             ) : (
-              // ==== Nếu chưa đăng nhập ====
+              /* ======================= */
+              /* 🔥 NẾU KHÔNG CÓ USER   */
+              /* ======================= */
               <div className={styles.authButtons}>
                 <button
                   onClick={() => navigate("/login")}
