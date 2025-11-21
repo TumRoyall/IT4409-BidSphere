@@ -20,21 +20,21 @@ const parsePrice = (value: any): number => {
 };
 
 const transformProducts = (rawProducts: any[]): Product[] => {
-  return rawProducts.map((p) => ({
-    product_id: p.productId || p.product_id,
-    seller_id: p.sellerId || p.seller_id,
-    name: p.name,
-    categories: p.categories,
-    description: p.description,
-    start_price: parsePrice(p.startPrice || p.start_price),
-    estimate_price: p.estimatePrice || p.estimate_price || "",
-    deposit: parsePrice(p.deposit),
-    image_url: p.imageUrl || p.image_url || "",
-    status: p.status,
-    created_at: p.createdAt || p.created_at,
-    images: p.images,
-    auction: p.auction,
-  }));
+return rawProducts.map((p) => ({
+productId: p.productId || p.product_id,
+sellerId: p.sellerId || p.seller_id,
+name: p.name,
+categories: p.categories,
+description: p.description,
+startPrice: parsePrice(p.startPrice || p.start_price),
+estimatePrice: p.estimatePrice || p.estimate_price || "",
+deposit: parsePrice(p.deposit),
+imageUrl: p.imageUrl || p.image_url || "",
+status: p.status,
+createdAt: p.createdAt || p.created_at,
+images: p.images,
+auction: p.auction,
+}));
 };
 
 /**

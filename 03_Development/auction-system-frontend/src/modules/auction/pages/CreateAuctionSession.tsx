@@ -51,24 +51,51 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
     try {
       setIsLoadingProducts(true);
       const { default: productApi } = await import("@/api/modules/product.api");
-      console.log("Loading products for seller:", user?.id);
-      const productsResponse = await productApi.getProductsBySeller(user.id);
-      console.log("Products loaded:", productsResponse.data);
+      console.log("Loading approved products for seller");
+      
+      // Load all pages to get all approved products
+      let allApprovedProducts: any[] = [];
+      let pageNum = 0;
+      let hasMore = true;
+
+      while (hasMore) {
+        const productsResponse = await productApi.getProductsBySellerMePage(pageNum, 10);
+        const products = productsResponse.data.content || [];
+        
+        // Filter only approved products from this page
+        const approvedOnThisPage = products.filter(
+          (p: any) => p.status?.toLowerCase() === "approved"
+        );
+        
+        allApprovedProducts = [...allApprovedProducts, ...approvedOnThisPage];
+        hasMore = products.length === 10;
+        pageNum++;
+      }
+      
+      console.log("Approved products loaded:", allApprovedProducts);
       
       // Log product IDs for debugging
-      if (productsResponse.data && Array.isArray(productsResponse.data)) {
-        productsResponse.data.forEach((p, idx) => {
+      if (allApprovedProducts && Array.isArray(allApprovedProducts)) {
+        allApprovedProducts.forEach((p, idx) => {
           console.log(`Product ${idx}:`, { 
             id: p?.id, 
             product_id: p?.product_id,
             productId: (p as any)?.productId,
             name: p?.name,
+            status: p?.status,
             fullObject: p
           });
         });
       }
       
-      setProducts(productsResponse.data || []);
+      if (allApprovedProducts.length === 0) {
+        setErrors((prev) => ({
+          ...prev,
+          products: "You have no approved products. Submit a product for approval first.",
+        }));
+      }
+      
+      setProducts(allApprovedProducts);
     } catch (error: any) {
       console.error("Failed to load products:", error);
       setErrors((prev) => ({

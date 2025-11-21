@@ -31,7 +31,7 @@ const AdminProductApprovalPage: React.FC = () => {
     loadAllPendingProducts();
   }, [statusFilter]);
 
-  // Load ALL pending products (not paginated) to calculate correct totalPages
+  // Load ALL products (not paginated) to calculate correct totalPages
   const loadAllPendingProducts = async () => {
     try {
       setLoading(true);
@@ -49,18 +49,22 @@ const AdminProductApprovalPage: React.FC = () => {
         pageNum++;
       }
       
-      // Filter pending
-      const pendingProducts = allProducts.filter(
-        (p: any) => p.status === "pending" || p.status === "PENDING"
-      );
+      // Filter based on statusFilter
+      let filteredProducts = allProducts;
+      if (statusFilter === "pending") {
+        filteredProducts = allProducts.filter(
+          (p: any) => p.status === "pending" || p.status === "PENDING"
+        );
+      }
+      // if statusFilter === "all", use all products without filtering
       
-      setAllPendingProducts(pendingProducts as Product[]);
+      setAllPendingProducts(filteredProducts as Product[]);
       // Calculate pages (showing 10 per page)
-      const pages = Math.ceil(pendingProducts.length / 10) || 1;
+      const pages = Math.ceil(filteredProducts.length / 10) || 1;
       setTotalPages(pages);
     } catch (error) {
-      console.error("Failed to load pending products:", error);
-      alert("❌ Failed to load pending products");
+      console.error("Failed to load products:", error);
+      alert("❌ Failed to load products");
     } finally {
       setLoading(false);
     }
@@ -84,7 +88,8 @@ const AdminProductApprovalPage: React.FC = () => {
       await productApi.approveProduct(productId, data);
       console.log("✅ Product approved successfully!");
       alert("✅ Product approved!");
-      loadPendingProducts();
+      // Reload all products from API to reflect changes immediately
+      await loadAllPendingProducts();
       setSelectedProduct(null);
     } catch (error: any) {
       console.error("❌ Approval failed:", error);
@@ -105,7 +110,8 @@ const AdminProductApprovalPage: React.FC = () => {
       await productApi.approveProduct(productId, data);
       console.log("✅ Product rejected successfully!");
       alert("✅ Product rejected!");
-      loadPendingProducts();
+      // Reload all products from API to reflect changes immediately
+      await loadAllPendingProducts();
       setSelectedProduct(null);
     } catch (error: any) {
       console.error("❌ Rejection failed:", error);
@@ -255,8 +261,8 @@ const AdminProductApprovalPage: React.FC = () => {
           }}
         >
           {products.map((product) => (
-            <div
-              key={(product as any).id || product.product_id || String(Math.random())}
+          <div
+          key={(product as any).id || product.productId || String(Math.random())}
               style={{
                 background: "white",
                 border: "1px solid #e2e8f0",
@@ -275,18 +281,18 @@ const AdminProductApprovalPage: React.FC = () => {
               }}
             >
               {/* Image */}
-              {product.image_url && (
-                <div
-                  style={{
-                    width: "100%",
-                    height: "200px",
-                    background: "#f7fafc",
-                    overflow: "hidden",
-                  }}
-                >
-                  <img
-                    src={product.image_url}
-                    alt={product.name}
+              {product.imageUrl && (
+              <div
+              style={{
+              width: "100%",
+              height: "200px",
+              background: "#f7fafc",
+              overflow: "hidden",
+              }}
+              >
+              <img
+              src={product.imageUrl}
+              alt={product.name}
                     style={{
                       width: "100%",
                       height: "100%",
@@ -298,102 +304,155 @@ const AdminProductApprovalPage: React.FC = () => {
 
               {/* Content */}
               <div style={{ padding: "16px" }}>
-                <h3
-                  style={{
-                    margin: "0 0 8px 0",
-                    fontSize: "14px",
-                    fontWeight: 700,
-                    color: "#1a202c",
-                    lineHeight: 1.4,
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
+              {/* Status Badge */}
+              <div style={{ marginBottom: "8px", display: "flex", gap: "8px", alignItems: "center" }}>
+              <span
+              style={{
+                display: "inline-block",
+                padding: "4px 12px",
+                borderRadius: "12px",
+                fontSize: "11px",
+                fontWeight: 600,
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+                  background:
+                      product.status?.toLowerCase() === "pending"
+                      ? "#fee2e2"
+                        : product.status?.toLowerCase() === "approved"
+                           ? "#d1fae5"
+                        : product.status?.toLowerCase() === "sold"
+                      ? "#e5e7eb"
+                    : product.status?.toLowerCase() === "rejected"
+                    ? "#fecaca"
+                    : "#f3f4f6",
+                color:
+                  product.status?.toLowerCase() === "pending"
+                    ? "#dc2626"
+                    : product.status?.toLowerCase() === "approved"
+                    ? "#059669"
+                      : product.status?.toLowerCase() === "sold"
+                        ? "#6b7280"
+                      : product.status?.toLowerCase() === "rejected"
+                        ? "#991b1b"
+                           : "#374151",
                   }}
-                >
-                  {product.name}
-                </h3>
+              >
+              {(product.status || "unknown").toUpperCase()}
+              </span>
+              </div>
 
-                <p
-                  style={{
-                    margin: "0 0 12px 0",
-                    fontSize: "12px",
-                    color: "#718096",
-                    lineHeight: 1.4,
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
-                  }}
-                >
-                  {product.description}
-                </p>
+              <h3
+              style={{
+                  margin: "0 0 8px 0",
+                fontSize: "14px",
+              fontWeight: 700,
+              color: "#1a202c",
+              lineHeight: 1.4,
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+              >
+              {product.name}
+              </h3>
 
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: "8px",
-                    marginBottom: "12px",
-                    fontSize: "12px",
-                  }}
-                >
-                  <div
-                    style={{
-                      background: "#f7fafc",
-                      padding: "8px",
-                      borderRadius: "6px",
-                      border: "1px solid #e2e8f0",
-                    }}
-                  >
-                    <span style={{ color: "#718096", fontSize: "10px", fontWeight: 600 }}>
-                      START PRICE
-                    </span>
-                    <p
-                      style={{
-                        color: "#2d3748",
-                        fontWeight: 600,
-                        margin: "4px 0 0 0",
-                      }}
-                    >
-                      {formatPrice(product.start_price || 0)}
-                    </p>
-                  </div>
-                  <div
-                    style={{
-                      background: "#f7fafc",
-                      padding: "8px",
-                      borderRadius: "6px",
-                      border: "1px solid #e2e8f0",
-                    }}
-                  >
-                    <span style={{ color: "#718096", fontSize: "10px", fontWeight: 600 }}>
-                      CATEGORY
-                    </span>
-                    <p
-                      style={{
-                        color: "#2d3748",
-                        fontWeight: 600,
-                        margin: "4px 0 0 0",
-                        fontSize: "11px",
-                      }}
-                    >
-                      {product.categories}
-                    </p>
-                  </div>
-                </div>
+              <p
+              style={{
+              margin: "0 0 12px 0",
+              fontSize: "12px",
+              color: "#718096",
+              lineHeight: 1.4,
+              display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              }}
+              >
+              {product.description}
+              </p>
 
-                <Button
-                  onClick={() => setSelectedProduct(product)}
-                  style={{
-                    width: "100%",
-                    borderRadius: "6px",
-                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                    boxShadow: "0 4px 12px rgba(102, 126, 234, 0.4)",
+              <div
+              style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "8px",
+              marginBottom: "12px",
+              fontSize: "12px",
+              }}
+              >
+              <div
+              style={{
+                background: "#f7fafc",
+              padding: "8px",
+                borderRadius: "6px",
+                  border: "1px solid #e2e8f0",
+                  }}
+                   >
+                  <span style={{ color: "#718096", fontSize: "10px", fontWeight: 600 }}>
+                  START PRICE
+                </span>
+              <p
+              style={{
+              color: "#2d3748",
+              fontWeight: 600,
+                margin: "4px 0 0 0",
                   }}
                 >
-                  Review & Approve
-                </Button>
+                  {formatPrice(product.startPrice || 0)}
+                     </p>
+                   </div>
+                   <div
+                     style={{
+                       background: "#f7fafc",
+                       padding: "8px",
+                       borderRadius: "6px",
+                       border: "1px solid #e2e8f0",
+                     }}
+                   >
+                     <span style={{ color: "#718096", fontSize: "10px", fontWeight: 600 }}>
+                       CATEGORY
+                     </span>
+                     <p
+                       style={{
+                         color: "#2d3748",
+                         fontWeight: 600,
+                         margin: "4px 0 0 0",
+                         fontSize: "11px",
+                       }}
+                     >
+                       {product.category}
+                     </p>
+                   </div>
+                 </div>
+
+                 {/* Conditional Buttons */}
+                 {product.status?.toLowerCase() === "pending" && (
+                   <Button
+                     onClick={() => setSelectedProduct(product)}
+                     style={{
+                       width: "100%",
+                       borderRadius: "6px",
+                       background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                       boxShadow: "0 4px 12px rgba(102, 126, 234, 0.4)",
+                     }}
+                   >
+                     Review & Approve
+                   </Button>
+                 )}
+                 {product.status?.toLowerCase() === "approved" && (
+                   <Button
+                     onClick={() => handleReject((product as any).id || product.productId, "Admin cancelled this product")}
+                     style={{
+                       width: "100%",
+                       borderRadius: "6px",
+                       background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
+                       boxShadow: "0 4px 12px rgba(239, 68, 68, 0.4)",
+                     }}
+                   >
+                     Cancel Product
+                   </Button>
+                 )}
               </div>
             </div>
           ))}

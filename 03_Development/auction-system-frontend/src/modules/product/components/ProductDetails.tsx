@@ -1,4 +1,3 @@
-// src/modules/product/components/ProductDetails.tsx
 import React, { useState, useEffect } from "react";
 import { UploadIcon, AlertCircle } from "lucide-react";
 import { Checkbox } from "@/components/common/CheckBox";

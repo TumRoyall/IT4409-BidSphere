@@ -9,7 +9,6 @@ import HomePage from "@/modules/home/pages/HomePage";
 import HelpPage from "@/modules/help/pages/HelpPage";
 import HelpDetailPage from "@/modules/help/pages/HelpDetailPage";
 import HowToBuyPage from "@/modules/help/pages/HowToBuyPage";
-import DebugLogin from "@/pages/DebugLogin";
 // Auth pages
 import VerifyInfoPage from "@/modules/auth/pages/VerifyInfoPage";
 import LoginPage from "@/modules/auth/pages/LoginPage";
@@ -46,10 +45,9 @@ export default function AppRoutes() {
         {/* MAIN LAYOUT – Public routes */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/debug-login" element={<DebugLogin />} />
           <Route path="/help" element={<HelpPage />} />
           <Route path="/help/:id" element={<HelpDetailPage />} />
-          <Route path="/how-to-buy" element={<HowToBuyPage />} />
+          <Route path="/howToBuy" element={<HowToBuyPage />} />
 
           {/* Products - Public */}
           <Route path="/products" element={<ProductList />} />
@@ -92,14 +90,14 @@ export default function AppRoutes() {
           {/* Account */}
           <Route path="account/profile" element={<ProfilePage />} />
           <Route path="account/payment" element={<PaymentPage />} />
-          <Route path="account/reset-password" element={<ResetPasswordPage />} />
+          <Route path="account/resetPassword" element={<ResetPasswordPage />} />
 
           {/* Notification */}
           <Route path="notification/:category" element={<NotificationPage />} />
 
           {/* Auction */}
-          <Route path="bid/history-bid" element={<HistoryBidPage />} />
-          <Route path="bid/auction-current-joined" element={<AuctionCurrentPage />} />
+          <Route path="bid/historyBid" element={<HistoryBidPage />} />
+          <Route path="bid/auctionCurrentJoined" element={<AuctionCurrentPage />} />
         </Route>
 
         {/* ADMIN AREA (ProtectedRoute + MainLayout) */}

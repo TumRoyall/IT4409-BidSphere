@@ -306,7 +306,7 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
               START PRICE
             </span>
             <p style={{ color: "#2d3748", fontWeight: 600, margin: "4px 0 0 0" }}>
-              {formatPrice(product.start_price || 0)}
+              {formatPrice(product.startPrice || 0)}
             </p>
           </div>
           <div>
@@ -314,7 +314,7 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
               CATEGORY
             </span>
             <p style={{ color: "#2d3748", fontWeight: 600, margin: "4px 0 0 0" }}>
-              {product.categories || "—"}
+              {product.category || "—"}
             </p>
           </div>
         </div>

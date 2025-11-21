@@ -104,8 +104,8 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
         {/* Product Image */}
         <div className="details-image-container">
           <img
-            src={product.image_url || "/placeholder-product.png"}
-            alt={product.name}
+          src={product.imageUrl || "/placeholder-product.png"}
+          alt={product.name}
             className="details-image"
             onError={(e) => {
               (e.target as HTMLImageElement).src = "/placeholder-product.png";
@@ -142,10 +142,10 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
             <h3 className="section-title">Pricing Information</h3>
             <div className="details-grid">
               <div className="detail-item">
-                <span className="detail-label">Starting Price</span>
-                <span className="detail-value price-highlight">
-                  {formatPrice(product.start_price)}
-                </span>
+              <span className="detail-label">Starting Price</span>
+              <span className="detail-value price-highlight">
+              {formatPrice(product.startPrice)}
+              </span>
               </div>
               <div className="detail-item">
                 <span className="detail-label">Deposit Amount</span>
@@ -180,42 +180,42 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
             <h3 className="section-title">Timeline</h3>
             <div className="details-grid">
               <div className="detail-item">
-                <span className="detail-label">Created</span>
-                <span className="detail-value">
-                  {formatDate(product.created_at)}
-                </span>
+              <span className="detail-label">Created</span>
+              <span className="detail-value">
+              {formatDate(product.createdAt)}
+              </span>
               </div>
-              {(product as any)?.updated_at && (
-                <div className="detail-item">
-                  <span className="detail-label">Last Updated</span>
-                  <span className="detail-value">
-                    {formatDate((product as any).updated_at)}
-                  </span>
-                </div>
+              {(product as any)?.updatedAt && (
+              <div className="detail-item">
+              <span className="detail-label">Last Updated</span>
+              <span className="detail-value">
+              {formatDate((product as any).updatedAt)}
+              </span>
+              </div>
               )}
             </div>
           </div>
 
           {/* Additional Details */}
-          {product.product_id && (
-            <div className="detail-section">
-              <h3 className="section-title">Product ID</h3>
-              <div className="detail-item">
-                <span className="detail-value mono">
-                  {product.product_id}
-                </span>
-                <button
-                  onClick={() =>
-                    handleCopyToClipboard(String(product.product_id), "id")
-                  }
-                  className="copy-button"
-                  title="Copy product ID"
-                >
-                  <Copy size={16} />
-                  {copiedField === "id" ? "Copied" : ""}
-                </button>
-              </div>
-            </div>
+          {product.productId && (
+          <div className="detail-section">
+          <h3 className="section-title">Product ID</h3>
+          <div className="detail-item">
+          <span className="detail-value mono">
+          {product.productId}
+          </span>
+          <button
+          onClick={() =>
+          handleCopyToClipboard(String(product.productId), "id")
+          }
+          className="copy-button"
+          title="Copy product ID"
+          >
+          <Copy size={16} />
+          {copiedField === "id" ? "Copied" : ""}
+          </button>
+          </div>
+          </div>
           )}
         </div>
 

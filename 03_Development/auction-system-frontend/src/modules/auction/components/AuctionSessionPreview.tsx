@@ -1,4 +1,3 @@
-// src/modules/auction/components/AuctionSessionPreview.tsx
 import { useMemo } from "react";
 import type { Product } from "@/api/modules/auction.api";
 import { Calendar, Clock, DollarSign, AlertCircle } from "lucide-react";

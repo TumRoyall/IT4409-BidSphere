@@ -12,10 +12,8 @@ export type AuctionStatus = typeof AUCTION_STATUS[keyof typeof AUCTION_STATUS];
 
 // ==================== TYPES & INTERFACES ====================
 export interface Product {
-  // ID fields (support both camelCase and snake_case)
   id?: number;
-  product_id?: number;
-  productId?: number;  // Backend returns camelCase
+  productId?: number;
   
   name: string;
   description?: string;
@@ -26,29 +24,23 @@ export interface Product {
   
   // Price fields
   startPrice?: number;
-  start_price?: number;
   estimatePrice?: number;
-  estimate_price?: number;
   
   deposit: number;
   
   // Image fields
-  image_url?: string;
   imageUrl?: string;
   
   status?: string;
   
   // Seller fields
-  seller_id?: number;
   sellerId?: number;
   
   // Timestamp fields
-  created_at?: string;
   createdAt?: string;
   
   // Additional fields
   isDeleted?: boolean;
-  is_deleted?: boolean;
 }
 
 export interface AuctionRequest {
@@ -60,25 +52,25 @@ export interface AuctionRequest {
 
 export interface AuctionResponse {
   id?: number;
-  auction_id?: number;
-  product_id?: number;
+  auctionId?: number;
+  productId?: number;
   product?: Product;
-  start_time?: string;
-  end_time?: string;
-  bid_step_amount?: number;
+  startTime?: string;
+  endTime?: string;
+  bidStepAmount?: number;
   status: AuctionStatus | string;
-  current_bid?: number;
-  highest_current_price?: number;
-  total_bids?: number;
-  created_at?: string;
-  updated_at?: string;
-  winner_id?: number | null;
+  currentBid?: number;
+  highestCurrentPrice?: number;
+  highestBid?: number;
+  totalBids?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  winnerId?: number | null;
   // Optional fields used by UI components
   productImageUrl?: string;
   productName?: string;
   startPrice?: number;
-  highestBid?: number;
-  auctionId?: number;
+  estimatePrice?: number;
 }
 
 // ==================== API FUNCTIONS ====================

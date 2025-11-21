@@ -37,11 +37,11 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
       
       // Filter by product if provided
       const filtered = product
-        ? auctionsList.filter((a: any) => {
-            const auctionProductId = a.product_id || a.productId;
-            return auctionProductId === product.product_id;
-          })
-        : auctionsList;
+      ? auctionsList.filter((a: any) => {
+      const auctionProductId = a.productId || a.product_id;
+      return auctionProductId === product.productId;
+      })
+      : auctionsList;
       
       // Debug logging
       console.log("Fetched auctions:", auctionsList);
@@ -309,8 +309,8 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           {auctions.map((auction: any) => (
-            <div
-              key={auction.auction_id}
+          <div
+          key={auction.auctionId}
               style={{
                 background: "white",
                 border: "1px solid #e2e8f0",
@@ -335,14 +335,14 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                 alignItems: "center",
                 justifyContent: "space-between",
                 gap: "12px",
-                borderBottom: expandedAuction === auction.auction_id ? "1px solid #e2e8f0" : "none",
+                borderBottom: expandedAuction === auction.auctionId ? "1px solid #e2e8f0" : "none",
                 cursor: "pointer",
-                background: expandedAuction === auction.auction_id ? "#f7fafc" : "white",
+                background: expandedAuction === auction.auctionId ? "#f7fafc" : "white",
                 transition: "background 0.2s"
-              }}
-              onClick={() => setExpandedAuction(
-                expandedAuction === auction.auction_id ? null : auction.auction_id
-              )}
+                }}
+                onClick={() => setExpandedAuction(
+                expandedAuction === auction.auctionId ? null : auction.auctionId
+                )}
               >
                 <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "12px" }}>
                   <div style={{
@@ -362,14 +362,14 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                       fontWeight: 600,
                       color: "#1a202c"
                     }}>
-                      {auction.product?.name || `Product #${auction.product_id || auction.productId}`}
+                      {auction.product?.name || `Product #${auction.productId || auction.product_id}`}
                     </h3>
                     <p style={{
                       margin: "4px 0 0 0",
                       fontSize: "12px",
                       color: "#718096"
                     }}>
-                      Auction ID: #{auction.auction_id}
+                      Auction ID: #{auction.auctionId}
                     </p>
                   </div>
                 </div>
@@ -398,7 +398,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                     onClick={(e) => {
                       e.stopPropagation();
                       setExpandedAuction(
-                        expandedAuction === auction.auction_id ? null : auction.auction_id
+                      expandedAuction === auction.auctionId ? null : auction.auctionId
                       );
                     }}
                     style={{
@@ -413,7 +413,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                       justifyContent: "center"
                     }}
                   >
-                    {expandedAuction === auction.auction_id ? "−" : "+"}
+                    {expandedAuction === auction.auctionId ? "−" : "+"}
                   </button>
                 </div>
               </div>
@@ -430,33 +430,33 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                 <div>
                   <p style={{ margin: 0, color: "#718096", fontWeight: 600, fontSize: "10px" }}>STARTS</p>
                   <p style={{ margin: "4px 0 0 0", color: "#2d3748", fontWeight: 600 }}>
-                    {new Date(auction.start_time).toLocaleDateString("vi-VN")}
+                  {new Date(auction.startTime).toLocaleDateString("vi-VN")}
                   </p>
                 </div>
                 <div>
                   <p style={{ margin: 0, color: "#718096", fontWeight: 600, fontSize: "10px" }}>ENDS</p>
                   <p style={{ margin: "4px 0 0 0", color: "#2d3748", fontWeight: 600 }}>
-                    {new Date(auction.end_time).toLocaleDateString("vi-VN")}
+                  {new Date(auction.endTime).toLocaleDateString("vi-VN")}
                   </p>
                 </div>
                 <div>
                   <p style={{ margin: 0, color: "#718096", fontWeight: 600, fontSize: "10px" }}>CURRENT BID</p>
                   <p style={{ margin: "4px 0 0 0", color: "#667eea", fontWeight: 700, fontSize: "13px" }}>
-                    {formatPrice(auction.highest_current_price || auction.current_bid || 0)}
+                    {formatPrice(auction.highestCurrentPrice || auction.currentBid || 0)}
                   </p>
                 </div>
-                {auction.total_bids !== undefined && (
-                  <div>
-                    <p style={{ margin: 0, color: "#718096", fontWeight: 600, fontSize: "10px" }}>TOTAL BIDS</p>
-                    <p style={{ margin: "4px 0 0 0", color: "#2d3748", fontWeight: 700, fontSize: "13px" }}>
-                      {auction.total_bids}
-                    </p>
-                  </div>
+                {auction.totalBids !== undefined && (
+                <div>
+                <p style={{ margin: 0, color: "#718096", fontWeight: 600, fontSize: "10px" }}>TOTAL BIDS</p>
+                <p style={{ margin: "4px 0 0 0", color: "#2d3748", fontWeight: 700, fontSize: "13px" }}>
+                {auction.totalBids}
+                </p>
+                </div>
                 )}
               </div>
 
               {/* Expanded details */}
-              {expandedAuction === auction.auction_id && (
+              {expandedAuction === auction.auctionId && (
                 <div style={{
                   padding: "16px",
                   background: "white"
@@ -476,7 +476,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                     }}>
                       <p style={{ margin: 0, fontSize: "11px", fontWeight: 600, color: "#718096", textTransform: "uppercase" }}>Bid Step Amount</p>
                       <p style={{ margin: "6px 0 0 0", fontSize: "15px", fontWeight: 700, color: "#667eea" }}>
-                        {formatPrice(auction.bid_step_amount || 0)}
+                      {formatPrice(auction.bidStepAmount || 0)}
                       </p>
                     </div>
 
@@ -488,11 +488,11 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                     }}>
                       <p style={{ margin: 0, fontSize: "11px", fontWeight: 600, color: "#718096", textTransform: "uppercase" }}>Created</p>
                       <p style={{ margin: "6px 0 0 0", fontSize: "13px", fontWeight: 600, color: "#2d3748" }}>
-                        {formatDate(auction.created_at || new Date().toISOString())}
+                      {formatDate(auction.createdAt || new Date().toISOString())}
                       </p>
                     </div>
 
-                    {auction.winner_id && (
+                    {auction.winnerId && (
                       <div style={{
                         padding: "12px",
                         background: "linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)",
@@ -502,7 +502,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                       }}>
                         <p style={{ margin: 0, fontSize: "11px", fontWeight: 600, color: "#065f46", textTransform: "uppercase" }}>Winner</p>
                         <p style={{ margin: "6px 0 0 0", fontSize: "15px", fontWeight: 700, color: "#047857" }}>
-                          User ID: #{auction.winner_id}
+                        User ID: #{auction.winnerId}
                         </p>
                       </div>
                     )}
@@ -517,7 +517,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                     borderTop: "1px solid #e2e8f0"
                   }}>
                     <Button
-                      onClick={() => handleViewBiddingHistory(auction.auction_id)}
+                      onClick={() => handleViewBiddingHistory(auction.auctionId)}
                       disabled={loading}
                       style={{
                         fontSize: "12px",
@@ -540,7 +540,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
 
                     {auction.status === "created" && (
                       <Button
-                        onClick={() => handleStartAuction(auction.auction_id)}
+                        onClick={() => handleStartAuction(auction.auctionId)}
                         disabled={loading}
                         style={{
                           fontSize: "12px",
@@ -560,7 +560,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
 
                     {auction.status === "open" && (
                       <Button
-                        onClick={() => handleCloseAuction(auction.auction_id)}
+                        onClick={() => handleCloseAuction(auction.auctionId)}
                         disabled={loading}
                         style={{
                           fontSize: "12px",
@@ -580,7 +580,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
 
                     {(auction.status === "created" || auction.status === "closed") && (
                       <Button
-                        onClick={() => handleDeleteAuction(auction.auction_id)}
+                        onClick={() => handleDeleteAuction(auction.auctionId)}
                         disabled={loading}
                         style={{
                           fontSize: "12px",

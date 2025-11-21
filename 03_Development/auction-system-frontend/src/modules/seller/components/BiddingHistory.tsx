@@ -1,4 +1,3 @@
-// src/modules/seller/components/BiddingHistory.tsx
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/common/Button";
 import { Card, CardContent } from "@/components/common/Card";
@@ -101,7 +100,7 @@ const BiddingHistory: React.FC<BiddingHistoryProps> = ({ auctionId, onClose }) =
               <div className="summary-item">
                 <span className="summary-label">Product:</span>
                 <span className="summary-value">
-                  {auction.product?.name || `Product #${auction.product_id}`}
+                  {auction.product?.name || `Product #${auction.productId}`}
                 </span>
               </div>
               <div className="summary-item">
@@ -113,23 +112,23 @@ const BiddingHistory: React.FC<BiddingHistoryProps> = ({ auctionId, onClose }) =
               <div className="summary-item">
                 <span className="summary-label">Current Bid:</span>
                 <span className="summary-value summary-price">
-                  {formatPrice(auction.highest_current_price || auction.current_bid || 0)}
+                  {formatPrice(auction.highestCurrentPrice || auction.currentBid || 0)}
                 </span>
               </div>
               <div className="summary-item">
                 <span className="summary-label">Total Bids:</span>
-                <span className="summary-value">{auction.total_bids || 0}</span>
+                <span className="summary-value">{auction.totalBids || 0}</span>
               </div>
               <div className="summary-item">
                 <span className="summary-label">Bid Step:</span>
                 <span className="summary-value">
-                  {formatPrice(auction.bid_step_amount || 0)}
+                  {formatPrice(auction.bidStepAmount || 0)}
                 </span>
               </div>
-              {auction.winner_id && (
+              {auction.winnerId && (
                 <div className="summary-item">
                   <span className="summary-label">Winner ID:</span>
-                  <span className="summary-value">#{auction.winner_id}</span>
+                  <span className="summary-value">#{auction.winnerId}</span>
                 </div>
               )}
             </div>
@@ -165,7 +164,7 @@ const BiddingHistory: React.FC<BiddingHistoryProps> = ({ auctionId, onClose }) =
                 {formatPrice(bid.amount || 0)}
               </span>
               <span className="bid-col bid-date">
-                {formatDate(bid.created_at || new Date().toISOString())}
+                {formatDate(bid.createdAt || new Date().toISOString())}
               </span>
               <span className={`bid-col bid-status ${bid.is_winning ? "winning" : ""}`}>
                 {bid.is_winning ? "Winning" : "Outbid"}

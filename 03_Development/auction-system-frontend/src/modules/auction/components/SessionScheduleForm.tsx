@@ -1,4 +1,3 @@
-// src/modules/auction/components/SessionScheduleForm.tsx
 import { Input, Label } from "@/components/common";
 
 interface SessionScheduleFormProps {

@@ -158,9 +158,9 @@ const ProductManagement = (): React.ReactElement => {
   };
 
   const handleConfirmDelete = async (product: Product) => {
-    try {
-      console.log("🗑️ Deleting product:", product.product_id);
-      await deleteProduct(product.product_id);
+  try {
+  console.log("🗑️ Deleting product:", product.productId);
+  await deleteProduct(product.productId);
       setIsDeleteConfirmOpen(false);
       setSelectedProduct(null);
       

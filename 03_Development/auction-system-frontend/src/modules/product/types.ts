@@ -5,17 +5,19 @@
 // ==========================================
 
 export interface Product {
-  product_id: number;
-  seller_id: number;
+  productId: number;
+  sellerId: number;
   name: string;
-  categories: string;
+  category?: string;
+  categories?: string;
   description: string;
-  start_price: number;
-  estimate_price: string;
+  startPrice: number;
+  estimatePrice?: string | number;
   deposit: number;
-  image_url: string;
+  imageUrl: string;
   status: ProductStatus;
-  created_at: string;
+  createdAt: string;
+  updatedAt?: string;
   images?: ProductImage[];
   auction?: Auction | null;
 }
@@ -32,10 +34,10 @@ export const PRODUCT_STATUS = {
 export type ProductStatus = typeof PRODUCT_STATUS[keyof typeof PRODUCT_STATUS];
 
 export interface ProductImage {
-  image_id: number;
-  product_id: number;
-  image_url: string;
-  is_thumbnail: boolean;
+  imageId: number;
+  productId: number;
+  imageUrl: string;
+  isThumbnail: boolean;
 }
 
 // ==========================================
@@ -43,15 +45,15 @@ export interface ProductImage {
 // ==========================================
 
 export interface Auction {
-  auction_id: number;
-  product_id: number;
-  start_time: string;
-  end_time: string;
+  auctionId: number;
+  productId: number;
+  startTime: string;
+  endTime: string;
   status: AuctionStatus;
-  highest_current_price: number;
-  bid_step_amount: string;
-  winner_id: number | null;
-  total_bids?: number;
+  highestCurrentPrice: number;
+  bidStepAmount: string;
+  winnerId: number | null;
+  totalBids?: number;
 }
 
 export const AUCTION_STATUS = {
@@ -69,9 +71,9 @@ export type AuctionStatus = typeof AUCTION_STATUS[keyof typeof AUCTION_STATUS];
 
 export interface ProductFormData {
   name: string;
-  categories: string;
+  category: string;
   description: string;
-  start_price: number;
+  startPrice: number;
   createAuction: boolean;
   auctionStartTime: string;
   auctionEndTime: string;

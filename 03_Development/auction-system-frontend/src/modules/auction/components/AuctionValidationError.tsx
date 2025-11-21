@@ -1,4 +1,3 @@
-// src/modules/auction/components/AuctionValidationError.tsx
 import { AlertCircle } from "lucide-react";
 import "@/styles/validation-error.css";
 

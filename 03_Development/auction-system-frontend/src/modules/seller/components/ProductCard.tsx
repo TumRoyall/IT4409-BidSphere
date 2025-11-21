@@ -46,8 +46,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Product Image */}
         <div className="product-image-container">
           <img
-            src={product.image_url || "/placeholder-product.png"}
-            alt={product.name}
+          src={product.imageUrl || "/placeholder-product.png"}
+          alt={product.name}
             className="product-image"
             onError={(e) => {
               (e.target as HTMLImageElement).src = "/placeholder-product.png";
@@ -91,10 +91,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {/* Quick Info */}
           <div className="product-card-info">
             <div className="info-row">
-              <span className="info-label">Price:</span>
-              <span className="info-value">
-                {formatPrice(product.start_price)}
-              </span>
+            <span className="info-label">Price:</span>
+            <span className="info-value">
+            {formatPrice(product.startPrice)}
+            </span>
             </div>
             <div className="info-row">
               <span className="info-label">Category:</span>

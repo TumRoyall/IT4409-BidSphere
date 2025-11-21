@@ -1,4 +1,3 @@
-// src/modules/auction/components/AuctionSessionForm.tsx
 import { useCallback, useMemo } from "react";
 import { Input } from "@/components/common/Input";
 import { Label } from "@/components/common/Label";

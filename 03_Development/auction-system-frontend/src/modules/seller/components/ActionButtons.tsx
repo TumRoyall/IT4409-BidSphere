@@ -1,4 +1,3 @@
-// src/modules/seller/components/ActionButtons.tsx
 import type { ReactElement } from "react";
 import { Button } from "@/components/common/Button";
 import "@/styles/seller.css";

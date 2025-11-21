@@ -1,4 +1,3 @@
-// src/modules/auction/components/SessionPreview.tsx
 interface SessionPreviewProps {
   duration: string;
   startPrice: number;
