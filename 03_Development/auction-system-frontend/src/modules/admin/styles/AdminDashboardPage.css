@@ -1,33 +1,101 @@
-.admin-dashboard-page h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.dashboard-cards {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.card {
-    background-color: white;
+/* Container */
+.dashboard-container {
     padding: 20px;
-    border-radius: 8px;
-    flex: 1;
-    min-width: 200px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    text-align: center;
+    background: #f4f6f8;
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
 }
 
-.card h2 {
-    font-size: 1rem;
+.dashboard-container h2 {
+    font-size: 24px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 18px;
+    color: #222;
 }
 
-.card p {
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #1f2937; /* gray-800 */
+/* Table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.table thead {
+    background: #f3f3f3;
+}
+
+.table th {
+    font-weight: 600;
+    font-size: 14px;
+    text-align: left;
+    padding: 14px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+}
+
+.table td {
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #444;
+    border-bottom: 1px solid #eee;
+}
+
+.table tbody tr:hover {
+    background: #fafafa;
+    transition: 0.2s ease;
+}
+
+/* Prices format */
+.table td:nth-child(4),
+.table td:nth-child(5) {
+    font-weight: 600;
+    color: #1a73e8;
+}
+
+/* Status styles */
+.status {
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-transform: capitalize;
+    display: inline-block;
+    font-size: 13px;
+}
+
+/* Status color variations */
+.status.open {
+    background: #d8f5df;
+    color: #0b7a33;
+}
+
+.status.closed {
+    background: #ffe0e0;
+    color: #a20000;
+}
+
+.status.upcoming {
+    background: #fff3d4;
+    color: #b27500;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .table {
+        font-size: 12px;
+    }
+
+    .table th, .table td {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 700px) {
+    .table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 }

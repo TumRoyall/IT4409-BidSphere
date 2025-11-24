@@ -23,11 +23,13 @@ import ResetPasswordPage from "@/modules/user/pages/ResetPasswordPage";
 import NotificationPage from "@/modules/user/pages/NotificationPage";
 import HistoryBidPage from "@/modules/user/pages/HistoryBidPage";
 import AuctionCurrentPage from "@/modules/user/pages/AuctionCurrentPage";
+import AuctionsPage from "@/modules/auction/pages/AuctionsPage"
+import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage"
+
+// Admin area
 import AdminLayout from "../layouts/AdminLayout";
 import AdminUsersPage from "../modules/admin/pages/AdminUsersPage";
 import AdminDashboardPage from "../modules/admin/pages/AdminDashboardPage.tsx";
-import AuctionsPage from "@/modules/auction/pages/AuctionsPage"
-import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage"
 
 
 export default function AppRoutes() {
@@ -71,7 +73,7 @@ export default function AppRoutes() {
                   >
                     {/* User management */}
                     <Route path="users" element={<AdminUsersPage />} />
-                    <Route path="Dashboard" element={<AdminDashboardPage/>} />
+                    <Route path="dashboard" element={<AdminDashboardPage/>} />
                   </Route>
 
                   {/* User */}

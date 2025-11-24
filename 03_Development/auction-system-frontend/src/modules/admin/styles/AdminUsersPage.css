@@ -1,18 +1,24 @@
+/* ===================== */
 /* Container */
 .admin-users-page {
     padding: 20px;
-    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
 }
 
 /* Header */
 .admin-users-page h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: #222;
 }
 
 /* Search box */
-.admin-users-page input[type="text"] {
+.admin-users-page input[type="text"],
+.admin-users-page input[type="email"],
+.admin-users-page input[type="date"] {
     padding: 6px 10px;
     border: 1px solid #d1d5db;
     border-radius: 4px;
@@ -20,45 +26,89 @@
     margin-bottom: 10px;
 }
 
-/* Table */
+/* Main table */
 .admin-users-page table {
     width: 100%;
     border-collapse: collapse;
-    background-color: white;
-}
-
-.admin-users-page th,
-.admin-users-page td {
-    border: 1px solid #d1d5db; /* gray-300 */
-    padding: 8px 12px;
-    text-align: left;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 .admin-users-page th {
-    background-color: #e5e7eb; /* gray-200 */
+    font-weight: 600;
+    font-size: 14px;
+    text-align: left;
+    padding: 14px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    background: #f3f3f3;
 }
 
-.admin-users-page tr:hover {
-    background-color: #f9fafb; /* gray-50 */
+.admin-users-page td {
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #444;
+    border-bottom: 1px solid #eee;
 }
 
-/* Actions cell */
-.admin-users-page .actions {
+.admin-users-page tbody tr:hover {
+    background: #fafafa;
+    transition: 0.2s ease;
+}
+
+/* Username clickable link */
+.username-link {
+    background: none;
+    border: none;
+    color: #1a73e8;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+}
+
+/* Status badge */
+.status {
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-transform: capitalize;
+    display: inline-block;
+    font-size: 13px;
+}
+
+.status.active {
+    background: #d8f5df;
+    color: #0b7a33;
+}
+
+.status.pending {
+    background: #fff3d4;
+    color: #b27500;
+}
+
+.status.banned {
+    background: #ffe0e0;
+    color: #a20000;
+}
+
+/* Actions dropdown */
+.actions {
     position: relative;
 }
 
-/* Action button */
-.admin-users-page .actions > button {
+.actions > button {
     padding: 4px 8px;
     border-radius: 4px;
     border: none;
-    background-color: #3b82f6; /* blue */
+    background-color: #3b82f6;
     color: white;
     cursor: pointer;
 }
 
-/* Dropdown menu */
-.admin-users-page .actions div {
+.actions div {
     position: absolute;
     top: 35px;
     left: 0;
@@ -72,58 +122,37 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/* Dropdown buttons */
-.admin-users-page .actions div button {
+.actions div button {
     padding: 6px 10px;
     background-color: white;
-    color: #111827; /* gray-900 */
+    color: #111827;
     border: none;
     text-align: left;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 6px; /* khoảng cách icon và text */
+    gap: 6px;
     font-size: 0.9rem;
 }
 
-.admin-users-page .actions div button:hover {
-    background-color: #f3f4f6; /* gray-100 */
+.actions div button:hover {
+    background-color: #f3f4f6;
 }
 
-/* Icons for buttons */
-.admin-users-page .actions div button.edit::before {
-    content: "✏️"; /* Edit icon */
-}
+/* Icons for action buttons */
+.actions div button.edit::before { content: "✏️"; }
+.actions div button.ban::before { content: "⛔"; }
+.actions div button.unban::before { content: "✔️"; }
+.actions div button.delete::before { content: "🗑️"; }
 
-.admin-users-page .actions div button.ban::before {
-    content: "⛔"; /* Ban icon */
-}
-
-.admin-users-page .actions div button.unban::before {
-    content: "✔️"; /* Unban icon */
-}
-
-.admin-users-page .actions div button.delete::before {
-    content: "🗑️"; /* Delete icon */
-}
-
-/* Inline edit/ban forms */
-.admin-users-page .actions input[type="text"],
-.admin-users-page .actions input[type="email"],
-.admin-users-page .actions input[type="date"] {
-    padding: 4px 6px;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-}
-
-.admin-users-page .actions button.save {
-    background-color: #10b981; /* green */
+.actions button.save {
+    background-color: #10b981;
     color: white;
     margin-right: 4px;
 }
 
-.admin-users-page .actions button.cancel {
-    background-color: #ef4444; /* red */
+.actions button.cancel {
+    background-color: #ef4444;
     color: white;
 }
 
@@ -134,6 +163,7 @@
     margin-bottom: 10px;
 }
 
+/* Modal overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -147,6 +177,7 @@
   z-index: 999;
 }
 
+/* Modal content */
 .modal-content {
   background: white;
   padding: 20px;
@@ -155,12 +186,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.modal-content input {
-  padding: 6px 10px;
-  border-radius: 4px;
-  border: 1px solid #d1d5db;
 }
 
 .modal-buttons {
@@ -187,3 +212,50 @@
   cursor: pointer;
 }
 
+/* ===================== */
+/* Transaction table */
+.transaction-row td {
+    padding: 0;
+    background: #f9fafb;
+}
+
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.transaction-table th, 
+.transaction-table td {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    font-size: 13px;
+}
+
+.transaction-table th {
+    background: #e5e7eb;
+    font-weight: 600;
+}
+
+.transaction-table tbody tr:hover {
+    background: #f3f4f6;
+}
+
+.transaction-table td:nth-child(5) {
+    font-weight: 600;
+    color: #1a73e8;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    table, .transaction-table {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 700px) {
+    table, .transaction-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}

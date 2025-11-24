@@ -39,5 +39,8 @@ export const adminUserApi = {
 
     // Xoá user
     deleteUser: (id: number) => axiosClient.delete(`/admin/users/${id}`),
-
+    
+    // Xem giao dịch của user
+    getAllTransactionsById: (id: number) =>
+        axiosClient.get(`/admin/users/${id}/transactions`),
 };
