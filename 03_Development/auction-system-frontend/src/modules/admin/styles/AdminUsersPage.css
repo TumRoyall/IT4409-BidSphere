@@ -17,18 +17,14 @@
     margin-bottom: 10px;
     display: flex;
     align-items: center;
-    gap: 10px; /* Khoảng cách giữa search và filter */
-}
-
-.status-filter-inline {
-    display: flex;
-    gap: 6px;
+    gap: 10px;
 }
 
 /* Inputs */
 .admin-users-page input[type="text"],
 .admin-users-page input[type="email"],
-.admin-users-page input[type="date"] {
+.admin-users-page input[type="date"],
+.admin-users-page input[type="time"] {
     padding: 6px 10px;
     border: 1px solid #d1d5db;
     border-radius: 4px;
@@ -37,18 +33,19 @@
 }
 
 /* Status pills */
-.status-pill {
+.status-pill, .status {
     padding: 4px 12px;
     border-radius: 20px;
-    cursor: pointer;
-    font-size: 13px;
+    font-weight: 600;
     text-transform: capitalize;
-    border: 1px solid transparent;
-    transition: all 0.2s;
+    display: inline-block;
+    font-size: 13px;
+    text-align: center;
+    min-width: 70px;
 }
-.status-pill.active { background: #d8f5df; color: #0b7a33; }
-.status-pill.pending { background: #fff3d4; color: #b27500; }
-.status-pill.banned { background: #ffe0e0; color: #a20000; }
+.status-pill.active, .status.active { background: #d8f5df; color: #0b7a33; }
+.status-pill.pending, .status.pending { background: #fff3d4; color: #b27500; }
+.status-pill.banned, .status.banned { background: #ffe0e0; color: #a20000; }
 .status-pill.selected { border-color: #333; font-weight: 600; }
 .status-pill:hover { opacity: 0.8; }
 
@@ -76,10 +73,7 @@
     color: #444;
     border-bottom: 1px solid #eee;
 }
-.admin-users-page tbody tr:hover {
-    background: #fafafa;
-    transition: 0.2s ease;
-}
+.admin-users-page tbody tr:hover { background: #fafafa; transition: 0.2s ease; }
 
 /* Username link */
 .username-link {
@@ -91,19 +85,6 @@
     text-decoration: underline;
     padding: 0;
 }
-
-/* Status inside table */
-.status {
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 6px;
-    text-transform: capitalize;
-    display: inline-block;
-    font-size: 13px;
-}
-.status.active { background: #d8f5df; color: #0b7a33; }
-.status.pending { background: #fff3d4; color: #b27500; }
-.status.banned { background: #ffe0e0; color: #a20000; }
 
 /* Actions dropdown */
 .actions { position: relative; }
@@ -137,3 +118,13 @@
 /* Responsive */
 @media (max-width: 900px) { table, .transaction-table { font-size: 12px; } }
 @media (max-width: 700px) { table, .transaction-table { display: block; overflow-x: auto; white-space: nowrap; } }
+
+/* Dropdown status */
+.status-dropdown { position: relative; display: inline-block; margin-left: 10px; }
+.dropdown-button { padding: 6px 12px; border: 1px solid #d1d5db; border-radius: 6px; background-color: #fff; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+.dropdown-button:hover { background-color: #f3f4f6; }
+.dropdown-content { position: absolute; top: 110%; left: 0; background-color: #fff; border: 1px solid #d1d5db; border-radius: 8px; min-width: 150px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 20; padding: 8px 0; animation: dropdownFade 0.2s ease; }
+@keyframes dropdownFade { from { opacity: 0; transform: translateY(-5px);} to { opacity: 1; transform: translateY(0);} }
+.dropdown-item { display: flex; align-items: center; gap: 6px; padding: 6px 14px; cursor: pointer; font-size: 14px; transition: background 0.2s; }
+.dropdown-item:hover { background-color: #f9fafb; border-radius: 6px; }
+.dropdown-item input[type="checkbox"] { cursor: pointer; }
