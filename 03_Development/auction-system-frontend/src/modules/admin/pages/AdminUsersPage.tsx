@@ -264,7 +264,7 @@ const AdminUsersPage: React.FC = () => {
                   <td>{showBanInfo && user.bannedUntil ? new Date(user.bannedUntil).toLocaleString('vi-VN') : "—"}</td>
                   <td className="actions">
                     {/* Action menu */}
-                    <button onClick={() => setOpenActionId(openActionId === user.userId ? null : user.userId)}>Action</button>
+                    <button onClick={() => setOpenActionId(openActionId === user.userId ? null : user.userId)}>📝</button>
                     {openActionId === user.userId && (
                       <div>
                         <button className="edit" onClick={() => { setSelectedUser(user); setModalType("edit"); setOpenActionId(null); }}>Edit</button>

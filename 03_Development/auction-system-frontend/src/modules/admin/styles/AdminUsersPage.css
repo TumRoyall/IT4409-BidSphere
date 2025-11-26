@@ -88,7 +88,7 @@
 
 /* Actions dropdown */
 .actions { position: relative; }
-.actions > button { padding: 4px 8px; border-radius: 4px; border: none; background-color: #3b82f6; color: white; cursor: pointer; }
+.actions > button { padding: 4px 8px; border-radius: 4px; border: none; background-color: #6dc670; color: white; cursor: pointer; }
 .actions div { position: absolute; top: 35px; left: 0; background-color: white; border: 1px solid #d1d5db; border-radius: 4px; display: flex; flex-direction: column; min-width: 120px; z-index: 10; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
 .actions div button { padding: 6px 10px; background-color: white; color: #111827; border: none; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; }
 .actions div button:hover { background-color: #f3f4f6; }
