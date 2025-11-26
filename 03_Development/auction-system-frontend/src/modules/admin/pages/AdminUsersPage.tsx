@@ -235,7 +235,7 @@ const AdminUsersPage: React.FC = () => {
             <th>Status</th>
             <th>Ban Reason</th>
             <th>Ban Until</th>
-            <th>Actions</th>
+            <th>Operations</th>
           </tr>
         </thead>
         <tbody>
