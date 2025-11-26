@@ -1,6 +1,17 @@
 import axiosClient from "../axiosClient";
 
 export const adminUserApi = {
+
+    // Tạo user mới
+    create: (data: {
+        fullName: string;
+        username: string;
+        email: string;
+        phone: string;
+        gender?: string;
+        status?: string;
+    }) => axiosClient.post("/admin/users", data),
+
     // Lấy toàn bộ user
     getAll: () => axiosClient.get("/admin/users"),
 
