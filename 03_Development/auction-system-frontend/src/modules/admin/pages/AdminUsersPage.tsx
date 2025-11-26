@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { adminUserApi } from "@/api/modules/adminUser.api";
 import '@/modules/admin/styles/AdminUsersPage.css';
 
+// --- Interface định nghĩa kiểu dữ liệu nhận từ API ---
 interface UserResponse {
   userId: number;
   fullName: string;
@@ -9,9 +10,9 @@ interface UserResponse {
   email: string;
   phone: string;
   gender?: string;
-  status?: string;
-  reason?: string;
-  bannedUntil?: string;
+  status?: string;        // "active" | "pending" | "banned"
+  reason?: string;        // lý do bị banned
+  bannedUntil?: string;   // thời gian hết hạn ban (ISO string)
 }
 
 interface TransactionResponse {
@@ -22,32 +23,34 @@ interface TransactionResponse {
   amount: number;
 }
 
+// --- Các trạng thái filter ---
 const STATUSES = ["active", "pending", "banned"];
 
 const AdminUsersPage: React.FC = () => {
+  // --- State quản lý dữ liệu ---
   const [users, setUsers] = useState<UserResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [searchText, setSearchText] = useState("");
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
-  const [openActionId, setOpenActionId] = useState<number | null>(null);
+  const [searchText, setSearchText] = useState("");           // text search
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]); // filter status
+  const [openActionId, setOpenActionId] = useState<number | null>(null); // id user mở action menu
 
   const [selectedTransactions, setSelectedTransactions] = useState<TransactionResponse[] | null>(null);
-  const [showTransactionsId, setShowTransactionsId] = useState<number | null>(null);
+  const [showTransactionsId, setShowTransactionsId] = useState<number | null>(null); // id user đang show transaction
 
-  const [modalType, setModalType] = useState<"edit" | "ban" | null>(null);
+  const [modalType, setModalType] = useState<"edit" | "ban" | null>(null); // loại modal
   const [selectedUser, setSelectedUser] = useState<UserResponse | null>(null);
-  const [banReason, setBanReason] = useState("");
+  const [banReason, setBanReason] = useState(""); 
   const [banDate, setBanDate] = useState(""); // yyyy-MM-dd
   const [banTime, setBanTime] = useState(""); // HH:mm
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1); // phân trang
   const usersPerPage = 10;
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false); // trạng thái dropdown filter
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Click outside dropdown to close
+  // --- Click outside dropdown để đóng ---
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -58,6 +61,7 @@ const AdminUsersPage: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // --- Lấy danh sách users từ API ---
   const fetchUsers = async () => {
     try {
       setLoading(true);
@@ -71,34 +75,70 @@ const AdminUsersPage: React.FC = () => {
     }
   };
 
+  // --- Load users lần đầu ---
   useEffect(() => { fetchUsers(); }, []);
 
+  // --- Xóa user ---
   const handleDelete = async (id: number) => {
     if (!window.confirm("Bạn có chắc muốn xóa user này?")) return;
-    try { await adminUserApi.deleteUser(id); fetchUsers(); } 
-    catch { alert("Xóa user thất bại!"); }
+    try { 
+      await adminUserApi.deleteUser(id); 
+      fetchUsers(); 
+    } catch { 
+      alert("Xóa user thất bại!"); 
+    }
   };
 
+  // --- Gỡ ban user ---
   const handleUnban = async (user: UserResponse) => {
-    try { await adminUserApi.unban(user.userId); fetchUsers(); } 
-    catch { alert("Unban user thất bại!"); }
+    try { 
+      await adminUserApi.unban(user.userId); 
+      fetchUsers(); 
+    } catch { 
+      alert("Unban user thất bại!"); 
+    }
   };
 
+  // --- Xem lịch sử giao dịch user ---
   const handleViewTransactions = async (user: UserResponse) => {
-    if (showTransactionsId === user.userId) { setShowTransactionsId(null); setSelectedTransactions(null); return; }
+    if (showTransactionsId === user.userId) { 
+      // click lại sẽ đóng
+      setShowTransactionsId(null); 
+      setSelectedTransactions(null); 
+      return; 
+    }
     try {
       const res = await adminUserApi.getAllTransactionsById(user.userId);
       setSelectedTransactions(res.data);
       setShowTransactionsId(user.userId);
-    } catch { alert("Lỗi khi tải lịch sử giao dịch!"); }
+    } catch { 
+      alert("Lỗi khi tải lịch sử giao dịch!"); 
+    }
   };
 
+  // --- Toggle filter status ---
   const toggleStatus = (status: string) => {
     setSelectedStatuses(prev =>
       prev.includes(status) ? prev.filter(s => s !== status) : [...prev, status]
     );
   };
 
+  // --- Hàm kiểm tra trạng thái frontend và hiển thị ban info ---
+  const getFrontendStatus = (user: UserResponse): {
+    status: "Active" | "Banned" | "Pending";
+    showBanInfo: boolean;
+  } => {
+    if (user.status?.toLowerCase() === "pending") return { status: "Pending", showBanInfo: false };
+    if (!user.bannedUntil) return { status: "Active", showBanInfo: false };
+
+    const now = new Date();
+    const bannedTime = new Date(user.bannedUntil);
+
+    // nếu thời gian ban > now thì vẫn Banned, ngược lại Active
+    return bannedTime > now ? { status: "Banned", showBanInfo: true } : { status: "Active", showBanInfo: false };
+  };
+
+  // --- Filter users dựa trên search + status ---
   const filteredUsers = users.filter(u => {
     const matchesSearch =
       u.userId.toString().includes(searchText) ||
@@ -106,22 +146,28 @@ const AdminUsersPage: React.FC = () => {
       (u.fullName?.toLowerCase().includes(searchText.toLowerCase()) ?? false) ||
       (u.email?.toLowerCase().includes(searchText.toLowerCase()) ?? false) ||
       (u.phone?.includes(searchText) ?? false);
-    const matchesStatus = selectedStatuses.length === 0 || (u.status && selectedStatuses.includes(u.status.toLowerCase()));
+
+    const frontendStatus = getFrontendStatus(u);
+    const matchesStatus = selectedStatuses.length === 0 || selectedStatuses.includes(frontendStatus.status.toLowerCase());
+
     return matchesSearch && matchesStatus;
   });
 
+  // --- Phân trang ---
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
+  // --- Thiết lập min date/time cho input ban ---
   const now = new Date();
   const minBanDate = now.toISOString().split("T")[0]; // yyyy-MM-dd
   const currentTimeStr = now.toTimeString().slice(0,5); // HH:mm
 
+  // --- Reset page khi filter/search thay đổi ---
   useEffect(() => { setCurrentPage(1); }, [searchText, selectedStatuses]);
 
-  // --- Hàm confirm ban với check quá khứ + fix múi giờ ---
+  // --- Xác nhận ban user ---
   const handleBanConfirm = async () => {
     if (!banDate || !banTime) { alert("Vui lòng chọn ngày và giờ!"); return; }
 
@@ -129,8 +175,10 @@ const AdminUsersPage: React.FC = () => {
     const [hours, minutes] = banTime.split(":").map(Number);
 
     const selectedLocal = new Date(year, month-1, day, hours, minutes, 0);
+
     if (selectedLocal <= new Date()) { alert("Không thể chọn thời gian trong quá khứ!"); return; }
 
+    // chuyển sang UTC trước khi gửi lên server
     const offset = selectedLocal.getTimezoneOffset();
     const selectedUTC = new Date(selectedLocal.getTime() - offset*60*1000);
 
@@ -151,6 +199,7 @@ const AdminUsersPage: React.FC = () => {
     <div className="admin-users-page">
       <h1>Quản lý Users</h1>
 
+      {/* --- Top bar: search + filter --- */}
       <div className="top-bar">
         <input type="text" placeholder="Search by ID, username, email, phone" value={searchText} onChange={e => setSearchText(e.target.value)} />
 
@@ -174,6 +223,7 @@ const AdminUsersPage: React.FC = () => {
       {loading && <div>Đang tải dữ liệu...</div>}
       {error && <div className="error">{error}</div>}
 
+      {/* --- Table hiển thị users --- */}
       <table>
         <thead>
           <tr>
@@ -190,7 +240,8 @@ const AdminUsersPage: React.FC = () => {
         </thead>
         <tbody>
           {currentUsers.map(user => {
-            const status = user.status?.toLowerCase() ?? "";
+            const { status: frontendStatus, showBanInfo } = getFrontendStatus(user);
+
             return (
               <React.Fragment key={user.userId}>
                 <tr>
@@ -204,16 +255,20 @@ const AdminUsersPage: React.FC = () => {
                   <td>{user.email}</td>
                   <td>{user.phone}</td>
                   <td>
-                    <span className={`status ${status}`}>{user.status}</span>
+                    <span className={`status ${frontendStatus.toLowerCase()}`}>
+                      {frontendStatus}
+                    </span>
                   </td>
-                  <td>{user.reason}</td>
-                  <td>{user.bannedUntil ? new Date(user.bannedUntil).toLocaleString('vi-VN') : '—'}</td>
+                  {/* Hiển thị lý do và thời gian ban nếu user đang banned */}
+                  <td>{showBanInfo ? user.reason : "—"}</td>
+                  <td>{showBanInfo && user.bannedUntil ? new Date(user.bannedUntil).toLocaleString('vi-VN') : "—"}</td>
                   <td className="actions">
+                    {/* Action menu */}
                     <button onClick={() => setOpenActionId(openActionId === user.userId ? null : user.userId)}>Action</button>
                     {openActionId === user.userId && (
                       <div>
                         <button className="edit" onClick={() => { setSelectedUser(user); setModalType("edit"); setOpenActionId(null); }}>Edit</button>
-                        {["active","pending"].includes(status) && (
+                        {["Active","Pending"].includes(frontendStatus) && (
                           <button className="ban" onClick={() => { 
                             setSelectedUser(user); 
                             setBanReason(""); 
@@ -223,13 +278,14 @@ const AdminUsersPage: React.FC = () => {
                             setOpenActionId(null); 
                           }}>Ban</button>
                         )}
-                        {status === "banned" && <button className="unban" onClick={() => handleUnban(user)}>Unban</button>}
+                        {frontendStatus === "Banned" && <button className="unban" onClick={() => handleUnban(user)}>Unban</button>}
                         <button className="delete" onClick={() => handleDelete(user.userId)}>Delete</button>
                       </div>
                     )}
                   </td>
                 </tr>
 
+                {/* Hiển thị transaction nếu user đang mở */}
                 {showTransactionsId === user.userId && selectedTransactions && (
                   <tr className="transaction-row">
                     <td colSpan={9}>
@@ -264,6 +320,7 @@ const AdminUsersPage: React.FC = () => {
         </tbody>
       </table>
 
+      {/* --- Pagination --- */}
       <div className="pagination">
         <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage===1}>Prev</button>
         {[...Array(totalPages)].map((_, idx) => (
@@ -272,6 +329,7 @@ const AdminUsersPage: React.FC = () => {
         <button onClick={() => setCurrentPage(prev => Math.min(prev+1, totalPages))} disabled={currentPage===totalPages}>Next</button>
       </div>
 
+      {/* --- Modal edit / ban --- */}
       {modalType && selectedUser && (
         <div className="modal-overlay">
           <div className="modal-content">
