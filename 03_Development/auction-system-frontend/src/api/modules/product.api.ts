@@ -2,14 +2,14 @@ import axiosClient from "../axiosClient";
 
 // ==================== TYPES & INTERFACES ====================
 export interface ImagePayload {
-  imageUrl: string;
+  url: string;
   isThumbnail?: boolean;
 }
 
 export interface ProductCreateRequest {
   name: string;
   description?: string | null;
-  categories?: string | null;
+  category?: string | null;
   startPrice: number;
   images?: ImagePayload[];
 }
@@ -17,7 +17,7 @@ export interface ProductCreateRequest {
 export interface ProductUpdateRequest {
   name?: string;
   description?: string | null;
-  categories?: string | null;
+  category?: string | null;
   startPrice?: number | null;
   images?: ImagePayload[];
 }
@@ -27,15 +27,22 @@ export interface ProductResponse {
   id?: number;
   name: string;
   description?: string;
-  categories?: string;
+  category?: string;
   startPrice?: number;
+  estimatePrice?: number;
   deposit?: number;
   imageUrl?: string;
   status?: string;
   sellerId?: number;
   createdAt?: string;
-  updatedAt?: string;
+  isDeleted?: boolean;
   deletedAt?: string;
+  images?: Array<{
+    imageId: number;
+    productId: number;
+    url: string;
+    isThumbnail: boolean;
+  }>;
 }
 
 export interface ProductPage {
@@ -98,7 +105,7 @@ const productApi = {
   uploadImage: (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
-    return axiosClient.post<{ imageUrl: string }>("/upload", formData, {
+    return axiosClient.post<{ url: string }>("/upload", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
   },
@@ -109,7 +116,7 @@ const productApi = {
     formData.append("file", file);
     formData.append("productId", String(productId));
     formData.append("isThumbnail", isThumbnail ? "1" : "0");
-    return axiosClient.post<{ imageUrl: string; imageId: number; isThumbnail: boolean }>(
+    return axiosClient.post<{ url: string; imageId: number; isThumbnail: boolean }>(
       "/upload",
       formData,
       { headers: { "Content-Type": "multipart/form-data" } }

@@ -56,11 +56,11 @@ export default function CreateProduct() {
           setFormData({
             name: product.name,
             description: product.description || "",
-            category: (product as any).category || product.categories || "",
-            startPrice: product.start_price || 0,
+            category: product.category || "",
+            startPrice: product.startPrice || 0,
             // deposit assigned by admin on approval
             images: [],
-            imagePreviews: product.image_url ? [product.image_url] : [],
+            imagePreviews: product.imageUrl ? [product.imageUrl] : [],
           });
         } catch (error) {
           console.error("Failed to load product:", error);
@@ -149,19 +149,19 @@ export default function CreateProduct() {
       console.log("Uploading images...");
       const uploadPromises = formData.images.map((f) => productApi.uploadImage(f));
       const uploadResponses = await Promise.all(uploadPromises);
-  const uploadedUrls = uploadResponses.map((r) => r?.data?.image_url).filter(Boolean) as string[];
+      const uploadedUrls = uploadResponses.map((r) => r?.data?.url).filter(Boolean) as string[];
 
       if (uploadedUrls.length === 0) {
         throw new Error("Failed to upload images or retrieve URLs");
       }
 
       // Build images payload; mark first image as thumbnail by default
-      const imagesPayload = uploadedUrls.map((url, idx) => ({ imageUrl: url, isThumbnail: idx === 0 }));
+      const imagesPayload = uploadedUrls.map((url, idx) => ({ url: url, isThumbnail: idx === 0 }));
 
       const productPayload = {
         name: formData.name,
         description: formData.description || null,
-        categories: formData.category || null,
+        category: formData.category || null,
         startPrice: formData.startPrice || 0,
         // deposit omitted (assigned by admin on approval)
         images: imagesPayload,

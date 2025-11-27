@@ -98,7 +98,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </div>
             <div className="info-row">
               <span className="info-label">Category:</span>
-              <span className="info-value">{product.categories || "—"}</span>
+              <span className="info-value">{product.category || "—"}</span>
             </div>
           </div>
 

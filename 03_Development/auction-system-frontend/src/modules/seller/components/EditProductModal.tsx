@@ -22,9 +22,9 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
 }) => {
   const [formData, setFormData] = useState<any>({
     name: "",
-    categories: "",
+    category: "",
     description: "",
-    start_price: 0,
+    startPrice: 0,
   });
 
   const [imagesList, setImagesList] = useState<Array<any>>([]);
@@ -35,17 +35,17 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     if (product) {
       setFormData({
         name: product.name || "",
-        categories: product.categories || "",
+        category: product.category || "",
         description: product.description || "",
-        start_price: product.start_price || 0,
+        startPrice: product.startPrice || 0,
       });
 
       const initialImages = (product.images || []).map((img: any) => ({
-        image_id: img.image_id,
-        image_url: img.image_url,
-        is_thumbnail: !!img.is_thumbnail,
+        imageId: img.imageId,
+        url: img.url,
+        isThumbnail: !!img.isThumbnail,
         file: null,
-        preview: img.image_url,
+        preview: img.url,
       }));
       setImagesList(initialImages);
     }
@@ -55,20 +55,20 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     const { name, value } = e.target;
     setFormData((prev: any) => ({
       ...prev,
-      [name]: name === "start_price" ? parseFloat(value) || 0 : value,
+      [name]: name === "startPrice" ? parseFloat(value) || 0 : value,
     }));
   };
 
   const handleCategoryChange = (value: string) => {
     setFormData((prev: any) => ({
       ...prev,
-      categories: value,
+      category: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!product?.product_id) return;
+    if (!product?.productId) return;
 
     try {
       setIsSubmitting(true);
@@ -88,11 +88,11 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
 
       // Build the basic payload (without images) - sellers cannot set deposit/estimate
       const payload: any = {
-        sellerId: product.seller_id,
+        sellerId: product.sellerId,
         name: formData.name.trim(),
-        categories: formData.categories || null,
+        category: formData.category || null,
         description: formData.description || null,
-        startPrice: toNullableNumber(formData.start_price),
+        startPrice: toNullableNumber(formData.startPrice),
       };
 
       // Handle images only if there are new uploads
@@ -109,16 +109,16 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
           if (it.file) {
             // This is a newly uploaded file
             const resp: any = responses.shift();
-            const secureUrl = resp?.data?.image_url || resp?.image_url || "";
+            const secureUrl = resp?.data?.url || resp?.url || "";
             return {
-              imageUrl: secureUrl,  // Backend expects 'imageUrl'
-              isThumbnail: !!it.is_thumbnail,
+              url: secureUrl,  // Backend expects 'url'
+              isThumbnail: !!it.isThumbnail,
             };
           }
           // This is an existing image
           return {
-            imageUrl: it.image_url,  // Backend expects 'imageUrl'
-            isThumbnail: !!it.is_thumbnail,
+            url: it.url,  // Backend expects 'url'
+            isThumbnail: !!it.isThumbnail,
           };
         });
 
@@ -126,7 +126,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
       }
 
       console.log("📤 Submitting product update:", JSON.stringify(payload, null, 2));
-      await onSubmit(product.product_id, payload);
+      await onSubmit(product.productId, payload);
       onCancel();
 
     } catch (error: any) {
@@ -265,7 +265,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             Category <span style={{ color: "#ef4444" }}>*</span>
           </label>
           <CategorySelect
-            value={formData.categories}
+            value={formData.category}
             onChange={handleCategoryChange}
             disabled={isSubmitting}
             categories={CATEGORIES}
@@ -311,17 +311,17 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             </label>
             <Input
               id="start-price"
-              name="start_price"
+              name="startPrice"
               type="number"
-              value={formData.start_price}
+              value={formData.startPrice}
               onChange={handleChange}
               placeholder="0"
               disabled={isSubmitting}
               style={{ width: "100%", borderRadius: "6px", borderColor: "#cbd5e0", padding: "10px 12px" }}
             />
-            {formData.start_price > 0 && (
+            {formData.startPrice > 0 && (
               <p style={{ fontSize: "12px", color: "#667eea", marginTop: "6px", fontWeight: 600 }}>
-                {formatPrice(formData.start_price)}
+                {formatPrice(formData.startPrice)}
               </p>
             )}
           </div>
@@ -346,7 +346,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
           </div>
           <div style={{ padding: "8px", background: "white", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
             <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>CATEGORY</span>
-            <p style={{ color: "#2d3748", fontWeight: 600, margin: "4px 0 0 0" }}>{formData.categories || "—"}</p>
+            <p style={{ color: "#2d3748", fontWeight: 600, margin: "4px 0 0 0" }}>{formData.category || "—"}</p>
           </div>
         </div>
       </div>

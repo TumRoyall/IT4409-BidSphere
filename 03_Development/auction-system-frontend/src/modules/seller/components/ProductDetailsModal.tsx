@@ -150,7 +150,7 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
               <div className="detail-item">
                 <span className="detail-label">Deposit Amount</span>
                 <span className="detail-value price-highlight">
-                  {formatPrice(product.deposit)}
+                  {formatPrice(product.deposit || 0)}
                 </span>
               </div>
             </div>
@@ -163,7 +163,7 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
               <div className="detail-item">
                 <span className="detail-label">Category</span>
                 <span className="detail-value">
-                  {product.categories || "Not specified"}
+                  {product.category || "Not specified"}
                 </span>
               </div>
               <div className="detail-item">

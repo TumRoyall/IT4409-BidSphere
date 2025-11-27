@@ -30,9 +30,9 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
   const { user } = useAuth();
   const [formData, setFormData] = useState<ProductFormData>({
     name: "",
-    categories: "",
+    category: "",
     description: "",
-    start_price: 0,
+    startPrice: 0,
     createAuction: false,
     auctionStartTime: "",
     auctionEndTime: "",
@@ -94,16 +94,16 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
       newErrors.name = "Tên sản phẩm phải có ít nhất 10 ký tự";
     }
 
-    if (!formData.categories) {
-      newErrors.categories = "Vui lòng chọn danh mục";
+    if (!formData.category) {
+      newErrors.category = "Vui lòng chọn danh mục";
     }
 
     if (!formData.description || formData.description.trim().length < 50) {
       newErrors.description = "Mô tả phải có ít nhất 50 ký tự";
     }
 
-    if (!formData.start_price || formData.start_price < 1000) {
-      newErrors.start_price = "Giá khởi điểm tối thiểu 1.000đ";
+    if (!formData.startPrice || formData.startPrice < 1000) {
+      newErrors.startPrice = "Giá khởi điểm tối thiểu 1.000đ";
     }
 
     if (!confirmChecked) {
@@ -133,9 +133,9 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
     if (onSubmit) {
       const payload: any = {
         name: formData.name,
-        categories: formData.categories,
+        category: formData.category,
         description: formData.description,
-        startPrice: formData.start_price,
+        startPrice: formData.startPrice,
         // deposit and estimatePrice will be assigned by admin upon approval
         imageUrl: "",
         sellerId: currentUser.id,
@@ -231,13 +231,13 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
             <div className="category-selector-wrapper">
               {!showCustomCategory ? (
                 <Select
-                  value={formData.categories}
+                  value={formData.category}
                   onValueChange={(val) => {
                     if (val === "__custom__") {
                       setShowCustomCategory(true);
-                      setFormData((prev) => ({ ...prev, categories: "" }));
+                      setFormData((prev) => ({ ...prev, category: "" }));
                     } else {
-                      handleChange("categories", val);
+                      handleChange("category", val);
                       setShowCustomCategory(false);
                     }
                   }}
@@ -268,7 +268,7 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
                     value={customCategory}
                     onChange={(e) => {
                       setCustomCategory(e.target.value);
-                      handleChange("categories", e.target.value);
+                      handleChange("category", e.target.value);
                     }}
                     autoFocus
                   />
@@ -277,7 +277,7 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
                     onClick={() => {
                       setShowCustomCategory(false);
                       setCustomCategory("");
-                      handleChange("categories", "");
+                      handleChange("category", "");
                     }}
                     className="category-back-button"
                   >
@@ -286,9 +286,9 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
                 </div>
               )}
             </div>
-            {errors.categories && (
+            {errors.category && (
               <span style={{ color: "#ef4444", fontSize: "14px", marginTop: "4px", display: "block" }}>
-                {errors.categories}
+                {errors.category}
               </span>
             )}
           </div>
@@ -326,13 +326,13 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
               step={1000}
               placeholder="VD: 1000000"
               className="form-input"
-              value={formData.start_price || ""}
-              onChange={(e) => handleChange("start_price", e.target.value ? Number(e.target.value) : 0)}
-              aria-invalid={!!errors.start_price}
+              value={formData.startPrice || ""}
+              onChange={(e) => handleChange("startPrice", e.target.value ? Number(e.target.value) : 0)}
+              aria-invalid={!!errors.startPrice}
             />
-            {errors.start_price && (
+            {errors.startPrice && (
               <span style={{ color: "#ef4444", fontSize: "14px", marginTop: "4px", display: "block" }}>
-                {errors.start_price}
+                {errors.startPrice}
               </span>
             )}
           </div>
