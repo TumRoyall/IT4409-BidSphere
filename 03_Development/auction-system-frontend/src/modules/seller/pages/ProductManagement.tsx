@@ -76,7 +76,7 @@ const ProductManagement = (): React.ReactElement => {
       };
 
       const response = await createProduct(finalPayload);
-      const productId = response?.product_id || response?.id;
+      const productId = response?.productId || response?.id;
       console.log("✅ Product created with ID:", productId);
 
       // Đóng modal
@@ -328,11 +328,11 @@ const ProductManagement = (): React.ReactElement => {
                  <img
                    src={
                      // Try to get thumbnail image first from images array
-                     selectedProduct.images?.find((img: any) => img.is_thumbnail)?.image_url ||
+                     selectedProduct.images?.find((img: any) => img.isThumbnail)?.url ||
                      // Fallback to first image in array
-                     selectedProduct.images?.[0]?.image_url ||
-                     // Fallback to product.image_url
-                     selectedProduct.image_url ||
+                     selectedProduct.images?.[0]?.url ||
+                     // Fallback to product.imageUrl
+                     selectedProduct.imageUrl ||
                      "/placeholder-product.png"
                    }
                    alt={selectedProduct.name}
@@ -400,7 +400,7 @@ const ProductManagement = (): React.ReactElement => {
                      </div>
                      <div className="detail-item">
                        <div className="detail-label">Category</div>
-                       <div className="detail-value">{selectedProduct.categories}</div>
+                       <div className="detail-value">{selectedProduct.category}</div>
                      </div>
                      <div className="detail-item">
                        <div className="detail-label">Status</div>
@@ -417,10 +417,10 @@ const ProductManagement = (): React.ReactElement => {
                            style: "currency",
                            currency: "VND",
                            minimumFractionDigits: 0,
-                         }).format(selectedProduct.start_price)}
+                         }).format(selectedProduct.startPrice)}
                        </div>
                      </div>
-                     {selectedProduct.estimate_price && (
+                     {selectedProduct.estimatePrice && (
                        <div className="detail-item">
                          <div className="detail-label">Estimate Price</div>
                          <div className="detail-value">
@@ -428,7 +428,7 @@ const ProductManagement = (): React.ReactElement => {
                              style: "currency",
                              currency: "VND",
                              minimumFractionDigits: 0,
-                           }).format(Number(selectedProduct.estimate_price))}
+                           }).format(Number(selectedProduct.estimatePrice))}
                          </div>
                        </div>
                      )}
@@ -439,13 +439,13 @@ const ProductManagement = (): React.ReactElement => {
                            style: "currency",
                            currency: "VND",
                            minimumFractionDigits: 0,
-                         }).format(selectedProduct.deposit)}
+                         }).format(selectedProduct.deposit || 0)}
                        </div>
                      </div>
                      <div className="detail-item">
                        <div className="detail-label">Created</div>
                        <div className="detail-value">
-                         {new Date(selectedProduct.created_at).toLocaleDateString("vi-VN")}
+                         {new Date(selectedProduct.createdAt).toLocaleDateString("vi-VN")}
                        </div>
                      </div>
                    </div>

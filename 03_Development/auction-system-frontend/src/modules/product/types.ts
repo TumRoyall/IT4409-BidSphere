@@ -9,15 +9,15 @@ export interface Product {
   sellerId: number;
   name: string;
   category?: string;
-  categories?: string;
   description: string;
   startPrice: number;
-  estimatePrice?: string | number;
-  deposit: number;
-  imageUrl: string;
+  estimatePrice?: number;
+  deposit?: number;
+  imageUrl?: string;
   status: ProductStatus;
   createdAt: string;
-  updatedAt?: string;
+  isDeleted?: boolean;
+  deletedAt?: string;
   images?: ProductImage[];
   auction?: Auction | null;
 }
@@ -36,7 +36,7 @@ export type ProductStatus = typeof PRODUCT_STATUS[keyof typeof PRODUCT_STATUS];
 export interface ProductImage {
   imageId: number;
   productId: number;
-  imageUrl: string;
+  url: string;
   isThumbnail: boolean;
 }
 

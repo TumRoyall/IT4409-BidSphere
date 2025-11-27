@@ -20,21 +20,21 @@ const parsePrice = (value: any): number => {
 };
 
 const transformProducts = (rawProducts: any[]): Product[] => {
-return rawProducts.map((p) => ({
-productId: p.productId || p.product_id,
-sellerId: p.sellerId || p.seller_id,
-name: p.name,
-categories: p.categories,
-description: p.description,
-startPrice: parsePrice(p.startPrice || p.start_price),
-estimatePrice: p.estimatePrice || p.estimate_price || "",
-deposit: parsePrice(p.deposit),
-imageUrl: p.imageUrl || p.image_url || "",
-status: p.status,
-createdAt: p.createdAt || p.created_at,
-images: p.images,
-auction: p.auction,
-}));
+  return rawProducts.map((p) => ({
+    productId: p.productId || p.product_id,
+    sellerId: p.sellerId || p.seller_id,
+    name: p.name,
+    category: p.category,
+    description: p.description,
+    startPrice: parsePrice(p.startPrice || p.start_price),
+    estimatePrice: parsePrice(p.estimatePrice || p.estimate_price),
+    deposit: parsePrice(p.deposit),
+    imageUrl: p.imageUrl || p.image_url || "",
+    status: p.status,
+    createdAt: p.createdAt || p.created_at,
+    images: p.images,
+    auction: p.auction,
+  }));
 };
 
 /**
@@ -104,7 +104,7 @@ export const useSellerProducts = (initialFilters?: Partial<ProductFilters>) => {
         productData = productData.filter((p: any) =>
           (p.name?.toLowerCase().includes(searchLower) || 
            p.description?.toLowerCase().includes(searchLower) ||
-           p.categories?.toLowerCase().includes(searchLower))
+           p.category?.toLowerCase().includes(searchLower))
         );
       }
       
@@ -294,7 +294,7 @@ export const useSellerStatistics = () => {
       const auctions = Array.isArray(auctionsResponse.data) ? auctionsResponse.data : [];
 
       // Filter auctions by products of current seller
-      const sellerProductIds = new Set(products.map(p => p.product_id));
+      const sellerProductIds = new Set(products.map(p => p.productId));
       const sellerAuctions = auctions.filter((a: any) => 
         sellerProductIds.has(a.productId || a.product_id)
       );
