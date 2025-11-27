@@ -1,6 +1,13 @@
-import React from "react";
+interface HelpArticle {
+  title: string;
+  summary: string;
+}
 
-const HelpArticleCard = ({ article }) => {
+interface HelpArticleCardProps {
+  article: HelpArticle;
+}
+
+const HelpArticleCard = ({ article }: HelpArticleCardProps) => {
   return (
     <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
       <h2 className="text-lg font-semibold text-blue-700">{article.title}</h2>

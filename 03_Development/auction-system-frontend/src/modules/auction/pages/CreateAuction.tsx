@@ -1,8 +1,9 @@
-// Member 3 - Auction Module
-// Create Auction Page
+// src/modules/auction/pages/CreateAuction.tsx
+// Member 3 - Auction Module - Create Auction Session
+import CreateAuctionSession from "./CreateAuctionSession";
 
 const CreateAuction = () => {
-  return <div>Create Auction - TODO: Form to create new auction</div>;
+  return <CreateAuctionSession />;
 };
 
 export default CreateAuction;

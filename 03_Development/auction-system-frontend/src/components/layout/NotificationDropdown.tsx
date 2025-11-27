@@ -2,14 +2,22 @@ import { useState, useEffect } from "react";
 import { Bell } from "lucide-react";
 import styles from "./layout.module.css";
 
+type NotificationItem = {
+  id: number;
+  message: string;
+  is_read: boolean;
+  created_at: string;
+  link: string;
+};
+
 export default function NotificationDropdown() {
   const [open, setOpen] = useState(false);
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [visibleCount, setVisibleCount] = useState(8); // hiển thị 8 cái đầu tiên
 
   useEffect(() => {
     // ⚡ Mock dữ liệu giả lập (sau này thay bằng API / DB)
-    const mock = [
+    const mock: NotificationItem[] = [
       {
         id: 1,
         message: "🎉 Chúc mừng bạn đã THẮNG phiên đấu giá MacBook Pro M2!",

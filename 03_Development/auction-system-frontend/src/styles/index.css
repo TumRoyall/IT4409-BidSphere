@@ -3,6 +3,8 @@
  * Import all CSS files here
  */
 
+@import './tailwind.css';
+
 /* Global Styles */
 @import './global.css';
 

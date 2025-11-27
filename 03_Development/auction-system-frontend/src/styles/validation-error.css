@@ -1,0 +1,91 @@
+/* src/styles/validation-error.css */
+
+.validation-error-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 0.375rem;
+  color: #991b1b;
+  margin-bottom: 1rem;
+}
+
+.error-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: #fecaca;
+  border-radius: 50%;
+  color: #dc2626;
+}
+
+.error-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.error-content {
+  flex: 1;
+}
+
+.error-title {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #991b1b;
+}
+
+.error-message {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #7f1d1d;
+  line-height: 1.5;
+}
+
+.error-dismiss {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: #991b1b;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: opacity 0.2s;
+}
+
+.error-dismiss:hover {
+  opacity: 0.7;
+}
+
+.error-dismiss:focus {
+  outline: 2px solid #dc2626;
+  outline-offset: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .validation-error-alert {
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .error-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 0.125rem;
+  }
+
+  .error-title {
+    font-size: 0.875rem;
+  }
+
+  .error-message {
+    font-size: 0.8125rem;
+  }
+}

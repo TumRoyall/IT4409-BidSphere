@@ -28,10 +28,12 @@ export const userApi = {
     }
   },
 
-  updateAvatar: (formData: FormData) =>
-      axiosClient.put("/users/me/avatar", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      }),
+  async updateAvatar(formData: FormData) {
+    const res = await axiosClient.put("/users/me/avatar", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return res.data;
+  },
 
   changePassword: (body: { currentPassword: string; newPassword: string }) =>
       axiosClient.patch("/users/change-password", body),
