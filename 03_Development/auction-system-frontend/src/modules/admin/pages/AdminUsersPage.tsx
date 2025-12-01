@@ -205,7 +205,7 @@ const AdminUsersPage: React.FC = () => {
 
         <div className="status-dropdown" ref={dropdownRef}>
           <div className="dropdown-button" onClick={() => setDropdownOpen(!dropdownOpen)}>
-            Filter Status {selectedStatuses.length > 0 ? `(${selectedStatuses.length})` : ""}
+             Status {selectedStatuses.length > 0 ? `(${selectedStatuses.length})` : ""}
           </div>
           {dropdownOpen && (
             <div className="dropdown-content">
