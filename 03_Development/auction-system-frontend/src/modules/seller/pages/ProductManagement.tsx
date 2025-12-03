@@ -322,65 +322,83 @@ const ProductManagement = (): React.ReactElement => {
            size="xl"
          >
            {selectedProduct && (
-             <div className="view-details-content">
-               <div className="details-image-container">
-                 {/* Main/Thumbnail Image */}
-                 <img
-                   src={
-                     // Try to get thumbnail image first from images array
-                     selectedProduct.images?.find((img: any) => img.isThumbnail)?.url ||
-                     // Fallback to first image in array
-                     selectedProduct.images?.[0]?.url ||
-                     // Fallback to product.imageUrl
-                     selectedProduct.imageUrl ||
-                     "/placeholder-product.png"
-                   }
-                   alt={selectedProduct.name}
-                   className="details-image"
-                   onError={(e) => {
-                     (e.target as HTMLImageElement).src = "/placeholder-product.png";
-                   }}
-                 />
+             <div className="view-details-content" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px", alignItems: "start" }}>
+               {/* LEFT: Image Section */}
+               <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                 {/* Main Image */}
+                 <div style={{
+                   borderRadius: "12px",
+                   overflow: "hidden",
+                   border: "1px solid #e2e8f0",
+                   background: "#f7fafc",
+                   aspectRatio: "1",
+                   display: "flex",
+                   alignItems: "center",
+                   justifyContent: "center"
+                 }}>
+                   <img
+                     src={
+                       selectedProduct.images?.find((img: any) => img.isThumbnail)?.url ||
+                       selectedProduct.images?.[0]?.url ||
+                       selectedProduct.imageUrl ||
+                       "/placeholder-product.png"
+                     }
+                     alt={selectedProduct.name}
+                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                     onError={(e) => {
+                       (e.target as HTMLImageElement).src = "/placeholder-product.png";
+                     }}
+                   />
+                 </div>
                  
-                 {/* All product images gallery (if multiple images) */}
+                 {/* Images Gallery Thumbnails */}
                  {selectedProduct.images && selectedProduct.images.length > 1 && (
-                   <div style={{ marginTop: "16px" }}>
-                     <h4 style={{ fontSize: "14px", fontWeight: 600, marginBottom: "8px", color: "#666" }}>
+                   <div>
+                     <h4 style={{ fontSize: "12px", fontWeight: 600, color: "#718096", textTransform: "uppercase", marginBottom: "10px", margin: "0 0 10px 0" }}>
                        All Images ({selectedProduct.images.length})
                      </h4>
-                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(80px, 1fr))", gap: "8px" }}>
+                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(70px, 1fr))", gap: "8px" }}>
                        {selectedProduct.images.map((img: any, idx: number) => (
                          <div
-                           key={img.image_id || idx}
+                           key={img.imageId || idx}
                            style={{
-                             position: "relative",
                              borderRadius: "6px",
                              overflow: "hidden",
-                             border: img.is_thumbnail ? "2px solid #1e3a5f" : "1px solid #ddd",
+                             border: img.isThumbnail ? "2px solid #667eea" : "1px solid #e2e8f0",
                              aspectRatio: "1",
+                             background: "#f7fafc",
+                             position: "relative",
+                             cursor: "pointer",
+                             transition: "transform 0.2s"
+                           }}
+                           onMouseEnter={(e) => {
+                             (e.currentTarget as HTMLElement).style.transform = "scale(1.05)";
+                           }}
+                           onMouseLeave={(e) => {
+                             (e.currentTarget as HTMLElement).style.transform = "scale(1)";
                            }}
                          >
                            <img
-                             src={img.image_url}
-                             alt={`Product image ${idx + 1}`}
+                             src={img.url || img.image_url}
+                             alt={`Product ${idx}`}
                              style={{ width: "100%", height: "100%", objectFit: "cover" }}
                              onError={(e) => {
                                (e.target as HTMLImageElement).src = "/placeholder-product.png";
                              }}
                            />
-                           {img.is_thumbnail && (
+                           {img.isThumbnail && (
                              <div style={{
                                position: "absolute",
-                               top: "4px",
-                               right: "4px",
-                               background: "#1e3a5f",
+                               top: "2px",
+                               right: "2px",
+                               background: "#667eea",
                                color: "white",
-                               fontSize: "10px",
+                               fontSize: "8px",
                                fontWeight: 700,
                                padding: "2px 4px",
                                borderRadius: "3px"
                              }}>
-                               THUMB
+                               MAIN
                              </div>
                            )}
                          </div>
@@ -390,81 +408,118 @@ const ProductManagement = (): React.ReactElement => {
                  )}
                </div>
 
-               <div className="details-content">
-                 <div className="detail-section">
-                   <h3 className="section-title">Product Information</h3>
-                   <div className="details-grid">
-                     <div className="detail-item">
-                       <div className="detail-label">Name</div>
-                       <div className="detail-value">{selectedProduct.name}</div>
-                     </div>
-                     <div className="detail-item">
-                       <div className="detail-label">Category</div>
-                       <div className="detail-value">{selectedProduct.category}</div>
-                     </div>
-                     <div className="detail-item">
-                       <div className="detail-label">Status</div>
-                       <div className="detail-value">
-                         <span className={`badge badge-${selectedProduct.status}`}>
-                           {selectedProduct.status}
-                         </span>
-                       </div>
-                     </div>
-                     <div className="detail-item">
-                       <div className="detail-label">Start Price</div>
-                       <div className="detail-value price-highlight">
-                         {new Intl.NumberFormat("vi-VN", {
-                           style: "currency",
-                           currency: "VND",
-                           minimumFractionDigits: 0,
-                         }).format(selectedProduct.startPrice)}
-                       </div>
-                     </div>
-                     {selectedProduct.estimatePrice && (
-                       <div className="detail-item">
-                         <div className="detail-label">Estimate Price</div>
-                         <div className="detail-value">
-                           {new Intl.NumberFormat("vi-VN", {
-                             style: "currency",
-                             currency: "VND",
-                             minimumFractionDigits: 0,
-                           }).format(Number(selectedProduct.estimatePrice))}
-                         </div>
-                       </div>
+               {/* RIGHT: Info Section */}
+               <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                 {/* Header */}
+                 <div>
+                   <h2 style={{ fontSize: "24px", fontWeight: 700, color: "#1a202c", margin: "0 0 12px 0" }}>
+                     {selectedProduct.name}
+                   </h2>
+                   <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
+                     {selectedProduct.status && (
+                       <span 
+                         className={`badge badge-${selectedProduct.status}`}
+                         style={{
+                           display: "inline-block",
+                           padding: "6px 14px",
+                           borderRadius: "6px",
+                           fontSize: "12px",
+                           fontWeight: 600,
+                           textTransform: "capitalize"
+                         }}
+                       >
+                         {selectedProduct.status}
+                       </span>
                      )}
-                     <div className="detail-item">
-                       <div className="detail-label">Deposit Required</div>
-                       <div className="detail-value">
-                         {new Intl.NumberFormat("vi-VN", {
-                           style: "currency",
-                           currency: "VND",
-                           minimumFractionDigits: 0,
-                         }).format(selectedProduct.deposit || 0)}
-                       </div>
-                     </div>
-                     <div className="detail-item">
-                       <div className="detail-label">Created</div>
-                       <div className="detail-value">
-                         {new Date(selectedProduct.createdAt).toLocaleDateString("vi-VN")}
-                       </div>
-                     </div>
+                     <span style={{ fontSize: "13px", color: "#718096" }}>
+                       Created: {new Date(selectedProduct.createdAt).toLocaleDateString("vi-VN")}
+                     </span>
                    </div>
                  </div>
 
-                 <div className="detail-section">
-                   <h3 className="section-title">Description</h3>
-                   <div className="section-content description-text">
-                     {selectedProduct.description}
+                 {/* Price Section */}
+                 <div style={{
+                   background: "linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%)",
+                   border: "1px solid #e2e8f0",
+                   borderRadius: "8px",
+                   padding: "16px"
+                 }}>
+                   <div style={{ marginBottom: "12px" }}>
+                     <span style={{ fontSize: "12px", color: "#718096", fontWeight: 600 }}>STARTING PRICE</span>
+                     <p style={{ fontSize: "28px", fontWeight: 700, color: "#667eea", margin: "4px 0 0 0" }}>
+                       {new Intl.NumberFormat("vi-VN", {
+                         style: "currency",
+                         currency: "VND",
+                         minimumFractionDigits: 0,
+                       }).format(selectedProduct.startPrice)}
+                     </p>
                    </div>
+                   {selectedProduct.estimatePrice && (
+                     <div style={{ paddingTop: "12px", borderTop: "1px solid #cbd5e0" }}>
+                       <span style={{ fontSize: "12px", color: "#718096", fontWeight: 600 }}>ESTIMATE PRICE</span>
+                       <p style={{ fontSize: "16px", fontWeight: 600, color: "#2d3748", margin: "4px 0 0 0" }}>
+                         {new Intl.NumberFormat("vi-VN", {
+                           style: "currency",
+                           currency: "VND",
+                           minimumFractionDigits: 0,
+                         }).format(Number(selectedProduct.estimatePrice))}
+                       </p>
+                     </div>
+                   )}
+                 </div>
+
+                 {/* Info Grid */}
+                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                   <div style={{ padding: "12px", background: "#f7fafc", borderRadius: "6px" }}>
+                     <span style={{ fontSize: "11px", color: "#718096", fontWeight: 600, textTransform: "uppercase" }}>Category</span>
+                     <p style={{ margin: "6px 0 0 0", fontSize: "14px", fontWeight: 600, color: "#2d3748" }}>
+                       {selectedProduct.category || "—"}
+                     </p>
+                   </div>
+                   <div style={{ padding: "12px", background: "#f7fafc", borderRadius: "6px" }}>
+                     <span style={{ fontSize: "11px", color: "#718096", fontWeight: 600, textTransform: "uppercase" }}>Deposit</span>
+                     <p style={{ margin: "6px 0 0 0", fontSize: "14px", fontWeight: 600, color: "#2d3748" }}>
+                       {new Intl.NumberFormat("vi-VN", {
+                         style: "currency",
+                         currency: "VND",
+                         minimumFractionDigits: 0,
+                       }).format(selectedProduct.deposit || 0)}
+                     </p>
+                   </div>
+                 </div>
+
+                 {/* Description */}
+                 <div>
+                   <h3 style={{ fontSize: "14px", fontWeight: 600, color: "#2d3748", marginBottom: "8px" }}>Description</h3>
+                   <p style={{ fontSize: "14px", color: "#4a5568", lineHeight: 1.6, margin: 0 }}>
+                     {selectedProduct.description || "No description provided"}
+                   </p>
                  </div>
                </div>
 
-               <div className="details-actions">
+               {/* Close Button */}
+               <div style={{ gridColumn: "1 / -1", paddingTop: "16px", borderTop: "1px solid #e2e8f0", display: "flex", justifyContent: "flex-end" }}>
                  <button
-                   className="cancel-button"
+                   style={{
+                     padding: "10px 24px",
+                     background: "#667eea",
+                     color: "white",
+                     border: "none",
+                     borderRadius: "6px",
+                     fontSize: "14px",
+                     fontWeight: 600,
+                     cursor: "pointer",
+                     transition: "background 0.2s"
+                   }}
                    onClick={() => {
                      setIsViewDetailsModalOpen(false);
                      setSelectedProduct(null);
+                   }}
+                   onMouseEnter={(e) => {
+                     (e.currentTarget as HTMLElement).style.background = "#5568d3";
+                   }}
+                   onMouseLeave={(e) => {
+                     (e.currentTarget as HTMLElement).style.background = "#667eea";
                    }}
                  >
                    Close

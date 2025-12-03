@@ -4,7 +4,7 @@ import { Button } from "@/components/common/Button";
 import { Input } from "@/components/common/Input";
 import { Textarea } from "@/components/common/TextArea";
 import CategorySelect from "@/components/common/CategorySelect";
-import { Edit2, DollarSign } from "lucide-react";
+import { Edit2, DollarSign, Upload, Trash2, CheckCircle } from "lucide-react";
 import type { Product } from "../types/seller.types";
 
 interface EditProductModalProps {
@@ -109,7 +109,8 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
           if (it.file) {
             // This is a newly uploaded file
             const resp: any = responses.shift();
-            const secureUrl = resp?.data?.url || resp?.url || "";
+            const secureUrl = resp?.data?.image_url || resp?.data?.url || resp?.url || "";
+            console.log("✅ Upload response:", resp?.data);
             return {
               url: secureUrl,  // Backend expects 'url'
               isThumbnail: !!it.isThumbnail,
@@ -325,6 +326,159 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
               </p>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* Images Section */}
+      <div style={{ marginBottom: "28px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
+          <div style={{ width: "4px", height: "24px", background: "#667eea", borderRadius: "2px" }}></div>
+          <h4 style={{ fontSize: "13px", fontWeight: 700, color: "#2d3748", textTransform: "uppercase", letterSpacing: "0.5px", margin: 0, display: "flex", alignItems: "center", gap: "6px" }}>
+            <Upload size={16} style={{ color: "#667eea" }} />
+            Product Images
+          </h4>
+        </div>
+
+        {/* Existing Images Gallery */}
+        {imagesList.length > 0 && (
+          <div style={{ marginBottom: "20px" }}>
+            <h5 style={{ fontSize: "12px", fontWeight: 600, color: "#718096", marginBottom: "12px" }}>Current Images</h5>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))", gap: "12px" }}>
+              {imagesList.map((img: any, idx: number) => (
+                <div
+                  key={idx}
+                  style={{
+                    position: "relative",
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                    border: img.isThumbnail ? "3px solid #667eea" : "1px solid #e2e8f0",
+                    aspectRatio: "1",
+                    background: "#f7fafc"
+                  }}
+                >
+                  <img
+                    src={img.preview || img.url}
+                    alt={`Product ${idx + 1}`}
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                  {img.isThumbnail && (
+                    <div style={{
+                      position: "absolute",
+                      top: "4px",
+                      right: "4px",
+                      background: "#667eea",
+                      color: "white",
+                      padding: "4px 8px",
+                      borderRadius: "4px",
+                      fontSize: "10px",
+                      fontWeight: 700,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px"
+                    }}>
+                      <CheckCircle size={12} /> MAIN
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (confirm("Remove this image?")) {
+                        setImagesList(imagesList.filter((_, i) => i !== idx));
+                      }
+                    }}
+                    style={{
+                      position: "absolute",
+                      bottom: "4px",
+                      right: "4px",
+                      background: "#ef4444",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "4px",
+                      padding: "4px 6px",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center"
+                    }}
+                  >
+                    <Trash2 size={12} />
+                  </button>
+                  {/* Set as thumbnail button */}
+                  {!img.isThumbnail && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setImagesList(imagesList.map((i, index) => ({
+                          ...i,
+                          isThumbnail: index === idx
+                        })));
+                      }}
+                      style={{
+                        position: "absolute",
+                        top: "4px",
+                        left: "4px",
+                        background: "rgba(0, 0, 0, 0.5)",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "4px",
+                        padding: "4px 8px",
+                        cursor: "pointer",
+                        fontSize: "10px",
+                        fontWeight: 600
+                      }}
+                    >
+                      Set Main
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Upload New Images */}
+        <div style={{
+          border: "2px dashed #cbd5e0",
+          borderRadius: "8px",
+          padding: "20px",
+          textAlign: "center",
+          background: "#f7fafc",
+          cursor: "pointer",
+          transition: "all 0.3s"
+        }}>
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            id="image-upload"
+            style={{ display: "none" }}
+            onChange={(e) => {
+              const files = Array.from(e.target.files || []);
+              files.forEach((file: any) => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                  setImagesList([
+                    ...imagesList,
+                    {
+                      file,
+                      preview: event.target?.result,
+                      url: null,
+                      isThumbnail: imagesList.length === 0,
+                    }
+                  ]);
+                };
+                reader.readAsDataURL(file);
+              });
+            }}
+          />
+          <label htmlFor="image-upload" style={{ cursor: "pointer", display: "block" }}>
+            <Upload size={24} style={{ color: "#667eea", margin: "0 auto 8px" }} />
+            <p style={{ margin: "8px 0 4px", fontSize: "14px", fontWeight: 600, color: "#2d3748" }}>
+              Click to upload or drag images here
+            </p>
+            <p style={{ margin: 0, fontSize: "12px", color: "#718096" }}>
+              PNG, JPG up to 10MB
+            </p>
+          </label>
         </div>
       </div>
 

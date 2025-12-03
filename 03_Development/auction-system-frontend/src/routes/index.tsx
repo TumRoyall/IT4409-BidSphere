@@ -15,6 +15,7 @@ import LoginPage from "@/modules/auth/pages/LoginPage";
 import RegisterPage from "@/modules/auth/pages/RegisterPage";
 // Seller + product modules (existing)
 import ProductManagement from "@/modules/seller/pages/ProductManagement";
+import SellerProfile from "@/modules/seller/pages/SellerProfile";
 import ProductList from "@/modules/product/pages/ProductList";
 import ProductDetail from "@/modules/product/pages/ProductDetail";
 import CreateProduct from "@/modules/product/pages/CreateProduct";
@@ -59,7 +60,11 @@ export default function AppRoutes() {
 
           {/* Feedbacks - Public */}
           <Route path="/feedbacks" element={<FeedbackList />} />
-        </Route>
+
+          {/* Seller Profile - Public */}
+          <Route path="/seller/profile" element={<SellerProfile />} />
+          <Route path="/seller/:sellerId/profile" element={<SellerProfile />} />
+          </Route>
 
         {/* SELLER AREA – protected under MainLayout */}
         <Route

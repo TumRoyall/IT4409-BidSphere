@@ -63,14 +63,6 @@ export interface AuctionResponse {
   winner_id: number | null;
 }
 
-export interface StatisticsResponse {
-  total_products: number;
-  active_sessions: number;
-  pending_approval: number;
-  total_revenue?: number;
-  total_sold?: number;
-}
-
 // ==========================================
 // 🔧 API METHODS
 // ==========================================
@@ -239,16 +231,6 @@ const sellerApi = {
     return axiosClient.delete(`/auctions/${auctionId}`);
   },
 
-  // ============ STATISTICS ============
-
-  /**
-   * Lấy thống kê
-   * Note: Thay thế với các endpoint tương ứng từ productApi và auctionApi
-   */
-  getStatistics: () => {
-    // For now, return a placeholder since backend doesn't have dedicated stats endpoint
-    return axiosClient.get<StatisticsResponse>("/products");
-  },
 };
 
 export default sellerApi;

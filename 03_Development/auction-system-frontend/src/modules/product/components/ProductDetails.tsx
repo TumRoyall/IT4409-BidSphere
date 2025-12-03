@@ -13,7 +13,7 @@ import {
 import { Textarea } from "@/components/common/TextArea";
 import { PRODUCT_CATEGORIES } from "../types";
 import type { ProductFormData } from "../types";
-import sellerApi from "@/api/modules/seller.api";
+import productApi from "@/api/modules/product.api";
 import { useAuth } from "@/hooks/useAuth";
 import "@/styles/seller.css";
 
@@ -57,11 +57,11 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
   const loadCategories = async () => {
     try {
       setCategoriesLoading(true);
-      const response = await sellerApi.getProducts?.({ limit: 1 });
-      const items = response?.data?.products ?? [];
+      const response = await productApi.getProductsPage(0, 100);
+      const items = response.data.content ?? [];
       const categorySet = new Set<string>();
       items.forEach((product: any) => {
-        if (product?.categories) categorySet.add(String(product.categories));
+        if (product?.category) categorySet.add(String(product.category));
       });
       const categories = Array.from(categorySet).map((cat) => ({ value: cat, label: cat }));
       setBackendCategories(categories.length ? categories : [...PRODUCT_CATEGORIES]);

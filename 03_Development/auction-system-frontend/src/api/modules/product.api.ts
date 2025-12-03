@@ -62,17 +62,9 @@ export interface ProductApprovalRequest {
 // ==================== API FUNCTIONS ====================
 
 const productApi = {
-  // Get all products
-  getProducts: () =>
-    axiosClient.get<ProductResponse[]>("/products"),
-
   // Get product by ID
   getProductById: (productId: number) =>
   axiosClient.get<ProductResponse>(`/products/${productId}`),
-
-  // Get products by seller ID
-  getProductsBySeller: (sellerId: number) =>
-  axiosClient.get<ProductResponse[]>(`/products/seller/${sellerId}`),
 
   // Get products for current seller (use token to resolve seller) with pagination
   getProductsBySellerMePage: async (page: number = 0, size: number = 10) => {
@@ -101,26 +93,13 @@ const productApi = {
       `/products/${productId}`
     ),
 
-  // Upload image (if using separate endpoint)
+  // Upload image
   uploadImage: (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
-    return axiosClient.post<{ url: string }>("/upload", formData, {
+    return axiosClient.post<{ image_url: string }>("/upload", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
-  },
-
-  // Upload image with isThumbnail flag
-  uploadImageWithThumbnail: (file: File, productId: number, isThumbnail: boolean = false) => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("productId", String(productId));
-    formData.append("isThumbnail", isThumbnail ? "1" : "0");
-    return axiosClient.post<{ url: string; imageId: number; isThumbnail: boolean }>(
-      "/upload",
-      formData,
-      { headers: { "Content-Type": "multipart/form-data" } }
-    );
   },
 
   // Approve or reject product (admin only)

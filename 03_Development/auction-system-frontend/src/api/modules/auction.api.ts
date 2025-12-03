@@ -1,4 +1,3 @@
-// src/api/modules/auction.api.ts
 import axiosClient from "../axiosClient";
 
 // ==================== STATUS (const + type) ====================
@@ -66,7 +65,6 @@ export interface AuctionResponse {
   createdAt?: string;
   updatedAt?: string;
   winnerId?: number | null;
-  // Optional fields used by UI components
   productImageUrl?: string;
   productName?: string;
   startPrice?: number;
@@ -83,6 +81,10 @@ const auctionApi = {
   // 📊 Get list of all auctions
   getAllAuctions: () =>
     axiosClient.get<AuctionResponse[]>("/auctions"),
+
+  // 📊 Get active auctions
+  getActiveAuctions: () =>
+    axiosClient.get<AuctionResponse[]>("/auctions/active"),
 
   // 🔍 Get auction by ID
   getAuctionById: (auctionId: number) =>
@@ -103,14 +105,6 @@ const auctionApi = {
   // ⏹️ Close auction
   closeAuction: (auctionId: number) =>
     axiosClient.post<void>(`/auctions/${auctionId}/close`),
-
-  // 📊 Get active auctions
-  getActiveAuctions: () =>
-    axiosClient.get<AuctionResponse[]>("/auctions/active"),
-
-  // ✅ Approve or reject auction (admin/moderator)
-  approveAuction: (auctionId: number, data: { status: string; startTime?: string; endTime?: string; rejectionReason?: string }) =>
-    axiosClient.put<AuctionResponse>(`/auctions/${auctionId}/approve`, data),
 };
 
 export default auctionApi;

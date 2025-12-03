@@ -96,19 +96,16 @@ const ApprovedProducts: React.FC<ApprovedProductsProps> = ({
       {/* Products List */}
       <div className="products-list">
         {products.map((product, index) => (
-          <div key={product.product_id || `product-${index}`} className="product-card">
+          <div key={product.productId || `product-${index}`} className="product-card">
             {/* Product Content */}
             <div className="product-content">
               {/* Product Image */}
               <div className="product-image-wrapper">
                 <img
                   src={
-                    // Try to get thumbnail image first from images array
-                    product.images?.find((img: any) => img.is_thumbnail)?.image_url ||
-                    // Fallback to first image in array
-                    product.images?.[0]?.image_url ||
-                    // Fallback to product.image_url
-                    product.image_url ||
+                    product.images?.find((img: any) => img.isThumbnail)?.url ||
+                    product.images?.[0]?.url ||
+                    product.imageUrl ||
                     "/placeholder-product.png"
                   }
                   alt={product.name}
@@ -152,26 +149,26 @@ const ApprovedProducts: React.FC<ApprovedProductsProps> = ({
                   <div className="info-item">
                     <span className="info-label">Start Price</span>
                     <span className="info-value">
-                      {formatPrice(product.start_price)}
+                      {formatPrice(product.startPrice)}
                     </span>
                   </div>
 
                   <div className="info-item">
                     <span className="info-label">Category</span>
-                    <span className="info-value">{product.categories}</span>
+                    <span className="info-value">{product.category}</span>
                   </div>
 
                   <div className="info-item">
                     <span className="info-label">Deposit</span>
                     <span className="info-value">
-                      {formatPrice(product.deposit)}
+                      {formatPrice(product.deposit || 0)}
                     </span>
                   </div>
 
                   <div className="info-item">
                     <span className="info-label">Created</span>
                     <span className="info-value">
-                      {new Date(product.created_at).toLocaleDateString(
+                      {new Date(product.createdAt).toLocaleDateString(
                         "vi-VN"
                       )}
                     </span>
