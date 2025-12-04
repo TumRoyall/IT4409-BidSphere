@@ -47,6 +47,7 @@ export interface AuctionRequest {
   startTime?: string;
   endTime?: string;
   bidStepAmount?: number;
+  createdBy?: number;
 }
 
 export interface AuctionResponse {

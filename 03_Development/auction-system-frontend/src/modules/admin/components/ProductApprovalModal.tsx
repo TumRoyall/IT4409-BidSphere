@@ -45,7 +45,7 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
     if (product) {
       setFormData({
         deposit: product.deposit || 0,
-        estimatePrice: product.estimate_price ? Number(product.estimate_price) : 0,
+        estimatePrice: product.estimatePrice ? Number(product.estimatePrice) : 0,
         rejectionReason: "",
       });
       setAction(null);
@@ -67,7 +67,7 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
   };
 
   const handleApprove = async () => {
-    const productId = (product as any)?.product_id || (product as any)?.productId || (product as any)?.id;
+    const productId = (product as any)?.productId || (product as any)?.id;
     console.log("🔵 handleApprove called, product:", product);
     console.log("🔍 productId resolved to:", productId);
     if (!productId) {
@@ -117,7 +117,7 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
   };
 
   const handleReject = async () => {
-    const productId = (product as any)?.product_id || (product as any)?.productId || (product as any)?.id;
+    const productId = (product as any)?.productId || (product as any)?.id;
     console.log("🔴 handleReject called, product:", product);
     console.log("🔍 productId resolved to:", productId);
     if (!productId) {

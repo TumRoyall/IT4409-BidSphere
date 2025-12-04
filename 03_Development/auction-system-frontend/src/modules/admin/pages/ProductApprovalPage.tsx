@@ -262,7 +262,7 @@ const AdminProductApprovalPage: React.FC = () => {
         >
           {products.map((product) => (
           <div
-          key={(product as any).id || product.productId || String(Math.random())}
+          key={product.productId || (product as any).id || String(Math.random())}
               style={{
                 background: "white",
                 border: "1px solid #e2e8f0",
@@ -442,7 +442,7 @@ const AdminProductApprovalPage: React.FC = () => {
                  )}
                  {product.status?.toLowerCase() === "approved" && (
                    <Button
-                     onClick={() => handleReject((product as any).id || product.productId, "Admin cancelled this product")}
+                     onClick={() => handleReject(product.productId || (product as any).id, "Admin cancelled this product")}
                      style={{
                        width: "100%",
                        borderRadius: "6px",

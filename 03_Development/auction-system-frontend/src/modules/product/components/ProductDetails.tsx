@@ -142,8 +142,8 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
         images: images, // Include images array in payload
       };
       console.log("📤 Final payload before submit:", payload);
-      console.log("✅ Validation passed. Start price:", payload.startPrice, "Category:", payload.categories);
-      console.log("📸 Images to upload:", images.length, "files");
+       console.log("✅ Validation passed. Start price:", payload.startPrice, "Category:", payload.category);
+       console.log("📸 Images to upload:", images.length, "files");
       onSubmit(payload);
     }
   };

@@ -124,7 +124,7 @@ const AdminAuctionApprovalPage: React.FC = () => {
       ) : (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 12 }}>
           {auctions.map((a) => (
-            <div key={a.auctionId || a.id} style={{ background: "white", border: "1px solid #e2e8f0", borderRadius: 8, overflow: "hidden" }}>
+            <div key={a.auctionId || (a as any).id} style={{ background: "white", border: "1px solid #e2e8f0", borderRadius: 8, overflow: "hidden" }}>
               {a.productImageUrl && (
                 <div style={{ width: "100%", height: 160, overflow: "hidden" }}>
                   <img src={a.productImageUrl} alt={a.productName} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -177,7 +177,7 @@ const AdminAuctionApprovalPage: React.FC = () => {
                   )}
                   {a.status?.toLowerCase() === "open" && (
                     <Button
-                      onClick={() => handleReject(a.auctionId || a.id || 0)}
+                      onClick={() => handleReject(a.auctionId || (a as any).id || 0)}
                       style={{
                         flex: 1,
                         background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",

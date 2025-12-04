@@ -89,7 +89,7 @@ const SellerProfile = (): React.ReactElement => {
           const filteredAuctions = allAuctions
             .map((auction: AuctionResponse) => ({
               ...auction,
-              title: auction.product?.name || `Auction ${auction.auctionId || auction.id}`,
+              title: auction.product?.name || `Auction ${auction.auctionId}`,
               featured: false,
               thumbnail: auction.product?.imageUrl || auction.productImageUrl || "/placeholder-auction.png"
             }));

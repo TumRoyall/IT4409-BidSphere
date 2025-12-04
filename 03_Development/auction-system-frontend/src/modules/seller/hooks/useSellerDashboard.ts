@@ -147,7 +147,7 @@ export const useSellerDashboard = () => {
   const deleteProduct = useCallback(
     async (product: Product) => {
       try {
-        await actionsHook.deleteProduct(product.product_id);
+        await actionsHook.deleteProduct(product.productId);
         closeDeleteConfirm();
         productsHook.refresh();
         statsHook.refresh();

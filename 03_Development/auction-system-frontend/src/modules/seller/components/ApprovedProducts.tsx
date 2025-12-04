@@ -102,12 +102,12 @@ const ApprovedProducts: React.FC<ApprovedProductsProps> = ({
               {/* Product Image */}
               <div className="product-image-wrapper">
                 <img
-                  src={
-                    product.images?.find((img: any) => img.isThumbnail)?.url ||
-                    product.images?.[0]?.url ||
-                    product.imageUrl ||
-                    "/placeholder-product.png"
-                  }
+                   src={
+                     (product.images?.find((img: any) => img.isThumbnail)?.imageUrl || product.images?.find((img: any) => img.isThumbnail)?.url) ||
+                     (product.images?.[0]?.imageUrl || product.images?.[0]?.url) ||
+                     product.imageUrl ||
+                     "/placeholder-product.png"
+                   }
                   alt={product.name}
                   className="product-image"
                   onError={(e) => {

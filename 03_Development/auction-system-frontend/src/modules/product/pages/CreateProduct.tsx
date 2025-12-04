@@ -149,7 +149,7 @@ export default function CreateProduct() {
       console.log("Uploading images...");
       const uploadPromises = formData.images.map((f) => productApi.uploadImage(f));
       const uploadResponses = await Promise.all(uploadPromises);
-      const uploadedUrls = uploadResponses.map((r) => r?.data?.url).filter(Boolean) as string[];
+      const uploadedUrls = uploadResponses.map((r) => r?.data?.image_url).filter(Boolean) as string[];
 
       if (uploadedUrls.length === 0) {
         throw new Error("Failed to upload images or retrieve URLs");

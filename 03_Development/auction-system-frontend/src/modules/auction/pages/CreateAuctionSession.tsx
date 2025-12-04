@@ -37,7 +37,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
     productId: null,
     startTime: "",
     endTime: "",
-    minBidIncrement: 10000,
+    bidStepAmount: 10000,
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -122,14 +122,14 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
     return products.filter(
       (product) =>
         (product?.name ?? "").toLowerCase().includes(query) ||
-        (product?.category ?? product?.categories ?? "").toLowerCase().includes(query)
+        (product?.category ?? "").toLowerCase().includes(query)
     );
   }, [products, searchQuery]);
 
   // Handle product selection
   const handleSelectProduct = useCallback((product: Product) => {
-    // Backend returns camelCase, but also support snake_case and id
-    const id = product?.productId || product?.product_id || product?.id;
+    // Backend returns camelCase
+    const id = product?.productId || product?.id;
     console.log("Selected product:", product);
     console.log("Product ID extracted:", id, "from fields: productId=", product?.productId, "product_id=", product?.product_id, "id=", product?.id);
     
@@ -185,12 +185,12 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
       newErrors.endTime = "End date and time is required";
     }
 
-    if (formData.minBidIncrement <= 0) {
-      newErrors.minBidIncrement = "Minimum bid increment must be greater than 0";
-    }
-    if (formData.minBidIncrement < 1000) {
-      newErrors.minBidIncrement = "Minimum bid increment must be at least 1,000 VND";
-    }
+    if (formData.bidStepAmount <= 0) {
+       newErrors.bidStepAmount = "Minimum bid increment must be greater than 0";
+     }
+     if (formData.bidStepAmount < 1000) {
+       newErrors.bidStepAmount = "Minimum bid increment must be at least 1,000 VND";
+     }
 
     if (formData.startTime && formData.endTime) {
       const startDate = new Date(formData.startTime);
@@ -277,11 +277,11 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
       }
 
       const payload = {
-        productId,
-        startTime: formatDateTime(startDate),
-        endTime: formatDateTime(endDate),
-        bidStepAmount: String(formData.minBidIncrement),
-      };
+         productId,
+         startTime: formatDateTime(startDate),
+         endTime: formatDateTime(endDate),
+         bidStepAmount: formData.bidStepAmount,
+       };
 
       console.log("📤 Auction payload:", payload);
       const response = await auctionApi.createAuction(payload);
@@ -324,7 +324,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
     formData.productId &&
     formData.startTime &&
     formData.endTime &&
-    formData.minBidIncrement > 0;
+    formData.bidStepAmount > 0;
 
   const durationInfo = calculateDuration();
 
@@ -432,7 +432,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                     <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
                       {filteredProducts.map((product, index) => (
                         <li
-                          key={product.id || product.product_id || `product-${index}`}
+                          key={product.productId || product.id || `product-${index}`}
                           onClick={() => handleSelectProduct(product)}
                           style={{
                             padding: "12px 16px",
@@ -468,7 +468,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                             color: "#999",
                             }}
                             >
-                            {product.categories || product.category}
+                            {product.category}
                             </p>
                           </div>
                           <span
@@ -482,7 +482,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                           >
                             ₫
                             {(
-                              product.startPrice ?? product.start_price ?? 0
+                              product.startPrice ?? 0
                             ).toLocaleString("vi-VN")}
                           </span>
                         </li>
@@ -527,8 +527,8 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                 {selectedProduct.name}
               </h4>
               <p style={{ margin: "0 0 4px 0", fontSize: "12px", color: "#666" }}>
-                {selectedProduct.category || selectedProduct.categories}
-              </p>
+                  {selectedProduct.category}
+                </p>
               <p
                 style={{
                   margin: 0,
@@ -539,7 +539,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
               >
                 Start: ₫
                 {(
-                  selectedProduct.startPrice ?? selectedProduct.start_price ?? 0
+                  selectedProduct.startPrice ?? 0
                 ).toLocaleString("vi-VN")}
               </p>
             </div>
@@ -640,22 +640,22 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                 Minimum Bid Increment (VNĐ) *
               </Label>
               <Input
-                id="auction-increment"
-                type="number"
-                value={formData.minBidIncrement}
-                onChange={(e) =>
-                  handleFieldChange("minBidIncrement", parseInt(e.target.value) || 0)
-                }
-                min="1000"
-                step="1000"
-                className="form-input"
-                aria-invalid={!!errors.minBidIncrement}
-              />
-              {errors.minBidIncrement && (
-                <span style={{ color: "#ef4444", fontSize: "14px" }}>
-                  {errors.minBidIncrement}
-                </span>
-              )}
+                    id="auction-increment"
+                    type="number"
+                    value={formData.bidStepAmount}
+                    onChange={(e) =>
+                      handleFieldChange("bidStepAmount", parseInt(e.target.value) || 0)
+                    }
+                    min="1000"
+                    step="1000"
+                    className="form-input"
+                    aria-invalid={!!errors.bidStepAmount}
+                  />
+                  {errors.bidStepAmount && (
+                    <span style={{ color: "#ef4444", fontSize: "14px" }}>
+                      {errors.bidStepAmount}
+                    </span>
+                  )}
               <p
                 style={{
                   fontSize: "13px",
@@ -713,7 +713,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                       Category:
                     </span>
                     <span style={{ color: "#1a1a1a", fontWeight: 600, fontSize: "13px" }}>
-                      {selectedProduct.category || selectedProduct.categories}
+                      {selectedProduct.category}
                     </span>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -723,7 +723,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                     <span style={{ color: "#667eea", fontWeight: 600, fontSize: "13px" }}>
                       ₫
                       {(
-                        selectedProduct.startPrice ?? selectedProduct.start_price ?? 0
+                        selectedProduct.startPrice ?? 0
                       ).toLocaleString("vi-VN")}
                     </span>
                   </div>
@@ -804,7 +804,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                     Min Increment:
                   </span>
                   <span style={{ color: "#667eea", fontWeight: 600, fontSize: "13px" }}>
-                    ₫{formData.minBidIncrement.toLocaleString("vi-VN")}
+                    ₫{formData.bidStepAmount.toLocaleString("vi-VN")}
                   </span>
                 </div>
               </div>

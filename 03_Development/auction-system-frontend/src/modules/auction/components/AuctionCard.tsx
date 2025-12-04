@@ -84,8 +84,6 @@ export default function AuctionCard({ auction }: AuctionCardProps) {
             <span className="auction-card-price-value">
             $
             {(
-            auction.currentBid ||
-            auction.highestCurrentPrice ||
             auction.highestBid ||
             auction.product?.startPrice ||
             auction.startPrice ||

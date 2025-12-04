@@ -1,6 +1,7 @@
 // src/modules/seller/pages/ProductManagement.tsx
 import React, { useState } from "react";
 import productApi from "@/api/modules/product.api";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import {
   ActionToolBar,
   StatsOverview,
@@ -25,11 +26,25 @@ const ProductManagement = (): React.ReactElement => {
   const [isAuctionModalOpen, setIsAuctionModalOpen] = useState(false);
   const [isViewDetailsModalOpen, setIsViewDetailsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Sử dụng custom hooks
   const { products, loading, error, pagination, updateFilters, refresh } = useSellerProducts();
   const { createProduct, updateProduct, deleteProduct, loading: submitting } = useProductActions();
   const { stats, refresh: refreshStats } = useSellerStatistics();
+
+  const nextImage = () => {
+    if (selectedProduct?.images && currentImageIndex < selectedProduct.images.length - 1) {
+      setCurrentImageIndex(currentImageIndex + 1);
+    }
+  };
+
+  const prevImage = () => {
+    if (currentImageIndex > 0) {
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
+  };
 
   const handleOpenCreateModal = () => {
     setIsCreateModalOpen(true);
@@ -58,8 +73,7 @@ const ProductManagement = (): React.ReactElement => {
 
         imageRequests = uploadResponses.map((res: any, idx: number) => {
           // backend UploadController returns { image_url: secure_url }
-          const data = res?.data || res;
-          const secureUrl = data?.image_url || data?.secure_url || data?.secureUrl || data?.secureurl;
+          const secureUrl = res?.data?.image_url;
           return {
             secure_url: secureUrl,
             isThumbnail: idx === 0,
@@ -76,7 +90,7 @@ const ProductManagement = (): React.ReactElement => {
       };
 
       const response = await createProduct(finalPayload);
-      const productId = response?.productId || response?.id;
+      const productId = response?.productId;
       console.log("✅ Product created with ID:", productId);
 
       // Đóng modal
@@ -326,23 +340,31 @@ const ProductManagement = (): React.ReactElement => {
                {/* LEFT: Image Section */}
                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                  {/* Main Image */}
-                 <div style={{
-                   borderRadius: "12px",
-                   overflow: "hidden",
-                   border: "1px solid #e2e8f0",
-                   background: "#f7fafc",
-                   aspectRatio: "1",
-                   display: "flex",
-                   alignItems: "center",
-                   justifyContent: "center"
-                 }}>
-                   <img
-                     src={
-                       selectedProduct.images?.find((img: any) => img.isThumbnail)?.url ||
-                       selectedProduct.images?.[0]?.url ||
-                       selectedProduct.imageUrl ||
-                       "/placeholder-product.png"
+                 <div 
+                   onClick={() => {
+                     if (selectedProduct.images && selectedProduct.images.length > 0) {
+                       setGalleryOpen(true);
+                       setCurrentImageIndex(0);
                      }
+                   }}
+                   style={{
+                     borderRadius: "12px",
+                     overflow: "hidden",
+                     border: "1px solid #e2e8f0",
+                     background: "#f7fafc",
+                     aspectRatio: "1",
+                     display: "flex",
+                     alignItems: "center",
+                     justifyContent: "center",
+                     cursor: selectedProduct.images && selectedProduct.images.length > 0 ? "pointer" : "default"
+                   }}>
+                   <img
+                      src={
+                        selectedProduct.images?.find((img: any) => img.isThumbnail || img.thumbnail)?.imageUrl ||
+                        selectedProduct.images?.[0]?.imageUrl ||
+                        selectedProduct.imageUrl ||
+                        "/placeholder-product.png"
+                      }
                      alt={selectedProduct.name}
                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
                      onError={(e) => {
@@ -361,6 +383,10 @@ const ProductManagement = (): React.ReactElement => {
                        {selectedProduct.images.map((img: any, idx: number) => (
                          <div
                            key={img.imageId || idx}
+                           onClick={() => {
+                             setGalleryOpen(true);
+                             setCurrentImageIndex(idx);
+                           }}
                            style={{
                              borderRadius: "6px",
                              overflow: "hidden",
@@ -379,7 +405,7 @@ const ProductManagement = (): React.ReactElement => {
                            }}
                          >
                            <img
-                             src={img.url || img.image_url}
+                             src={img.imageUrl || img.url || img.image_url}
                              alt={`Product ${idx}`}
                              style={{ width: "100%", height: "100%", objectFit: "cover" }}
                              onError={(e) => {
@@ -528,6 +554,173 @@ const ProductManagement = (): React.ReactElement => {
              </div>
            )}
          </Modal>
+
+        {/* Gallery Modal */}
+        {galleryOpen && selectedProduct?.images && selectedProduct.images.length > 0 && (
+          <div style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 2000,
+            padding: "20px"
+          }}>
+            {/* Modal Container */}
+            <div style={{
+              background: "white",
+              borderRadius: "12px",
+              overflow: "hidden",
+              maxWidth: "800px",
+              maxHeight: "600px",
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)"
+            }}>
+              {/* Header with Close button */}
+              <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "16px",
+                borderBottom: "1px solid #e2e8f0",
+                background: "#f7fafc"
+              }}>
+                <h3 style={{ margin: 0, fontSize: "16px", fontWeight: 600, color: "#2d3748" }}>
+                  {selectedProduct.name}
+                </h3>
+                <button
+                  onClick={() => setGalleryOpen(false)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "#718096",
+                    cursor: "pointer",
+                    padding: "4px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transition: "color 0.2s"
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#2d3748")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "#718096")}
+                >
+                  <X size={24} />
+                </button>
+              </div>
+
+              {/* Main image */}
+              <div style={{
+                flex: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "#f7fafc",
+                position: "relative",
+                minHeight: "350px",
+                maxHeight: "350px",
+                overflow: "auto"
+              }}>
+                <img
+                  src={selectedProduct.images[currentImageIndex]?.imageUrl || selectedProduct.images[currentImageIndex]?.url}
+                  alt={`${selectedProduct.name} ${currentImageIndex + 1}`}
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "100%",
+                    objectFit: "contain",
+                    padding: "20px"
+                  }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/placeholder-product.png";
+                  }}
+                />
+              </div>
+
+              {/* Footer with navigation */}
+              {selectedProduct.images.length > 1 && (
+                <div style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "16px",
+                  borderTop: "1px solid #e2e8f0",
+                  background: "#f7fafc"
+                }}>
+                  <button
+                    onClick={prevImage}
+                    disabled={currentImageIndex === 0}
+                    style={{
+                      background: currentImageIndex === 0 ? "#e2e8f0" : "#667eea",
+                      border: "none",
+                      color: currentImageIndex === 0 ? "#a0aec0" : "white",
+                      cursor: currentImageIndex === 0 ? "not-allowed" : "pointer",
+                      padding: "8px 12px",
+                      borderRadius: "4px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                      fontSize: "13px",
+                      fontWeight: 500,
+                      transition: "background 0.2s"
+                    }}
+                    onMouseEnter={(e) => {
+                      if (currentImageIndex > 0) {
+                        e.currentTarget.style.background = "#5568d3";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = currentImageIndex === 0 ? "#e2e8f0" : "#667eea";
+                    }}
+                  >
+                    <ChevronLeft size={18} /> Previous
+                  </button>
+
+                  <div style={{
+                    color: "#718096",
+                    fontSize: "13px",
+                    fontWeight: 500
+                  }}>
+                    {currentImageIndex + 1} / {selectedProduct.images.length}
+                  </div>
+
+                  <button
+                    onClick={nextImage}
+                    disabled={currentImageIndex === selectedProduct.images.length - 1}
+                    style={{
+                      background: currentImageIndex === selectedProduct.images.length - 1 ? "#e2e8f0" : "#667eea",
+                      border: "none",
+                      color: currentImageIndex === selectedProduct.images.length - 1 ? "#a0aec0" : "white",
+                      cursor: currentImageIndex === selectedProduct.images.length - 1 ? "not-allowed" : "pointer",
+                      padding: "8px 12px",
+                      borderRadius: "4px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                      fontSize: "13px",
+                      fontWeight: 500,
+                      transition: "background 0.2s"
+                    }}
+                    onMouseEnter={(e) => {
+                      if (selectedProduct.images && currentImageIndex < selectedProduct.images.length - 1) {
+                        e.currentTarget.style.background = "#5568d3";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = (selectedProduct.images && currentImageIndex === selectedProduct.images.length - 1) ? "#e2e8f0" : "#667eea";
+                    }}
+                  >
+                    Next <ChevronRight size={18} />
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     );
   };

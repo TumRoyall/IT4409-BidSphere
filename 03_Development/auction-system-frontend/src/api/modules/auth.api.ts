@@ -17,5 +17,5 @@ export const authApi = {
 
   // 🔁 Resend verification email
   resendVerification: (email: string) =>
-    axiosClient.post(`/auth/resendVerification?email=${encodeURIComponent(email)}`),
+    axiosClient.post(`/auth/resend-verification?email=${encodeURIComponent(email)}`),
 };

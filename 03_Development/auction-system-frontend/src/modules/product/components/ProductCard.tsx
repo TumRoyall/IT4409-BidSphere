@@ -40,8 +40,8 @@ export default function ProductCard({ product }: ProductCardProps) {
           </p>
         )}
 
-        {product.categories && (
-        <p className="product-card-category">{product.categories}</p>
+        {product.category && (
+        <p className="product-card-category">{product.category}</p>
         )}
 
         {/* Price Info */}

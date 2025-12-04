@@ -38,8 +38,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
       // Filter by product if provided
       const filtered = product
       ? auctionsList.filter((a: any) => {
-      const auctionProductId = a.productId || a.product_id;
-      return auctionProductId === product.productId;
+      return a.productId === product.productId;
       })
       : auctionsList;
       

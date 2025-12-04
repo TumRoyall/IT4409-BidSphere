@@ -21,17 +21,17 @@ const parsePrice = (value: any): number => {
 
 const transformProducts = (rawProducts: any[]): Product[] => {
   return rawProducts.map((p) => ({
-    productId: p.productId || p.product_id,
-    sellerId: p.sellerId || p.seller_id,
+    productId: p.productId,
+    sellerId: p.sellerId,
     name: p.name,
     category: p.category,
     description: p.description,
-    startPrice: parsePrice(p.startPrice || p.start_price),
-    estimatePrice: parsePrice(p.estimatePrice || p.estimate_price),
+    startPrice: parsePrice(p.startPrice),
+    estimatePrice: parsePrice(p.estimatePrice),
     deposit: parsePrice(p.deposit),
-    imageUrl: p.imageUrl || p.image_url || "",
+    imageUrl: p.imageUrl || "",
     status: p.status,
-    createdAt: p.createdAt || p.created_at,
+    createdAt: p.createdAt,
     images: p.images,
     auction: p.auction,
   }));
