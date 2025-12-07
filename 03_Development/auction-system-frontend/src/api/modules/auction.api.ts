@@ -8,38 +8,29 @@ export const AUCTION_STATUS = {
   CLOSED: "closed",
   CANCELLED: "cancelled",
 } as const;
-export type AuctionStatus = typeof AUCTION_STATUS[keyof typeof AUCTION_STATUS];
+
+export type AuctionStatus =
+  typeof AUCTION_STATUS[keyof typeof AUCTION_STATUS];
 
 // ==================== TYPES & INTERFACES ====================
 export interface Product {
   id?: number;
   productId?: number;
-  
   name: string;
   description?: string;
-  
-  // Category fields
+
   category?: string;
   categories?: string;
-  
-  // Price fields
+
   startPrice?: number;
   estimatePrice?: number;
-  
   deposit: number;
-  
-  // Image fields
+
   imageUrl?: string;
-  
   status?: string;
-  
-  // Seller fields
   sellerId?: number;
-  
-  // Timestamp fields
+
   createdAt?: string;
-  
-  // Additional fields
   isDeleted?: boolean;
 }
 
@@ -55,18 +46,23 @@ export interface AuctionResponse {
   auctionId?: number;
   productId?: number;
   product?: Product;
+
   startTime?: string;
   endTime?: string;
   bidStepAmount?: number;
+
   status: AuctionStatus | string;
+
   currentBid?: number;
   highestCurrentPrice?: number;
   highestBid?: number;
   totalBids?: number;
+
   createdAt?: string;
   updatedAt?: string;
   winnerId?: number | null;
-  // Optional fields used by UI components
+
+  // UI fields
   productImageUrl?: string;
   productName?: string;
   startPrice?: number;
@@ -74,43 +70,66 @@ export interface AuctionResponse {
 }
 
 // ==================== API FUNCTIONS ====================
-
 const auctionApi = {
-  // ✨ Create new auction
+  // 📊 Get auctions with filter (từ HEAD)
+  getAuctions: (params?: {
+    status?: string;
+    category?: string;
+    keyword?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    page?: number;
+    size?: number;
+    sort?: string;
+  }) =>
+    axiosClient.get<AuctionResponse[]>("/auctions", { params }),
+
+  // ✨ Create
   createAuction: (data: AuctionRequest) =>
     axiosClient.post<AuctionResponse>("/auctions", data),
 
-  // 📊 Get list of all auctions
+  // 📊 Get all
   getAllAuctions: () =>
     axiosClient.get<AuctionResponse[]>("/auctions"),
 
-  // 🔍 Get auction by ID
+  // 🔍 Get by ID
   getAuctionById: (auctionId: number) =>
     axiosClient.get<AuctionResponse>(`/auctions/${auctionId}`),
 
-  // ✏️ Update auction
+  // ✏️ Update
   updateAuction: (auctionId: number, data: AuctionRequest) =>
     axiosClient.put<AuctionResponse>(`/auctions/${auctionId}`, data),
 
-  // 🗑️ Delete auction
+  // 🗑️ Delete
   deleteAuction: (auctionId: number) =>
     axiosClient.delete<void>(`/auctions/${auctionId}`),
 
-  // ▶️ Start auction (OPEN)
+  // ▶️ Start
   startAuction: (auctionId: number) =>
     axiosClient.post<void>(`/auctions/${auctionId}/start`),
 
-  // ⏹️ Close auction
+  // ⏹️ Close
   closeAuction: (auctionId: number) =>
     axiosClient.post<void>(`/auctions/${auctionId}/close`),
 
-  // 📊 Get active auctions
+  // 📊 Active
   getActiveAuctions: () =>
     axiosClient.get<AuctionResponse[]>("/auctions/active"),
 
-  // ✅ Approve or reject auction (admin/moderator)
-  approveAuction: (auctionId: number, data: { status: string; startTime?: string; endTime?: string; rejectionReason?: string }) =>
-    axiosClient.put<AuctionResponse>(`/auctions/${auctionId}/approve`, data),
+  // ✅ Approve / Reject
+  approveAuction: (
+    auctionId: number,
+    data: {
+      status: string;
+      startTime?: string;
+      endTime?: string;
+      rejectionReason?: string;
+    }
+  ) =>
+    axiosClient.put<AuctionResponse>(
+      `/auctions/${auctionId}/approve`,
+      data
+    ),
 };
 
 export default auctionApi;

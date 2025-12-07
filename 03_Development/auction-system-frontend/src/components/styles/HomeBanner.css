@@ -1,0 +1,105 @@
+/* MAIN WRAPPER */
+.banner-container {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100%;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+
+/* LEFT SLIDER */
+.banner-left {
+  width: 70%;
+  height: 240px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* ARROWS */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  background: rgba(0,0,0,0.35);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.arrow-left {
+  left: 12px;
+}
+
+.arrow-right {
+  right: 12px;
+}
+
+.arrow:hover {
+  background: rgba(0,0,0,0.55);
+}
+
+/* DOTS */
+.dots {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  z-index: 10;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.dot.active {
+  width: 20px;
+  background: white;
+}
+
+/* RIGHT SIDE */
+.banner-right {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.right-img {
+  width: 100%;
+  height: 115px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+

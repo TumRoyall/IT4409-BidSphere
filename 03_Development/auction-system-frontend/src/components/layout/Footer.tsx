@@ -1,4 +1,4 @@
-import styles from "./layout.module.css";
+import styles from "@/components/styles/layout.module.css";
 import logo from "@/assets/logo.png";
 
 export default function Footer() {

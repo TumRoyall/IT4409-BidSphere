@@ -37,6 +37,8 @@ import ResetPasswordPage from "@/modules/user/pages/ResetPasswordPage";
 import NotificationPage from "@/modules/user/pages/NotificationPage";
 import HistoryBidPage from "@/modules/user/pages/HistoryBidPage";
 import AuctionCurrentPage from "@/modules/user/pages/AuctionCurrentPage";
+import AuctionsPage from "@/modules/auction/pages/AuctionsPage"
+import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage"
 
 export default function AppRoutes() {
   return (
@@ -53,12 +55,16 @@ export default function AppRoutes() {
           <Route path="/products" element={<ProductList />} />
           <Route path="/products/:id" element={<ProductDetail />} />
 
-          {/* Auctions - Public */}
-          <Route path="/auctions" element={<AuctionList />} />
-          <Route path="/auctions/:id" element={<AuctionDetail />} />
-
-          {/* Feedbacks - Public */}
-          <Route path="/feedbacks" element={<FeedbackList />} />
+          {/* AUCTION */}
+          <Route path="/auctions" element={<AuctionsPage />} />
+          {/* Auction detail chỉ cho USER */}
+          <Route
+            path="/auctions/:id"
+                element={
+                <ProtectedRoute>
+                  <AuctionDetailPage />
+                </ProtectedRoute>
+                }/>
         </Route>
 
         {/* SELLER AREA – protected under MainLayout */}

@@ -1,0 +1,31 @@
+.active-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.active-filters .title {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.filter-tag {
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 20px;
+  font-size: 14px;
+  gap: 6px;
+}
+
+.filter-tag button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+}

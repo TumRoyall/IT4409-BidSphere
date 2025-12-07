@@ -1,0 +1,33 @@
+/* LỚP NỀN TÔNG XÁM CHO TOÀN TRANG */
+.auction-page {
+  min-height: 100vh;
+  padding: 25px 0;
+}
+
+/* LỚP BỌC NỘI DUNG (Trắng, bo góc, shadow nhẹ) */
+.auction-wrapper {
+  width: 95%;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  gap: 22px;
+}
+
+/* LỌC BÊN TRÁI */
+.filter-sidebar-wrapper {
+  width: 260px;
+}
+
+/* KHỐI MAIN BÊN PHẢI */
+.auction-main {
+  flex: 1;
+}
+
+/* CONTENT CARD – NỀN TRẮNG BAO LẤY GRID */
+.auction-content-card {
+  background: #eef0f3;
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+}

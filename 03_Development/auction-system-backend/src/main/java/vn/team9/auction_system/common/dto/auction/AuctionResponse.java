@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import vn.team9.auction_system.common.base.BaseResponse;
 
 import java.math.BigDecimal;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,17 +13,27 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class AuctionResponse extends BaseResponse {
     private Long auctionId;
-    private Long productId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private BigDecimal highestBid;
     private String status;
 
-    // Thêm thông tin product
+    // Product
+    private Long productId;
     private String productName;
-    private String productImageUrl;           // thumbnail hoặc ảnh đầu tiên
-    private List<String> productImageUrls;    // nếu muốn trả tất cả ảnh
+    private String productImageUrl;
+    private List<String> productImageUrls;
+    private String productDescription;
+    private BigDecimal startPrice;
+
+    // Category
+    private String categoryName;
 
     private BigDecimal startPrice;            // giá khởi điểm
     private BigDecimal estimatePrice;         // giá ước tính
+    // Seller
+    private Long sellerId;
+    private String sellerName;
+
+    private Long totalBidders;
 }
