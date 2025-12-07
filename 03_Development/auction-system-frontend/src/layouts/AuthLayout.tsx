@@ -4,24 +4,28 @@ import "@/styles/auth.css";
 export default function AuthLayout() {
   return (
     <div className="auth-layout">
-      {/* Background image */}
-      <div className="auth-bg"></div>
-      <div className="auth-overlay"></div>
+      {/* Background */}
+      <div className="auth-bg" />
+      <div className="auth-overlay" />
 
-      {/* Logo */}
-      <div className="auth-header">
-        <h1 className="auth-title">1xBid.com</h1>
-        <p className="auth-subtitle">Nền tảng đấu giá trực tuyến thông minh</p>
+      <div className="auth-wrapper">
+
+        {/* Header */}
+        <div className="auth-header">
+          <h1 className="auth-title">1xBid</h1>
+          <p className="auth-subtitle">Đăng nhập và tham gia đấu giá ngay</p>
+        </div>
+
+        {/* Content (Login / Register / Verify) */}
+        <div className="auth-card">
+          <Outlet />
+        </div>
+
+        {/* Footer */}
+        <footer className="auth-footer">
+          © 2025 1xBid. All rights reserved.
+        </footer>
       </div>
-
-      {/* Form container */}
-      <div className="auth-card">
-        <Outlet />
-      </div>
-
-      <footer className="auth-footer">
-        © 2025 1xBid.com. All rights reserved.
-      </footer>
     </div>
   );
 }

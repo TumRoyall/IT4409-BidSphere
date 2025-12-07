@@ -1,13 +1,13 @@
 import { useState } from "react";
 import "@/styles/auth.css";
 
-interface AuthFormProps {
+interface Props {
   mode: "login" | "register";
   onSubmit: (data: any) => void;
   loading?: boolean;
 }
 
-export default function AuthForm({ mode, onSubmit, loading }: AuthFormProps) {
+export default function AuthForm({ mode, onSubmit, loading }: Props) {
   const [form, setForm] = useState({
     username: "",
     fullName: "",
@@ -18,77 +18,45 @@ export default function AuthForm({ mode, onSubmit, loading }: AuthFormProps) {
     gender: "male",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const change = (e: any) =>
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const submit = (e: any) => {
     e.preventDefault();
-    if (mode === "register" && form.password !== form.confirm) {
-      alert("Mật khẩu xác nhận không khớp!");
-      return;
-    }
-    if (mode === "login") onSubmit({ email: form.email, password: form.password });
-    else onSubmit(form);
+    if (mode === "register" && form.password !== form.confirm)
+      return alert("Mật khẩu xác nhận không khớp!");
+
+    onSubmit(
+      mode === "login"
+        ? { email: form.email, password: form.password }
+        : form
+    );
   };
 
   return (
-    <form className="auth-form" onSubmit={handleSubmit}>
+    <form className="auth-form" onSubmit={submit}>
       {mode === "register" && (
         <>
           <div className="auth-group">
             <label>Tên người dùng</label>
-            <input
-              name="username"
-              placeholder="Tên tài khoản"
-              value={form.username}
-              onChange={handleChange}
-              required
-            />
+            <input name="username" value={form.username} onChange={change} required />
           </div>
+
           <div className="auth-group">
             <label>Họ và tên</label>
-            <input
-              name="fullName"
-              placeholder="Họ và tên"
-              value={form.fullName}
-              onChange={handleChange}
-              required
-            />
+            <input name="fullName" value={form.fullName} onChange={change} required />
           </div>
+
           <div className="auth-group">
             <label>Số điện thoại</label>
-            <input
-              name="phone"
-              placeholder="09xx xxx xxx"
-              value={form.phone}
-              onChange={handleChange}
-              required
-            />
+            <input name="phone" value={form.phone} onChange={change} required />
           </div>
+
           <div className="auth-group">
             <label>Giới tính</label>
             <div className="gender-options">
-              <label>
-                <input
-                  type="radio"
-                  name="gender"
-                  value="male"
-                  checked={form.gender === "male"}
-                  onChange={handleChange}
-                />
-                Nam
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="gender"
-                  value="female"
-                  checked={form.gender === "female"}
-                  onChange={handleChange}
-                />
-                Nữ
-              </label>
+              <label><input type="radio" name="gender" value="male" checked={form.gender === "male"} onChange={change}/> Nam</label>
+              <label><input type="radio" name="gender" value="female" checked={form.gender === "female"} onChange={change}/> Nữ</label>
             </div>
           </div>
         </>
@@ -96,38 +64,18 @@ export default function AuthForm({ mode, onSubmit, loading }: AuthFormProps) {
 
       <div className="auth-group">
         <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="Nhập email của bạn..."
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
+        <input name="email" type="email" value={form.email} onChange={change} required />
       </div>
 
       <div className="auth-group">
         <label>Mật khẩu</label>
-        <input
-          type="password"
-          name="password"
-          placeholder="••••••••"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
+        <input name="password" type="password" value={form.password} onChange={change} required />
       </div>
 
       {mode === "register" && (
         <div className="auth-group">
           <label>Xác nhận mật khẩu</label>
-          <input
-            type="password"
-            name="confirm"
-            value={form.confirm}
-            onChange={handleChange}
-            required
-          />
+          <input name="confirm" type="password" value={form.confirm} onChange={change} required />
         </div>
       )}
 
