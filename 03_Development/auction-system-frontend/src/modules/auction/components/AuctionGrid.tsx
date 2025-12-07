@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AuctionCard from "@/components/home/AuctionCard";
 import SortBar from "@/modules/auction/components/SortBar.tsx"
-import { auctionApi } from "@/api/modules/auction.api";
+import  auctionApi  from "@/api/modules/auction.api";
 import "@/modules/auction/styles/auctionGrid.css";
 
 export default function AuctionGrid({ filters, onChange }: any) {

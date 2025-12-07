@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { auctionApi } from "@/api/modules/auction.api";
+import  auctionApi  from "@/api/modules/auction.api";
 import AuctionCard from "./AuctionCard";
 import "@/components/styles/AuctionsSection.css";
 
