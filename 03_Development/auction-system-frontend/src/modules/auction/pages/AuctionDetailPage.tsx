@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Clock, Wallet, Users } from "lucide-react";
-import { auctionApi } from "@/api/modules/auction.api";
+import auctionApi from "@/api/modules/auction.api";
 import { bidApi } from "@/api/modules/bid.api";
 import { userApi } from "@/api/modules/user.api";
 import "@/modules/auction/styles/auctionDetail.css";
