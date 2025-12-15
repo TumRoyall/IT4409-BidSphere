@@ -56,7 +56,11 @@ export default function ProfilePage() {
   const handleSave = async () => {
     try {
       setSaving(true);
-      await userApi.updateProfile(form);
+      await userApi.updateProfile({
+        fullName: form.fullName,
+        phone: form.phone,
+        gender: form.gender as "male" | "female" | "other" | undefined,
+      });
       setMsg("Hồ sơ đã được cập nhật!");
       setTimeout(() => setMsg(""), 2000);
     } catch {

@@ -1,11 +1,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { authApi } from "@/api/modules/auth.api";
+import { userApi } from "@/api/modules/user.api";
 
 interface User {
+  id?: number;
   username: string;
   fullName: string;
   email: string;
   gender?: string;
+  role?: string;
+  roles?: string;
+  roleName?: string;
 }
 
 interface AuthContextType {
@@ -32,16 +37,49 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const res = await authApi.login({ email, password });
     const data = res.data;
 
-    localStorage.setItem("access_token", data.accessToken);
-    localStorage.setItem("user", JSON.stringify(data));
+    // Chuẩn hóa token từ nhiều khóa trả về: accessToken | access_token | token
+    const receivedToken: string | undefined =
+      (data && (data.accessToken || data.access_token || data.token)) || undefined;
 
-    setToken(data.accessToken);
-    setUser({
-      username: data.username,
-      fullName: data.fullName,
-      email: data.email,
-      gender: data.gender,
-    });
+    if (!receivedToken) {
+      throw new Error("Không nhận được access token từ máy chủ");
+    }
+
+    localStorage.setItem("access_token", receivedToken);
+    setToken(receivedToken);
+
+    // Fetch full user info (including role) from /users/me endpoint
+    try {
+      const userInfo = await userApi.getProfile();
+      console.log("📋 /users/me response:", userInfo);
+      const userObject = {
+        id: userInfo.userId,
+        username: userInfo.username,
+        fullName: userInfo.fullName,
+        email: userInfo.email,
+        gender: userInfo.gender,
+        role: userInfo.roleName, // Backend returns roleName
+        roleName: userInfo.roleName,
+      };
+      console.log("✅ Logged in successfully with role:", userObject.role);
+      localStorage.setItem("user", JSON.stringify(userObject));
+      setUser(userObject);
+    } catch (err) {
+      console.warn("Failed to fetch user profile, using login response data:", err);
+      // Fallback: use data from login response if /users/me fails
+      const userObject = {
+        id: data.userId || data.id || data.user_id,
+        username: data.username,
+        fullName: data.fullName || data.full_name,
+        email: data.email,
+        gender: data.gender,
+        role: data.role || data.roles || data.roleName || data.role_id,
+        roles: data.roles,
+        roleName: data.roleName,
+      };
+      localStorage.setItem("user", JSON.stringify(userObject));
+      setUser(userObject);
+    }
   };
 
   // 🧩 Register
