@@ -1,0 +1,196 @@
+/* ===================================================================
+   🎨 CATEGORY SELECT COMPONENT STYLES
+   =================================================================== */
+
+:root {
+  --cat-primary: #667eea;
+  --cat-primary-dark: #5a6fd8;
+  --cat-secondary: #764ba2;
+  --cat-gray-50: #f9fafb;
+  --cat-gray-100: #f3f4f6;
+  --cat-gray-200: #e5e7eb;
+  --cat-gray-300: #d1d5db;
+  --cat-gray-600: #4b5563;
+  --cat-gray-700: #374151;
+  --cat-gray-900: #1f2937;
+  --cat-error: #ef4444;
+  --cat-success: #10b981;
+  --cat-radius-md: 0.5rem;
+  --cat-radius-lg: 0.75rem;
+  --cat-transition: all 0.2s ease;
+  --cat-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.category-select {
+  position: relative;
+  width: 100%;
+}
+
+.category-select-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.category-select-error .category-select-trigger {
+  border-color: var(--cat-error) !important;
+}
+
+.category-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--cat-gray-50);
+  border: 1.5px solid var(--cat-gray-200);
+  border-radius: var(--cat-radius-md);
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--cat-gray-900);
+  transition: var(--cat-transition);
+  text-align: left;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.category-select-trigger:hover:not(:disabled) {
+  border-color: var(--cat-primary);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.category-select-trigger:focus {
+  outline: none;
+  border-color: var(--cat-primary);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.category-select-value {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: var(--cat-gray-900);
+}
+
+.category-select-placeholder {
+  color: var(--cat-gray-600);
+  font-weight: 400;
+}
+
+.category-select-icon {
+  flex-shrink: 0;
+  color: var(--cat-gray-600);
+  transition: var(--cat-transition);
+  margin-left: 0.5rem;
+}
+
+.category-select-icon-open {
+  transform: rotate(180deg);
+  color: var(--cat-primary);
+}
+
+.category-select-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid var(--cat-gray-200);
+  border-radius: var(--cat-radius-lg);
+  box-shadow: var(--cat-shadow-md);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.category-select-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--cat-gray-100);
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--cat-gray-700);
+  transition: var(--cat-transition);
+  text-align: left;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.category-select-item:last-child {
+  border-bottom: none;
+}
+
+.category-select-item:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+  color: var(--cat-primary);
+}
+
+.category-select-item-selected {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.12) 100%);
+  color: var(--cat-primary);
+  font-weight: 600;
+}
+
+.category-select-item-text {
+  flex: 1;
+}
+
+.category-select-item-check {
+  flex-shrink: 0;
+  color: var(--cat-success);
+  margin-left: 0.5rem;
+}
+
+/* Scrollbar styling */
+.category-select-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.category-select-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.category-select-dropdown::-webkit-scrollbar-thumb {
+  background: var(--cat-gray-300);
+  border-radius: 3px;
+}
+
+.category-select-dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--cat-gray-400);
+}
+
+/* Firefox scrollbar */
+.category-select-dropdown {
+  scrollbar-color: var(--cat-gray-300) transparent;
+  scrollbar-width: thin;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .category-select-dropdown {
+    max-height: 250px;
+  }
+
+  .category-select-item {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.8125rem;
+  }
+}

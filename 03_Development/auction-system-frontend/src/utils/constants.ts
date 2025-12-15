@@ -7,6 +7,7 @@ export const USER_ROLES = {
   BIDDER: 'BIDDER',
   SELLER: 'SELLER',
   ADMIN: 'ADMIN',
+  MODERATOR: 'MODERATOR',
 } as const;
 
 export const AUCTION_STATUS = {
