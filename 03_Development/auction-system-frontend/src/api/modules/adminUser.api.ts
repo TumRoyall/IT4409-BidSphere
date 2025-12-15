@@ -10,6 +10,7 @@ export const adminUserApi = {
         phone: string;
         gender?: string;
         status?: string;
+        // fasdsad
     }) => axiosClient.post("/admin/users", data),
 
     // Lấy toàn bộ user
