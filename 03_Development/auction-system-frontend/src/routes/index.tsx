@@ -40,12 +40,6 @@ import AuctionCurrentPage from "@/modules/user/pages/AuctionCurrentPage";
 import AuctionsPage from "@/modules/auction/pages/AuctionsPage"
 import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage"
 
-// Admin area
-import AdminLayout from "../layouts/AdminLayout";
-import AdminUsersPage from "../modules/admin/pages/AdminUsersPage";
-import AdminDashboardPage from "../modules/admin/pages/AdminDashboardPage.tsx";
-
-
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -72,6 +66,7 @@ export default function AppRoutes() {
                 </ProtectedRoute>
                 }/>
         </Route>
+
         {/* SELLER AREA – protected under MainLayout */}
         <Route
           path="/seller"
