@@ -41,9 +41,9 @@ import AuctionsPage from "@/modules/auction/pages/AuctionsPage"
 import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage"
 
 // Admin area
-import AdminLayout from "../layouts/AdminLayout";
-import AdminUsersPage from "../modules/admin/pages/AdminUsersPage";
-import AdminDashboardPage from "../modules/admin/pages/AdminDashboardPage.tsx";
+import AdminLayout from "@/layouts/AdminLayout";
+import AdminUsersPage from "@/modules/admin/pages/AdminUsersPage";
+import AdminDashboardPage from "@/modules/admin/pages/AdminDashboardPage.tsx";
 
 //
 export default function AppRoutes() {
@@ -124,7 +124,7 @@ export default function AppRoutes() {
           <Route path="products/approval" element={<AdminProductApprovalPage />} />
           <Route path="auctions/approval" element={<AdminAuctionApprovalPage />} />
           <Route path="users" element={<AdminUsersPage />} />
-          <Route path="dashboard" element={<AdminDashboardPage/>
+          <Route path="dashboard" element={<AdminDashboardPage/>} />
         </Route>
 
         {/* MODERATOR AREA (ProtectedRoute + MainLayout) */}

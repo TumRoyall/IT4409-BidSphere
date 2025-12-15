@@ -8,7 +8,8 @@ export const adminUserApi = {
   getById: (id: number) =>
     axiosClient.get(`/api/admin/users/${id}`),
 
-  // ✏️ Cập nhật user
+  // ✏️ Cập nhật userd 123
+  // 1123
   update: (
     id: number,
     data: {
