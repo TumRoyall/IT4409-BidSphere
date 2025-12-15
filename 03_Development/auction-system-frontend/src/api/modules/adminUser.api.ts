@@ -1,40 +1,57 @@
 import axiosClient from "../axiosClient";
 
 export const adminUserApi = {
-  // 📌 Lấy toàn bộ user
-  getAll: () => axiosClient.get("/api/admin/users"),
 
-  // 📌 Lấy user theo ID
-  getById: (id: number) =>
-    axiosClient.get(`/api/admin/users/${id}`),
+    // Tạo user mới
+    create: (data: {
+        fullName: string;
+        username: string;
+        email: string;
+        phone: string;
+        gender?: string;
+        status?: string;
+    }) => axiosClient.post("/admin/users", data),
 
-  // ✏️ Cập nhật user
-  update: (
-    id: number,
-    data: {
-      fullName?: string;
-      username?: string;
-      email?: string;
-      phone?: string;
-      gender?: string;
-      status?: string;
-    }
-  ) => axiosClient.put(`/api/admin/users/${id}`, data),
+    // Lấy toàn bộ user
+    getAll: () => axiosClient.get("/admin/users"),
 
-  // ⛔ Ban user
-  ban: (
-    id: number,
-    data: {
-      reason: string;
-      bannedUntil: string;
-    }
-  ) => axiosClient.put(`/api/admin/users/${id}/ban`, data),
+    // Lấy user theo ID
+    getById: (id: number) =>
+        axiosClient.get(`/admin/users/${id}`),
 
-  // ✔ Unban user
-  unban: (id: number) =>
-    axiosClient.put(`/api/admin/users/${id}/unban`),
+    // Cập nhật user
+    update: (
+        id: number,
+        data: {
+            fullName?: string;
+            username?: string;
+            email?: string;
+            phone?: string;
+            gender?: string;
+            status?: string;
+        }
+    ) => axiosClient.put(`/admin/users/${id}`, data),
 
-  // 🗑 Xoá user
-  delete: (id: number) =>
-    axiosClient.delete(`/api/admin/users/${id}`),
+    // Ban user
+    ban: (
+        id: number,
+        data: {
+            userId: number;
+            reason: string;
+            bannedUntil: string;
+        }
+    ) => axiosClient.put(`/admin/users/${id}/ban`, data),
+
+
+    // Unban user
+    unban: (id: number) =>
+        axiosClient.put(`/admin/users/${id}/unban`, { userId: id }),
+
+
+    // Xoá user
+    deleteUser: (id: number) => axiosClient.delete(`/admin/users/${id}`),
+    
+    // Xem giao dịch của user
+    getAllTransactionsById: (id: number) =>
+        axiosClient.get(`/admin/users/${id}/transactions`),
 };
