@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Clock, Wallet, Users } from "lucide-react";
+import { Clock, Wallet, Users, HelpCircle } from "lucide-react";
 import auctionApi from "@/api/modules/auction.api";
 import { bidApi } from "@/api/modules/bid.api";
 import { userApi } from "@/api/modules/user.api";
@@ -60,6 +60,7 @@ export default function AuctionDetailPage() {
   const [loading, setLoading] = useState(true);
   const [bidLoading, setBidLoading] = useState(false);
   const [error, setError] = useState<string>("");
+  const [activeTab, setActiveTab] = useState<"desc" | "history">("desc");
 
   const loadAuction = async () => {
     const res = await auctionApi.getAuctionById(auctionId);
@@ -76,7 +77,6 @@ export default function AuctionDetailPage() {
       const data = await userApi.getProfile();
       setUser(data);
     } catch {
-      // chưa đăng nhập thì để null
       setUser(null);
     }
   };
@@ -89,7 +89,6 @@ export default function AuctionDetailPage() {
   useEffect(() => {
     if (!auctionId) return;
     reloadAll();
-    // auto refresh khi đang OPEN
   }, [auctionId]);
 
   // Poll nhẹ khi OPEN (3s)
@@ -108,8 +107,12 @@ export default function AuctionDetailPage() {
     await loadUser(); // số dư thay đổi
   };
 
-  if (loading) return <div className="auction-detail-loading">Đang tải...</div>;
-  if (!auction) return <div className="auction-detail-loading">Không tìm thấy phiên đấu giá.</div>;
+  if (loading)
+    return <div className="auction-detail-loading">Đang tải...</div>;
+  if (!auction)
+    return (
+      <div className="auction-detail-loading">Không tìm thấy phiên đấu giá.</div>
+    );
 
   return (
     <div className="auction-detail-wrapper">
@@ -124,7 +127,9 @@ export default function AuctionDetailPage() {
             Người bán:{" "}
             <span
               className="auction-seller-link"
-              onClick={() => (window.location.href = `/user/${auction.sellerId}`)}
+              onClick={() =>
+                (window.location.href = `/user/${auction.sellerId}`)
+              }
             >
               {auction.sellerName}
             </span>
@@ -146,21 +151,38 @@ export default function AuctionDetailPage() {
       {/* BOTTOM TABS */}
       <div className="auction-detail-bottom">
         <div className="auction-tabs">
-          <div className="auction-tab active">Mô tả sản phẩm</div>
-          <div className="auction-tab">Lịch sử đấu giá</div>
+          <div
+            className={`auction-tab ${activeTab === "desc" ? "active" : ""}`}
+            onClick={() => setActiveTab("desc")}
+          >
+            Mô tả sản phẩm
+          </div>
+
+          <div
+            className={`auction-tab ${activeTab === "history" ? "active" : ""}`}
+            onClick={() => setActiveTab("history")}
+          >
+            Lịch sử đấu giá
+          </div>
         </div>
+
 
         <div className="auction-tab-content">
-          <div className="auction-desc">
-            <h3>Chi tiết sản phẩm</h3>
-            <p>{auction.productDescription || "Không có mô tả chi tiết."}</p>
-          </div>
+          {activeTab === "desc" && (
+            <div className="auction-desc">
+              <h3>Chi tiết sản phẩm</h3>
+              <p>{auction.productDescription || "Không có mô tả chi tiết."}</p>
+            </div>
+          )}
 
-          <div className="auction-history-wrapper">
-            <h3>Lịch sử đấu giá</h3>
-            <AuctionHistory bids={bids} />
-          </div>
+          {activeTab === "history" && (
+            <div className="auction-history-wrapper">
+              <h3>Lịch sử đấu giá</h3>
+              <AuctionHistory bids={bids} />
+            </div>
+          )}
         </div>
+
       </div>
     </div>
   );
@@ -236,17 +258,54 @@ function BidPanel({
   setError,
   onBidSuccess,
 }: BidPanelProps) {
+
+  const { id } = useParams();
+  const auctionId = Number(id);
+
+  const [highestBid, setHighestBid] = useState<number>(0);
   const [bidAmount, setBidAmount] = useState<string>("");
+  const [isAutoBid, setIsAutoBid] = useState<boolean>(false);
+  const [maxAutoBidAmount, setMaxAutoBidAmount] = useState<string>("");
+  const [stepAutoBidAmount, setStepAutoBidAmount] = useState<string>("");
 
   const isUpcoming = auction.status === "PENDING";
   const isOpen = auction.status === "OPEN";
   const isClosed = auction.status === "CLOSED";
 
-  const highest = auction.highestCurrentPrice ?? auction.startPrice;
-  const nextBid =
-    auction.highestCurrentPrice && auction.highestCurrentPrice > 0
-      ? auction.highestCurrentPrice + auction.bidStepAmount
-      : auction.startPrice;
+  // Giá từ auction
+  const startPrice = Number(auction.startPrice ?? 0);
+  const bidStep = Number(auction.bidStepAmount ?? 0);
+
+  // ===== LẤY GIÁ CAO NHẤT TỪ API BIDS/HIGHEST =====
+  const loadHighestBid = async () => {
+    try {
+      const res = await bidApi.getHighestBid(auctionId);
+      const amount = Number(res?.data?.bidAmount ?? 0);
+      setHighestBid(amount);
+    } catch {
+      setHighestBid(0);
+    }
+  };
+
+  // Gọi khi render + poll
+  useEffect(() => {
+    loadHighestBid();
+  }, [auctionId]);
+
+  // Poll mỗi 3s khi OPEN
+  useEffect(() => {
+    if (!isOpen) return;
+    const interval = setInterval(() => {
+      loadHighestBid();
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isOpen]);
+
+  // Giá cao nhất thật sự
+  const highest = highestBid > 0 ? highestBid : startPrice;
+
+  // Giá đề xuất tiếp theo
+  const nextBid = highest + bidStep;
 
   // countdown
   const [targetTime, setTargetTime] = useState<number | null>(null);
@@ -254,11 +313,13 @@ function BidPanel({
 
   useEffect(() => {
     let t: number | null = null;
-    if (isUpcoming) t = new Date(auction.startTime).getTime();
-    else if (isOpen) t = new Date(auction.endTime).getTime();
+    if (isUpcoming && auction.startTime)
+      t = new Date(auction.startTime).getTime();
+    else if (isOpen && auction.endTime)
+      t = new Date(auction.endTime).getTime();
     setTargetTime(t);
     setTimeLeft(t ? t - Date.now() : 0);
-  }, [auction.auctionId, auction.status, auction.startTime, auction.endTime]);
+  }, [auction.id, auction.status, auction.startTime, auction.endTime]);
 
   useEffect(() => {
     if (!targetTime) return;
@@ -269,6 +330,7 @@ function BidPanel({
   }, [targetTime]);
 
   const handleQuickBid = () => {
+    if (!isOpen) return;
     setBidAmount(nextBid.toString());
   };
 
@@ -282,31 +344,67 @@ function BidPanel({
       return;
     }
 
-    const amount = Number(bidAmount);
-    if (Number.isNaN(amount) || amount <= 0) {
-      setError("Giá đặt không hợp lệ.");
-      return;
-    }
+    setError("");
 
-    if (amount < Number(nextBid)) {
-      setError(`Giá đặt phải tối thiểu ${nextBid.toLocaleString()} đ.`);
-      return;
-    }
-
-    if (user.balance !== undefined && amount > user.balance) {
-      setError("Số dư không đủ để đặt giá.");
+    const auctionKey = auction.auctionId ?? auction.id;
+    if (!auctionKey) {
+      setError("Không xác định được phiên đấu giá.");
       return;
     }
 
     try {
       setLoading(true);
-      setError("");
-      await bidApi.placeBid({
-        auctionId: auction.auctionId,
-        bidAmount: amount,
-      });
+
+      if (!isAutoBid) {
+        // BID THỦ CÔNG
+        const amount = Number(bidAmount);
+        if (Number.isNaN(amount) || amount <= 0) {
+          setError("Giá đặt không hợp lệ.");
+          return;
+        }
+        if (amount < nextBid) {
+          setError(`Giá đặt phải tối thiểu ${nextBid.toLocaleString()} đ.`);
+          return;
+        }
+        if (user.balance !== undefined && amount > user.balance) {
+          setError("Số dư không đủ để đặt giá.");
+          return;
+        }
+
+        await bidApi.placeBid({
+          auctionId: auctionKey,
+          bidderId: user.userId,
+          bidAmount: amount,
+        });
+      } else {
+        // AUTO BID
+        const maxAuto = Number(maxAutoBidAmount);
+        const stepAuto = Number(stepAutoBidAmount);
+
+        if (Number.isNaN(maxAuto) || maxAuto <= nextBid) {
+          setError("Giá auto tối đa phải lớn hơn giá đề xuất tiếp theo.");
+          return;
+        }
+        if (Number.isNaN(stepAuto) || stepAuto <= 0) {
+          setError("Bước tăng tự động phải lớn hơn 0.");
+          return;
+        }
+
+        await bidApi.placeAutoBid({
+          auctionId: auctionKey,
+          bidderId: user.userId,
+          maxAutoBidAmount: maxAuto,
+          stepAutoBidAmount: stepAuto,
+        });
+      }
+
+      // reset form
       setBidAmount("");
+      setMaxAutoBidAmount("");
+      setStepAutoBidAmount("");
+
       await onBidSuccess();
+      await loadHighestBid(); // update ngay giá cao nhất
     } catch (e: any) {
       setError(e?.response?.data?.message || "Đặt giá thất bại.");
     } finally {
@@ -353,80 +451,107 @@ function BidPanel({
       <div className="bid-prices">
         <div className="bid-price-item">
           <span className="label">Giá khởi điểm</span>
-          <span className="value">
-            {auction.startPrice?.toLocaleString()} đ
-          </span>
+          <span className="value">{startPrice.toLocaleString()} đ</span>
         </div>
+
         <div className="bid-price-item">
           <span className="label">Giá cao nhất hiện tại</span>
           <span className="value highlight">
-            {highest?.toLocaleString()} đ
+            {highest.toLocaleString()} đ
           </span>
         </div>
+
         <div className="bid-price-item">
           <span className="label">Bước giá</span>
-          <span className="value">
-            {auction.bidStepAmount?.toLocaleString()} đ
-          </span>
+          <span className="value">{bidStep.toLocaleString()} đ</span>
         </div>
       </div>
 
-      {/* BALANCE */}
+      {/* Balance */}
       <div className="bid-balance">
         <Wallet size={16} />
         <span>
           Số dư của bạn:{" "}
-          <strong>
-            {user ? `${(user.balance ?? 0).toLocaleString()} đ` : "Chưa đăng nhập"}
-          </strong>
+          <strong>{user ? `${user.balance.toLocaleString()} đ` : "Chưa đăng nhập"}</strong>
         </span>
       </div>
 
-      {/* NEXT BID SUGGESTION */}
-      {isOpen && (
-        <div className="bid-next">
-          Giá đề xuất tiếp theo:{" "}
-          <strong>{nextBid.toLocaleString()} đ</strong>
-          <button className="btn-quick-bid" onClick={handleQuickBid}>
-            Điền nhanh
+      {/* AutoBid Toggle */}
+      <div className="auto-bid-toggle">
+        <span className="switch-label">Sử dụng AutoBid</span>
+
+        <div className="tooltip-wrapper">
+          <HelpCircle className="tooltip-icon" size={16} />
+          <div className="tooltip-box">
+            AutoBid là hệ thống tự động đặt giá thay bạn:
+            <br />- Chọn giá tối đa bạn muốn trả
+            <br />- Hệ thống tăng giá theo bước mỗi khi có người vượt
+            <br />- Dừng khi chạm mức tối đa
+          </div>
+        </div>
+
+        <label className="switch">
+          <input
+            type="checkbox"
+            checked={isAutoBid}
+            onChange={() => setIsAutoBid((prev) => !prev)}
+          />
+          <span className="slider"></span>
+        </label>
+      </div>
+
+      {/* Manual bid */}
+      {!isAutoBid && (
+        <div className="bid-form">
+          <div className="bid-next">
+            Giá đề xuất tiếp theo:
+            <strong>{nextBid.toLocaleString()} đ</strong>
+            <button className="btn-quick-bid" onClick={handleQuickBid}>
+              Điền nhanh
+            </button>
+          </div>
+
+          <input
+            type="number"
+            placeholder="Nhập giá bạn muốn đặt (đ)"
+            value={bidAmount}
+            onChange={(e) => setBidAmount(e.target.value)}
+          />
+
+          <button className="btn-place-bid" onClick={handleSubmit}>
+            {loading ? "Đang xử lý..." : "Đặt giá ngay"}
           </button>
         </div>
       )}
 
-      {/* FORM BID */}
-      <div className="bid-form">
-        <input
-          type="number"
-          placeholder="Nhập giá bạn muốn đặt (đ)"
-          value={bidAmount}
-          onChange={(e) => setBidAmount(e.target.value)}
-          disabled={!isOpen || loading}
-        />
-        <button
-          className="btn-place-bid"
-          onClick={handleSubmit}
-          disabled={!isOpen || loading}
-        >
-          {loading ? "Đang xử lý..." : "Đặt giá ngay"}
-        </button>
-      </div>
+      {/* Auto bid */}
+      {isAutoBid && (
+        <div className="auto-bid-form">
+          <input
+            type="number"
+            placeholder="Giá tối đa muốn trả"
+            value={maxAutoBidAmount}
+            onChange={(e) => setMaxAutoBidAmount(e.target.value)}
+          />
 
-      {error && <p className="bid-error">{error}</p>}
+          <input
+            type="number"
+            placeholder="Bước tăng tự động"
+            value={stepAutoBidAmount}
+            onChange={(e) => setStepAutoBidAmount(e.target.value)}
+          />
 
-      {!isOpen && !isUpcoming && (
-        <p className="bid-note-small">
-          Phiên đấu giá đã kết thúc. Bạn không thể đặt giá nữa.
-        </p>
+          <button className="btn-place-bid" onClick={handleSubmit}>
+            {loading ? "Đang xử lý..." : "Kích hoạt AutoBid"}
+          </button>
+        </div>
       )}
 
-      {/* Participants */}
-      <div className="bid-participants">
-        <Users size={15} />
-        <span>{auction.totalBidder ?? bids.length} người đã tham gia</span>
-      </div>
+      {error && <p className="bid-error">{error}</p>}
     </div>
   );
 }
+
 
 // ===================== BID HISTORY =====================
 
