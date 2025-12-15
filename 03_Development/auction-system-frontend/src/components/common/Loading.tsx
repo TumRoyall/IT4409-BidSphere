@@ -1,8 +1,35 @@
-// Loading Component
-// TODO: Implement loading spinner for async operations
+import React from "react";
 
-const Loading = () => {
-  return <div>Loading...</div>;
+/**
+ * Simple loading indicator with a spinner and a label. This component can be
+ * dropped into any place where asynchronous operations are happening.
+ * Tailwind CSS handles the animation and sizing of the spinner. You can
+ * customise the colour by adjusting the `text-primary` class.
+ */
+export const Loading: React.FC = () => {
+  return (
+    <div className="flex items-center justify-center space-x-2 py-4">
+      <svg
+        className="h-5 w-5 animate-spin text-primary"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+        ></circle>
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+        ></path>
+      </svg>
+      <span className="text-sm text-muted-foreground">Loading...</span>
+    </div>
+  );
 };
-
-export default Loading;

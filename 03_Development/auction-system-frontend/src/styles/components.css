@@ -4,3 +4,26 @@
 .btn {
   /* TODO: Add button styles */
 }
+
+/* Force select trigger and content to have solid background and sit above overlays */
+.form-select-trigger,
+.form-select-content,
+[role="listbox"],
+[role="option"] {
+  background: white !important;
+  color: #111827; /* text color */
+}
+
+/* Ensure dropdown content appears above overlays */
+.form-select-content,
+[role="listbox"] {
+  z-index: 2000 !important;
+}
+
+/* If you use a specific dropdown wrapper class from the select lib, add it here too */
+.rc-select-dropdown, /* example for rc-select */
+.select-dropdown, /* generic */
+.select-content {
+  background: white !important;
+  z-index: 2000 !important;
+}
