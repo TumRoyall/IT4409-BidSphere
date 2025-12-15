@@ -2,7 +2,7 @@ import axiosClient from "../axiosClient";
 
 export const adminUserApi = {
 
-    // Tạo user mới
+    // Tạo user mớiiiii
     create: (data: {
         fullName: string;
         username: string;
