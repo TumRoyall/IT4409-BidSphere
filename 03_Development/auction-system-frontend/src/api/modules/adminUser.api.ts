@@ -10,14 +10,14 @@ export const adminUserApi = {
         phone: string;
         gender?: string;
         status?: string;
-    }) => axiosClient.post("/admin/users", data),
+    }) => axiosClient.post("/superadmin/users", data),
 
     // Lấy toàn bộ user
-    getAll: () => axiosClient.get("/admin/users"),
+    getAll: () => axiosClient.get("/superadmin/users"),
 
     // Lấy user theo ID
     getById: (id: number) =>
-        axiosClient.get(`/admin/users/${id}`),
+        axiosClient.get(`/superadmin/users/${id}`),
 
     // Cập nhật user
     update: (
@@ -30,7 +30,7 @@ export const adminUserApi = {
             gender?: string;
             status?: string;
         }
-    ) => axiosClient.put(`/admin/users/${id}`, data),
+    ) => axiosClient.put(`/superadmin/users/${id}`, data),
 
     // Ban user
     ban: (
@@ -40,18 +40,18 @@ export const adminUserApi = {
             reason: string;
             bannedUntil: string;
         }
-    ) => axiosClient.put(`/admin/users/${id}/ban`, data),
+    ) => axiosClient.put(`/superadmin/users/${id}/ban`, data),
 
 
     // Unban user
     unban: (id: number) =>
-        axiosClient.put(`/admin/users/${id}/unban`, { userId: id }),
+        axiosClient.put(`/superadmin/users/${id}/unban`, { userId: id }),
 
 
     // Xoá user
-    deleteUser: (id: number) => axiosClient.delete(`/admin/users/${id}`),
+    deleteUser: (id: number) => axiosClient.delete(`/superadmin/users/${id}`),
     
     // Xem giao dịch của user
     getAllTransactionsById: (id: number) =>
-        axiosClient.get(`/admin/users/${id}/transactions`),
+        axiosClient.get(`/superadmin/users/${id}/transactions`),
 };

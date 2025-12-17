@@ -128,3 +128,122 @@
 .dropdown-item { display: flex; align-items: center; gap: 6px; padding: 6px 14px; cursor: pointer; font-size: 14px; transition: background 0.2s; }
 .dropdown-item:hover { background-color: #f9fafb; border-radius: 6px; }
 .dropdown-item input[type="checkbox"] { cursor: pointer; }
+/* =======================
+   MODAL PRO STYLE
+======================= */
+
+/* Overlay mờ + blur */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+/* Modal box */
+.modal-content {
+    background: #ffffff;
+    width: 100%;
+    max-width: 520px;
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    animation: modalFadeIn 0.25s ease;
+}
+
+/* Animation */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Title */
+.modal-content h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #111827;
+}
+
+/* Input group */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.input-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Inputs in modal */
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="date"],
+.modal-content input[type="time"] {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.modal-content input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+}
+
+/* Footer buttons */
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Save button */
+.modal-buttons .save {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.modal-buttons .save:hover {
+    background: #1e40af;
+}
+
+/* Cancel button */
+.modal-buttons .cancel {
+    background: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.modal-buttons .cancel:hover {
+    background: #e5e7eb;
+}

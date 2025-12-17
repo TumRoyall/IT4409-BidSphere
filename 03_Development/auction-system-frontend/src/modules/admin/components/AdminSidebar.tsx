@@ -9,13 +9,38 @@ const AdminSidebar: React.FC = () => {
             <nav>
                 <ul>
                     <li>
-                        <NavLink to="/admin/dashboard" className={({ isActive }) => isActive ? 'active' : ''}>
+                        <NavLink
+                            to="/superadmin/dashboard"
+                            className={({ isActive }) => isActive ? 'active' : ''}
+                        >
                             Dashboard
                         </NavLink>
                     </li>
+
                     <li>
-                        <NavLink to="/admin/users" className={({ isActive }) => isActive ? 'active' : ''}>
+                        <NavLink
+                            to="/superadmin/users"
+                            className={({ isActive }) => isActive ? 'active' : ''}
+                        >
                             Users
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="/superadmin/violations"
+                            className={({ isActive }) => isActive ? 'active' : ''}
+                        >
+                            Violations
+                        </NavLink>
+                    </li>
+
+                    {/* ✅ User Reports */}
+                    <li>
+                        <NavLink
+                            to="/superadmin/user-reports"
+                            className={({ isActive }) => isActive ? 'active' : ''}
+                        >
+                            Reports
                         </NavLink>
                     </li>
                 </ul>

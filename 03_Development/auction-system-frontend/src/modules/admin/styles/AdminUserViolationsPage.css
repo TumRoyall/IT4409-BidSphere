@@ -1,0 +1,75 @@
+/* =======================
+   ADMIN USER VIOLATION TABLE
+======================= */
+
+.violations-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: "Inter", sans-serif;
+}
+
+/* Loading / empty */
+.loading, .empty {
+    text-align: center;
+    font-size: 16px;
+    color: #555;
+}
+
+/* Table */
+.violations-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.violations-table th,
+.violations-table td {
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+.violations-table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+}
+
+.violations-table tbody tr:hover {
+    background-color: #f1f5f9;
+    transition: 0.2s ease;
+}
+
+/* Status badges */
+.status-pill {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: capitalize;
+    font-size: 13px;
+    display: inline-block;
+    text-align: center;
+}
+.status-pill.warning { background: #fff3d4; color: #b27500; }
+.status-pill.banned { background: #ffe0e0; color: #a20000; }
+
+/* Responsive: table scroll ngang nếu quá rộng */
+@media (max-width: 768px) {
+    .violations-card {
+        padding: 10px;
+    }
+    .violations-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    .violations-table th, .violations-table td {
+        padding: 8px 10px;
+    }
+}

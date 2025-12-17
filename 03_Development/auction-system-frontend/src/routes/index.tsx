@@ -44,33 +44,35 @@ import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage"
 import AdminLayout from "../layouts/AdminLayout";
 import AdminUsersPage from "../modules/admin/pages/AdminUsersPage";
 import AdminDashboardPage from "../modules/admin/pages/AdminDashboardPage.tsx";
+import AdminReportsPage from "../modules/admin/pages/AdminReportsPage";
+import AdminUserViolationsPage from "../modules/admin/pages/AdminUserViolationsPage";
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* MAIN LAYOUT – Public routes */}
+
+        {/* ================= PUBLIC ================= */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/help" element={<HelpPage />} />
           <Route path="/help/:id" element={<HelpDetailPage />} />
           <Route path="/howToBuy" element={<HowToBuyPage />} />
 
-          {/* Products - Public */}
           <Route path="/products" element={<ProductList />} />
           <Route path="/products/:id" element={<ProductDetail />} />
 
-          {/* AUCTION */}
           <Route path="/auctions" element={<AuctionsPage />} />
-          {/* Auction detail chỉ cho USER */}
           <Route
             path="/auctions/:id"
-                element={
-                <ProtectedRoute>
-                  <AuctionDetailPage />
-                </ProtectedRoute>
-                }/>
+            element={
+              <ProtectedRoute>
+                <AuctionDetailPage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
-        {/* SELLER AREA – protected under MainLayout */}
+
+        {/* ================= SELLER ================= */}
         <Route
           path="/seller"
           element={
@@ -87,7 +89,7 @@ export default function AppRoutes() {
           <Route path="auctions/create" element={<CreateAuction />} />
         </Route>
 
-        {/* USER AREA (ProtectedRoute + ProfileLayout) */}
+        {/* ================= USER ================= */}
         <Route
           path="/user"
           element={
@@ -96,31 +98,31 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         >
-          {/* Account */}
           <Route path="account/profile" element={<ProfilePage />} />
           <Route path="account/payment" element={<PaymentPage />} />
           <Route path="account/resetPassword" element={<ResetPasswordPage />} />
-        {/* SUPER ADMIN */}
-          <Route
-            path="/superadmin"
-            element={
-              <ProtectedRoute>
-                <AdminLayout/>
-              </ProtectedRoute>
-            }
-          >
-            {/* User management */}
-            <Route path="users" element={<AdminUsersPage />} />
-            <Route path="dashboard" element={<AdminDashboardPage/>} />
-          </Route>
-          {/* Notification */}
           <Route path="notification/:category" element={<NotificationPage />} />
-          {/* Auction */}
           <Route path="bid/historyBid" element={<HistoryBidPage />} />
           <Route path="bid/auctionCurrentJoined" element={<AuctionCurrentPage />} />
         </Route>
 
-        {/* ADMIN AREA (ProtectedRoute + MainLayout) */}
+        {/* ================= SUPER ADMIN ================= */}
+        <Route
+          path="/superadmin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="users" element={<AdminUsersPage />} />
+          <Route path="dashboard" element={<AdminDashboardPage />} />
+            {/* ✅ User Reports */}
+          <Route path="user-reports" element={<AdminReportsPage />} />
+          <Route path="violations" element={<AdminUserViolationsPage />} />
+        </Route>
+
+        {/* ================= ADMIN ================= */}
         <Route
           path="/admin"
           element={
@@ -132,7 +134,8 @@ export default function AppRoutes() {
           <Route path="products/approval" element={<AdminProductApprovalPage />} />
           <Route path="auctions/approval" element={<AdminAuctionApprovalPage />} />
         </Route>
-        {/* MODERATOR AREA (ProtectedRoute + MainLayout) */}
+
+        {/* ================= MODERATOR ================= */}
         <Route
           path="/moderator"
           element={
@@ -144,12 +147,14 @@ export default function AppRoutes() {
           <Route path="products/approval" element={<AdminProductApprovalPage />} />
           <Route path="auctions/approval" element={<AdminAuctionApprovalPage />} />
         </Route>
-        {/* AUTH LAYOUT */}
+
+        {/* ================= AUTH ================= */}
         <Route element={<AuthLayout />}>
           <Route path="/verify-info" element={<VerifyInfoPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Route>
+
       </Routes>
     </BrowserRouter>
   );
