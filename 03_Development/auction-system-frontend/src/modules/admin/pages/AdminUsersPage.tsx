@@ -78,16 +78,17 @@ const AdminUsersPage: React.FC = () => {
   // --- Load users lần đầu ---
   useEffect(() => { fetchUsers(); }, []);
 
-  // --- Xóa user ---
-  const handleDelete = async (id: number) => {
+// --- Xóa mềm user ---
+  const handleSoftDelete = async (id: number) => {
     if (!window.confirm("Bạn có chắc muốn xóa user này?")) return;
     try { 
-      await adminUserApi.deleteUser(id); 
+      await adminUserApi.softDelete(id); 
       fetchUsers(); 
     } catch { 
-      alert("Xóa user thất bại!"); 
+      alert("Xóa user thất bại!");
     }
   };
+
 
   // --- Gỡ ban user ---
   const handleUnban = async (user: UserResponse) => {
@@ -279,7 +280,7 @@ const AdminUsersPage: React.FC = () => {
                           }}>Ban</button>
                         )}
                         {frontendStatus === "Banned" && <button className="unban" onClick={() => handleUnban(user)}>Unban</button>}
-                        <button className="delete" onClick={() => handleDelete(user.userId)}>Delete</button>
+                        <button className="delete" onClick={() => handleSoftDelete(user.userId)}>Delete</button>
                       </div>
                     )}
                   </td>

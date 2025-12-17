@@ -42,15 +42,16 @@ export const adminUserApi = {
         }
     ) => axiosClient.put(`/superadmin/users/${id}/ban`, data),
 
-
     // Unban user
     unban: (id: number) =>
         axiosClient.put(`/superadmin/users/${id}/unban`, { userId: id }),
 
-
-    // Xoá user
+    // Xóa cứng user (nếu cần)
     deleteUser: (id: number) => axiosClient.delete(`/superadmin/users/${id}`),
-    
+
+    // --- Soft delete user ---
+    softDelete: (id: number) => axiosClient.put(`/superadmin/users/${id}/soft-delete`),
+
     // Xem giao dịch của user
     getAllTransactionsById: (id: number) =>
         axiosClient.get(`/superadmin/users/${id}/transactions`),
