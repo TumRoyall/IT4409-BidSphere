@@ -45,7 +45,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import AdminUsersPage from "../modules/admin/pages/AdminUsersPage";
 import AdminDashboardPage from "../modules/admin/pages/AdminDashboardPage.tsx";
 import AdminReportsPage from "../modules/admin/pages/AdminReportsPage";
-import AdminUserViolationsPage from "../modules/admin/pages/AdminUserViolationsPage";
+import AdminUserWarningPage from "../modules/admin/pages/AdminUserWarningPage.tsx";
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -119,7 +119,7 @@ export default function AppRoutes() {
           <Route path="dashboard" element={<AdminDashboardPage />} />
             {/* ✅ User Reports */}
           <Route path="user-reports" element={<AdminReportsPage />} />
-          <Route path="violations" element={<AdminUserViolationsPage />} />
+          <Route path="user-warnings" element={<AdminUserWarningPage />} />
         </Route>
 
         {/* ================= ADMIN ================= */}

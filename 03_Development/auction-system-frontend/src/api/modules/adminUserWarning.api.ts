@@ -1,7 +1,6 @@
 import axiosClient from "../axiosClient";
 
-// --- Interface dữ liệu nhận từ backend ---
-export interface UserWarningLog {
+export interface UserWarningLogResponse {
   logId: number;
   userId: number;
   transactionId: number;
@@ -12,23 +11,40 @@ export interface UserWarningLog {
   createdAt: string;
 }
 
-export const adminUserWarningApi = {
-  // Lấy tất cả warning của 1 user
-  getByUserId: (userId: number) =>
-    axiosClient.get<UserWarningLog[]>(`/warnings/user/${userId}`),
+export interface UserWarningLogRequest {
+  userId: number;
+  transactionId: number;
+  type?: string;
+  status?: string;
+  description?: string;
+}
 
-  // Lấy warning theo transaction
-  getByTransactionId: (txnId: number) =>
-    axiosClient.get<UserWarningLog[]>(`/warnings/transaction/${txnId}`),
+// Lấy tất cả warning
+export const getAllWarnings = async (): Promise<UserWarningLogResponse[]> => {
+  const res = await axiosClient.get<UserWarningLogResponse[]>("/warnings");
+  return res.data;
+};
 
-  // Tạo warning mới
-  create: (data: {
-    userId: number;
-    transactionId?: number;
-    type: string;
-    description?: string;
-  }) => axiosClient.post("/warnings", data),
+// Lấy warning theo userId
+export const getWarningsByUser = async (userId: number): Promise<UserWarningLogResponse[]> => {
+  const res = await axiosClient.get<UserWarningLogResponse[]>(`/warnings/user/${userId}`);
+  return res.data;
+};
 
-  // Auto warn (backend xử lý logic)
-  autoWarn: () => axiosClient.post("/warnings/auto-warn"),
+// Lấy warning theo transactionId
+export const getWarningsByTransaction = async (txnId: number): Promise<UserWarningLogResponse[]> => {
+  const res = await axiosClient.get<UserWarningLogResponse[]>(`/warnings/transaction/${txnId}`);
+  return res.data;
+};
+
+// Tạo warning mới
+export const createWarning = async (data: UserWarningLogRequest): Promise<UserWarningLogResponse> => {
+  const res = await axiosClient.post<UserWarningLogResponse>("/warnings", data);
+  return res.data;
+};
+
+// Auto warn pending transactions
+export const autoWarnPendingTransactions = async (): Promise<string> => {
+  const res = await axiosClient.post<string>("/warnings/auto-warn");
+  return res.data;
 };

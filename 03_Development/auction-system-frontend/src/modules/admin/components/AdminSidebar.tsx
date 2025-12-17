@@ -27,10 +27,10 @@ const AdminSidebar: React.FC = () => {
                     </li>
                     <li>
                         <NavLink
-                            to="/superadmin/violations"
+                            to="/superadmin/user-warnings"
                             className={({ isActive }) => isActive ? 'active' : ''}
                         >
-                            Violations
+                            Warnings
                         </NavLink>
                     </li>
 
