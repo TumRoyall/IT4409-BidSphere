@@ -23,63 +23,57 @@ import ResetPasswordPage from "@/modules/user/pages/ResetPasswordPage";
 import NotificationPage from "@/modules/user/pages/NotificationPage";
 import HistoryBidPage from "@/modules/user/pages/HistoryBidPage";
 import AuctionCurrentPage from "@/modules/user/pages/AuctionCurrentPage";
-import AuctionsPage from "@/modules/auction/pages/AuctionsPage"
-import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage"
+import AuctionsPage from "@/modules/auction/pages/AuctionsPage";
+import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage";
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-
         {/* MAIN LAYOUT – BỌC TẤT CẢ PUBLIC + USER */}
         <Route element={<MainLayout />}>
-
           {/* PUBLIC PAGES */}
           <Route path="/" element={<HomePage />} />
           <Route path="/help" element={<HelpPage />} />
           <Route path="/help/:id" element={<HelpDetailPage />} />
           <Route path="/how-to-buy" element={<HowToBuyPage />} />
 
-          {/* AUCTION */}
+          {/* AUCTIONS */}
           <Route path="/auctions" element={<AuctionsPage />} />
-          {/* Auction list vẫn public */}
-            <Route path="/auctions" element={<AuctionsPage />} />
-
-            {/* Auction detail chỉ cho USER */}
-            <Route
-              path="/auctions/:id"
-              element={
-                <ProtectedRoute>
-                  <AuctionDetailPage />
-                </ProtectedRoute>
-              }
-            />
-
+          <Route
+            path="/auctions/:id"
+            element={
+              <ProtectedRoute>
+                <AuctionDetailPage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
+
         {/* USER AREA (có ProtectedRoute + ProfileLayout) */}
-                  <Route
-                    path="/user"
-                    element={
-                      <ProtectedRoute>
-                        <ProfileLayout />
-                      </ProtectedRoute>
-                    }
-                  >
-                    {/* Account */}
-                    <Route path="account/profile" element={<ProfilePage />} />
-                    <Route path="account/payment" element={<PaymentPage />} />
-                    <Route path="account/reset-password" element={<ResetPasswordPage />} />
+        <Route
+          path="/user"
+          element={
+            <ProtectedRoute>
+              <ProfileLayout />
+            </ProtectedRoute>
+          }
+        >
+          {/* Account */}
+          <Route path="account/profile" element={<ProfilePage />} />
+          <Route path="account/payment" element={<PaymentPage />} />
+          <Route path="account/reset-password" element={<ResetPasswordPage />} />
 
-                    {/* Notification */}
-                    <Route path="notification/:category" element={<NotificationPage />} />
+          {/* Notification */}
+          <Route path="notification/:category" element={<NotificationPage />} />
 
-                    {/* Auction */}
-                    <Route path="bid/history-bid" element={<HistoryBidPage />} />
-                    <Route
-                      path="bid/auction-current-joined"
-                      element={<AuctionCurrentPage />}
-                    />
-                  </Route>
+          {/* Auction */}
+          <Route path="bid/history-bid" element={<HistoryBidPage />} />
+          <Route
+            path="bid/auction-current-joined"
+            element={<AuctionCurrentPage />}
+          />
+        </Route>
 
         {/* AUTH LAYOUT – KHÔNG DÙNG MAINLAYOUT */}
         <Route element={<AuthLayout />}>
@@ -87,7 +81,6 @@ export default function AppRoutes() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Route>
-
       </Routes>
     </BrowserRouter>
   );
