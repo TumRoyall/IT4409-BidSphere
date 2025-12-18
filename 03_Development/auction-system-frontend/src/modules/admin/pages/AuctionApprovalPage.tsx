@@ -7,7 +7,6 @@ import type { AuctionResponse } from "@/api/modules/auction.api";
 import "@/styles/seller.css";
 
 const AdminAuctionApprovalPage: React.FC = () => {
-  const [allAuctions, setAllAuctions] = useState<AuctionResponse[]>([]);
   const [auctions, setAuctions] = useState<AuctionResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<AuctionResponse | null>(null);
@@ -22,7 +21,6 @@ const AdminAuctionApprovalPage: React.FC = () => {
       setLoading(true);
       const res = await auctionApi.getAllAuctions();
       const list = res.data || [];
-      setAllAuctions(list);
       filterAuctions(list);
     } catch (err) {
       console.error("Failed to load auctions", err);

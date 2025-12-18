@@ -41,11 +41,11 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
       });
 
       const initialImages = (product.images || []).map((img: any) => ({
-        imageId: img.id,
-        url: img.imageUrl,
+        imageId: img.imageId,
+        url: img.url,
         isThumbnail: !!img.isThumbnail,
         file: null,
-        preview: img.imageUrl,
+        preview: img.url,
       }));
       setImagesList(initialImages);
     }
@@ -109,10 +109,10 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
           if (it.file) {
             // This is a newly uploaded file
             const resp: any = responses.shift();
-            const secureUrl = resp?.data?.image_url;
+            const secureUrl = resp?.data?.imageUrl || resp?.data?.url || resp?.url || "";
             console.log("✅ Upload response:", resp?.data);
             return {
-              url: secureUrl,  // From UploadController { image_url }
+              url: secureUrl,  // Backend expects 'url'
               isThumbnail: !!it.isThumbnail,
             };
           }
@@ -219,6 +219,23 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
           </button>
         </div>
       )}
+
+      {/* Header */}
+      <div style={{ marginBottom: "28px", paddingBottom: "20px", borderBottom: "2px solid #e2e8f0", background: "linear-gradient(135deg, #f8fafc 0%, rgba(102, 126, 234, 0.03) 100%)", padding: "16px 16px 20px 16px", marginLeft: "-16px", marginRight: "-16px", marginTop: "-16px", paddingLeft: "16px", paddingRight: "16px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
+          <div style={{ background: "#667eea", padding: "8px", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Edit2 size={18} style={{ color: "white" }} />
+          </div>
+          <div>
+            <h3 style={{ margin: 0, fontSize: "18px", fontWeight: 700, color: "#1a202c", lineHeight: 1.2 }}>
+              Edit Product Details
+            </h3>
+            <p style={{ margin: "6px 0 0 0", fontSize: "13px", color: "#718096", fontWeight: 500 }}>
+              Updating: <strong style={{ color: "#2d3748" }}>{product.name}</strong>
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Basic Information Section */}
       <div style={{ marginBottom: "28px" }}>

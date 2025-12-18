@@ -24,6 +24,7 @@ export interface Product {
 
 // Runtime-safe constants compatible with "erasableSyntaxOnly"
 export const PRODUCT_STATUS = {
+  DRAFT: "draft",
   PENDING: "pending",
   APPROVED: "approved",
   REJECTED: "rejected",

@@ -23,6 +23,7 @@ interface ApprovedProductsProps {
 }
 
 const STATUS_BADGE_CLASS: Record<string, string> = {
+  draft: "badge-default",
   pending: "badge-pending",
   approved: "badge-approved",
   rejected: "badge-rejected",

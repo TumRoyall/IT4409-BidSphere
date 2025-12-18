@@ -37,7 +37,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
     productId: null,
     startTime: "",
     endTime: "",
-    bidStepAmount: 10000,
+    minBidIncrement: 10000,
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -77,13 +77,14 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
       // Log product IDs for debugging
       if (allApprovedProducts && Array.isArray(allApprovedProducts)) {
         allApprovedProducts.forEach((p, idx) => {
-          console.log(`Product ${idx}:`, { 
-            id: p?.id, 
-            product_id: p?.product_id,
-            productId: (p as any)?.productId,
+          const legacyProduct = p as any;
+          console.log(`Product ${idx}:`, {
+            id: p?.id,
+            productId: p?.productId,
+            legacyProductId: legacyProduct?.product_id,
             name: p?.name,
             status: p?.status,
-            fullObject: p
+            fullObject: p,
           });
         });
       }
@@ -122,16 +123,25 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
     return products.filter(
       (product) =>
         (product?.name ?? "").toLowerCase().includes(query) ||
-        (product?.category ?? "").toLowerCase().includes(query)
+        (product?.category ?? product?.categories ?? "").toLowerCase().includes(query)
     );
   }, [products, searchQuery]);
 
   // Handle product selection
   const handleSelectProduct = useCallback((product: Product) => {
-    // Backend returns camelCase
-    const id = product?.productId || product?.id;
+    // Backend returns camelCase, but also support snake_case and id
+    const id = product?.productId ?? product?.id ?? (product as any)?.product_id;
     console.log("Selected product:", product);
-    console.log("Product ID extracted:", id, "from fields: productId=", product?.productId, "product_id=", product?.product_id, "id=", product?.id);
+    console.log(
+      "Product ID extracted:",
+      id,
+      "from fields: productId=",
+      product?.productId,
+      "legacy product_id=",
+      (product as any)?.product_id,
+      "id=",
+      product?.id
+    );
     
     if (!id || id <= 0) {
       console.error("Product has no valid ID:", product);
@@ -185,12 +195,12 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
       newErrors.endTime = "End date and time is required";
     }
 
-    if (formData.bidStepAmount <= 0) {
-       newErrors.bidStepAmount = "Minimum bid increment must be greater than 0";
-     }
-     if (formData.bidStepAmount < 1000) {
-       newErrors.bidStepAmount = "Minimum bid increment must be at least 1,000 VND";
-     }
+    if (formData.minBidIncrement <= 0) {
+      newErrors.minBidIncrement = "Minimum bid increment must be greater than 0";
+    }
+    if (formData.minBidIncrement < 1000) {
+      newErrors.minBidIncrement = "Minimum bid increment must be at least 1,000 VND";
+    }
 
     if (formData.startTime && formData.endTime) {
       const startDate = new Date(formData.startTime);
@@ -277,15 +287,15 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
       }
 
       const payload = {
-         productId,
-         startTime: formatDateTime(startDate),
-         endTime: formatDateTime(endDate),
-         bidStepAmount: formData.bidStepAmount,
-       };
+        productId,
+        startTime: formatDateTime(startDate),
+        endTime: formatDateTime(endDate),
+        bidStepAmount: formData.minBidIncrement,
+      };
 
       console.log("📤 Auction payload:", payload);
       const response = await auctionApi.createAuction(payload);
-      const auctionId = response.data?.auctionId || response.data?.id || response.data?.auction_id;
+      const auctionId = response.data?.auctionId ?? response.data?.id;
       
       if (!auctionId) {
         throw new Error(`Invalid response: no auctionId found in response.data = ${JSON.stringify(response.data)}`);
@@ -324,7 +334,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
     formData.productId &&
     formData.startTime &&
     formData.endTime &&
-    formData.bidStepAmount > 0;
+    formData.minBidIncrement > 0;
 
   const durationInfo = calculateDuration();
 
@@ -468,7 +478,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                             color: "#999",
                             }}
                             >
-                            {product.category}
+                            {product.categories || product.category}
                             </p>
                           </div>
                           <span
@@ -481,9 +491,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                             }}
                           >
                             ₫
-                            {(
-                              product.startPrice ?? 0
-                            ).toLocaleString("vi-VN")}
+                            {(product.startPrice ?? 0).toLocaleString("vi-VN")}
                           </span>
                         </li>
                       ))}
@@ -527,8 +535,8 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                 {selectedProduct.name}
               </h4>
               <p style={{ margin: "0 0 4px 0", fontSize: "12px", color: "#666" }}>
-                  {selectedProduct.category}
-                </p>
+                {selectedProduct.category || selectedProduct.categories}
+              </p>
               <p
                 style={{
                   margin: 0,
@@ -538,9 +546,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                 }}
               >
                 Start: ₫
-                {(
-                  selectedProduct.startPrice ?? 0
-                ).toLocaleString("vi-VN")}
+                {(selectedProduct.startPrice ?? 0).toLocaleString("vi-VN")}
               </p>
             </div>
             <button
@@ -640,22 +646,22 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                 Minimum Bid Increment (VNĐ) *
               </Label>
               <Input
-                    id="auction-increment"
-                    type="number"
-                    value={formData.bidStepAmount}
-                    onChange={(e) =>
-                      handleFieldChange("bidStepAmount", parseInt(e.target.value) || 0)
-                    }
-                    min="1000"
-                    step="1000"
-                    className="form-input"
-                    aria-invalid={!!errors.bidStepAmount}
-                  />
-                  {errors.bidStepAmount && (
-                    <span style={{ color: "#ef4444", fontSize: "14px" }}>
-                      {errors.bidStepAmount}
-                    </span>
-                  )}
+                id="auction-increment"
+                type="number"
+                value={formData.minBidIncrement}
+                onChange={(e) =>
+                  handleFieldChange("minBidIncrement", parseInt(e.target.value) || 0)
+                }
+                min="1000"
+                step="1000"
+                className="form-input"
+                aria-invalid={!!errors.minBidIncrement}
+              />
+              {errors.minBidIncrement && (
+                <span style={{ color: "#ef4444", fontSize: "14px" }}>
+                  {errors.minBidIncrement}
+                </span>
+              )}
               <p
                 style={{
                   fontSize: "13px",
@@ -713,7 +719,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                       Category:
                     </span>
                     <span style={{ color: "#1a1a1a", fontWeight: 600, fontSize: "13px" }}>
-                      {selectedProduct.category}
+                      {selectedProduct.category || selectedProduct.categories}
                     </span>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -722,9 +728,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                     </span>
                     <span style={{ color: "#667eea", fontWeight: 600, fontSize: "13px" }}>
                       ₫
-                      {(
-                        selectedProduct.startPrice ?? 0
-                      ).toLocaleString("vi-VN")}
+                      {(selectedProduct.startPrice ?? 0).toLocaleString("vi-VN")}
                     </span>
                   </div>
                 </div>
@@ -804,7 +808,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                     Min Increment:
                   </span>
                   <span style={{ color: "#667eea", fontWeight: 600, fontSize: "13px" }}>
-                    ₫{formData.bidStepAmount.toLocaleString("vi-VN")}
+                    ₫{formData.minBidIncrement.toLocaleString("vi-VN")}
                   </span>
                 </div>
               </div>

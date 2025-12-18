@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import auctionApi from "@/api/modules/auction.api";
+import productApi from "@/api/modules/product.api";
+import type { ProductResponse } from "@/api/modules/product.api";
 import { userApi } from "@/api/modules/user.api";
-import type { AuctionResponse } from "@/api/modules/auction.api";
 import {
   MapPin,
   Mail,
@@ -19,17 +19,18 @@ import "@/styles/seller-profile.css";
 
 type SellerData = any;
 
-interface AuctionItem extends Omit<AuctionResponse, "product"> {
-  title?: string;
-  featured?: boolean;
-}
-
 interface SellerStats {
-  total_products: number;
-  active_auctions: number;
-  completed_auctions: number;
-  success_rate: number;
-  averagePrice?: number;
+  totalProducts: number;
+  activeAuctions: number;
+  completedAuctions: number;
+  successRate: number;
+  approvalRate: number;
+  pendingProducts: number;
+  recentListings: number;
+  averageStartPrice: number;
+  topCategories: Array<{ name: string; count: number }>;
+  highestStartPrice: number;
+  reputationScore: number;
 }
 
 const SellerProfile = (): React.ReactElement => {
@@ -38,29 +39,110 @@ const SellerProfile = (): React.ReactElement => {
   
   const [sellerData, setSellerData] = useState<SellerData | null>(null);
   const [stats, setStats] = useState<SellerStats | null>(null);
-  const [auctions, setAuctions] = useState<AuctionItem[]>([]);
+  const [sellerProducts, setSellerProducts] = useState<ProductResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const calculateStats = (allAuctions: AuctionResponse[]) => {
-    const activeAuctions = allAuctions.filter(
-      (a) => a.status === "open" || a.status === "active"
-    ).length;
-    
-    const completedAuctions = allAuctions.filter(
-      (a) => a.status === "closed" || a.status === "ended"
-    ).length;
-    
-    const totalAuctions = allAuctions.length;
-    const successRate = totalAuctions > 0 ? (completedAuctions / totalAuctions) * 100 : 0;
-    
+  const calculateStats = (products: ProductResponse[]): SellerStats => {
+    const totalProducts = products.length;
+    const normalizedStatuses = products.map((item) => (item.status || "").toLowerCase());
+
+    const activeStatuses = new Set(["active", "approved", "open"]);
+    const completedStatuses = new Set(["completed", "sold", "closed", "ended", "cancelled"]);
+
+    const activeProducts = normalizedStatuses.filter((status) => activeStatuses.has(status)).length;
+    const completedProducts = normalizedStatuses.filter((status) => completedStatuses.has(status)).length;
+    const pendingProducts = normalizedStatuses.filter((status) => status === "pending").length;
+    const approvedProducts = normalizedStatuses.filter((status) => status === "approved" || status === "active").length;
+
+    const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    const recentListings = products.filter((product) => {
+      if (!product.createdAt) return false;
+      return new Date(product.createdAt).getTime() >= thirtyDaysAgo;
+    }).length;
+
+    const startPrices = products
+      .map((product) => Number(product.startPrice ?? 0))
+      .filter((price) => price > 0);
+
+    const averageStartPrice = startPrices.length
+      ? startPrices.reduce((sum, value) => sum + value, 0) / startPrices.length
+      : 0;
+    const highestStartPrice = startPrices.length ? Math.max(...startPrices) : 0;
+
+    const categoryMap = new Map<string, number>();
+    products.forEach((product) => {
+      const category = (product.category || "Uncategorized").trim() || "Uncategorized";
+      categoryMap.set(category, (categoryMap.get(category) ?? 0) + 1);
+    });
+
+    const topCategories = Array.from(categoryMap.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([name, count]) => ({ name, count }));
+
+    const successRate = totalProducts > 0 ? (completedProducts / totalProducts) * 100 : 0;
+    const approvalRate = totalProducts > 0 ? (approvedProducts / totalProducts) * 100 : 0;
+    const reputationScore = Math.min(
+      100,
+      Math.round(successRate * 0.6 + approvalRate * 0.3 + Math.min(recentListings, 5) * 2)
+    );
+
     return {
-      total_products: totalAuctions,
-      active_auctions: activeAuctions,
-      completed_auctions: completedAuctions,
-      success_rate: parseFloat(successRate.toFixed(2)),
-      followers_count: 0
+      totalProducts,
+      activeAuctions: activeProducts,
+      completedAuctions: completedProducts,
+      successRate: Number(successRate.toFixed(2)),
+      approvalRate: Number(approvalRate.toFixed(2)),
+      pendingProducts,
+      recentListings,
+      averageStartPrice,
+      topCategories,
+      highestStartPrice,
+      reputationScore
     };
+  };
+
+  const formatCurrency = (value?: number) =>
+    new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+      maximumFractionDigits: 0
+    }).format(value ?? 0);
+
+  const resolveSellerId = (profile: SellerData | null): number | null => {
+    if (!profile) return null;
+    if (profile.id) return Number(profile.id);
+    if (profile.userId) return Number(profile.userId);
+    if (profile.sellerId) return Number(profile.sellerId);
+    return null;
+  };
+
+  const loadSellerProducts = async (targetSellerId: number) => {
+    try {
+      const response = await productApi.getProductsPage(0, 100, { sellerId: targetSellerId });
+      const payload: any = response.data;
+      let productList: ProductResponse[] = [];
+
+      if (Array.isArray(payload)) {
+        productList = payload;
+      } else if (payload?.content && Array.isArray(payload.content)) {
+        productList = payload.content;
+      } else if (payload?.products && Array.isArray(payload.products)) {
+        productList = payload.products;
+      }
+
+      const normalizedList = productList.filter(
+        (product) => Number(product.sellerId ?? (product as any).seller_id) === Number(targetSellerId)
+      );
+
+      setSellerProducts(normalizedList);
+      setStats(calculateStats(normalizedList));
+    } catch (productErr) {
+      console.error("Failed to fetch seller products:", productErr);
+      setSellerProducts([]);
+      setStats(calculateStats([]));
+    }
   };
 
   useEffect(() => {
@@ -81,27 +163,13 @@ const SellerProfile = (): React.ReactElement => {
         }
         setSellerData(profileData);
 
-        let allAuctions: AuctionResponse[] = [];
-        try {
-          const auctionsRes = await auctionApi.getAllAuctions();
-          allAuctions = auctionsRes.data || [];
-          
-          const filteredAuctions = allAuctions
-            .map((auction: AuctionResponse) => ({
-              ...auction,
-              title: auction.product?.name || `Auction ${auction.auctionId}`,
-              featured: false,
-              thumbnail: auction.product?.imageUrl || auction.productImageUrl || "/placeholder-auction.png"
-            }));
-
-          setAuctions(filteredAuctions);
-        } catch (auctionsErr: any) {
-          console.warn("Failed to fetch auctions:", auctionsErr?.response?.status);
-          setAuctions([]);
+        const resolvedId = sellerId ? Number(sellerId) : resolveSellerId(profileData);
+        if (resolvedId) {
+          await loadSellerProducts(resolvedId);
+        } else {
+          setSellerProducts([]);
+          setStats(calculateStats([]));
         }
-
-        const calculatedStats = calculateStats(allAuctions);
-        setStats(calculatedStats);
       } catch (err: any) {
         console.error("Error fetching seller profile:", err);
         setError(err?.response?.data?.message || "Failed to load seller profile");
@@ -115,20 +183,26 @@ const SellerProfile = (): React.ReactElement => {
 
   const getStatusBadge = (status: string) => {
     const statusMap: Record<string, { label: string; className: string }> = {
-      "open": { label: "Active", className: "status-active" },
-      "active": { label: "Active", className: "status-active" },
-      "created": { label: "Coming Soon", className: "status-coming" },
-      "coming_soon": { label: "Coming Soon", className: "status-coming" },
-      "closed": { label: "Ended", className: "status-ended" },
-      "ended": { label: "Ended", className: "status-ended" },
-      "cancelled": { label: "Cancelled", className: "status-ended" }
+      active: { label: "Active", className: "status-active" },
+      approved: { label: "Approved", className: "status-active" },
+      open: { label: "Active", className: "status-active" },
+      created: { label: "Incoming", className: "status-coming" },
+      pending: { label: "Pending", className: "status-coming" },
+      coming_soon: { label: "Coming Soon", className: "status-coming" },
+      draft: { label: "Draft", className: "status-coming" },
+      closed: { label: "Closed", className: "status-ended" },
+      ended: { label: "Ended", className: "status-ended" },
+      rejected: { label: "Rejected", className: "status-ended" },
+      cancelled: { label: "Cancelled", className: "status-ended" },
+      sold: { label: "Sold", className: "status-ended" }
     };
     return statusMap[status?.toLowerCase()] || { label: status || "Unknown", className: "" };
   };
 
-  const filteredAuctions = auctions.filter((auction) => {
-    if (activeTab === "active") return auction.status === "open" || auction.status === "active";
-    if (activeTab === "completed") return auction.status === "closed" || auction.status === "ended";
+  const filteredProducts = sellerProducts.filter((product) => {
+    const status = (product.status || "").toLowerCase();
+    if (activeTab === "active") return status === "active" || status === "approved";
+    if (activeTab === "completed") return status && status !== "active" && status !== "approved";
     return true;
   });
 
@@ -183,7 +257,7 @@ const SellerProfile = (): React.ReactElement => {
                        <Star key={i} size={14} fill="currentColor" />
                      ))}
                    </div>
-                   <span className="rating-score">{stats?.success_rate?.toFixed(0) || 0}%</span>
+                   <span className="rating-score">{stats?.successRate?.toFixed(0) || 0}% match</span>
                  </div>
 
                  <p className="seller-meta">
@@ -211,19 +285,23 @@ const SellerProfile = (): React.ReactElement => {
 
           {/* QUICK STATS */}
           {stats && (
-            <div className="quick-stats">
-              <div className="quick-stat">
-                <div className="stat-value">{stats.active_auctions || 0}</div>
-                <div className="stat-label">Active</div>
-              </div>
-              <div className="quick-stat">
-                <div className="stat-value">{stats.completed_auctions || 0}</div>
-                <div className="stat-label">Completed</div>
-              </div>
-              <div className="quick-stat">
-                <div className="stat-value">{(stats.success_rate || 0).toFixed(0)}%</div>
-                <div className="stat-label">Success Rate</div>
-              </div>
+              <div className="quick-stats">
+                <div className="quick-stat">
+                  <div className="stat-value">{stats.activeAuctions || 0}</div>
+                  <div className="stat-label">Đang diễn ra</div>
+                </div>
+                <div className="quick-stat">
+                  <div className="stat-value">{stats.completedAuctions || 0}</div>
+                  <div className="stat-label">Hoàn tất</div>
+                </div>
+                <div className="quick-stat">
+                  <div className="stat-value">{(stats.successRate || 0).toFixed(0)}%</div>
+                  <div className="stat-label">Tỉ lệ thành công</div>
+                </div>
+                <div className="quick-stat">
+                  <div className="stat-value">{stats.reputationScore || 0}</div>
+                  <div className="stat-label">Điểm uy tín</div>
+                </div>
             </div>
           )}
         </div>
@@ -237,24 +315,65 @@ const SellerProfile = (): React.ReactElement => {
             {/* SELLER STATS */}
             {stats && (
               <section className="card">
-                <h2 className="card-title">Seller Performance</h2>
-                
+                <div className="card-header">
+                  <h2 className="card-title">Seller Performance</h2>
+                  <span className="card-subtitle">Tổng quan trong 30 ngày gần nhất</span>
+                </div>
+
                 <div className="stat-boxes">
-                  <div className="stat-box">
-                    <div className="stat-box-value">{stats.total_products}</div>
-                    <div className="stat-box-label">Total Products</div>
+                  <div className="stat-box accent">
+                    <div className="stat-box-label">Tổng sản phẩm</div>
+                    <div className="stat-box-value">{stats.totalProducts}</div>
                   </div>
                   <div className="stat-box">
-                    <div className="stat-box-value">{stats.completed_auctions}</div>
-                    <div className="stat-box-label">Completed</div>
+                    <div className="stat-box-label">Đã duyệt</div>
+                    <div className="stat-box-value">{stats.totalProducts - stats.pendingProducts}</div>
+                    <p className="stat-box-hint">{stats.approvalRate.toFixed(0)}% approval</p>
                   </div>
                   <div className="stat-box">
-                    <div className="stat-box-value">{(stats.success_rate || 0).toFixed(0)}%</div>
-                    <div className="stat-box-label">Success Rate</div>
+                    <div className="stat-box-label">Chờ duyệt</div>
+                    <div className="stat-box-value">{stats.pendingProducts}</div>
+                    <p className="stat-box-hint">{stats.recentListings} bài đăng mới</p>
+                  </div>
+                </div>
+
+                <div className="insight-grid">
+                  <div className="insight-card">
+                    <span>Giá khởi điểm TB</span>
+                    <strong>{formatCurrency(stats.averageStartPrice)}</strong>
+                  </div>
+                  <div className="insight-card">
+                    <span>Listing cao nhất</span>
+                    <strong>{formatCurrency(stats.highestStartPrice)}</strong>
+                  </div>
+                  <div className="insight-card">
+                    <span>Số phiên đang chạy</span>
+                    <strong>{stats.activeAuctions}</strong>
+                  </div>
+                  <div className="insight-card">
+                    <span>Số phiên hoàn tất</span>
+                    <strong>{stats.completedAuctions}</strong>
                   </div>
                 </div>
               </section>
             )}
+
+            {stats?.topCategories?.length ? (
+              <section className="card">
+                <div className="card-header">
+                  <h2 className="card-title">Top Categories</h2>
+                  <span className="card-subtitle">Lĩnh vực hoạt động nổi bật</span>
+                </div>
+                <div className="category-chips">
+                  {stats.topCategories.map((category) => (
+                    <div key={category.name} className="category-chip">
+                      <span>{category.name}</span>
+                      <small>{category.count} sản phẩm</small>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ) : null}
 
             {/* CONTACT */}
             <section className="card">
@@ -300,18 +419,22 @@ const SellerProfile = (): React.ReactElement => {
 
             {stats && (
               <div className="card">
-                <h3 className="card-title">Auction Stats</h3>
+                <h3 className="card-title">Marketplace Insights</h3>
                 <div className="detail-item">
-                  <span>Active Auctions</span>
-                  <strong>{stats.active_auctions}</strong>
+                  <span>Điểm uy tín</span>
+                  <strong>{stats.reputationScore}/100</strong>
                 </div>
                 <div className="detail-item">
-                  <span>Completed</span>
-                  <strong>{stats.completed_auctions}</strong>
+                  <span>Tỉ lệ thành công</span>
+                  <strong>{stats.successRate.toFixed(1)}%</strong>
                 </div>
                 <div className="detail-item">
-                  <span>Success Rate</span>
-                  <strong>{(stats.success_rate || 0).toFixed(1)}%</strong>
+                  <span>Tỉ lệ duyệt</span>
+                  <strong>{stats.approvalRate.toFixed(1)}%</strong>
+                </div>
+                <div className="detail-item">
+                  <span>Bài đăng mới (30d)</span>
+                  <strong>{stats.recentListings}</strong>
                 </div>
               </div>
             )}
@@ -346,17 +469,21 @@ const SellerProfile = (): React.ReactElement => {
             </div>
           </div>
 
-          {filteredAuctions.length > 0 ? (
+          {filteredProducts.length > 0 ? (
             <div className="auctions-grid">
-              {filteredAuctions.slice(0, 8).map((auction) => {
-                const statusInfo = getStatusBadge(auction.status || "");
-                const auctionId = auction.auctionId || auction.id || 0;
+              {filteredProducts.slice(0, 8).map((product) => {
+                const statusInfo = getStatusBadge(product.status || "");
+                const productId = product.productId || product.id || 0;
+                const imageSrc =
+                  product.imageUrl ||
+                  product.images?.find((img) => img.isThumbnail)?.url ||
+                  "/placeholder-auction.png";
                 return (
-                  <a href={`/auction/${auctionId}`} key={auctionId} className="auction-card">
+                  <a href={`/product/${productId}`} key={productId} className="auction-card">
                     <div className="auction-image-box">
                       <img
-                        src={(auction as any).thumbnail || "/placeholder-auction.png"}
-                        alt={auction.title || "Auction"}
+                        src={imageSrc}
+                        alt={product.name}
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = "/placeholder-auction.png";
                         }}
@@ -366,13 +493,12 @@ const SellerProfile = (): React.ReactElement => {
                       </span>
                     </div>
                     <div className="auction-info">
-                      <h3>{auction.title || "Auction"}</h3>
-                      {auction.startTime && (
-                        <p className="auction-date">
-                          <Clock size={12} />
-                          {new Date(auction.startTime).toLocaleDateString("vi-VN")}
-                        </p>
-                      )}
+                      <h3>{product.name}</h3>
+                      <p className="auction-date">
+                        <Clock size={12} />
+                        {new Date(product.createdAt || Date.now()).toLocaleDateString("vi-VN")}
+                      </p>
+                      <p className="auction-price">{formatCurrency(product.startPrice)}</p>
                     </div>
                   </a>
                 );
@@ -384,7 +510,7 @@ const SellerProfile = (): React.ReactElement => {
             </div>
           )}
 
-          {filteredAuctions.length > 8 && (
+          {filteredProducts.length > 8 && (
             <div className="view-more-btn">
               <button>
                 View All Auctions

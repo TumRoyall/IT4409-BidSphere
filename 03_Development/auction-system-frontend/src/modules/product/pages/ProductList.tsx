@@ -159,7 +159,7 @@ export default function ProductList() {
           <div className="product-list-grid">
             {products.map((product) => (
               <ProductCard
-                key={product.productId || (product as any).id}
+                key={product.productId || product.id}
                 product={product}
               />
             ))}

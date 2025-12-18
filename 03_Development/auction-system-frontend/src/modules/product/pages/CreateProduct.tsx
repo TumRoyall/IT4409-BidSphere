@@ -149,14 +149,27 @@ export default function CreateProduct() {
       console.log("Uploading images...");
       const uploadPromises = formData.images.map((f) => productApi.uploadImage(f));
       const uploadResponses = await Promise.all(uploadPromises);
-      const uploadedUrls = uploadResponses.map((r) => r?.data?.image_url).filter(Boolean) as string[];
+      const uploadedImages = uploadResponses
+        .map((r) => {
+          const data = r?.data;
+          if (!data) return null;
+          const imageUrl = data.imageUrl ?? data.image_url ?? data.secure_url ?? data.secureUrl;
+          const secureUrl = data.secure_url ?? data.secureUrl ?? null;
+          if (!imageUrl) return null;
+          return { imageUrl, secureUrl };
+        })
+        .filter(Boolean) as Array<{ imageUrl: string; secureUrl: string | null }>;
 
-      if (uploadedUrls.length === 0) {
+      if (uploadedImages.length === 0) {
         throw new Error("Failed to upload images or retrieve URLs");
       }
 
       // Build images payload; mark first image as thumbnail by default
-      const imagesPayload = uploadedUrls.map((url, idx) => ({ url: url, isThumbnail: idx === 0 }));
+      const imagesPayload = uploadedImages.map((img, idx) => ({
+        imageUrl: img.imageUrl,
+        secureUrl: img.secureUrl ?? img.imageUrl,
+        isThumbnail: idx === 0,
+      }));
 
       const productPayload = {
         name: formData.name,

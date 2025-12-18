@@ -183,11 +183,11 @@ export default function ProductDetail() {
           </div>
           )}
 
-          {product.createdAt && (
+          {(product as any).updatedAt && (
           <div className="product-detail-meta-item">
           <Calendar size={16} />
           <span>
-          Created on {new Date(product.createdAt).toLocaleDateString()}
+          Updated on {new Date((product as any).updatedAt).toLocaleDateString()}
           </span>
           </div>
           )}

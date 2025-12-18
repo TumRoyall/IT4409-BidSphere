@@ -1,24 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
 import { Filter, RefreshCw } from "lucide-react";
 import { Button } from "@/components/common/Button";
 import ProductApprovalModal, { type ProductApprovalRequest } from "../components/ProductApprovalModal";
 import productApi from "@/api/modules/product.api";
 import type { Product } from "@/modules/product/types";
-import { useAuth } from "@/hooks/useAuth";
-import { USER_ROLES } from "@/utils/constants";
 import "@/styles/seller.css";
 
 const AdminProductApprovalPage: React.FC = () => {
-  const { user } = useAuth();
-  
-  // Check authorization - allow ADMIN and MODERATOR
-  const rawRole = (user as any)?.role || (user as any)?.roles || (user as any)?.roleName || "";
-  const role = String(rawRole).toUpperCase();
-  
-  if (role !== USER_ROLES.ADMIN && role !== USER_ROLES.MODERATOR) {
-    return <Navigate to="/" replace />;
-  }
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);

@@ -37,10 +37,15 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
       
       // Filter by product if provided
       const filtered = product
-      ? auctionsList.filter((a: any) => {
-      return a.productId === product.productId;
-      })
-      : auctionsList;
+        ? auctionsList.filter((a: any) => {
+            const legacyAuction = a as { product_id?: number };
+            const auctionProductId = a.productId ?? legacyAuction.product_id;
+            const selectedProductId = product.productId ?? (product as any)?.id;
+            return auctionProductId && selectedProductId
+              ? auctionProductId === selectedProductId
+              : false;
+          })
+        : auctionsList;
       
       // Debug logging
       console.log("Fetched auctions:", auctionsList);
@@ -361,7 +366,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                       fontWeight: 600,
                       color: "#1a202c"
                     }}>
-                      {auction.product?.name || `Product #${auction.productId || auction.product_id}`}
+                      {auction.product?.name || `Product #${auction.productId ?? (auction as { product_id?: number }).product_id ?? "?"}`}
                     </h3>
                     <p style={{
                       margin: "4px 0 0 0",

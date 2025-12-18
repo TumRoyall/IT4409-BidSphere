@@ -2,7 +2,8 @@ import axiosClient from "../axiosClient";
 
 // ==================== TYPES & INTERFACES ====================
 export interface ImagePayload {
-  url: string;
+  imageUrl?: string;
+  secureUrl?: string;
   isThumbnail?: boolean;
 }
 
@@ -74,9 +75,13 @@ const productApi = {
   },
 
   // Get all products with pagination (for bidders)
-  getProductsPage: async (page: number = 0, size: number = 10) => {
-    return axiosClient.get<ProductPage>(`/products/page`, { 
-       params: { page, size }
+  getProductsPage: async (
+    page: number = 0,
+    size: number = 10,
+    extraParams: Record<string, unknown> = {}
+  ) => {
+    return axiosClient.get<ProductPage>(`/products/page`, {
+      params: { page, size, ...extraParams },
     });
   },
   // Create new product
@@ -97,7 +102,12 @@ const productApi = {
   uploadImage: (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
-    return axiosClient.post<{ image_url: string }>("/upload", formData, {
+    return axiosClient.post<{
+      image_url?: string;
+      imageUrl?: string;
+      secure_url?: string;
+      secureUrl?: string;
+    }>("/upload", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
   },
