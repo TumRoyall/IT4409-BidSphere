@@ -117,7 +117,6 @@ export default function AppRoutes() {
         >
           <Route path="users" element={<AdminUsersPage />} />
           <Route path="dashboard" element={<AdminDashboardPage />} />
-            {/* ✅ User Reports */}
           <Route path="user-reports" element={<AdminReportsPage />} />
           <Route path="user-warnings" element={<AdminUserWarningPage />} />
         </Route>
