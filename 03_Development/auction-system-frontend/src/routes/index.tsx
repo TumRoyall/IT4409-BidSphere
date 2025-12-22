@@ -34,6 +34,12 @@ import ProductList from "@/modules/product/pages/ProductList";
 import ProductDetail from "@/modules/product/pages/ProductDetail";
 import ProductManagement from "@/modules/seller/pages/ProductManagement";
 
+// Admin area
+import AdminLayout from "../layouts/AdminLayout";
+import AdminUsersPage from "../modules/admin/pages/AdminUsersPage";
+import AdminDashboardPage from "../modules/admin/pages/AdminDashboardPage.tsx";
+import AdminReportsPage from "../modules/admin/pages/AdminReportsPage";
+import AdminUserWarningPage from "../modules/admin/pages/AdminUserWarningPage.tsx";
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -88,7 +94,6 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         >
-          {/* Account */}
           <Route path="account/profile" element={<ProfilePage />} />
           <Route path="account/payment" element={<PaymentPage />} />
           <Route path="account/reset-password" element={<ResetPasswordPage />} />
@@ -111,7 +116,22 @@ export default function AppRoutes() {
           <Route path="/register" element={<RegisterPage />} />
         </Route>
 
-        {/* ADMIN AREA (ProtectedRoute + MainLayout) */}
+        {/* ================= SUPER ADMIN ================= */}
+        <Route
+          path="/superadmin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="users" element={<AdminUsersPage />} />
+          <Route path="dashboard" element={<AdminDashboardPage />} />
+          <Route path="user-reports" element={<AdminReportsPage />} />
+          <Route path="user-warnings" element={<AdminUserWarningPage />} />
+        </Route>
+
+        {/* ================= ADMIN ================= */}
         <Route
           path="/admin"
           element={
@@ -124,7 +144,7 @@ export default function AppRoutes() {
           <Route path="auctions/approval" element={<AdminAuctionApprovalPage />} />
         </Route>
 
-        {/* MODERATOR AREA (ProtectedRoute + MainLayout) */}
+        {/* ================= MODERATOR ================= */}
         <Route
           path="/moderator"
           element={
