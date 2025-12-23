@@ -132,6 +132,14 @@ export default function ProfileLayout() {
                 >
                   Phiên đang tham gia
                 </NavLink>
+                <NavLink
+                                  to="/user/bid/won-products"
+                                  className={({ isActive }) =>
+                                    `sub-link ${isActive ? "active" : ""}`
+                                  }
+                                >
+                                  Đơn đáu giá
+                                </NavLink>
               </nav>
             )}
           </div>
