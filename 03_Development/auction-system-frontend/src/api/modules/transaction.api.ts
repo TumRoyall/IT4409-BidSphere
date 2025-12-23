@@ -47,3 +47,21 @@ export const getUserTransactions = (
     { params }
   );
 };
+
+export type AccountTransactionRequest = {
+  userId: number;
+  amount: string | number; // gửi string cho an toàn BigDecimal
+  type: "DEPOSIT" | "WITHDRAW" | "TRANSFER" | "RECEIVED";
+};
+
+export const transactionApi = {
+  // =========================
+  // Nạp tiền vào tài khoản
+  // =========================
+  deposit(data: AccountTransactionRequest) {
+    return axiosClient.post(
+      "/account/deposit",
+      data
+    );
+  },
+};
