@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Filter, RefreshCw } from "lucide-react";
 import { Button } from "@/components/common/Button";
-import ProductApprovalModal, { type ProductApprovalRequest } from "../components/ProductApprovalModal";
+import ProductApprovalModal, {
+  type ProductApprovalRequest,
+} from "../components/ProductApprovalModal";
 import productApi from "@/api/modules/product.api";
 import type { Product } from "@/modules/product/types";
-import "@/styles/seller.css";
+import "@/modules/admin/styles/ProductApprovalPage.css";
 
 const AdminProductApprovalPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [statusFilter, setStatusFilter] = useState<"pending" | "all">("pending");
+  const [statusFilter, setStatusFilter] = useState<"pending" | "all">(
+    "pending"
+  );
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [allPendingProducts, setAllPendingProducts] = useState<Product[]>([]);
@@ -36,7 +40,7 @@ const AdminProductApprovalPage: React.FC = () => {
         hasMore = products.length === 10; // If less than 10, it's the last page
         pageNum++;
       }
-      
+
       // Filter based on statusFilter
       let filteredProducts = allProducts;
       if (statusFilter === "pending") {
@@ -45,7 +49,7 @@ const AdminProductApprovalPage: React.FC = () => {
         );
       }
       // if statusFilter === "all", use all products without filtering
-      
+
       setAllPendingProducts(filteredProducts as Product[]);
       // Calculate pages (showing 10 per page)
       const pages = Math.ceil(filteredProducts.length / 10) || 1;
@@ -70,9 +74,15 @@ const AdminProductApprovalPage: React.FC = () => {
     loadPendingProducts();
   }, [page, allPendingProducts]);
 
-  const handleApprove = async (productId: number, data: ProductApprovalRequest) => {
+  const handleApprove = async (
+    productId: number,
+    data: ProductApprovalRequest
+  ) => {
     try {
-      console.log("📤 Sending approval request:", JSON.stringify(data, null, 2));
+      console.log(
+        "📤 Sending approval request:",
+        JSON.stringify(data, null, 2)
+      );
       await productApi.approveProduct(productId, data);
       console.log("✅ Product approved successfully!");
       alert("✅ Product approved!");
@@ -81,7 +91,8 @@ const AdminProductApprovalPage: React.FC = () => {
       setSelectedProduct(null);
     } catch (error: any) {
       console.error("❌ Approval failed:", error);
-      const errorMsg = error?.response?.data?.message || "Failed to approve product";
+      const errorMsg =
+        error?.response?.data?.message || "Failed to approve product";
       throw new Error(errorMsg);
     }
   };
@@ -94,7 +105,10 @@ const AdminProductApprovalPage: React.FC = () => {
         status: "rejected",
         rejectionReason: reason,
       };
-      console.log("📤 Sending rejection request:", JSON.stringify(data, null, 2));
+      console.log(
+        "📤 Sending rejection request:",
+        JSON.stringify(data, null, 2)
+      );
       await productApi.approveProduct(productId, data);
       console.log("✅ Product rejected successfully!");
       alert("✅ Product rejected!");
@@ -103,7 +117,8 @@ const AdminProductApprovalPage: React.FC = () => {
       setSelectedProduct(null);
     } catch (error: any) {
       console.error("❌ Rejection failed:", error);
-      const errorMsg = error?.response?.data?.message || "Failed to reject product";
+      const errorMsg =
+        error?.response?.data?.message || "Failed to reject product";
       throw new Error(errorMsg);
     }
   };
@@ -117,346 +132,134 @@ const AdminProductApprovalPage: React.FC = () => {
     }).format(num || 0);
   };
 
+  const buildStatusClass = (status?: string) => {
+    const normalized = status?.toLowerCase() || "unknown";
+    return `pa-badge status-${normalized}`;
+  };
+
+  const pillText =
+    statusFilter === "pending"
+      ? `${allPendingProducts.length} waiting for a decision`
+      : `${allPendingProducts.length} products loaded`;
+
   return (
-    <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto" }}>
-      {/* Header */}
-      <div
-        style={{
-          marginBottom: "32px",
-          paddingBottom: "24px",
-          borderBottom: "2px solid #e2e8f0",
-        }}
-      >
-        <h1
-          style={{
-            margin: "0 0 8px 0",
-            fontSize: "28px",
-            fontWeight: 700,
-            color: "#1a202c",
-          }}
-        >
-          📋 Product Approvals
-        </h1>
-        <p
-          style={{
-            margin: 0,
-            fontSize: "14px",
-            color: "#718096",
-            fontWeight: 500,
-          }}
-        >
-          Review and approve pending product submissions
-        </p>
+    <div className="product-approval-page">
+      <div className="pa-header">
+        <div>
+          <p className="pa-eyebrow">
+            Review and approve pending product submissions
+          </p>
+          <h1 className="pa-title">📋 Product Approvals</h1>
+        </div>
+        <div className="pa-pill">{pillText}</div>
       </div>
 
-      {/* Controls */}
-      <div
-        style={{
-          display: "flex",
-          gap: "12px",
-          marginBottom: "24px",
-          alignItems: "center",
-        }}
-      >
+      <div className="pa-controls">
         <Button
           onClick={loadPendingProducts}
           disabled={loading}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            borderRadius: "6px",
-          }}
+          className="pa-control-btn"
         >
-          <RefreshCw size={16} />
-          Refresh
+          <RefreshCw size={16} /> Refresh
         </Button>
 
-        <div
-          style={{
-            display: "flex",
-            gap: "8px",
-            alignItems: "center",
-            background: "#f7fafc",
-            padding: "8px 12px",
-            borderRadius: "6px",
-            border: "1px solid #cbd5e0",
-          }}
-        >
-          <Filter size={16} style={{ color: "#718096" }} />
+        <div className="pa-filter">
+          <Filter size={16} className="pa-filter-icon" />
           <select
             value={statusFilter}
             onChange={(e) => {
               setStatusFilter(e.target.value as "pending" | "all");
               setPage(0);
             }}
-            style={{
-              background: "transparent",
-              border: "none",
-              fontSize: "13px",
-              fontWeight: 500,
-              color: "#2d3748",
-              cursor: "pointer",
-              outline: "none",
-            }}
+            className="pa-select"
           >
-            <option value="pending">Pending Only</option>
-            <option value="all">All Products</option>
+            <option value="pending">Pending only</option>
+            <option value="all">All products</option>
           </select>
         </div>
 
-        <div style={{ marginLeft: "auto", fontSize: "13px", color: "#718096" }}>
-          {products.length > 0 && (
-            <span>
-              Showing <strong>{products.length}</strong> product{products.length !== 1 ? "s" : ""}
-            </span>
-          )}
+        <div className="pa-meta">
+          Showing {products.length} product{products.length !== 1 ? "s" : ""}
         </div>
       </div>
 
-      {/* Products List */}
       {loading ? (
-        <div
-          style={{
-            textAlign: "center",
-            padding: "40px",
-            color: "#718096",
-            fontSize: "14px",
-          }}
-        >
-          Loading pending products...
-        </div>
+        <div className="pa-state pa-loading">Loading pending products...</div>
       ) : products.length === 0 ? (
-        <div
-          style={{
-            background: "#f0fdf4",
-            border: "2px solid #86efac",
-            borderRadius: "8px",
-            padding: "32px",
-            textAlign: "center",
-          }}
-        >
-          <p style={{ margin: 0, fontSize: "14px", color: "#166534", fontWeight: 500 }}>
-            ✅ No pending products to approve!
-          </p>
+        <div className="pa-state pa-empty">
+          ✅ No pending products to approve
         </div>
       ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: "16px",
-          }}
-        >
+        <div className="pa-grid">
           {products.map((product) => (
-          <div
-          key={product.productId || (product as any).id || String(Math.random())}
-              style={{
-                background: "white",
-                border: "1px solid #e2e8f0",
-                borderRadius: "8px",
-                overflow: "hidden",
-                transition: "box-shadow 0.2s",
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) => {
-                const target = e.currentTarget as HTMLElement;
-                target.style.boxShadow = "0 10px 25px rgba(0, 0, 0, 0.1)";
-              }}
-              onMouseLeave={(e) => {
-                const target = e.currentTarget as HTMLElement;
-                target.style.boxShadow = "none";
-              }}
+            <div
+              className="pa-card"
+              key={
+                product.productId ||
+                (product as any).id ||
+                String(Math.random())
+              }
             >
-              {/* Image */}
-              {product.imageUrl && (
-              <div
-              style={{
-              width: "100%",
-              height: "200px",
-              background: "#f7fafc",
-              overflow: "hidden",
-              }}
-              >
-              <img
-              src={product.imageUrl}
-              alt={product.name}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-              )}
-
-              {/* Content */}
-              <div style={{ padding: "16px" }}>
-              {/* Status Badge */}
-              <div style={{ marginBottom: "8px", display: "flex", gap: "8px", alignItems: "center" }}>
-              <span
-              style={{
-                display: "inline-block",
-                padding: "4px 12px",
-                borderRadius: "12px",
-                fontSize: "11px",
-                fontWeight: 600,
-                textTransform: "uppercase",
-                letterSpacing: "0.5px",
-                  background:
-                      product.status?.toLowerCase() === "pending"
-                      ? "#fee2e2"
-                        : product.status?.toLowerCase() === "approved"
-                           ? "#d1fae5"
-                        : product.status?.toLowerCase() === "sold"
-                      ? "#e5e7eb"
-                    : product.status?.toLowerCase() === "rejected"
-                    ? "#fecaca"
-                    : "#f3f4f6",
-                color:
-                  product.status?.toLowerCase() === "pending"
-                    ? "#dc2626"
-                    : product.status?.toLowerCase() === "approved"
-                    ? "#059669"
-                      : product.status?.toLowerCase() === "sold"
-                        ? "#6b7280"
-                      : product.status?.toLowerCase() === "rejected"
-                        ? "#991b1b"
-                           : "#374151",
-                  }}
-              >
-              {(product.status || "unknown").toUpperCase()}
-              </span>
+              <div className={`pa-image ${product.imageUrl ? "" : "pa-image--empty"}`}>
+                {product.imageUrl ? (
+                  <img src={product.imageUrl} alt={product.name} />
+                ) : (
+                  <div className="pa-image-fallback">No image</div>
+                )}
               </div>
 
-              <h3
-              style={{
-                  margin: "0 0 8px 0",
-                fontSize: "14px",
-              fontWeight: 700,
-              color: "#1a202c",
-              lineHeight: 1.4,
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              }}
-              >
-              {product.name}
-              </h3>
+              <div className="pa-card-body">
+                <div className="pa-badge-row">
+                  <span className={buildStatusClass(product.status)}>
+                    {(product.status || "unknown").toUpperCase()}
+                  </span>
+                </div>
 
-              <p
-              style={{
-              margin: "0 0 12px 0",
-              fontSize: "12px",
-              color: "#718096",
-              lineHeight: 1.4,
-              display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-              }}
-              >
-              {product.description}
-              </p>
+                <h3 className="pa-name">{product.name}</h3>
+                <p className="pa-desc">{product.description}</p>
 
-              <div
-              style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "8px",
-              marginBottom: "12px",
-              fontSize: "12px",
-              }}
-              >
-              <div
-              style={{
-                background: "#f7fafc",
-              padding: "8px",
-                borderRadius: "6px",
-                  border: "1px solid #e2e8f0",
-                  }}
-                   >
-                  <span style={{ color: "#718096", fontSize: "10px", fontWeight: 600 }}>
-                  START PRICE
-                </span>
-              <p
-              style={{
-              color: "#2d3748",
-              fontWeight: 600,
-                margin: "4px 0 0 0",
-                  }}
-                >
-                  {formatPrice(product.startPrice || 0)}
-                     </p>
-                   </div>
-                   <div
-                     style={{
-                       background: "#f7fafc",
-                       padding: "8px",
-                       borderRadius: "6px",
-                       border: "1px solid #e2e8f0",
-                     }}
-                   >
-                     <span style={{ color: "#718096", fontSize: "10px", fontWeight: 600 }}>
-                       CATEGORY
-                     </span>
-                     <p
-                       style={{
-                         color: "#2d3748",
-                         fontWeight: 600,
-                         margin: "4px 0 0 0",
-                         fontSize: "11px",
-                       }}
-                     >
-                       {product.category}
-                     </p>
-                   </div>
-                 </div>
+                <div className="pa-info-grid">
+                  <div className="pa-info-card">
+                    <span className="pa-info-label">Start price</span>
+                    <p className="pa-info-value">
+                      {formatPrice(product.startPrice || 0)}
+                    </p>
+                  </div>
+                  <div className="pa-info-card">
+                    <span className="pa-info-label">Category</span>
+                    <p className="pa-info-value">{product.category}</p>
+                  </div>
+                </div>
 
-                 {/* Conditional Buttons */}
-                 {product.status?.toLowerCase() === "pending" && (
-                   <Button
-                     onClick={() => setSelectedProduct(product)}
-                     style={{
-                       width: "100%",
-                       borderRadius: "6px",
-                       background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                       boxShadow: "0 4px 12px rgba(102, 126, 234, 0.4)",
-                     }}
-                   >
-                     Review & Approve
-                   </Button>
-                 )}
-                 {product.status?.toLowerCase() === "approved" && (
-                   <Button
-                     onClick={() => handleReject(product.productId || (product as any).id, "Admin cancelled this product")}
-                     style={{
-                       width: "100%",
-                       borderRadius: "6px",
-                       background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
-                       boxShadow: "0 4px 12px rgba(239, 68, 68, 0.4)",
-                     }}
-                   >
-                     Cancel Product
-                   </Button>
-                 )}
+                {product.status?.toLowerCase() === "pending" && (
+                  <Button
+                    onClick={() => setSelectedProduct(product)}
+                    className="pa-action-btn"
+                  >
+                    Review &amp; Approve
+                  </Button>
+                )}
+                {product.status?.toLowerCase() === "approved" && (
+                  <Button
+                    onClick={() =>
+                      handleReject(
+                        product.productId || (product as any).id,
+                        "Admin cancelled this product"
+                      )
+                    }
+                    className="pa-action-btn pa-danger"
+                  >
+                    Cancel Product
+                  </Button>
+                )}
               </div>
             </div>
           ))}
         </div>
       )}
 
-      {/* Pagination */}
       {totalPages > 1 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "8px",
-            justifyContent: "center",
-            marginTop: "24px",
-          }}
-        >
+        <div className="pa-pagination">
           <Button
             onClick={() => setPage(Math.max(0, page - 1))}
             disabled={page === 0 || loading}
@@ -464,17 +267,7 @@ const AdminProductApprovalPage: React.FC = () => {
           >
             Previous
           </Button>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "0 12px",
-              fontSize: "13px",
-              color: "#718096",
-              fontWeight: 500,
-            }}
-          >
+          <div className="pa-page-meta">
             Page {page + 1} of {totalPages}
           </div>
           <Button
@@ -487,21 +280,9 @@ const AdminProductApprovalPage: React.FC = () => {
         </div>
       )}
 
-      {/* Approval Modal */}
       {selectedProduct && (
         <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1000,
-          }}
+          className="pa-modal-backdrop"
           onClick={() => setSelectedProduct(null)}
         >
           <div onClick={(e) => e.stopPropagation()}>
