@@ -39,6 +39,9 @@ import HistoryBidPage from "@/modules/user/pages/HistoryBidPage";
 import AuctionCurrentPage from "@/modules/user/pages/AuctionCurrentPage";
 import AuctionsPage from "@/modules/auction/pages/AuctionsPage"
 import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage"
+import DepositPage from "@/modules/payment/pages/DepositPage"
+import MyAuctionOrdersPage from "@/modules/auction/pages/MyAuctionOrdersPage"
+import OrderDetail from "@/modules/auction/pages/OrderDetail"
 
 export default function AppRoutes() {
   return (
@@ -96,7 +99,8 @@ export default function AppRoutes() {
           {/* Account */}
           <Route path="account/profile" element={<ProfilePage />} />
           <Route path="account/payment" element={<PaymentPage />} />
-          <Route path="account/resetPassword" element={<ResetPasswordPage />} />
+          <Route path="account/payment/deposit" element={<DepositPage />} />
+          <Route path="account/reset-password" element={<ResetPasswordPage />} />
 
           {/* Notification */}
           <Route path="notification/:category" element={<NotificationPage />} />
@@ -104,6 +108,9 @@ export default function AppRoutes() {
           {/* Auction */}
           <Route path="bid/historyBid" element={<HistoryBidPage />} />
           <Route path="bid/auctionCurrentJoined" element={<AuctionCurrentPage />} />
+          <Route path="bid/won-products" element={<MyAuctionOrdersPage />} />
+          <Route path="bid/won-products/order/:txnId" element={<OrderDetail />} />
+
         </Route>
 
         {/* ADMIN AREA (ProtectedRoute + MainLayout) */}

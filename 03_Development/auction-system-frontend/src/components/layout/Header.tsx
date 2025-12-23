@@ -24,6 +24,18 @@ export default function Header() {
   const role = String(rawRole).toUpperCase();
   const isAdminOrModerator = role === "ADMIN" || role === "MODERATOR";
 
+  const CATEGORY_MAP: Record<string, string> = {
+    "Xe cộ": "vehicle",
+    "Thời trang": "fashion",
+    "Điện tử": "electronics",
+    "Nhà cửa": "home",
+    "Nhà & Vườn": "garden",
+    "Trang sức": "jewelry",
+    "Tiêu dùng": "grocery",
+    "Khác": "other"
+  };
+
+
   return (
     <header>
       {/* ===== Thanh trên cùng ===== */}
@@ -209,18 +221,13 @@ export default function Header() {
       {/* ===== Thanh danh mục ===== */}
       <div className={styles.categoryBar}>
         <div className={styles.categoryList}>
-          {[
-            "Xe cộ",
-            "Thời trang",
-            "Điện tử",
-            "Đồ gia dụng",
-            "Nhà & Vườn",
-            "Trang sức",
-            "Tiêu dùng",
-          ].map((cat) => (
-            <a key={cat} href="#">
-              {cat}
-            </a>
+          {Object.entries(CATEGORY_MAP).map(([label, value]) => (
+            <Link
+              key={value}
+              to={`/auctions?category=${value}&sort=startTime,desc&page=1`}
+            >
+              {label}
+            </Link>
           ))}
         </div>
       </div>
