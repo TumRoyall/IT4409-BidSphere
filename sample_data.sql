@@ -105,7 +105,7 @@ VALUES (
   257087.23,
   '314243',
   25708.72,
-  'https://example.com/img/4_1.jpg,https://example.com/img/4_2.jpg,https://example.com/img/4_3.jpg,https://example.com/img/4_4.jpg,https://example.com/img/4_5.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477506/auction_images/av6ggt81so03jysbuvsz.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477508/auction_images/wmll0shpwvsiqogyg3j2.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477511/auction_images/w71ogacx9l7xtkammjs8.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477513/auction_images/uyy4kbwteoohw5cylv0g.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477515/auction_images/rcmp1krhot3ke5p53rgl.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477517/auction_images/bbcksox2h7yn7b0imzad.jpg',
   'pending',
   '2024-05-19 09:22:31'
 );
@@ -377,12 +377,12 @@ INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.
 INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447321/auction_images/icszk93t63ikblgfivd6.jpg', 0);
 
 -- Product 4
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4_1.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4_2.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4_3.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4_4.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4_5.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4_6.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477506/auction_images/av6ggt81so03jysbuvsz.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477508/auction_images/wmll0shpwvsiqogyg3j2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477511/auction_images/w71ogacx9l7xtkammjs8.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477513/auction_images/uyy4kbwteoohw5cylv0g.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477515/auction_images/rcmp1krhot3ke5p53rgl.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477517/auction_images/bbcksox2h7yn7b0imzad.jpg', 0);
 
 -- Product 5
 INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5_1.jpg', 1);
