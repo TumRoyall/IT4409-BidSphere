@@ -50,48 +50,467 @@ INSERT INTO AccountTransaction (user_id, amount, type, status, created_at) VALUE
 INSERT INTO AccountTransaction (user_id, amount, type, status, created_at) VALUES (13, 466971.76, 'deposit', 'completed', '2024-04-25 09:22:31');
 
 -- (Product)
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (17, 'Profit-focused intermediate orchestration', 'Điện tử', 'Test image bank general box meeting without garden. Avoid same stay shoulder.', 3750598.04, '5902509', 375059.8, 'https://example.com/img/1.jpg', 'cancelled', '2025-08-21 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (6, 'Public-key value-added customer loyalty', 'Điện tử', 'Smile growth be. Wear north score prevent institution work.', 4388954.75, '8184622', 438895.48, 'https://example.com/img/2.jpg', 'approved', '2024-01-01 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (8, 'Face-to-face well-modulated throughput', 'Thời trang', 'Its manager simply position door color attention. Away as begin research democratic there.', 1475846.1, '2417798', 147584.61, 'https://example.com/img/3.jpg', 'sold', '2025-03-21 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (19, 'Realigned bi-directional database', 'Điện tử', 'Gas strong pull claim. To similar president brother between.', 257087.23, '314243', 25708.72, 'https://example.com/img/4.jpg', 'pending', '2024-05-19 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (6, 'Persevering hybrid utilization', 'Thời trang', 'Can budget feel game red house. Position choose while have yet dark woman team.', 3583916.77, '4154489', 358391.68, 'https://example.com/img/5.jpg', 'cancelled', '2023-04-09 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (7, 'Self-enabling encompassing protocol', 'Thời trang', 'Box his station not difficult of.', 2487313.5, '2843168', 248731.35, 'https://example.com/img/6.jpg', 'approved', '2025-08-02 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (2, 'Implemented full-range website', 'Nội thất', 'Sea PM against buy smile voice. Almost as week school not. News design eat suggest event.', 1310095.29, '1632905', 131009.53, 'https://example.com/img/7.jpg', 'approved', '2024-09-09 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (11, 'Synergistic optimizing forecast', 'Thời trang', 'Establish chair project give nothing. Hold data deep never much. Edge before government tonight.', 2954481.45, '4132622', 295448.15, 'https://example.com/img/8.jpg', 'sold', '2024-12-07 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (2, 'Balanced attitude-oriented Graphical User Interface', 'Nội thất', 'Sport others these court miss plant detail. Number leader nor traditional power inside.', 4340734.17, '5986819', 434073.42, 'https://example.com/img/9.jpg', 'pending', '2023-05-29 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (19, 'Sharable encompassing access', 'Nội thất', 'Whole majority community medical create. Particularly former write stay air whatever day.', 2454366.06, '4819743', 245436.61, 'https://example.com/img/10.jpg', 'approved', '2025-01-23 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (4, 'Customer-focused contextually-based task-force', 'Nội thất', 'Political Mrs he technology economic argue really. Find evidence become truth.', 664706.24, '1159904', 66470.62, 'https://example.com/img/11.jpg', 'cancelled', '2023-04-23 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (17, 'Upgradable directional product', 'Sưu tầm', 'On forward rest throughout threat teach two. Decision machine season class add career.', 4816504.04, '6721116', 481650.4, 'https://example.com/img/12.jpg', 'sold', '2025-03-03 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (15, 'Cross-group multi-state Local Area Network', 'Điện tử', 'Serious pull red participant decide. Sport music board guy much.', 1408840.66, '2776439', 140884.07, 'https://example.com/img/13.jpg', 'approved', '2025-01-07 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (20, 'Programmable object-oriented success', 'Xe cộ', 'People little bit successful. Room bit watch prevent attention poor stage stop.', 2651407.14, '3616311', 265140.71, 'https://example.com/img/14.jpg', 'sold', '2024-07-05 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (19, 'Pre-emptive dynamic neural-net', 'Điện tử', 'Space themselves adult something official kid billion.', 793287.11, '1395202', 79328.71, 'https://example.com/img/15.jpg', 'sold', '2025-03-18 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (12, 'Self-enabling zero tolerance leverage', 'Thời trang', 'West least which hundred result cover. Large music member chance economic.', 4256874.1, '6295708', 425687.41, 'https://example.com/img/16.jpg', 'approved', '2025-02-17 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (16, 'Quality-focused context-sensitive leverage', 'Nội thất', 'Number decision whatever cell something. Despite risk might alone others.', 3207644.22, '4630360', 320764.42, 'https://example.com/img/17.jpg', 'approved', '2024-08-17 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (11, 'Synergistic systematic instruction set', 'Điện tử', 'Sort start debate authority newspaper. Rather letter cause. Sea decision in suddenly pull.', 2933515.85, '3603931', 293351.59, 'https://example.com/img/18.jpg', 'cancelled', '2024-09-16 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (9, 'Streamlined human-resource pricing structure', 'Nội thất', 'Operation authority everybody. Late sister fine opportunity rule both with.', 507009.96, '633693', 50701.0, 'https://example.com/img/19.jpg', 'cancelled', '2024-04-24 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (9, 'Enhanced optimizing ability', 'Sưu tầm', 'Language talk budget affect.', 4819758.42, '7571984', 481975.84, 'https://example.com/img/20.jpg', 'cancelled', '2024-08-23 09:22:31');
+-- Product 1 (Điện tử)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  17,
+  'Điện thoại Samsung Galaxy S25',
+  'Điện tử',
+  'Điện thoại cao cấp với màn hình AMOLED 6.7 inch, camera 108MP và pin 5000mAh.',
+  3750598.04,
+  '5902509',
+  375059.8,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441194/auction_images/udxcgvfq9htxkvlcvgkr.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441195/auction_images/rmxqnljlhaxsoa9pbizk.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441198/auction_images/kzinchuhuhvj2c738x9v.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441200/auction_images/u8w1omzxamlettjstsaw.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441201/auction_images/jbfonr130muwmqwbmx70.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441203/auction_images/ehz51hkpme3eissie2vs.jpg',
+  'cancelled',
+  '2025-08-21 09:22:31'
+);
+
+-- Product 2 (Điện tử)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  6,
+  'Laptop Dell XPS 15',
+  'Điện tử',
+  'Laptop hiệu năng cao với chip Intel i9, RAM 32GB, SSD 1TB và màn hình 4K.',
+  4388954.75,
+  '8184622',
+  438895.48,
+      ,
+  'approved',
+  '2024-01-01 09:22:31'
+);
+
+-- Product 3 (Thời trang)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  8,
+  'Áo khoác nam mùa đông',
+  'Thời trang',
+  'Áo khoác dáng dài, chống thấm nước, lót nỉ giữ ấm tuyệt vời cho mùa lạnh.',
+  1475846.1,
+  '2417798',
+  147584.61,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447312/auction_images/cpce8cgwwrjscyhwrtst.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447314/auction_images/f40gchliupyofg6twufc.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447316/auction_images/wmvaou9bykecw3cefbum.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447317/auction_images/r2fj7twbbwdaxpkiwgmx.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447319/auction_images/wdbqwxzxiu4fqjfvkgl7.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447321/auction_images/icszk93t63ikblgfivd6.jpg',
+  'sold',
+  '2025-03-21 09:22:31'
+);
+
+-- Product 4 (Điện tử)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  19,
+  'Tai nghe Sony WH-1000XM5',
+  'Điện tử',
+  'Tai nghe chống ồn chủ động, pin 30 giờ, kết nối Bluetooth ổn định.',
+  257087.23,
+  '314243',
+  25708.72,
+  'https://example.com/img/4_1.jpg,https://example.com/img/4_2.jpg,https://example.com/img/4_3.jpg,https://example.com/img/4_4.jpg,https://example.com/img/4_5.jpg',
+  'pending',
+  '2024-05-19 09:22:31'
+);
+
+-- Product 5 (Thời trang)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  6,
+  'Váy nữ dạ hội',
+  'Thời trang',
+  'Váy satin dài, kiểu dáng sang trọng, phù hợp cho sự kiện và tiệc tối.',
+  3583916.77,
+  '4154489',
+  358391.68,
+  'https://example.com/img/5_1.jpg,https://example.com/img/5_2.jpg,https://example.com/img/5_3.jpg,https://example.com/img/5_4.jpg,https://example.com/img/5_5.jpg',
+  'cancelled',
+  '2023-04-09 09:22:31'
+);
+
+-- Product 6 (Thời trang)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  7,
+  'Giày thể thao nam Nike Air Max',
+  'Thời trang',
+  'Giày thể thao êm chân, thiết kế trẻ trung, phù hợp tập luyện và đi dạo hàng ngày.',
+  2487313.5,
+  '2843168',
+  248731.35,
+  'https://example.com/img/6_1.jpg,https://example.com/img/6_2.jpg,https://example.com/img/6_3.jpg,https://example.com/img/6_4.jpg,https://example.com/img/6_5.jpg',
+  'approved',
+  '2025-08-02 09:22:31'
+);
+
+-- Product 7 (Nội thất)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  2,
+  'Bàn làm việc gỗ sồi',
+  'Nội thất',
+  'Bàn làm việc bằng gỗ sồi tự nhiên, chắc chắn, thiết kế hiện đại, phù hợp văn phòng và gia đình.',
+  1310095.29,
+  '1632905',
+  131009.53,
+  'https://example.com/img/7_1.jpg,https://example.com/img/7_2.jpg,https://example.com/img/7_3.jpg,https://example.com/img/7_4.jpg,https://example.com/img/7_5.jpg',
+  'approved',
+  '2024-09-09 09:22:31'
+);
+
+-- Product 8 (Thời trang)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  11,
+  'Đầm dạ tiệc nữ',
+  'Thời trang',
+  'Đầm thiết kế sang trọng, chất liệu mềm mại, màu sắc trang nhã, thích hợp dự tiệc và sự kiện đặc biệt.',
+  2954481.45,
+  '4132622',
+  295448.15,
+  'https://example.com/img/8_1.jpg,https://example.com/img/8_2.jpg,https://example.com/img/8_3.jpg,https://example.com/img/8_4.jpg,https://example.com/img/8_5.jpg',
+  'sold',
+  '2024-12-07 09:22:31'
+);
+
+-- Product 9 (Nội thất)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  2,
+  'Ghế sofa phòng khách',
+  'Nội thất',
+  'Ghế sofa da bò, cấu trúc nhẹ và bay bổng, màu be nhạt, phù hợp phòng khách hiện đại.',
+  4340734.17,
+  '5986819',
+  434073.42,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445481/auction_images/shqjsthyjoka4skiy15n.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445484/auction_images/cyel0scnrkety37sgwks.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445486/auction_images/fgo1kl4refht0fv9i2mq.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445488/auction_images/chzairocxu5bzdnrficr.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445490/auction_images/jrocv0bizz8li177rman.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445491/auction_images/lbopdroyvbppr3xscyuh.jpg',
+  'pending',
+  '2023-05-29 09:22:31'
+);
+
+-- Product 10 (Nội thất)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  19,
+  'Tủ sách gỗ cao su',
+  'Nội thất',
+  'Tủ sách gỗ cao su chắc chắn, nhiều ngăn, phù hợp trưng bày sách và đồ trang trí.',
+  2454366.06,
+  '4819743',
+  245436.61,
+  'https://example.com/img/10_1.jpg,https://example.com/img/10_2.jpg,https://example.com/img/10_3.jpg,https://example.com/img/10_4.jpg,https://example.com/img/10_5.jpg',
+  'approved',
+  '2025-01-23 09:22:31'
+);
+
+-- Product 11 (Nội thất)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  4,
+  'Bàn trà gỗ óc chó',
+  'Nội thất',
+  'Bàn trà kích thước vừa, bề mặt gỗ óc chó bóng mịn, chân sắt chắc chắn, phù hợp phòng khách hiện đại.',
+  664706.24,
+  '1159904',
+  66470.62,
+  'https://example.com/img/11_1.jpg,https://example.com/img/11_2.jpg,https://example.com/img/11_3.jpg,https://example.com/img/11_4.jpg,https://example.com/img/11_5.jpg',
+  'cancelled',
+  '2023-04-23 09:22:31'
+);
+
+-- Product 12 (Trang Sức)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  17,
+  'Dây chuyền bạc nữ đính đá Carbon tổng hợp cao cấp',
+  'Sưu tầm',
+  'Chiếc dây chuyền được làm từ bạc S925 đính đá Carbon tổng hợp cao cấp với thiết kế hình những bông hoa mặt trời nối tiếp nhau tỉ mỉ và tinh tế.',
+  8816504.04,
+  '15721116',
+  481650.4,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444529/auction_images/uskdpndlejalrg5gcfty.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444531/auction_images/mrjzvkwmnrnlzpxwwbwo.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444532/auction_images/htmzsk0hsdzvxiaaliyn.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444534/auction_images/cjy9pzewr8trebauelwz.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444536/auction_images/bvzxc7fmk21qf80srqbf.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444537/auction_images/t7dtosneaeiym3d6q0ih.jpg',
+  'sold',
+  '2025-03-03 09:22:31'
+);
+
+-- Product 13 (Điện tử)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  15,
+  'Router Wi-Fi 6 TP-Link',
+  'Điện tử',
+  'Router hỗ trợ chuẩn Wi-Fi 6, tốc độ 3000Mbps, nhiều băng tần, bảo mật WPA3.',
+  1408840.66,
+  '2776439',
+  140884.07,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440200/auction_images/m1uzpfoiw9evwyecptjc.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440202/auction_images/uau5lbwrpzjblxlooyqu.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440204/auction_images/umfagepnyvwdhgjqw1vh.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440207/auction_images/fycaoq7omjf8viml3eik.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440209/auction_images/k0nzlrj5ze56bzklljej.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440212/auction_images/hlbn3ogprydrc3jk6r1t.jpg',
+  'approved',
+  '2025-01-07 09:22:31'
+);
+
+-- Product 14 (Xe cộ)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  20,
+  'Xe máy Honda Winner X',
+  'Xe cộ',
+  'Xe máy thể thao Honda, động cơ 150cc, thiết kế năng động, tiết kiệm nhiên liệu, thích hợp đi phố.',
+  2651407.14,
+  '3616311',
+  265140.71,
+  'https://example.com/img/14_1.jpg,https://example.com/img/14_2.jpg,https://example.com/img/14_3.jpg,https://example.com/img/14_4.jpg,https://example.com/img/14_5.jpg',
+  'sold',
+  '2024-07-05 09:22:31'
+);
+
+-- Product 15 (Điện tử)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  19,
+  'Máy ảnh Canon EOS R6',
+  'Điện tử',
+  'Máy ảnh mirrorless, cảm biến full-frame, quay video 4K, thích hợp nhiếp ảnh chuyên nghiệp.',
+  793287.11,
+  '1395202',
+  79328.71,
+  'https://example.com/img/15_1.jpg,https://example.com/img/15_2.jpg,https://example.com/img/15_3.jpg,https://example.com/img/15_4.jpg,https://example.com/img/15_5.jpg',
+  'sold',
+  '2025-03-18 09:22:31'
+);
+
+-- Product 16 (Thời trang)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  12,
+  'Áo thun unisex',
+  'Thời trang',
+  'Áo thun cotton 100%, kiểu dáng unisex, màu sắc trẻ trung, phù hợp mặc hàng ngày.',
+  4256874.1,
+  '6295708',
+  425687.41,
+  'https://example.com/img/16_1.jpg,https://example.com/img/16_2.jpg,https://example.com/img/16_3.jpg,https://example.com/img/16_4.jpg,https://example.com/img/16_5.jpg',
+  'approved',
+  '2025-02-17 09:22:31'
+);
+
+-- Product 17 (Nội thất)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  16,
+  'Giường ngủ bọc da bò phong cách Ý',
+  'Nội thất',
+  'Giường được bọc bằng da bò thật nhập khẩu, đường nét tinh tế, tạo điểm nhấn thanh lịch cho không gian phòng ngủ.',
+  13207644.22,
+  '24630360',
+  320764.42,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446564/auction_images/xrnxejf1neevhb6to8oc.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446566/auction_images/rbebiv8pulkxnngbeulj.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446568/auction_images/huzpbtlgh1jubbsykeed.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446569/auction_images/pc3qj2qz0jbthhnam3ov.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446571/auction_images/vovmq0lisnafk4ksqmlf.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446573/auction_images/p0bfprfoe9a3fmimjo0k.jpg',
+  'approved',
+  '2024-08-17 09:22:31'
+);
+
+-- Product 18 (Điện tử)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  11,
+  'Máy tính bảng iPad Pro M5 13 inch',
+  'Điện tử',
+  'iPad Pro màn hình Liquid Retina XDR 13 inch, chip M5 nhân 9, dung lượng 512GB, hỗ trợ Apple Pencil.',
+  29323515.85,
+  '36073931',
+  293351.59,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446129/auction_images/lpzdki8ysh9tjqha2qll.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446130/auction_images/zeagpmezvlghoxfxt4si.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446131/auction_images/upbt6jhrratfot3sp8ch.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446132/auction_images/dl1uvlgykgd9u5p7adzn.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446134/auction_images/a0gesiw3j2onoqfivvj1.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446135/auction_images/g2zvk9k4fmvjbvfsfppl.jpg',
+  'cancelled',
+  '2024-09-16 09:22:31'
+);
+
+-- Product 19 (Nội thất)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  9,
+  'Tủ quần áo 6 cánh',
+  'Nội thất',
+  'Tủ quần áo bằng MDF, 6 cánh mở, màu trắng hiện đại, ngăn kéo tiện lợi cùng bề mặt chống thấm.',
+  507009.96,
+  '633693',
+  50701.0,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443205/auction_images/vb62sdnecs76kgmrskal.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443207/auction_images/zwbmjaod5lsbadmqdbqc.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443209/auction_images/ktuau871dtcmuvskamsa.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443211/auction_images/wstfkdnxjjctvqynklw8.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443212/auction_images/z9dtjhiankg8uxmkfwhy.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443214/auction_images/tehyrpuatyinvq9s75aa.jpg',
+  'cancelled',
+  '2024-04-24 09:22:31'
+);
+
+-- Product 20 (Sưu tầm)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  9,
+  'Đồng hồ cổ Seiko 1965',
+  'Sưu tầm',
+  'Đồng hồ Seiko cổ, còn hoạt động tốt, thiết kế kinh điển, giá trị sưu tầm cao.',
+  4819758.42,
+  '7571984',
+  481975.84,
+  'https://example.com/img/20_1.jpg,https://example.com/img/20_2.jpg,https://example.com/img/20_3.jpg,https://example.com/img/20_4.jpg,https://example.com/img/20_5.jpg',
+  'cancelled',
+  '2024-08-23 09:22:31'
+);
+
 
 -- (Image)
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://example.com/product_1.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://example.com/product_2.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://example.com/product_3.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://example.com/product_9.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://example.com/product_12.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://example.com/product_13.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://example.com/product_17.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://example.com/product_18.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://example.com/product_19.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20.jpg', 1);
+-- Product 1
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441194/auction_images/udxcgvfq9htxkvlcvgkr.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441195/auction_images/rmxqnljlhaxsoa9pbizk.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441198/auction_images/kzinchuhuhvj2c738x9v.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441200/auction_images/u8w1omzxamlettjstsaw.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441201/auction_images/jbfonr130muwmqwbmx70.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441203/auction_images/ehz51hkpme3eissie2vs.jpg', 0);
+
+-- Product 2
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441642/auction_images/ulc4m7mfnwlwgotabh0m.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441643/auction_images/bccxtuf5or36n0rc0vhx.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441645/auction_images/dgmn6plpadgsh5dmbino.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441648/auction_images/yc9jpwead3jkikxk7iwm.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441650/auction_images/of2jaarwp0bljrotorjk.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441652/auction_images/coszhhyrimtkmlzoin79.jpg', 0);
+
+-- Product 3
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447312/auction_images/cpce8cgwwrjscyhwrtst.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447314/auction_images/f40gchliupyofg6twufc.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447316/auction_images/wmvaou9bykecw3cefbum.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447317/auction_images/r2fj7twbbwdaxpkiwgmx.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447319/auction_images/wdbqwxzxiu4fqjfvkgl7.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447321/auction_images/icszk93t63ikblgfivd6.jpg', 0);
+
+-- Product 4
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4_1.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4_2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4_3.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4_4.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4_5.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4_6.jpg', 0);
+
+-- Product 5
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5_1.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5_2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5_3.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5_4.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5_5.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5_6.jpg', 0);
+
+-- Product 6
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6_1.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6_2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6_3.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6_4.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6_5.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6_6.jpg', 0);
+
+-- Product 7
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7_1.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7_2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7_3.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7_4.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7_5.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7_6.jpg', 0);
+
+-- Product 8
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8_1.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8_2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8_3.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8_4.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8_5.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8_6.jpg', 0);
+
+-- Product 9
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445481/auction_images/shqjsthyjoka4skiy15n.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445484/auction_images/cyel0scnrkety37sgwks.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445486/auction_images/fgo1kl4refht0fv9i2mq.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445488/auction_images/chzairocxu5bzdnrficr.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445490/auction_images/jrocv0bizz8li177rman.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445491/auction_images/lbopdroyvbppr3xscyuh.jpg', 0);
+
+-- Product 10
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10_1.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10_2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10_3.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10_4.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10_5.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10_6.jpg', 0);
+
+-- Product 11
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11_1.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11_2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11_3.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11_4.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11_5.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11_6.jpg', 0);
+
+-- Product 12
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444529/auction_images/uskdpndlejalrg5gcfty.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444531/auction_images/mrjzvkwmnrnlzpxwwbwo.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444532/auction_images/htmzsk0hsdzvxiaaliyn.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444534/auction_images/cjy9pzewr8trebauelwz.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444536/auction_images/bvzxc7fmk21qf80srqbf.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444537/auction_images/t7dtosneaeiym3d6q0ih.jpg', 0);
+
+-- Product 13
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440200/auction_images/m1uzpfoiw9evwyecptjc.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440202/auction_images/uau5lbwrpzjblxlooyqu.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440204/auction_images/umfagepnyvwdhgjqw1vh.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440207/auction_images/fycaoq7omjf8viml3eik.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440209/auction_images/k0nzlrj5ze56bzklljej.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440212/auction_images/hlbn3ogprydrc3jk6r1t.jpg', 0);
+
+-- Product 14
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14_1.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14_2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14_3.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14_4.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14_5.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14_6.jpg', 0);
+
+-- Product 15
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15_1.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15_2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15_3.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15_4.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15_5.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15_6.jpg', 0);
+
+-- Product 16
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16_1.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16_2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16_3.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16_4.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16_5.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16_6.jpg', 0);
+
+-- Product 17
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446564/auction_images/xrnxejf1neevhb6to8oc.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446566/auction_images/rbebiv8pulkxnngbeulj.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446568/auction_images/huzpbtlgh1jubbsykeed.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446569/auction_images/pc3qj2qz0jbthhnam3ov.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446571/auction_images/vovmq0lisnafk4ksqmlf.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446573/auction_images/p0bfprfoe9a3fmimjo0k.jpg', 0);
+
+-- Product 18
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446129/auction_images/lpzdki8ysh9tjqha2qll.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446130/auction_images/zeagpmezvlghoxfxt4si.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446131/auction_images/upbt6jhrratfot3sp8ch.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446132/auction_images/dl1uvlgykgd9u5p7adzn.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446134/auction_images/a0gesiw3j2onoqfivvj1.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446135/auction_images/g2zvk9k4fmvjbvfsfppl.jpg', 0);
+
+-- Product 19
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443205/auction_images/vb62sdnecs76kgmrskal.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443207/auction_images/zwbmjaod5lsbadmqdbqc.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443209/auction_images/ktuau871dtcmuvskamsa.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443211/auction_images/wstfkdnxjjctvqynklw8.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443212/auction_images/z9dtjhiankg8uxmkfwhy.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443214/auction_images/tehyrpuatyinvq9s75aa.jpg', 0);
+
+-- Product 20
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20_1.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20_2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20_3.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20_4.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20_5.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20_6.jpg', 0);
 
 -- (Auction)
 INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (1, '2023-10-03 09:22:31', '2025-11-04 09:22:31', 'cancelled', 3740880, '50000', 18);
