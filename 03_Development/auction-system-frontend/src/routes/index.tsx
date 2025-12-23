@@ -25,21 +25,16 @@ import HistoryBidPage from "@/modules/user/pages/HistoryBidPage";
 import AuctionCurrentPage from "@/modules/user/pages/AuctionCurrentPage";
 import AuctionsPage from "@/modules/auction/pages/AuctionsPage";
 import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage";
+import ProductManagement from "@/modules/seller/pages/ProductManagement";
+import SellerProfile from "@/modules/seller/pages/SellerProfile";
+import CreateProduct from "@/modules/product/pages/CreateProduct";
 import AuctionList from "@/modules/auction/pages/AuctionList";
 import CreateAuction from "@/modules/auction/pages/CreateAuction";
-import AdminProductApprovalPage from "@/modules/admin/pages/ProductApprovalPage";
-import AdminAuctionApprovalPage from "@/modules/admin/pages/AuctionApprovalPage";
-import CreateProduct from "@/modules/product/pages/CreateProduct";
 import ProductList from "@/modules/product/pages/ProductList";
 import ProductDetail from "@/modules/product/pages/ProductDetail";
-import ProductManagement from "@/modules/seller/pages/ProductManagement";
+import AdminProductApprovalPage from "@/modules/admin/pages/ProductApprovalPage";
+import AdminAuctionApprovalPage from "@/modules/admin/pages/AuctionApprovalPage";
 
-// Admin area
-import AdminLayout from "../layouts/AdminLayout";
-import AdminUsersPage from "../modules/admin/pages/AdminUsersPage";
-import AdminDashboardPage from "../modules/admin/pages/AdminDashboardPage.tsx";
-import AdminReportsPage from "../modules/admin/pages/AdminReportsPage";
-import AdminUserWarningPage from "../modules/admin/pages/AdminUserWarningPage.tsx";
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -67,8 +62,7 @@ export default function AppRoutes() {
             }
           />
         </Route>
-
-         {/* SELLER AREA – protected under MainLayout */}
+        {/* SELLER AREA – protected under MainLayout */}
         <Route
           path="/seller"
           element={
@@ -81,6 +75,7 @@ export default function AppRoutes() {
           <Route path="products" element={<ProductManagement />} />
           <Route path="products/create" element={<CreateProduct />} />
           <Route path="products/:id/edit" element={<CreateProduct />} />
+          <Route path="profile" element={<SellerProfile />} />
           <Route path="auctions" element={<AuctionList />} />
           <Route path="auctions/create" element={<CreateAuction />} />
         </Route>
@@ -94,6 +89,7 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         >
+          {/* Account */}
           <Route path="account/profile" element={<ProfilePage />} />
           <Route path="account/payment" element={<PaymentPage />} />
           <Route path="account/reset-password" element={<ResetPasswordPage />} />
@@ -116,37 +112,9 @@ export default function AppRoutes() {
           <Route path="/register" element={<RegisterPage />} />
         </Route>
 
-        {/* ================= SUPER ADMIN ================= */}
-        <Route
-          path="/superadmin"
-          element={
-            <ProtectedRoute>
-              <AdminLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="users" element={<AdminUsersPage />} />
-          <Route path="dashboard" element={<AdminDashboardPage />} />
-          <Route path="user-reports" element={<AdminReportsPage />} />
-          <Route path="user-warnings" element={<AdminUserWarningPage />} />
-        </Route>
-
-        {/* ================= ADMIN ================= */}
+        {/* ADMIN AREA (ProtectedRoute + MainLayout) */}
         <Route
           path="/admin"
-          element={
-            <ProtectedRoute>
-              <MainLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="products/approval" element={<AdminProductApprovalPage />} />
-          <Route path="auctions/approval" element={<AdminAuctionApprovalPage />} />
-        </Route>
-
-        {/* ================= MODERATOR ================= */}
-        <Route
-          path="/moderator"
           element={
             <ProtectedRoute>
               <MainLayout />
