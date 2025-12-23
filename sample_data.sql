@@ -120,7 +120,7 @@ VALUES (
   3583916.77,
   '4154489',
   358391.68,
-  'https://example.com/img/5_1.jpg,https://example.com/img/5_2.jpg,https://example.com/img/5_3.jpg,https://example.com/img/5_4.jpg,https://example.com/img/5_5.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501778/auction_images/blg9l4ua6oey99sw4squ.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501781/auction_images/htuawd443pm6znigbzge.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501783/auction_images/bfs1fibpht0ebcnmco9o.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501784/auction_images/f6dy9d0ln1a0xgi4gut9.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501786/auction_images/nyebv4myighpdz76pqih.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501788/auction_images/uoxjgborh0vorphmfpy0.jpg',
   'cancelled',
   '2023-04-09 09:22:31'
 );
@@ -129,13 +129,13 @@ VALUES (
 INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
 VALUES (
   7,
-  'Giày thể thao nam Nike Air Max',
+  'Giày thể thao nam Nike Air Max 1',
   'Thời trang',
   'Giày thể thao êm chân, thiết kế trẻ trung, phù hợp tập luyện và đi dạo hàng ngày.',
   2487313.5,
   '2843168',
   248731.35,
-  'https://example.com/img/6_1.jpg,https://example.com/img/6_2.jpg,https://example.com/img/6_3.jpg,https://example.com/img/6_4.jpg,https://example.com/img/6_5.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502020/auction_images/uvlsicje6nbhj8sue7wu.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502026/auction_images/gpimoduu7gkf3l4eokrg.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502030/auction_images/grvxyocaltcxlcyhxftv.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502034/auction_images/xmtzesqvpzdrm7ild2gs.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502036/auction_images/g7fjcvjpq5yir57myaxw.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502038/auction_images/oia9omzx9barpunsn19s.jpg',
   'approved',
   '2025-08-02 09:22:31'
 );
@@ -150,7 +150,7 @@ VALUES (
   1310095.29,
   '1632905',
   131009.53,
-  'https://example.com/img/7_1.jpg,https://example.com/img/7_2.jpg,https://example.com/img/7_3.jpg,https://example.com/img/7_4.jpg,https://example.com/img/7_5.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502367/auction_images/ooixfvmotqaq0m4ubj9u.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502373/auction_images/mlvzynhk4gedwxaf8nfl.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502375/auction_images/hqluaqdvqqggh8kigmuf.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502377/auction_images/pkxqpxqv3hu4zkg15yfv.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502380/auction_images/szenqxuvbeqyamcnh3ov.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502384/auction_images/belb3ylt4hmdupie27vs.jpg',
   'approved',
   '2024-09-09 09:22:31'
 );
@@ -165,7 +165,7 @@ VALUES (
   2954481.45,
   '4132622',
   295448.15,
-  'https://example.com/img/8_1.jpg,https://example.com/img/8_2.jpg,https://example.com/img/8_3.jpg,https://example.com/img/8_4.jpg,https://example.com/img/8_5.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502651/auction_images/m3vpg2gglxgzk5sqlwl1.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502653/auction_images/dtyhmbu9ezddpocynrp0.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502655/auction_images/oqbjzazza7gu3hrcqo2x.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502658/auction_images/xgiwnhw5cunf2emgerua.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502660/auction_images/dykomkxi9we9yrubiubz.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502662/auction_images/dqubewykvu4xdzp7bm88.jpg',
   'sold',
   '2024-12-07 09:22:31'
 );
@@ -189,13 +189,13 @@ VALUES (
 INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
 VALUES (
   19,
-  'Tủ sách gỗ cao su',
+  'Tủ sách gỗ Vân Sồi',
   'Nội thất',
-  'Tủ sách gỗ cao su chắc chắn, nhiều ngăn, phù hợp trưng bày sách và đồ trang trí.',
+  'Tủ sách gỗ Vân Sồi chắc chắn, nhiều tầng, tiện lợi, phù hợp trưng bày sách và đồ trang trí.',
   2454366.06,
   '4819743',
   245436.61,
-  'https://example.com/img/10_1.jpg,https://example.com/img/10_2.jpg,https://example.com/img/10_3.jpg,https://example.com/img/10_4.jpg,https://example.com/img/10_5.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506811/auction_images/ocvchtv6jjsboiqpa21v.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506814/auction_images/xh7xn2dxqotfxkgsygoy.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506817/auction_images/fomodp8wliyizt14ljse.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506819/auction_images/ij2rk81wrv4ontp7w9ro.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506821/auction_images/s5nk8tbucavbd2mkcwu4.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506824/auction_images/nxv7axkpyatdpprepp4x.jpg',
   'approved',
   '2025-01-23 09:22:31'
 );
@@ -207,10 +207,10 @@ VALUES (
   'Bàn trà gỗ óc chó',
   'Nội thất',
   'Bàn trà kích thước vừa, bề mặt gỗ óc chó bóng mịn, chân sắt chắc chắn, phù hợp phòng khách hiện đại.',
-  664706.24,
+  6647060.24,
   '1159904',
-  66470.62,
-  'https://example.com/img/11_1.jpg,https://example.com/img/11_2.jpg,https://example.com/img/11_3.jpg,https://example.com/img/11_4.jpg,https://example.com/img/11_5.jpg',
+  366470.62,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507332/auction_images/jgzcsr6z9mdhvqh7nmwv.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507334/auction_images/hs2ncpnwlgwyq99uvnhp.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507337/auction_images/k8n2g0kyryfmfwlqlt8o.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507339/auction_images/wkqa5igdgnd4uc47ss8b.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507342/auction_images/sf0ruvi3qexwz10j3dag.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507346/auction_images/dgop0bl0p9ppy39lspkd.jpg',
   'cancelled',
   '2023-04-23 09:22:31'
 );
@@ -252,10 +252,10 @@ VALUES (
   'Xe máy Honda Winner X',
   'Xe cộ',
   'Xe máy thể thao Honda, động cơ 150cc, thiết kế năng động, tiết kiệm nhiên liệu, thích hợp đi phố.',
-  2651407.14,
+  26514076.14,
   '3616311',
-  265140.71,
-  'https://example.com/img/14_1.jpg,https://example.com/img/14_2.jpg,https://example.com/img/14_3.jpg,https://example.com/img/14_4.jpg,https://example.com/img/14_5.jpg',
+  565140.71,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508057/auction_images/ltmroixi6hh8rsiwpjgl.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508062/auction_images/y4ejy1od426zu7ze9awo.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508067/auction_images/jq5makhu2gosxq9d9diw.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508071/auction_images/sujgzoqavzzlpgwborq5.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508074/auction_images/urjxruxj7pnaiv2gi6x0.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508078/auction_images/cqcwlwt3zmfucgbrq7lr.jpg',
   'sold',
   '2024-07-05 09:22:31'
 );
@@ -267,10 +267,10 @@ VALUES (
   'Máy ảnh Canon EOS R6',
   'Điện tử',
   'Máy ảnh mirrorless, cảm biến full-frame, quay video 4K, thích hợp nhiếp ảnh chuyên nghiệp.',
-  793287.11,
+  2793287.11,
   '1395202',
-  79328.71,
-  'https://example.com/img/15_1.jpg,https://example.com/img/15_2.jpg,https://example.com/img/15_3.jpg,https://example.com/img/15_4.jpg,https://example.com/img/15_5.jpg',
+  593286.71,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508334/auction_images/vdeuvjfphkpga4odatbb.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508336/auction_images/mpuckdkxjlidayn3i9rw.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508337/auction_images/pdrss8cfyy374khkykxh.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508338/auction_images/rhxanrpmknn2xm3ve7nm.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508340/auction_images/obadwsbmcf5g6fnml3la.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508341/auction_images/xuzgn5x8pwdcs2vd2qzs.jpg ',
   'sold',
   '2025-03-18 09:22:31'
 );
@@ -285,7 +285,7 @@ VALUES (
   4256874.1,
   '6295708',
   425687.41,
-  'https://example.com/img/16_1.jpg,https://example.com/img/16_2.jpg,https://example.com/img/16_3.jpg,https://example.com/img/16_4.jpg,https://example.com/img/16_5.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508702/auction_images/qp53ebab49u3wz68wggm.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508704/auction_images/bhikzi4gddol1dxtyrlt.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508706/auction_images/h3gfuyvcjueprkymm4bd.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508708/auction_images/dzov0yvfryyebythaws0.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508711/auction_images/locmfroxr87sla3y1upz.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508712/auction_images/zyvdjmcvpxt24tvcjg8h.jpg',
   'approved',
   '2025-02-17 09:22:31'
 );
@@ -345,7 +345,7 @@ VALUES (
   4819758.42,
   '7571984',
   481975.84,
-  'https://example.com/img/20_1.jpg,https://example.com/img/20_2.jpg,https://example.com/img/20_3.jpg,https://example.com/img/20_4.jpg,https://example.com/img/20_5.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507683/auction_images/yyoynf5cshjstbqpoput.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507685/auction_images/zkdvtstcp7pbozv8gir2.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507687/auction_images/lxlvznmojpkm6w189ytq.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507689/auction_images/beyhuyb2f1jas5kqtm5k.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507691/auction_images/elbup9wb025k3hpt51ls.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507694/auction_images/xbhgni4dpqeycxgxeauw.jpg',
   'cancelled',
   '2024-08-23 09:22:31'
 );
@@ -385,36 +385,36 @@ INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.
 INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477517/auction_images/bbcksox2h7yn7b0imzad.jpg', 0);
 
 -- Product 5
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5_1.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5_2.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5_3.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5_4.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5_5.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5_6.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501778/auction_images/blg9l4ua6oey99sw4squ.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501781/auction_images/htuawd443pm6znigbzge.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501783/auction_images/bfs1fibpht0ebcnmco9o.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501784/auction_images/f6dy9d0ln1a0xgi4gut9.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501786/auction_images/nyebv4myighpdz76pqih.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501788/auction_images/uoxjgborh0vorphmfpy0.jpg', 0);
 
 -- Product 6
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6_1.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6_2.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6_3.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6_4.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6_5.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6_6.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502020/auction_images/uvlsicje6nbhj8sue7wu.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502026/auction_images/gpimoduu7gkf3l4eokrg.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502030/auction_images/grvxyocaltcxlcyhxftv.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502034/auction_images/xmtzesqvpzdrm7ild2gs.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502036/auction_images/g7fjcvjpq5yir57myaxw.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502038/auction_images/oia9omzx9barpunsn19s.jpg', 0);
 
 -- Product 7
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7_1.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7_2.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7_3.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7_4.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7_5.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7_6.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502367/auction_images/ooixfvmotqaq0m4ubj9u.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502373/auction_images/mlvzynhk4gedwxaf8nfl.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502375/auction_images/hqluaqdvqqggh8kigmuf.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502377/auction_images/pkxqpxqv3hu4zkg15yfv.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502380/auction_images/szenqxuvbeqyamcnh3ov.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502384/auction_images/belb3ylt4hmdupie27vs.jpg', 0);
 
 -- Product 8
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8_1.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8_2.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8_3.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8_4.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8_5.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8_6.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502651/auction_images/m3vpg2gglxgzk5sqlwl1.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502653/auction_images/dtyhmbu9ezddpocynrp0.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502655/auction_images/oqbjzazza7gu3hrcqo2x.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502658/auction_images/xgiwnhw5cunf2emgerua.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502660/auction_images/dykomkxi9we9yrubiubz.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502662/auction_images/dqubewykvu4xdzp7bm88.jpg', 0);
 
 -- Product 9
 INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445481/auction_images/shqjsthyjoka4skiy15n.jpg', 1);
@@ -425,20 +425,20 @@ INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.
 INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445491/auction_images/lbopdroyvbppr3xscyuh.jpg', 0);
 
 -- Product 10
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10_1.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10_2.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10_3.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10_4.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10_5.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10_6.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506811/auction_images/ocvchtv6jjsboiqpa21v.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506814/auction_images/xh7xn2dxqotfxkgsygoy.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506817/auction_images/fomodp8wliyizt14ljse.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506819/auction_images/ij2rk81wrv4ontp7w9ro.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506821/auction_images/s5nk8tbucavbd2mkcwu4.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506824/auction_images/nxv7axkpyatdpprepp4x.jpg', 0);
 
 -- Product 11
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11_1.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11_2.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11_3.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11_4.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11_5.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11_6.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507332/auction_images/jgzcsr6z9mdhvqh7nmwv.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507334/auction_images/hs2ncpnwlgwyq99uvnhp.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507337/auction_images/k8n2g0kyryfmfwlqlt8o.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507339/auction_images/wkqa5igdgnd4uc47ss8b.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507342/auction_images/sf0ruvi3qexwz10j3dag.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507346/auction_images/dgop0bl0p9ppy39lspkd.jpg', 0);
 
 -- Product 12
 INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444529/auction_images/uskdpndlejalrg5gcfty.jpg', 1);
@@ -457,28 +457,28 @@ INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res
 INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440212/auction_images/hlbn3ogprydrc3jk6r1t.jpg', 0);
 
 -- Product 14
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14_1.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14_2.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14_3.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14_4.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14_5.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14_6.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508057/auction_images/ltmroixi6hh8rsiwpjgl.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508062/auction_images/y4ejy1od426zu7ze9awo.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508067/auction_images/jq5makhu2gosxq9d9diw.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508071/auction_images/sujgzoqavzzlpgwborq5.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508074/auction_images/urjxruxj7pnaiv2gi6x0.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508078/auction_images/cqcwlwt3zmfucgbrq7lr.jpg', 0);
 
 -- Product 15
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15_1.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15_2.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15_3.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15_4.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15_5.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15_6.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508334/auction_images/vdeuvjfphkpga4odatbb.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508336/auction_images/mpuckdkxjlidayn3i9rw.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508337/auction_images/pdrss8cfyy374khkykxh.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508338/auction_images/rhxanrpmknn2xm3ve7nm.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508340/auction_images/obadwsbmcf5g6fnml3la.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508341/auction_images/xuzgn5x8pwdcs2vd2qzs.jpg', 0);
 
 -- Product 16
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16_1.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16_2.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16_3.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16_4.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16_5.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16_6.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508702/auction_images/qp53ebab49u3wz68wggm.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508704/auction_images/bhikzi4gddol1dxtyrlt.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508706/auction_images/h3gfuyvcjueprkymm4bd.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508708/auction_images/dzov0yvfryyebythaws0.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508711/auction_images/locmfroxr87sla3y1upz.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508712/auction_images/zyvdjmcvpxt24tvcjg8h.jpg', 0);
 
 -- Product 17
 INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446564/auction_images/xrnxejf1neevhb6to8oc.jpg', 1);
@@ -505,12 +505,12 @@ INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res
 INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443214/auction_images/tehyrpuatyinvq9s75aa.jpg', 0);
 
 -- Product 20
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20_1.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20_2.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20_3.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20_4.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20_5.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20_6.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507683/auction_images/yyoynf5cshjstbqpoput.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507685/auction_images/zkdvtstcp7pbozv8gir2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507687/auction_images/lxlvznmojpkm6w189ytq.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507689/auction_images/beyhuyb2f1jas5kqtm5k.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507691/auction_images/elbup9wb025k3hpt51ls.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507694/auction_images/xbhgni4dpqeycxgxeauw.jpg', 0);
 
 -- (Auction)
 INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (1, '2023-10-03 09:22:31', '2025-11-04 09:22:31', 'cancelled', 3740880, '50000', 18);
