@@ -12,6 +12,17 @@ export const userApi = {
     }
   },
 
+  // Lấy public profile của user theo ID
+  async getPublicProfile(userId: number) {
+    try {
+      const res = await axiosClient.get(`/users/${userId}`);
+      return res.data;
+    } catch (err: any) {
+      console.error("[userApi.getPublicProfile] Error:", err);
+      throw err.response?.data || { message: "Không thể tải thông tin người dùng" };
+    }
+  },
+
   // Cập nhật hồ sơ cá nhân
   async updateProfile(payload: {
     fullName?: string;

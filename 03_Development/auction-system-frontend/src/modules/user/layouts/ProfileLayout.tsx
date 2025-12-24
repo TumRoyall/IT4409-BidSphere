@@ -58,7 +58,7 @@ export default function ProfileLayout() {
 
       <main className="flex gap-6 px-6 md:px-10 py-6 flex-1">
         {/* Sidebar */}
-        <aside className="w-72 flex-shrink-0 hidden lg:block">
+        <aside className="w-72 flex-shrink-0 block">
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm sticky top-6">
             <div className="p-4 border-b border-gray-100">
               <h2 className="text-lg font-bold text-gray-900">Quản lý tài khoản</h2>
@@ -75,20 +75,18 @@ export default function ProfileLayout() {
                     {/* Menu Title */}
                     <button
                       onClick={() => toggleMenu(menu.id)}
-                      className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all ${
-                        isOpen
+                      className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all ${isOpen
                           ? "bg-gray-900 text-white"
                           : "text-gray-700 hover:bg-gray-50"
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center gap-3">
                         <MenuIcon className="w-5 h-5" />
                         <span className="font-medium text-sm">{menu.title}</span>
                       </div>
                       <ChevronDown
-                        className={`w-4 h-4 transition-transform ${
-                          isOpen ? "rotate-180" : ""
-                        }`}
+                        className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""
+                          }`}
                       />
                     </button>
 
@@ -103,10 +101,9 @@ export default function ProfileLayout() {
                               key={item.to}
                               to={item.to}
                               className={({ isActive }) =>
-                                `w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all ${
-                                  isActive
-                                    ? "bg-emerald-50 text-emerald-700 font-semibold"
-                                    : "text-gray-600 hover:bg-gray-50"
+                                `w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all ${isActive
+                                  ? "bg-emerald-50 text-emerald-700 font-semibold"
+                                  : "text-gray-600 hover:bg-gray-50"
                                 }`
                               }
                             >

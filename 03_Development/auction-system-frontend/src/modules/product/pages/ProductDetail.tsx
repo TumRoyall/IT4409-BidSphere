@@ -115,10 +115,10 @@ export default function ProductDetail() {
           <h1 className="product-detail-title">{product.name}</h1>
 
           {/* Category */}
-          {product.categories && (
+          {product.category && (
             <div className="product-detail-category">
               <Tag size={16} />
-              <span>{product.categories}</span>
+              <span>{product.category}</span>
             </div>
           )}
 
@@ -183,11 +183,11 @@ export default function ProductDetail() {
           </div>
           )}
 
-          {product.updatedAt && (
+          {(product as any).updatedAt && (
           <div className="product-detail-meta-item">
           <Calendar size={16} />
           <span>
-          Updated on {new Date(product.updatedAt).toLocaleDateString()}
+          Updated on {new Date((product as any).updatedAt).toLocaleDateString()}
           </span>
           </div>
           )}

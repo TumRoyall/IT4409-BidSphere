@@ -1,24 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
 import { Filter, RefreshCw } from "lucide-react";
 import { Button } from "@/components/common/Button";
 import ProductApprovalModal, { type ProductApprovalRequest } from "../components/ProductApprovalModal";
 import productApi from "@/api/modules/product.api";
 import type { Product } from "@/modules/product/types";
-import { useAuth } from "@/hooks/useAuth";
-import { USER_ROLES } from "@/utils/constants";
 import "@/styles/seller.css";
 
 const AdminProductApprovalPage: React.FC = () => {
-  const { user } = useAuth();
-  
-  // Check authorization - allow ADMIN and MODERATOR
-  const rawRole = (user as any)?.role || (user as any)?.roles || (user as any)?.roleName || "";
-  const role = String(rawRole).toUpperCase();
-  
-  if (role !== USER_ROLES.ADMIN && role !== USER_ROLES.MODERATOR) {
-    return <Navigate to="/" replace />;
-  }
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -48,7 +36,7 @@ const AdminProductApprovalPage: React.FC = () => {
         hasMore = products.length === 10; // If less than 10, it's the last page
         pageNum++;
       }
-      
+
       // Filter based on statusFilter
       let filteredProducts = allProducts;
       if (statusFilter === "pending") {
@@ -57,7 +45,7 @@ const AdminProductApprovalPage: React.FC = () => {
         );
       }
       // if statusFilter === "all", use all products without filtering
-      
+
       setAllPendingProducts(filteredProducts as Product[]);
       // Calculate pages (showing 10 per page)
       const pages = Math.ceil(filteredProducts.length / 10) || 1;
@@ -147,7 +135,7 @@ const AdminProductApprovalPage: React.FC = () => {
             color: "#1a202c",
           }}
         >
-          📋 Product Approvals
+          🎯 Duyệt Yêu Cầu Đấu Giá
         </h1>
         <p
           style={{
@@ -157,8 +145,7 @@ const AdminProductApprovalPage: React.FC = () => {
             fontWeight: 500,
           }}
         >
-          Review and approve pending product submissions
-        </p>
+          Duyệt các yêu cầu tạo phiên đấu giá từ seller. Khi duyệt, cả sản phẩm và auction sẽ được cập nhật.</p>
       </div>
 
       {/* Controls */}
@@ -261,8 +248,8 @@ const AdminProductApprovalPage: React.FC = () => {
           }}
         >
           {products.map((product) => (
-          <div
-          key={(product as any).id || product.productId || String(Math.random())}
+            <div
+              key={product.productId || (product as any).id || String(Math.random())}
               style={{
                 background: "white",
                 border: "1px solid #e2e8f0",
@@ -282,17 +269,17 @@ const AdminProductApprovalPage: React.FC = () => {
             >
               {/* Image */}
               {product.imageUrl && (
-              <div
-              style={{
-              width: "100%",
-              height: "200px",
-              background: "#f7fafc",
-              overflow: "hidden",
-              }}
-              >
-              <img
-              src={product.imageUrl}
-              alt={product.name}
+                <div
+                  style={{
+                    width: "100%",
+                    height: "200px",
+                    background: "#f7fafc",
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    src={product.imageUrl}
+                    alt={product.name}
                     style={{
                       width: "100%",
                       height: "100%",
@@ -304,155 +291,155 @@ const AdminProductApprovalPage: React.FC = () => {
 
               {/* Content */}
               <div style={{ padding: "16px" }}>
-              {/* Status Badge */}
-              <div style={{ marginBottom: "8px", display: "flex", gap: "8px", alignItems: "center" }}>
-              <span
-              style={{
-                display: "inline-block",
-                padding: "4px 12px",
-                borderRadius: "12px",
-                fontSize: "11px",
-                fontWeight: 600,
-                textTransform: "uppercase",
-                letterSpacing: "0.5px",
-                  background:
-                      product.status?.toLowerCase() === "pending"
-                      ? "#fee2e2"
-                        : product.status?.toLowerCase() === "approved"
-                           ? "#d1fae5"
-                        : product.status?.toLowerCase() === "sold"
-                      ? "#e5e7eb"
-                    : product.status?.toLowerCase() === "rejected"
-                    ? "#fecaca"
-                    : "#f3f4f6",
-                color:
-                  product.status?.toLowerCase() === "pending"
-                    ? "#dc2626"
-                    : product.status?.toLowerCase() === "approved"
-                    ? "#059669"
-                      : product.status?.toLowerCase() === "sold"
-                        ? "#6b7280"
-                      : product.status?.toLowerCase() === "rejected"
-                        ? "#991b1b"
-                           : "#374151",
-                  }}
-              >
-              {(product.status || "unknown").toUpperCase()}
-              </span>
-              </div>
+                {/* Status Badge */}
+                <div style={{ marginBottom: "8px", display: "flex", gap: "8px", alignItems: "center" }}>
+                  <span
+                    style={{
+                      display: "inline-block",
+                      padding: "4px 12px",
+                      borderRadius: "12px",
+                      fontSize: "11px",
+                      fontWeight: 600,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.5px",
+                      background:
+                        product.status?.toLowerCase() === "pending"
+                          ? "#fee2e2"
+                          : product.status?.toLowerCase() === "approved"
+                            ? "#d1fae5"
+                            : product.status?.toLowerCase() === "sold"
+                              ? "#e5e7eb"
+                              : product.status?.toLowerCase() === "rejected"
+                                ? "#fecaca"
+                                : "#f3f4f6",
+                      color:
+                        product.status?.toLowerCase() === "pending"
+                          ? "#dc2626"
+                          : product.status?.toLowerCase() === "approved"
+                            ? "#059669"
+                            : product.status?.toLowerCase() === "sold"
+                              ? "#6b7280"
+                              : product.status?.toLowerCase() === "rejected"
+                                ? "#991b1b"
+                                : "#374151",
+                    }}
+                  >
+                    {(product.status || "unknown").toUpperCase()}
+                  </span>
+                </div>
 
-              <h3
-              style={{
-                  margin: "0 0 8px 0",
-                fontSize: "14px",
-              fontWeight: 700,
-              color: "#1a202c",
-              lineHeight: 1.4,
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              }}
-              >
-              {product.name}
-              </h3>
-
-              <p
-              style={{
-              margin: "0 0 12px 0",
-              fontSize: "12px",
-              color: "#718096",
-              lineHeight: 1.4,
-              display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-              }}
-              >
-              {product.description}
-              </p>
-
-              <div
-              style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "8px",
-              marginBottom: "12px",
-              fontSize: "12px",
-              }}
-              >
-              <div
-              style={{
-                background: "#f7fafc",
-              padding: "8px",
-                borderRadius: "6px",
-                  border: "1px solid #e2e8f0",
-                  }}
-                   >
-                  <span style={{ color: "#718096", fontSize: "10px", fontWeight: 600 }}>
-                  START PRICE
-                </span>
-              <p
-              style={{
-              color: "#2d3748",
-              fontWeight: 600,
-                margin: "4px 0 0 0",
+                <h3
+                  style={{
+                    margin: "0 0 8px 0",
+                    fontSize: "14px",
+                    fontWeight: 700,
+                    color: "#1a202c",
+                    lineHeight: 1.4,
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
                   }}
                 >
-                  {formatPrice(product.startPrice || 0)}
-                     </p>
-                   </div>
-                   <div
-                     style={{
-                       background: "#f7fafc",
-                       padding: "8px",
-                       borderRadius: "6px",
-                       border: "1px solid #e2e8f0",
-                     }}
-                   >
-                     <span style={{ color: "#718096", fontSize: "10px", fontWeight: 600 }}>
-                       CATEGORY
-                     </span>
-                     <p
-                       style={{
-                         color: "#2d3748",
-                         fontWeight: 600,
-                         margin: "4px 0 0 0",
-                         fontSize: "11px",
-                       }}
-                     >
-                       {product.category}
-                     </p>
-                   </div>
-                 </div>
+                  {product.name}
+                </h3>
 
-                 {/* Conditional Buttons */}
-                 {product.status?.toLowerCase() === "pending" && (
-                   <Button
-                     onClick={() => setSelectedProduct(product)}
-                     style={{
-                       width: "100%",
-                       borderRadius: "6px",
-                       background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                       boxShadow: "0 4px 12px rgba(102, 126, 234, 0.4)",
-                     }}
-                   >
-                     Review & Approve
-                   </Button>
-                 )}
-                 {product.status?.toLowerCase() === "approved" && (
-                   <Button
-                     onClick={() => handleReject((product as any).id || product.productId, "Admin cancelled this product")}
-                     style={{
-                       width: "100%",
-                       borderRadius: "6px",
-                       background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
-                       boxShadow: "0 4px 12px rgba(239, 68, 68, 0.4)",
-                     }}
-                   >
-                     Cancel Product
-                   </Button>
-                 )}
+                <p
+                  style={{
+                    margin: "0 0 12px 0",
+                    fontSize: "12px",
+                    color: "#718096",
+                    lineHeight: 1.4,
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}
+                >
+                  {product.description}
+                </p>
+
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: "8px",
+                    marginBottom: "12px",
+                    fontSize: "12px",
+                  }}
+                >
+                  <div
+                    style={{
+                      background: "#f7fafc",
+                      padding: "8px",
+                      borderRadius: "6px",
+                      border: "1px solid #e2e8f0",
+                    }}
+                  >
+                    <span style={{ color: "#718096", fontSize: "10px", fontWeight: 600 }}>
+                      START PRICE
+                    </span>
+                    <p
+                      style={{
+                        color: "#2d3748",
+                        fontWeight: 600,
+                        margin: "4px 0 0 0",
+                      }}
+                    >
+                      {formatPrice(product.startPrice || 0)}
+                    </p>
+                  </div>
+                  <div
+                    style={{
+                      background: "#f7fafc",
+                      padding: "8px",
+                      borderRadius: "6px",
+                      border: "1px solid #e2e8f0",
+                    }}
+                  >
+                    <span style={{ color: "#718096", fontSize: "10px", fontWeight: 600 }}>
+                      CATEGORY
+                    </span>
+                    <p
+                      style={{
+                        color: "#2d3748",
+                        fontWeight: 600,
+                        margin: "4px 0 0 0",
+                        fontSize: "11px",
+                      }}
+                    >
+                      {product.category}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Conditional Buttons */}
+                {product.status?.toLowerCase() === "pending" && (
+                  <Button
+                    onClick={() => setSelectedProduct(product)}
+                    style={{
+                      width: "100%",
+                      borderRadius: "6px",
+                      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                      boxShadow: "0 4px 12px rgba(102, 126, 234, 0.4)",
+                    }}
+                  >
+                    Review & Approve
+                  </Button>
+                )}
+                {product.status?.toLowerCase() === "approved" && (
+                  <Button
+                    onClick={() => handleReject(product.productId || (product as any).id, "Admin cancelled this product")}
+                    style={{
+                      width: "100%",
+                      borderRadius: "6px",
+                      background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
+                      boxShadow: "0 4px 12px rgba(239, 68, 68, 0.4)",
+                    }}
+                  >
+                    Cancel Product
+                  </Button>
+                )}
               </div>
             </div>
           ))}
