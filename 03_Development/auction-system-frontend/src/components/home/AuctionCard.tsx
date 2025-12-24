@@ -142,7 +142,7 @@ export default function AuctionCard({ auction, viewMode = "grid" }: any) {
           )}
 
           <p className="participants">
-            <Users size={15} /> {auction.totalBidder ?? 0} người tham gia
+            <Users size={15} /> {auction.totalBidders ?? 0} người tham gia
           </p>
         </div>
       </div>

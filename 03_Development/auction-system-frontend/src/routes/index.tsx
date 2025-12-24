@@ -106,8 +106,8 @@ export default function AppRoutes() {
           <Route path="notification/:category" element={<NotificationPage />} />
 
           {/* Auction */}
-          <Route path="bid/historyBid" element={<HistoryBidPage />} />
-          <Route path="bid/auctionCurrentJoined" element={<AuctionCurrentPage />} />
+          <Route path="bid/history" element={<HistoryBidPage />} />
+          <Route path="bid/auction-current-joined" element={<AuctionCurrentPage />} />
           <Route path="bid/won-products" element={<MyAuctionOrdersPage />} />
           <Route path="bid/won-products/order/:txnId" element={<OrderDetail />} />
 
