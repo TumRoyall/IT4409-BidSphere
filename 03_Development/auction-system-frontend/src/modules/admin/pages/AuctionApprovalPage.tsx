@@ -10,7 +10,7 @@ const AdminAuctionApprovalPage: React.FC = () => {
   const [auctions, setAuctions] = useState<AuctionResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<AuctionResponse | null>(null);
-  const [statusFilter, setStatusFilter] = useState<"pending" | "all">("pending");
+  const [statusFilter, setStatusFilter] = useState<"draft" | "all">("draft");
 
   useEffect(() => {
     loadAllAuctions();
@@ -31,13 +31,13 @@ const AdminAuctionApprovalPage: React.FC = () => {
   };
 
   const filterAuctions = (list: AuctionResponse[]) => {
-    if (statusFilter === "pending") {
-      // Filter pending/created auctions
-      const pending = list.filter((a: any) => {
+    if (statusFilter === "draft") {
+      // Filter DRAFT auctions (chờ admin duyệt)
+      const drafts = list.filter((a: any) => {
         const s = (a.status || "").toString().toLowerCase();
-        return s === "created" || s === "pending";
+        return s === "draft";
       });
-      setAuctions(pending);
+      setAuctions(drafts);
     } else {
       // Show all auctions
       setAuctions(list);
@@ -50,8 +50,9 @@ const AdminAuctionApprovalPage: React.FC = () => {
 
   const handleApprove = async (auctionId: number) => {
     try {
-      await auctionApi.startAuction(auctionId);
-      alert("✅ Auction approved and opened");
+      // DRAFT -> PENDING (chờ đến giờ lên sàn)
+      await auctionApi.approveAuction(auctionId, "PENDING");
+      alert("✅ Auction đã được duyệt! Sẽ tự động lên sàn khi đến giờ.");
       loadPending();
       setSelected(null);
     } catch (err: any) {
@@ -62,8 +63,9 @@ const AdminAuctionApprovalPage: React.FC = () => {
 
   const handleReject = async (auctionId: number) => {
     try {
-      await auctionApi.deleteAuction(auctionId);
-      alert("✅ Auction rejected and deleted");
+      // DRAFT -> CANCELLED
+      await auctionApi.approveAuction(auctionId, "CANCELLED");
+      alert("✅ Auction đã bị từ chối.");
       loadPending();
       setSelected(null);
     } catch (err: any) {
@@ -88,7 +90,7 @@ const AdminAuctionApprovalPage: React.FC = () => {
           <Filter size={16} style={{ color: "#718096" }} />
           <select
             value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value as "pending" | "all")}
+            onChange={(e) => setStatusFilter(e.target.value as "draft" | "all")}
             style={{
               background: "transparent",
               border: "none",
@@ -99,8 +101,8 @@ const AdminAuctionApprovalPage: React.FC = () => {
               outline: "none",
             }}
           >
-            <option value="pending">Pending Only</option>
-            <option value="all">All Auctions</option>
+            <option value="draft">Chờ duyệt (Draft)</option>
+            <option value="all">Tất cả</option>
           </select>
         </div>
 
@@ -117,7 +119,7 @@ const AdminAuctionApprovalPage: React.FC = () => {
         <div style={{ padding: 40, textAlign: "center" }}>Loading...</div>
       ) : auctions.length === 0 ? (
         <div style={{ padding: 32, background: "#f0fdf4", border: "2px solid #86efac", borderRadius: 8 }}>
-          {statusFilter === "pending" ? "No pending auctions" : "No auctions"}
+          {statusFilter === "draft" ? "Không có auction nào chờ duyệt" : "Không có auction nào"}
         </div>
       ) : (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 12 }}>
@@ -141,25 +143,29 @@ const AdminAuctionApprovalPage: React.FC = () => {
                       textTransform: "uppercase",
                       letterSpacing: "0.5px",
                       background:
-                        a.status?.toLowerCase() === "pending" || a.status?.toLowerCase() === "created"
-                          ? "#fee2e2"
-                          : a.status?.toLowerCase() === "open"
-                          ? "#d1fae5"
-                          : a.status?.toLowerCase() === "closed"
-                          ? "#e5e7eb"
-                          : a.status?.toLowerCase() === "cancelled"
-                          ? "#fecaca"
-                          : "#f3f4f6",
+                        a.status?.toLowerCase() === "draft"
+                          ? "#fef3c7"  // vàng - chờ duyệt
+                          : a.status?.toLowerCase() === "pending"
+                            ? "#dbeafe"  // xanh dương nhạt - chờ lên sàn
+                            : a.status?.toLowerCase() === "open"
+                              ? "#d1fae5"  // xanh lá - đang diễn ra
+                              : a.status?.toLowerCase() === "closed"
+                                ? "#e5e7eb"  // xám
+                                : a.status?.toLowerCase() === "cancelled"
+                                  ? "#fecaca"  // đỏ
+                                  : "#f3f4f6",
                       color:
-                        a.status?.toLowerCase() === "pending" || a.status?.toLowerCase() === "created"
-                          ? "#dc2626"
-                          : a.status?.toLowerCase() === "open"
-                          ? "#059669"
-                          : a.status?.toLowerCase() === "closed"
-                          ? "#6b7280"
-                          : a.status?.toLowerCase() === "cancelled"
-                          ? "#991b1b"
-                          : "#374151",
+                        a.status?.toLowerCase() === "draft"
+                          ? "#92400e"  // vàng đậm
+                          : a.status?.toLowerCase() === "pending"
+                            ? "#1e40af"  // xanh dương đậm
+                            : a.status?.toLowerCase() === "open"
+                              ? "#059669"
+                              : a.status?.toLowerCase() === "closed"
+                                ? "#6b7280"
+                                : a.status?.toLowerCase() === "cancelled"
+                                  ? "#991b1b"
+                                  : "#374151",
                     }}
                   >
                     {(a.status || "unknown").toUpperCase()}
@@ -168,9 +174,9 @@ const AdminAuctionApprovalPage: React.FC = () => {
                 <h3 style={{ margin: "0 0 8px 0" }}>{(a as any).productName || a.product?.name || "Auction"}</h3>
                 <p style={{ margin: 0, color: "#666", fontSize: 13 }}>{a.product?.description || ""}</p>
                 <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-                  {(a.status?.toLowerCase() === "pending" || a.status?.toLowerCase() === "created") && (
+                  {a.status?.toLowerCase() === "draft" && (
                     <Button onClick={() => setSelected(a)} style={{ flex: 1 }}>
-                      Review & Approve
+                      Duyệt
                     </Button>
                   )}
                   {a.status?.toLowerCase() === "open" && (

@@ -24,7 +24,7 @@ export default function Header() {
         <div className={styles.topBarLinks}>
           <Link to="/help">Trợ giúp</Link>
           <Link to="/how-to-buy">Hướng dẫn mua</Link>
-          <Link to="/seller">Kênh người bán</Link>
+          <Link to="/seller/dashboard">Kênh người bán</Link>
           <a href="#">💬 Trò chuyện</a>
         </div>
       </div>

@@ -26,9 +26,11 @@ import AuctionCurrentPage from "@/modules/user/pages/AuctionCurrentPage";
 import AuctionsPage from "@/modules/auction/pages/AuctionsPage";
 import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage";
 import ProductManagement from "@/modules/seller/pages/ProductManagement";
+import SellerLayout from "@/modules/seller/layouts/SellerLayout";
 import SellerProfile from "@/modules/seller/pages/SellerProfile";
+import SellerAuctionManagement from "@/modules/seller/pages/SellerAuctionManagement";
+import SellerOrders from "@/modules/seller/pages/SellerOrders";
 import CreateProduct from "@/modules/product/pages/CreateProduct";
-import AuctionList from "@/modules/auction/pages/AuctionList";
 import CreateAuction from "@/modules/auction/pages/CreateAuction";
 import ProductList from "@/modules/product/pages/ProductList";
 import ProductDetail from "@/modules/product/pages/ProductDetail";
@@ -62,22 +64,24 @@ export default function AppRoutes() {
             }
           />
         </Route>
-        {/* SELLER AREA – protected under MainLayout */}
+        {/* SELLER AREA – protected with SellerLayout (sidebar) */}
         <Route
           path="/seller"
           element={
             <ProtectedRoute>
-              <MainLayout />
+              <SellerLayout />
             </ProtectedRoute>
           }
         >
           <Route index element={<ProductManagement />} />
+          <Route path="dashboard" element={<ProductManagement />} />
+          <Route path="profile" element={<SellerProfile />} />
           <Route path="products" element={<ProductManagement />} />
           <Route path="products/create" element={<CreateProduct />} />
           <Route path="products/:id/edit" element={<CreateProduct />} />
-          <Route path="profile" element={<SellerProfile />} />
-          <Route path="auctions" element={<AuctionList />} />
+          <Route path="auctions" element={<SellerAuctionManagement />} />
           <Route path="auctions/create" element={<CreateAuction />} />
+          <Route path="orders" element={<SellerOrders />} />
         </Route>
 
         {/* USER AREA (có ProtectedRoute + ProfileLayout) */}

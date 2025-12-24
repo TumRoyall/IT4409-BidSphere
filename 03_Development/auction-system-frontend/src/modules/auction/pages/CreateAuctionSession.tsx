@@ -51,32 +51,35 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
     try {
       setIsLoadingProducts(true);
       const { default: productApi } = await import("@/api/modules/product.api");
-      console.log("Loading approved products for seller");
-      
-      // Load all pages to get all approved products
-      let allApprovedProducts: any[] = [];
+      console.log("Loading products eligible for auction (draft/rejected)");
+
+      // Load all pages to get all eligible products
+      let eligibleProducts: any[] = [];
       let pageNum = 0;
       let hasMore = true;
 
       while (hasMore) {
         const productsResponse = await productApi.getProductsBySellerMePage(pageNum, 10);
         const products = productsResponse.data.content || [];
-        
-        // Filter only approved products from this page
-        const approvedOnThisPage = products.filter(
-          (p: any) => p.status?.toLowerCase() === "approved"
+
+        // Filter products that can be submitted for auction: draft or rejected
+        const eligibleOnThisPage = products.filter(
+          (p: any) => {
+            const status = p.status?.toLowerCase();
+            return status === "draft" || status === "rejected";
+          }
         );
-        
-        allApprovedProducts = [...allApprovedProducts, ...approvedOnThisPage];
+
+        eligibleProducts = [...eligibleProducts, ...eligibleOnThisPage];
         hasMore = products.length === 10;
         pageNum++;
       }
-      
-      console.log("Approved products loaded:", allApprovedProducts);
-      
+
+      console.log("Eligible products loaded:", eligibleProducts);
+
       // Log product IDs for debugging
-      if (allApprovedProducts && Array.isArray(allApprovedProducts)) {
-        allApprovedProducts.forEach((p, idx) => {
+      if (eligibleProducts && Array.isArray(eligibleProducts)) {
+        eligibleProducts.forEach((p, idx) => {
           const legacyProduct = p as any;
           console.log(`Product ${idx}:`, {
             id: p?.id,
@@ -88,15 +91,15 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
           });
         });
       }
-      
-      if (allApprovedProducts.length === 0) {
+
+      if (eligibleProducts.length === 0) {
         setErrors((prev) => ({
           ...prev,
-          products: "You have no approved products. Submit a product for approval first.",
+          products: "Bạn không có sản phẩm nào có thể tạo đấu giá. Chỉ sản phẩm ở trạng thái 'draft' hoặc 'rejected' mới có thể đăng ký đấu giá.",
         }));
       }
-      
-      setProducts(allApprovedProducts);
+
+      setProducts(eligibleProducts);
     } catch (error: any) {
       console.error("Failed to load products:", error);
       setErrors((prev) => ({
@@ -142,13 +145,13 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
       "id=",
       product?.id
     );
-    
+
     if (!id || id <= 0) {
       console.error("Product has no valid ID:", product);
       setErrors((prev) => ({ ...prev, productId: "Selected product has no valid ID" }));
       return;
     }
-    
+
     setSelectedProduct(product);
     setFormData((prev) => ({
       ...prev,
@@ -281,7 +284,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
       console.log("formData.productId before conversion:", formData.productId, typeof formData.productId);
       const productId = Number(formData.productId);
       console.log("productId after conversion:", productId, "isNaN:", isNaN(productId));
-      
+
       if (!productId || isNaN(productId)) {
         throw new Error(`Invalid product ID: ${formData.productId} (converted to ${productId})`);
       }
@@ -296,18 +299,20 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
       console.log("📤 Auction payload:", payload);
       const response = await auctionApi.createAuction(payload);
       const auctionId = response.data?.auctionId ?? response.data?.id;
-      
+
       if (!auctionId) {
         throw new Error(`Invalid response: no auctionId found in response.data = ${JSON.stringify(response.data)}`);
       }
 
-      navigate(`/auctions/${auctionId}`, {
-        state: { message: "Auction created successfully" },
-      });
+      // Thông báo thành công và quay về dashboard
+      alert("✅ Yêu cầu đấu giá đã được gửi thành công!\nVui lòng chờ admin duyệt.");
       onClose?.();
+      navigate("/seller/dashboard", {
+        state: { message: "Yêu cầu đấu giá đã được gửi, chờ admin duyệt" },
+      });
     } catch (error: any) {
       let errorMsg = "Failed to create auction";
-      
+
       if (error?.response?.data?.message) {
         errorMsg = error.response.data.message;
       } else if (error?.response?.data?.error) {
@@ -315,7 +320,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
       } else if (error?.message) {
         errorMsg = error.message;
       }
-      
+
       setErrors((prev) => ({ ...prev, submit: String(errorMsg) }));
       console.error("Create auction error:", error);
       console.error("Response data:", error?.response?.data);
@@ -384,23 +389,23 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                   }}
                 />
                 <input
-                id="auction-product"
-                type="text"
-                placeholder={
-                isLoadingProducts
-                ? "Loading products..."
-                : "Search product by name or category..."
-                }
-                value={searchQuery}
-                onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setShowDropdown(true);
-                }}
-                onFocus={() => setShowDropdown(true)}
-                onBlur={() => setTimeout(() => setShowDropdown(false), 300)}
-                disabled={isLoadingProducts}
-                className="form-input"
-                style={{ paddingLeft: "40px" }}
+                  id="auction-product"
+                  type="text"
+                  placeholder={
+                    isLoadingProducts
+                      ? "Loading products..."
+                      : "Search product by name or category..."
+                  }
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setShowDropdown(true);
+                  }}
+                  onFocus={() => setShowDropdown(true)}
+                  onBlur={() => setTimeout(() => setShowDropdown(false), 300)}
+                  disabled={isLoadingProducts}
+                  className="form-input"
+                  style={{ paddingLeft: "40px" }}
                 />
               </div>
 
@@ -472,13 +477,13 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                               {product.name}
                             </p>
                             <p
-                            style={{
-                            margin: "2px 0 0 0",
-                            fontSize: "12px",
-                            color: "#999",
-                            }}
+                              style={{
+                                margin: "2px 0 0 0",
+                                fontSize: "12px",
+                                color: "#999",
+                              }}
                             >
-                            {product.categories || product.category}
+                              {product.categories || product.category}
                             </p>
                           </div>
                           <span
