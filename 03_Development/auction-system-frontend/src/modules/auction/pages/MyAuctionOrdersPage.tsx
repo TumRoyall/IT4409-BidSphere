@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { afterAuctionApi } from "@/api/modules/afterAuction.api";
 import { userApi } from "@/api/modules/user.api";
 import AuctionOrderCard from "@/modules/auction/components/AuctionOrderCard";
@@ -25,6 +26,7 @@ const TAB_STATUS_MAP: Record<TabKey, string | null> = {
 
 
 export default function MyAuctionOrdersPage() {
+  const navigate = useNavigate();
   const [userId, setUserId] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<TabKey>("ALL");
   const [orders, setOrders] = useState<any[]>([]);
