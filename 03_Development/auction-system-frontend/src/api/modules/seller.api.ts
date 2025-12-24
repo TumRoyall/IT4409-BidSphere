@@ -7,68 +7,60 @@ import axiosClient from "../axiosClient";
 
 export interface CreateProductDto {
   name: string;
-  categories: string;
+  category?: string;
   description: string;
-  start_price: number;
-  estimate_price?: string;
+  startPrice: number;
+  estimatePrice?: number;
   deposit: number;
   createAuction?: boolean;
   auctionDetails?: {
-    start_time: string;
-    end_time: string;
-    bid_step_amount: number;
+    startTime: string;
+    endTime: string;
+    bidStepAmount: number;
   };
 }
 
 export interface UpdateProductDto {
   name?: string;
-  categories?: string;
+  category?: string;
   description?: string;
-  start_price?: number;
-  estimate_price?: string;
+  startPrice?: number;
+  estimatePrice?: number;
   deposit?: number;
 }
 
 export interface ProductResponse {
-  product_id: number;
-  seller_id: number;
+  productId: number;
+  sellerId: number;
   name: string;
-  categories: string;
+  category: string;
   description: string;
-  start_price: number;
-  estimate_price: string;
+  startPrice: number;
+  estimatePrice: number;
   deposit: number;
-  image_url: string;
+  imageUrl: string;
   status: string;
-  created_at: string;
+  createdAt: string;
   images?: ImageResponse[];
   auction?: AuctionResponse;
 }
 
 export interface ImageResponse {
-  image_id: number;
-  product_id: number;
-  image_url: string;
-  is_thumbnail: boolean;
+  imageId: number;
+  productId: number;
+  imageUrl: string;
+  isThumbnail: boolean;
 }
 
 export interface AuctionResponse {
-  auction_id: number;
-  product_id: number;
-  start_time: string;
-  end_time: string;
+  auctionId: number;
+  productId: number;
+  startTime: string;
+  endTime: string;
   status: string;
-  highest_current_price: number;
-  bid_step_amount: string;
-  winner_id: number | null;
-}
-
-export interface StatisticsResponse {
-  total_products: number;
-  active_sessions: number;
-  pending_approval: number;
-  total_revenue?: number;
-  total_sold?: number;
+  highestBid: number;
+  bidStepAmount: number;
+  winnerId: number | null;
 }
 
 // ==========================================
@@ -208,10 +200,10 @@ const sellerApi = {
    * POST /api/auctions
    */
   createAuction: (data: {
-    product_id: number;
-    start_time: string;
-    end_time: string;
-    bid_step_amount: number;
+    productId: number;
+    startTime: string;
+    endTime: string;
+    bidStepAmount: number;
   }) => {
     return axiosClient.post<AuctionResponse>("/auctions", data);
   },
@@ -239,16 +231,6 @@ const sellerApi = {
     return axiosClient.delete(`/auctions/${auctionId}`);
   },
 
-  // ============ STATISTICS ============
-
-  /**
-   * Lấy thống kê
-   * Note: Thay thế với các endpoint tương ứng từ productApi và auctionApi
-   */
-  getStatistics: () => {
-    // For now, return a placeholder since backend doesn't have dedicated stats endpoint
-    return axiosClient.get<StatisticsResponse>("/products");
-  },
 };
 
 export default sellerApi;

@@ -8,6 +8,8 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const navigate = useNavigate();
+  const legacyCategory = (product as { categories?: string }).categories;
+  const category = product.category ?? legacyCategory;
 
   const handleClick = () => {
     navigate(`/products/${product.productId || product.id}`);
@@ -40,22 +42,20 @@ export default function ProductCard({ product }: ProductCardProps) {
           </p>
         )}
 
-        {product.categories && (
-        <p className="product-card-category">{product.categories}</p>
-        )}
+        {category && <p className="product-card-category">{category}</p>}
 
         {/* Price Info */}
         <div className="product-card-price-section">
-        {product.startPrice && (
-        <div className="product-card-price-item">
-        <span className="product-card-price-label">Start Price:</span>
-        <span className="product-card-price">${product.startPrice.toFixed(2)}</span>
-        </div>
+        {typeof product.startPrice === "number" && (
+          <div className="product-card-price-item">
+            <span className="product-card-price-label">Start Price:</span>
+            <span className="product-card-price">₫{product.startPrice.toLocaleString("vi-VN")}</span>
+          </div>
         )}
-          {product.deposit && (
+          {typeof product.deposit === "number" && (
             <div className="product-card-price-item">
               <span className="product-card-price-label">Deposit:</span>
-              <span className="product-card-deposit">${product.deposit.toFixed(2)}</span>
+              <span className="product-card-deposit">₫{product.deposit.toLocaleString("vi-VN")}</span>
             </div>
           )}
         </div>

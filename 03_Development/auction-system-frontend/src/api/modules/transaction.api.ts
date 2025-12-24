@@ -6,7 +6,7 @@ export type Transaction = {
   id: number;
   userId: number;
   amount: number;
-  type: "DEPOSIT" | "WITHDRAW" | "TRANSFER";
+  type: "DEPOSIT" | "WITHDRAW" | "TRANSFER" | "RECEIVED";
   status: "SUCCESS" | "PENDING" | "FAILED";
   createdAt: string;
 };

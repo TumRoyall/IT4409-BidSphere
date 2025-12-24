@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUserTransactions } from "@/api/modules/transaction.api";
+import { getUserTransactions, type Transaction } from "@/api/modules/transaction.api";
 import "@/modules/user/styles/TransactionHistory.css";
 import TransactionIcon from "@/components/icons/TransactionIcon";
 

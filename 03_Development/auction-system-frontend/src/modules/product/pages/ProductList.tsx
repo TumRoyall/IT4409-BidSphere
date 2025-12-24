@@ -42,7 +42,7 @@ export default function ProductList() {
       let filteredProducts = data.content || [];
       if (filterCategory !== "all") {
         filteredProducts = filteredProducts.filter(
-          (p) => p.categories?.toLowerCase() === filterCategory.toLowerCase()
+          (p) => p.category?.toLowerCase() === filterCategory.toLowerCase()
         );
       }
 
@@ -159,7 +159,7 @@ export default function ProductList() {
           <div className="product-list-grid">
             {products.map((product) => (
               <ProductCard
-                key={product.product_id || product.id}
+                key={product.productId || product.id}
                 product={product}
               />
             ))}
