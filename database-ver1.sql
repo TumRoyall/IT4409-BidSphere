@@ -115,7 +115,7 @@ CREATE TABLE Auction (
   end_time DATETIME,
   status VARCHAR(20), -- PENDING, OPEN, CANCELLED, CLOSED
   highest_current_price DECIMAL(18,2),
-  bid_step_amount VARCHAR(50),
+  bid_step_amount DECIMAL(18,2),
   winner_id BIGINT,
   FOREIGN KEY (product_id) REFERENCES Product(product_id),
   FOREIGN KEY (winner_id) REFERENCES User(user_id)

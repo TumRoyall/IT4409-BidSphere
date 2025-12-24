@@ -23,8 +23,12 @@ import ResetPasswordPage from "@/modules/user/pages/ResetPasswordPage";
 import NotificationPage from "@/modules/user/pages/NotificationPage";
 import HistoryBidPage from "@/modules/user/pages/HistoryBidPage";
 import AuctionCurrentPage from "@/modules/user/pages/AuctionCurrentPage";
+
+// Auction pages (from HEAD - seller_profile branch)
 import AuctionsPage from "@/modules/auction/pages/AuctionsPage";
 import AuctionDetailPage from "@/modules/auction/pages/AuctionDetailPage";
+
+// Seller pages (from HEAD - seller_profile branch)
 import ProductManagement from "@/modules/seller/pages/ProductManagement";
 import SellerLayout from "@/modules/seller/layouts/SellerLayout";
 import SellerProfile from "@/modules/seller/pages/SellerProfile";
@@ -34,8 +38,15 @@ import CreateProduct from "@/modules/product/pages/CreateProduct";
 import CreateAuction from "@/modules/auction/pages/CreateAuction";
 import ProductList from "@/modules/product/pages/ProductList";
 import ProductDetail from "@/modules/product/pages/ProductDetail";
+
+// Admin pages (from HEAD - seller_profile branch)
 import AdminProductApprovalPage from "@/modules/admin/pages/ProductApprovalPage";
 import AdminAuctionApprovalPage from "@/modules/admin/pages/AuctionApprovalPage";
+
+// Payment & Orders pages (from main branch)
+import DepositPage from "@/modules/payment/pages/DepositPage";
+import MyAuctionOrdersPage from "@/modules/auction/pages/MyAuctionOrdersPage";
+import OrderDetail from "@/modules/auction/pages/OrderDetail";
 
 export default function AppRoutes() {
   return (
@@ -64,6 +75,7 @@ export default function AppRoutes() {
             }
           />
         </Route>
+
         {/* SELLER AREA – protected with SellerLayout (sidebar) */}
         <Route
           path="/seller"
@@ -96,17 +108,21 @@ export default function AppRoutes() {
           {/* Account */}
           <Route path="account/profile" element={<ProfilePage />} />
           <Route path="account/payment" element={<PaymentPage />} />
+          <Route path="account/payment/deposit" element={<DepositPage />} />
           <Route path="account/reset-password" element={<ResetPasswordPage />} />
 
           {/* Notification */}
           <Route path="notification/:category" element={<NotificationPage />} />
 
-          {/* Auction */}
+          {/* Auction - giữ cả 2 routes (từ HEAD dùng kebab-case) */}
           <Route path="bid/history-bid" element={<HistoryBidPage />} />
-          <Route
-            path="bid/auction-current-joined"
-            element={<AuctionCurrentPage />}
-          />
+          <Route path="bid/historyBid" element={<HistoryBidPage />} />
+          <Route path="bid/auction-current-joined" element={<AuctionCurrentPage />} />
+          <Route path="bid/auctionCurrentJoined" element={<AuctionCurrentPage />} />
+
+          {/* Won products (from main) */}
+          <Route path="bid/won-products" element={<MyAuctionOrdersPage />} />
+          <Route path="bid/won-products/order/:txnId" element={<OrderDetail />} />
         </Route>
 
         {/* AUTH LAYOUT – KHÔNG DÙNG MAINLAYOUT */}
