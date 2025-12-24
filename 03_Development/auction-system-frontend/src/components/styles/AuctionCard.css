@@ -220,10 +220,20 @@
   font-size: 13px;
   color: #555;
   margin: 6px 0;
-  max-height: 42px;
+  line-height: 1.4;
+
+  /* giới hạn 3 dòng */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+
   overflow: hidden;
-  text-overflow: ellipsis;
+
+  /* xử lý chuỗi không có space */
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
+
 
 /* spacing between list cards */
 .auction-card.list + .auction-card.list {

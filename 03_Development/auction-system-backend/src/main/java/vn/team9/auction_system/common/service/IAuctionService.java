@@ -40,4 +40,13 @@ public interface IAuctionService {
 
     // Lấy danh sách auctions của seller hiện tại (từ token)
     List<AuctionResponse> getAuctionsByCurrentSeller();
+            String sort
+    );
+
+    public Page<AuctionResponse> getParticipatingOpenAuctions(
+            Long userId,
+            int page,
+            int size,
+            String sort
+    );
 }
