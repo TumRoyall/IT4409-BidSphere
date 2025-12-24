@@ -75,8 +75,17 @@ export default function AuctionCard({ auction, viewMode = "grid" }: any) {
       </div>
 
       {/* IMAGE */}
-      <div className={`auction-img-wrapper ${isList ? "list-img" : ""}`}>
+      <div
+        className={`auction-img-wrapper ${isList ? "list-img" : ""}`}
+        style={
+          isList
+            ? ({ ["--bg-img" as any]: `url(${images[index]})` })
+            : undefined
+        }
+      >
         <img src={images[index]} alt="product" />
+
+
 
         {images.length > 1 && (
           <>
