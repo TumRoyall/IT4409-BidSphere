@@ -35,8 +35,8 @@ interface SellerStats {
 
 const SellerProfile = (): React.ReactElement => {
   const { sellerId } = useParams<{ sellerId: string }>();
-  const [activeTab, setActiveTab] = useState<"active" | "completed" | "all">("active");
-  
+  const [activeTab, setActiveTab] = useState<"active" | "all">("active");
+
   const [sellerData, setSellerData] = useState<SellerData | null>(null);
   const [stats, setStats] = useState<SellerStats | null>(null);
   const [sellerProducts, setSellerProducts] = useState<ProductResponse[]>([]);
@@ -201,9 +201,8 @@ const SellerProfile = (): React.ReactElement => {
 
   const filteredProducts = sellerProducts.filter((product) => {
     const status = (product.status || "").toLowerCase();
-    if (activeTab === "active") return status === "active" || status === "approved";
-    if (activeTab === "completed") return status && status !== "active" && status !== "approved";
-    return true;
+    if (activeTab === "active") return status === "approved";
+    return true; // "all" tab - show all products of this seller
   });
 
   if (loading) {
@@ -236,37 +235,37 @@ const SellerProfile = (): React.ReactElement => {
             <div className="avatar-section">
               <div className="avatar-wrapper">
                 <img
-                   src={sellerData.avatarUrl || "/placeholder-seller.png"}
-                   alt={sellerData.fullName}
-                   className="avatar"
-                   onError={(e) => {
-                     (e.target as HTMLImageElement).src = "/placeholder-seller.png";
-                   }}
-                 />
-                 <div className="verified-badge">
-                   <Shield size={16} fill="currentColor" />
-                 </div>
+                  src={sellerData.avatarUrl || "/placeholder-seller.png"}
+                  alt={sellerData.fullName}
+                  className="avatar"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/placeholder-seller.png";
+                  }}
+                />
+                <div className="verified-badge">
+                  <Shield size={16} fill="currentColor" />
                 </div>
-                
-                <div className="seller-info">
-                 <h1 className="seller-name">{sellerData.fullName}</h1>
-                 
-                 <div className="rating-row">
-                   <div className="stars">
-                     {[...Array(5)].map((_, i) => (
-                       <Star key={i} size={14} fill="currentColor" />
-                     ))}
-                   </div>
-                   <span className="rating-score">{stats?.successRate?.toFixed(0) || 0}% match</span>
-                 </div>
+              </div>
 
-                 <p className="seller-meta">
-                   <MapPin size={12} /> 
-                   {sellerData.status || "Member"}
-                   <span className="dot">•</span>
-                   Since {new Date(sellerData.createdAt).getFullYear()}
-                 </p>
+              <div className="seller-info">
+                <h1 className="seller-name">{sellerData.fullName}</h1>
+
+                <div className="rating-row">
+                  <div className="stars">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={14} fill="currentColor" />
+                    ))}
+                  </div>
+                  <span className="rating-score">{stats?.successRate?.toFixed(0) || 0}% match</span>
                 </div>
+
+                <p className="seller-meta">
+                  <MapPin size={12} />
+                  {sellerData.status || "Member"}
+                  <span className="dot">•</span>
+                  Since {new Date(sellerData.createdAt).getFullYear()}
+                </p>
+              </div>
             </div>
 
             <div className="header-actions">
@@ -285,23 +284,23 @@ const SellerProfile = (): React.ReactElement => {
 
           {/* QUICK STATS */}
           {stats && (
-              <div className="quick-stats">
-                <div className="quick-stat">
-                  <div className="stat-value">{stats.activeAuctions || 0}</div>
-                  <div className="stat-label">Đang diễn ra</div>
-                </div>
-                <div className="quick-stat">
-                  <div className="stat-value">{stats.completedAuctions || 0}</div>
-                  <div className="stat-label">Hoàn tất</div>
-                </div>
-                <div className="quick-stat">
-                  <div className="stat-value">{(stats.successRate || 0).toFixed(0)}%</div>
-                  <div className="stat-label">Tỉ lệ thành công</div>
-                </div>
-                <div className="quick-stat">
-                  <div className="stat-value">{stats.reputationScore || 0}</div>
-                  <div className="stat-label">Điểm uy tín</div>
-                </div>
+            <div className="quick-stats">
+              <div className="quick-stat">
+                <div className="stat-value">{stats.activeAuctions || 0}</div>
+                <div className="stat-label">Đang diễn ra</div>
+              </div>
+              <div className="quick-stat">
+                <div className="stat-value">{stats.completedAuctions || 0}</div>
+                <div className="stat-label">Hoàn tất</div>
+              </div>
+              <div className="quick-stat">
+                <div className="stat-value">{(stats.successRate || 0).toFixed(0)}%</div>
+                <div className="stat-label">Tỉ lệ thành công</div>
+              </div>
+              <div className="quick-stat">
+                <div className="stat-value">{stats.reputationScore || 0}</div>
+                <div className="stat-label">Điểm uy tín</div>
+              </div>
             </div>
           )}
         </div>
@@ -378,7 +377,7 @@ const SellerProfile = (): React.ReactElement => {
             {/* CONTACT */}
             <section className="card">
               <h2 className="card-title">Contact Information</h2>
-              
+
               <div className="contact-list">
                 <a href={`mailto:${sellerData.email}`} className="contact-link">
                   <Mail size={18} />
@@ -442,23 +441,17 @@ const SellerProfile = (): React.ReactElement => {
         </div>
       </div>
 
-      {/* AUCTIONS */}
+      {/* PRODUCTS */}
       <div className="auctions-section">
         <div className="auctions-container">
           <div className="auctions-header">
-            <h2>Featured Auctions</h2>
+            <h2>Featured Products</h2>
             <div className="tabs">
               <button
                 className={`tab ${activeTab === "active" ? "active" : ""}`}
                 onClick={() => setActiveTab("active")}
               >
                 Active
-              </button>
-              <button
-                className={`tab ${activeTab === "completed" ? "active" : ""}`}
-                onClick={() => setActiveTab("completed")}
-              >
-                Completed
               </button>
               <button
                 className={`tab ${activeTab === "all" ? "active" : ""}`}

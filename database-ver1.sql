@@ -8,26 +8,48 @@ USE auction_system;
 -- ========================
 -- Roles & Permissions
 -- ========================
-CREATE TABLE Role (
-  role_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  role_name VARCHAR(200) UNIQUE NOT NULL,
-  description VARCHAR(500)
-);
+-- Tạo bảng role
+CREATE TABLE role (
+  role_id      BIGINT AUTO_INCREMENT PRIMARY KEY,
+  role_name    VARCHAR(200) NOT NULL UNIQUE,
+  description  VARCHAR(500),
+  is_active    BOOLEAN NOT NULL DEFAULT 1,
+  created_at   DATETIME(6),
+  updated_at   DATETIME(6),
+  deleted_at   DATETIME(6),
+  created_by   BIGINT,
+  updated_by   BIGINT,
+  deleted_by   BIGINT,
+  is_deleted   BOOLEAN NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE Permission (
-  permission_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  permission_name VARCHAR(200) UNIQUE NOT NULL,
-  description VARCHAR(500)
-);
+-- Tạo bảng permission
+CREATE TABLE permission (
+  permission_id   BIGINT AUTO_INCREMENT PRIMARY KEY,
+  permission_name VARCHAR(200) NOT NULL,
+  api_path        VARCHAR(500) NOT NULL,
+  method          VARCHAR(20)  NOT NULL,
+  module          VARCHAR(100) NOT NULL,
+  description     VARCHAR(500),
+  created_at      DATETIME(6),
+  updated_at      DATETIME(6),
+  deleted_at      DATETIME(6),
+  created_by      BIGINT,
+  updated_by      BIGINT,
+  deleted_by      BIGINT,
+  is_deleted      BOOLEAN NOT NULL DEFAULT 0,
+  CONSTRAINT uk_permission_api_method UNIQUE (api_path, method),
+  CONSTRAINT uk_permission_name UNIQUE (permission_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE RolePermission (
-  role_id BIGINT,
-  permission_id BIGINT,
+-- Tạo bảng join rolePermission (khớp entity hiện tại)
+CREATE TABLE rolePermission (
+  role_id       BIGINT NOT NULL,
+  permission_id BIGINT NOT NULL,
   PRIMARY KEY (role_id, permission_id),
-  FOREIGN KEY (role_id) REFERENCES Role(role_id),
-  FOREIGN KEY (permission_id) REFERENCES Permission(permission_id)
-);
-
+  CONSTRAINT fk_rp_role FOREIGN KEY (role_id) REFERENCES role(role_id),
+  CONSTRAINT fk_rp_perm FOREIGN KEY (permission_id) REFERENCES permission(permission_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ========================
 -- Users
 -- ========================
@@ -93,7 +115,7 @@ CREATE TABLE Auction (
   end_time DATETIME,
   status VARCHAR(20), -- PENDING, OPEN, CANCELLED, CLOSED
   highest_current_price DECIMAL(18,2),
-  bid_step_amount VARCHAR(50),
+  bid_step_amount DECIMAL(18,2),
   winner_id BIGINT,
   FOREIGN KEY (product_id) REFERENCES Product(product_id),
   FOREIGN KEY (winner_id) REFERENCES User(user_id)

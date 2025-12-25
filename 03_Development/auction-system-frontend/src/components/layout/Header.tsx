@@ -1,6 +1,19 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Bell } from "lucide-react";
+import {
+  User,
+  Wallet,
+  Lock,
+  Clock,
+  Gavel,
+  LogOut,
+  MessageCircle,
+  Search,
+  ChevronDown,
+  Receipt,
+  Activity
+} from "lucide-react";
+
 import styles from "@/components/styles/layout.module.css";
 import logo from "@/assets/logo.png";
 import { useAuth } from "@/hooks/useAuth";
@@ -17,6 +30,23 @@ export default function Header() {
     setShowMenu(false);
   };
 
+  // Check if user is admin or moderator
+  const rawRole = (user as any)?.role || (user as any)?.roles || (user as any)?.roleName || "";
+  const role = String(rawRole).toUpperCase();
+  const isAdminOrModerator = role === "ADMIN" || role === "MODERATOR";
+
+  const CATEGORY_MAP: Record<string, string> = {
+    "Xe cộ": "vehicle",
+    "Thời trang": "fashion",
+    "Điện tử": "electronics",
+    "Nhà cửa": "home",
+    "Nhà & Vườn": "garden",
+    "Trang sức": "jewelry",
+    "Tiêu dùng": "grocery",
+    "Khác": "other"
+  };
+
+
   return (
     <header>
       {/* ===== Thanh trên cùng ===== */}
@@ -24,8 +54,11 @@ export default function Header() {
         <div className={styles.topBarLinks}>
           <Link to="/help">Trợ giúp</Link>
           <Link to="/how-to-buy">Hướng dẫn mua</Link>
-          <Link to="/seller">Kênh người bán</Link>
-          <a href="#">💬 Trò chuyện</a>
+          <Link to="/seller/dashboard">Kênh người bán</Link>
+          <a href="#">
+            Trò chuyện
+          </a>
+
         </div>
       </div>
 
@@ -39,10 +72,12 @@ export default function Header() {
           </Link>
 
           {/* Ô tìm kiếm */}
-          <div className={styles.search}>
-            <input type="text" placeholder="Tìm kiếm sản phẩm đấu giá..." />
-            <button>🔍</button>
-          </div>
+            <div className={styles.search}>
+              <input type="text" placeholder="Tìm kiếm sản phẩm đấu giá..." />
+              <button>
+                <Search size={18} />
+              </button>
+            </div>
 
           {/* Actions bên phải */}
           <div className={styles.actions}>
@@ -69,26 +104,36 @@ export default function Header() {
                 {showMenu && (
                   <div className={styles.dropdownMenu}>
                     <div className={styles.dropdownGroup}>
-                      <p className={styles.menuLabel}>👤 Tài khoản của tôi</p>
+                      <p className={`${styles.menuLabel} ${styles.sectionAccount}`}>
+                        <User size={16} />
+                        Tài khoản của tôi
+                      </p>
+
                       <button onClick={() => handleNavigate("/user/account/profile")}>
-                        Hồ sơ cá nhân
+                        <User size={16} /> Hồ sơ cá nhân
                       </button>
                       <button onClick={() => handleNavigate("/user/account/payment")}>
-                        Ví của tôi
+                        <Wallet size={16} /> Ví của tôi
                       </button>
                       <button onClick={() => handleNavigate("/user/account/reset-password")}>
-                        Đổi mật khẩu
+                        <Lock size={16} /> Đổi mật khẩu
                       </button>
                     </div>
-
                     <div className={styles.dropdownGroup}>
-                      <p className={styles.menuLabel}>⚡ Phiên đấu giá</p>
-                      <button onClick={() => handleNavigate("/user/bid/history-bid")}>
-                        Lịch sử đấu giá
+                      <p className={`${styles.menuLabel} ${styles.sectionAuction}`}>
+                        <Gavel size={16} />
+                        Phiên đấu giá
+                      </p>
+                      <button onClick={() => handleNavigate("/user/bid/won-products")}>
+                        <Receipt size={16} /> Đơn đấu giá
+                      </button>
+                      <button onClick={() => handleNavigate("/user/bid/history")}>
+                        <Clock size={16} /> Lịch sử đấu giá
                       </button>
                       <button onClick={() => handleNavigate("/user/bid/auction-current-joined")}>
-                        Phiên đang tham gia
+                        <Activity size={16} /> Phiên đang tham gia
                       </button>
+
                     </div>
 
                     <hr />
@@ -100,8 +145,9 @@ export default function Header() {
                       }}
                       className={styles.logoutBtn}
                     >
-                      🚪 Đăng xuất
+                      <LogOut size={16} /> Đăng xuất
                     </button>
+
                   </div>
                 )}
               </div>
@@ -131,18 +177,13 @@ export default function Header() {
       {/* ===== Thanh danh mục ===== */}
       <div className={styles.categoryBar}>
         <div className={styles.categoryList}>
-          {[
-            "Xe cộ",
-            "Thời trang",
-            "Điện tử",
-            "Đồ gia dụng",
-            "Nhà & Vườn",
-            "Trang sức",
-            "Tiêu dùng",
-          ].map((cat) => (
-            <a key={cat} href="#">
-              {cat}
-            </a>
+          {Object.entries(CATEGORY_MAP).map(([label, value]) => (
+            <Link
+              key={value}
+              to={`/auctions?category=${value}&sort=startTime,desc&page=1`}
+            >
+              {label}
+            </Link>
           ))}
         </div>
       </div>
