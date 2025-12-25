@@ -323,6 +323,15 @@ INSERT INTO permission (permission_name, api_path, method, module, description) 
 ('ADMIN_USER_SOFT_DELETE', '/api/superadmin/users/{id}/soft-delete', 'PUT', 'admin-user', 'Soft delete user'),
 ('ADMIN_USER_TRANSACTIONS', '/api/superadmin/users/{id}/transactions', 'GET', 'admin-user', 'Lịch sử giao dịch user');
 
+-- Auctions (bổ sung)
+('AUCTION_APPROVE', '/api/auctions/{auctionId}/approve', 'PUT', 'auction', 'Duyệt phiên đấu giá'),
+('AUCTION_ME', '/api/auctions/me', 'GET', 'auction', 'Danh sách auction của tôi'),
+-- Transactions after auction (bổ sung)
+('TXN_AFTER_BY_SELLER', '/api/transactions/after-auction/seller/{sellerId}', 'GET', 'transaction', 'Giao dịch theo seller'),
+('TXN_AFTER_WON_PRODUCTS', '/api/transactions/after-auction/{userId}/won-products', 'GET', 'transaction', 'Sản phẩm đã thắng'),
+-- Users (bổ sung)
+('USER_PARTICIPATING_AUCTIONS', '/api/users/{userId}/auctions/participating', 'GET', 'user', 'Auctions đang tham gia');
+
 -- (RolePermission)
 -- gán tất cả permission cho role ADMIN
 INSERT IGNORE INTO rolePermission (role_id, permission_id)
