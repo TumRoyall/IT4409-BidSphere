@@ -32,7 +32,11 @@ export default function ChangePasswordPage() {
       setMsg("Đổi mật khẩu thành công. Đang đăng xuất...");
       setTimeout(() => logout(), 1500);
     } catch (err: any) {
-      setMsg(err.message || "Đổi mật khẩu thất bại");
+        const msg =
+          err?.response?.data?.message ||
+          err?.response?.data?.error ||
+          "Đổi mật khẩu thất bại";
+        setMsg(msg);
     } finally {
       setLoading(false);
     }

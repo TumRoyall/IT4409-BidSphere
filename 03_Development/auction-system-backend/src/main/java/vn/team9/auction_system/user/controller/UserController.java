@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import org.springframework.web.multipart.MultipartFile;
+import vn.team9.auction_system.auction.service.AuctionServiceImpl;
+import vn.team9.auction_system.common.dto.auction.AuctionResponse;
 import vn.team9.auction_system.common.dto.user.ChangePasswordRequest;
 import vn.team9.auction_system.common.dto.user.UserResponse;
 import vn.team9.auction_system.user.service.UserService;
@@ -24,25 +27,29 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final AuctionServiceImpl auctionService;
 
-    // 🧩 Lấy thông tin của chính mình
     @GetMapping("/me")
     public ResponseEntity<UserResponse> getCurrentUser(Authentication authentication) {
         String email = authentication.getName();
         return ResponseEntity.ok(userService.getByEmail(email));
     }
 
-    // 🧩 Cập nhật thông tin cá nhân
+    // Get public profile of user by ID (from seller_profile branch)
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getPublicProfile(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getPublicProfile(id));
+    }
+
+    // Update personal information (from main)
     @PutMapping("/me")
     public ResponseEntity<UserResponse> updateCurrentUser(
             Authentication authentication,
-            @Valid @RequestBody UpdateUserDTO request
-    ) {
+            @Valid @RequestBody UpdateUserDTO request) {
         String email = authentication.getName();
         return ResponseEntity.ok(userService.updateByEmail(email, request));
     }
 
-    // 🧩 Đổi mật khẩu
     @PatchMapping("/change-password")
     public ResponseEntity<?> changePassword(Authentication authentication, @RequestBody ChangePasswordRequest req) {
         String email = authentication.getName();
@@ -50,31 +57,28 @@ public class UserController {
         return ResponseEntity.ok("Password changed successfully");
     }
 
-    // 🧩 Cập nhật avatar (single file)
     @PutMapping("/me/avatar")
     public ResponseEntity<?> updateAvatar(
             Authentication authentication,
-            @RequestParam("file") MultipartFile file
-    ) {
+            @RequestParam("file") MultipartFile file) {
         try {
-            // Lấy user hiện tại qua email
+            // Get current user via email
             String email = authentication.getName();
             UserResponse currentUser = userService.getByEmail(email);
 
-            // 1️⃣ Đặt tên file
             String filename = "ID_" + currentUser.getUserId() + "_" + currentUser.getUsername() + ".png";
 
-            // 2️⃣ Tạo thư mục nếu chưa có
+            // Create directory if not exists
             Path uploadDir = Paths.get("src/main/resources/static/avatars/users/");
             if (!Files.exists(uploadDir)) {
                 Files.createDirectories(uploadDir);
             }
 
-            // 3️⃣ Ghi file (ghi đè nếu có sẵn)
+            // Write file (overwrite if exists)
             Path filePath = uploadDir.resolve(filename);
             Files.write(filePath, file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
-            // 4️⃣ Cập nhật avatar_url trong DB
+            // Update avatar_url in DB
             String relativeUrl = "/avatars/users/" + filename;
             userService.updateAvatarUrl(currentUser.getUserId(), relativeUrl);
 
@@ -83,7 +87,24 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("message", "Không thể cập nhật avatar"));
+                    .body(Map.of("message", "Unable to update avatar"));
         }
+    }
+
+    @GetMapping("/{userId}/auctions/participating")
+    public ResponseEntity<?> getParticipatingOpenAuctions(
+            @PathVariable Long userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size,
+            @RequestParam(defaultValue = "endTime,asc") String sort
+    ) {
+        return ResponseEntity.ok(
+                auctionService.getParticipatingOpenAuctions(
+                        userId,
+                        page,
+                        size,
+                        sort
+                )
+        );
     }
 }

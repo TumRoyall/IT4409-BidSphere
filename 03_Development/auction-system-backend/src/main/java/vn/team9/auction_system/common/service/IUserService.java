@@ -10,4 +10,6 @@ public interface IUserService {
     UserResponse getUserById(Long id);
     List<UserResponse> getAllUsers();
     void deleteUser(Long id);
+    List<TransactionResponse> getAllTransactions(Long userId);
+    UserResponse softDeleteUser(Long id);
 }

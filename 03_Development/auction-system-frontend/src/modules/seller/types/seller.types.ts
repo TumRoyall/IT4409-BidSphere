@@ -20,9 +20,9 @@ export { AUCTION_STATUS } from "@/modules/product/types";
 // ==========================================
 
 export interface SellerStatistics {
-  total_products: number;
-  active_sessions: number;
-  pending_approval: number;
-  total_revenue?: number;
-  total_sold?: number;
+  totalProducts: number;
+  activeSessions: number;
+  pendingApproval: number;
+  totalRevenue?: number;
+  totalSold?: number;
 }

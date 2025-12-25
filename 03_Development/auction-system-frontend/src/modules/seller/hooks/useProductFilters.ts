@@ -6,6 +6,8 @@ import type { FilterState } from "../components/ProductFilterBar";
 export const useProductFilters = (products: Product[]) => {
   const [filters, setFilters] = useState<FilterState>({});
   const [searchTerm, setSearchTerm] = useState("");
+  const getCategory = (product: Product) =>
+    product.category ?? (product as { categories?: string }).categories ?? "";
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
@@ -17,7 +19,7 @@ export const useProductFilters = (products: Product[]) => {
 
     // Apply category filter
     if (filters.category) {
-      result = result.filter((p) => p.categories === filters.category);
+      result = result.filter((p) => getCategory(p) === filters.category);
     }
 
     // Apply auction filter
@@ -35,7 +37,7 @@ export const useProductFilters = (products: Product[]) => {
         (p) =>
           p.name.toLowerCase().includes(searchLower) ||
           p.description?.toLowerCase().includes(searchLower) ||
-          p.categories?.toLowerCase().includes(searchLower)
+          getCategory(p).toLowerCase().includes(searchLower)
       );
     }
 

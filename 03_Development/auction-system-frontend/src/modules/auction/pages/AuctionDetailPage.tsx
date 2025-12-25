@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Clock, Wallet, Users, HelpCircle } from "lucide-react";
 import auctionApi from "@/api/modules/auction.api";
 import { bidApi } from "@/api/modules/bid.api";
 import { userApi } from "@/api/modules/user.api";
 import "@/modules/auction/styles/auctionDetail.css";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const STATUS_LABEL: Record<string, string> = {
   OPEN: "Đang diễn ra",
@@ -51,6 +54,8 @@ function getCountdownColor(ms: number) {
 // ===================== MAIN PAGE =====================
 
 export default function AuctionDetailPage() {
+    const navigate = useNavigate();
+    const [blocked, setBlocked] = useState(false);
   const { id } = useParams();
   const auctionId = Number(id);
 
@@ -64,8 +69,17 @@ export default function AuctionDetailPage() {
 
   const loadAuction = async () => {
     const res = await auctionApi.getAuctionById(auctionId);
+
+    const status = res.data.status;
+
+    if (status === "CLOSED" || status === "CANCELLED") {
+      setBlocked(true);
+      return;
+    }
+
     setAuction(res.data);
   };
+
 
   const loadBids = async () => {
     const res = await bidApi.getBidsByAuction(auctionId);
@@ -106,6 +120,27 @@ export default function AuctionDetailPage() {
     await loadBids();
     await loadUser(); // số dư thay đổi
   };
+
+  if (blocked) {
+      return (
+        <div className="auction-blocked-wrapper">
+          <div className="auction-blocked-box">
+            <h2>Phiên đấu giá đã kết thúc</h2>
+            <p>
+              Phiên đấu giá này đã kết thúc hoặc đã bị huỷ.<br />
+              Bạn không thể tiếp tục truy cập.
+            </p>
+
+            <button
+              className="btn-back"
+              onClick={() => navigate(-1)}
+            >
+              Quay lại
+            </button>
+          </div>
+        </div>
+      );
+    }
 
   if (loading)
     return <div className="auction-detail-loading">Đang tải...</div>;
@@ -171,7 +206,10 @@ export default function AuctionDetailPage() {
           {activeTab === "desc" && (
             <div className="auction-desc">
               <h3>Chi tiết sản phẩm</h3>
-              <p>{auction.productDescription || "Không có mô tả chi tiết."}</p>
+
+              <div className="auction-desc-box">
+                <p>{auction.productDescription || "Không có mô tả chi tiết."}</p>
+              </div>
             </div>
           )}
 
@@ -182,6 +220,7 @@ export default function AuctionDetailPage() {
             </div>
           )}
         </div>
+
 
       </div>
     </div>
@@ -279,11 +318,26 @@ function BidPanel({
   // ===== LẤY GIÁ CAO NHẤT TỪ API BIDS/HIGHEST =====
   const loadHighestBid = async () => {
     try {
-      const res = await bidApi.getHighestBid(auctionId);
-      const amount = Number(res?.data?.bidAmount ?? 0);
-      setHighestBid(amount);
-    } catch {
-      setHighestBid(0);
+      const response = await bidApi.getHighestBid(auctionId);
+      
+      // ✅ CHECK success
+      if (response.data.success === false) {
+        console.warn("Failed to load highest bid:", response.data.message);
+        setHighestBid(startPrice);
+        return;
+      }
+      
+      // ✅ Có data
+      if (response.data.id) { // Check có id thay vì bidAmount
+        const amount = Number(response.data.bidAmount ?? 0);
+        setHighestBid(amount);
+      } else {
+        // Không có bid
+        setHighestBid(startPrice);
+      }
+    } catch (e: any) {
+      console.warn("Error loading highest bid:", e);
+      setHighestBid(startPrice);
     }
   };
 
@@ -371,11 +425,21 @@ function BidPanel({
           return;
         }
 
-        await bidApi.placeBid({
+        const response = await bidApi.placeBid({ // THÊM const response
           auctionId: auctionKey,
           bidderId: user.userId,
           bidAmount: amount,
         });
+        
+        // ✅ CHECK response.data.success
+        if (response.data.success === false) {
+          setError(response.data.message || "Đặt giá thất bại.");
+          return; // Dừng lại
+        }
+        
+        // ✅ Thành công - hiển thị message từ server
+        toast.success(response.data.message || "Đặt giá thành công!");
+        
       } else {
         // AUTO BID
         const maxAuto = Number(maxAutoBidAmount);
@@ -390,12 +454,21 @@ function BidPanel({
           return;
         }
 
-        await bidApi.placeAutoBid({
+        const response = await bidApi.placeAutoBid({ // THÊM const response
           auctionId: auctionKey,
           bidderId: user.userId,
           maxAutoBidAmount: maxAuto,
           stepAutoBidAmount: stepAuto,
         });
+        
+        // ✅ CHECK response.data.success
+        if (response.data.success === false) {
+          setError(response.data.message || "Đặt auto-bid thất bại.");
+          return;
+        }
+        
+        // ✅ Thành công
+        toast.success(response.data.message || "Auto-bid được kích hoạt!");
       }
 
       // reset form
@@ -405,7 +478,9 @@ function BidPanel({
 
       await onBidSuccess();
       await loadHighestBid(); // update ngay giá cao nhất
+      
     } catch (e: any) {
+      // ✅ Vào đây khi có network error hoặc HTTP 400/500
       setError(e?.response?.data?.message || "Đặt giá thất bại.");
     } finally {
       setLoading(false);
