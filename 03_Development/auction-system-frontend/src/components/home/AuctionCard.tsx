@@ -75,17 +75,8 @@ export default function AuctionCard({ auction, viewMode = "grid" }: any) {
       </div>
 
       {/* IMAGE */}
-      <div
-        className={`auction-img-wrapper ${isList ? "list-img" : ""}`}
-        style={
-          isList
-            ? ({ ["--bg-img" as any]: `url(${images[index]})` })
-            : undefined
-        }
-      >
+      <div className={`auction-img-wrapper ${isList ? "list-img" : ""}`}>
         <img src={images[index]} alt="product" />
-
-
 
         {images.length > 1 && (
           <>
@@ -151,7 +142,7 @@ export default function AuctionCard({ auction, viewMode = "grid" }: any) {
           )}
 
           <p className="participants">
-            <Users size={15} /> {auction.totalBidders ?? 0} người tham gia
+            <Users size={15} /> {auction.totalBidder ?? 0} người tham gia
           </p>
         </div>
       </div>

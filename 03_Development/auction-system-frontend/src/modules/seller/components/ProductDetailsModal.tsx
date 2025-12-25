@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, Edit2, Trash2, Copy, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, Edit2, Trash2, Copy } from "lucide-react";
 import { Button } from "@/components/common";
 import { Modal } from "@/components/common/Modal";
 import type { Product } from "../types/seller.types";
@@ -38,22 +38,8 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
   onDelete,
 }) => {
   const [copiedField, setCopiedField] = useState<string | null>(null);
-  const [galleryOpen, setGalleryOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   if (!product) return null;
-
-  const nextImage = () => {
-    if (product.images && currentImageIndex < product.images.length - 1) {
-      setCurrentImageIndex(currentImageIndex + 1);
-    }
-  };
-
-  const prevImage = () => {
-    if (currentImageIndex > 0) {
-      setCurrentImageIndex(currentImageIndex - 1);
-    }
-  };
 
   const handleCopyToClipboard = async (text: string, field: string) => {
     // Try the modern clipboard API first, fall back to execCommand copy if not available
@@ -116,45 +102,16 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
         </div>
 
         {/* Product Image */}
-         <div 
-           className="details-image-container" 
-           onClick={() => {
-             if (product.images && product.images.length > 0) {
-               setGalleryOpen(true);
-               setCurrentImageIndex(0);
-             }
-           }}
-           style={{ cursor: product.images && product.images.length > 0 ? "pointer" : "default" }}
-         >
-           <img
-            src={
-              (product.images?.find((img: any) => img.isThumbnail || img.thumbnail)?.imageUrl || product.images?.find((img: any) => img.isThumbnail || img.thumbnail)?.url) ||
-              (product.images?.[0]?.imageUrl || product.images?.[0]?.url) ||
-              product.imageUrl || 
-              "/placeholder-product.png"
-            }
-           alt={product.name}
-             className="details-image"
-             onError={(e) => {
-               (e.target as HTMLImageElement).src = "/placeholder-product.png";
-             }}
-           />
-           {product.images && product.images.length > 1 && (
-             <div style={{
-               position: "absolute",
-               bottom: "12px",
-               right: "12px",
-               background: "rgba(0, 0, 0, 0.6)",
-               color: "white",
-               padding: "6px 12px",
-               borderRadius: "4px",
-               fontSize: "12px",
-               fontWeight: 600
-             }}>
-               +{product.images.length - 1} more
-             </div>
-           )}
-         </div>
+        <div className="details-image-container">
+          <img
+          src={product.imageUrl || "/placeholder-product.png"}
+          alt={product.name}
+            className="details-image"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = "/placeholder-product.png";
+            }}
+          />
+        </div>
 
         {/* Product Details Content */}
         <div className="details-content">
@@ -297,151 +254,6 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
           </div>
         </div>
       </div>
-
-      {/* Image Gallery Modal */}
-      {galleryOpen && product.images && product.images.length > 0 && (
-        <div style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.9)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 2000,
-          padding: "20px"
-        }}>
-          {/* Close button */}
-          <button
-            onClick={() => setGalleryOpen(false)}
-            style={{
-              position: "absolute",
-              top: "20px",
-              right: "20px",
-              background: "rgba(255, 255, 255, 0.2)",
-              border: "none",
-              color: "white",
-              cursor: "pointer",
-              padding: "8px",
-              borderRadius: "4px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "background 0.3s"
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.3)")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)")}
-          >
-            <X size={24} />
-          </button>
-
-          {/* Main image */}
-          <div style={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            maxHeight: "80vh"
-          }}>
-            <img
-              src={product.images[currentImageIndex]?.imageUrl || product.images[currentImageIndex]?.url}
-              alt={`${product.name} ${currentImageIndex + 1}`}
-              style={{
-                maxWidth: "100%",
-                maxHeight: "100%",
-                objectFit: "contain"
-              }}
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "/placeholder-product.png";
-              }}
-            />
-          </div>
-
-          {/* Navigation arrows */}
-          {product.images.length > 1 && (
-            <>
-              <button
-                onClick={prevImage}
-                disabled={currentImageIndex === 0}
-                style={{
-                  position: "absolute",
-                  left: "20px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  background: currentImageIndex === 0 ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.2)",
-                  border: "none",
-                  color: "white",
-                  cursor: currentImageIndex === 0 ? "not-allowed" : "pointer",
-                  padding: "12px",
-                  borderRadius: "4px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transition: "background 0.3s"
-                }}
-                onMouseEnter={(e) => {
-                  if (currentImageIndex > 0) {
-                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.3)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = currentImageIndex === 0 ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.2)";
-                }}
-              >
-                <ChevronLeft size={28} />
-              </button>
-
-              <button
-                onClick={nextImage}
-                disabled={currentImageIndex === product.images.length - 1}
-                style={{
-                  position: "absolute",
-                  right: "20px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  background: currentImageIndex === product.images.length - 1 ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.2)",
-                  border: "none",
-                  color: "white",
-                  cursor: currentImageIndex === product.images.length - 1 ? "not-allowed" : "pointer",
-                  padding: "12px",
-                  borderRadius: "4px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transition: "background 0.3s"
-                }}
-                onMouseEnter={(e) => {
-                  if (product.images && currentImageIndex < product.images.length - 1) {
-                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.3)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = (product.images && currentImageIndex === product.images.length - 1) ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.2)";
-                }}
-              >
-                <ChevronRight size={28} />
-              </button>
-            </>
-          )}
-
-          {/* Image counter */}
-          <div style={{
-            position: "absolute",
-            bottom: "20px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            background: "rgba(0, 0, 0, 0.5)",
-            color: "white",
-            padding: "8px 16px",
-            borderRadius: "4px",
-            fontSize: "14px"
-          }}>
-            {currentImageIndex + 1} / {product.images.length}
-          </div>
-        </div>
-      )}
     </Modal>
   );
 };

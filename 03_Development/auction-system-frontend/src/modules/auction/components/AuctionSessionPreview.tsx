@@ -54,7 +54,7 @@ export const AuctionSessionPreview = ({
     }
   }, [startTime, endTime]);
 
-  const startPrice = selectedProduct?.startPrice ?? 0;
+  const startPrice = selectedProduct?.startPrice ?? selectedProduct?.start_price ?? 0;
   const deposit = selectedProduct?.deposit ?? 0;
 
   return (
@@ -69,7 +69,11 @@ export const AuctionSessionPreview = ({
         <div className="preview-section-title">Product</div>
         <div className="product-info-box">
           <img
-            src={selectedProduct?.imageUrl || "/placeholder-product.png"}
+            src={
+              selectedProduct?.imageUrl ||
+              selectedProduct?.image_url ||
+              "/placeholder-product.png"
+            }
             alt={selectedProduct?.name}
             className="product-info-image"
             onError={(e) => {

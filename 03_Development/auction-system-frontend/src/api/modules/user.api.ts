@@ -12,17 +12,6 @@ export const userApi = {
     }
   },
 
-  // Lấy public profile của user theo ID
-  async getPublicProfile(userId: number) {
-    try {
-      const res = await axiosClient.get(`/users/${userId}`);
-      return res.data;
-    } catch (err: any) {
-      console.error("[userApi.getPublicProfile] Error:", err);
-      throw err.response?.data || { message: "Không thể tải thông tin người dùng" };
-    }
-  },
-
   // Cập nhật hồ sơ cá nhân
   async updateProfile(payload: {
     fullName?: string;
@@ -48,21 +37,4 @@ export const userApi = {
 
   changePassword: (body: { currentPassword: string; newPassword: string }) =>
       axiosClient.patch("/users/change-password", body),
-
-  // Lấy các phiên đấu giá user đang tham gia (từ token)
-  async getParticipatingAuctions(
-      userId: number,
-      params?: {
-        page?: number;
-        size?: number;
-        sort?: string;
-      }
-    ) {
-      const res = await axiosClient.get(
-        `/users/${userId}/auctions/participating`,
-        { params }
-      );
-      return res.data; // Page<Auction>
-    },
-
 };

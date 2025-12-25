@@ -29,9 +29,9 @@
   --form-spacing-xl: 2rem;
 
   /* Border Radius */
-  --form-radius-sm: 0;
-  --form-radius-md: 0;
-  --form-radius-lg: 0;
+  --form-radius-sm: 0.375rem;
+  --form-radius-md: 0.5rem;
+  --form-radius-lg: 0.75rem;
 
   /* Shadows */
   --form-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
