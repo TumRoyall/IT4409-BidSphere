@@ -1,0 +1,236 @@
+/* AdminUserWarningPage.css */
+
+.admin-user-warning-page {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f7f8fa;
+  min-height: 100vh;
+}
+
+.admin-user-warning-page h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.admin-user-warning-page table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.admin-user-warning-page th,
+.admin-user-warning-page td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-user-warning-page th {
+  background-color: #f4f6f7;
+  color: #0d0202;
+  font-weight: 600;
+}
+
+.admin-user-warning-page tbody tr:hover {
+  background-color: #f1f7ff;
+  cursor: default;
+}
+
+.admin-user-warning-page tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Error message style */
+.admin-user-warning-page .error {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-user-warning-page table,
+  .admin-user-warning-page thead,
+  .admin-user-warning-page tbody,
+  .admin-user-warning-page th,
+  .admin-user-warning-page td,
+  .admin-user-warning-page tr {
+    display: block;
+  }
+
+  .admin-user-warning-page thead tr {
+    display: none;
+  }
+
+  .admin-user-warning-page tbody tr {
+    margin-bottom: 15px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  .admin-user-warning-page td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .admin-user-warning-page td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    width: calc(50% - 30px);
+    font-weight: 600;
+    text-align: left;
+  }
+}
+.admin-user-warning-page .no-data {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+  padding: 20px 0;
+}
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+.status-badge.active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.resolved {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.status-badge.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+.type-badge {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.type-badge.spam {
+  color: #dc2626;
+}
+
+.type-badge.fraud {
+  color: #7c2d12;
+}
+
+.type-badge.minor {
+  color: #2563eb;
+}
+.violation-count {
+  font-weight: 700;
+  color: #dc2626;
+}
+.count-badge {
+  margin-left: 10px;
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.count-badge {
+  display: inline-block;
+  background-color: #2563eb;
+  color: white;
+  font-size: 0.85rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: 8px;
+}
+
+.search-bar {
+  margin-bottom: 15px;
+}
+
+.search-bar input {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.search-bar input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+/* Type/Status badge style */
+.type-badge {
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.type-badge.warning {
+  background-color: #f59e0b;
+}
+
+.type-badge.info {
+  background-color: #3b82f6;
+}
+
+.status-badge {
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.status-badge.open {
+  background-color: #10b981;
+}
+
+.status-badge.closed {
+  background-color: #ef4444;
+}
+
+.status-badge.upcoming {
+  background-color: #facc15;
+}
+.count-badge {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+.filter-bar {
+  margin-bottom: 12px;
+}
+
+.search-input {
+  width: 250px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
