@@ -117,13 +117,10 @@ export default function AppRoutes() {
           {/* Notification */}
           <Route path="notification/:category" element={<NotificationPage />} />
 
-          {/* Auction - giữ cả 2 routes (từ HEAD dùng kebab-case) */}
-          <Route path="bid/history-bid" element={<HistoryBidPage />} />
-          <Route path="bid/historyBid" element={<HistoryBidPage />} />
-          <Route path="bid/auction-current-joined" element={<AuctionCurrentPage />} />
-          <Route path="bid/auctionCurrentJoined" element={<AuctionCurrentPage />} />
 
-          {/* Won products (from main) */}
+          {/* Auction */}
+          <Route path="bid/history" element={<HistoryBidPage />} />
+          <Route path="bid/auction-current-joined" element={<AuctionCurrentPage />} />
           <Route path="bid/won-products" element={<MyAuctionOrdersPage />} />
           <Route path="bid/won-products/order/:txnId" element={<OrderDetail />} />
         </Route>

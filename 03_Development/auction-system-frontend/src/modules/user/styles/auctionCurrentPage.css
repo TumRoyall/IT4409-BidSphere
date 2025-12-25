@@ -1,0 +1,101 @@
+/* ===============================
+   Auction Current Page
+   =============================== */
+
+.auction-page-wrapper {
+  padding: 12px 4px 24px;
+}
+
+/* ===== HEADER ===== */
+.auction-page-header {
+  margin-bottom: 20px;
+}
+
+.auction-page-header h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.auction-page-header .sub-text {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* ===== LOADING ===== */
+.auction-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+  font-size: 15px;
+  color: #6b7280;
+}
+
+/* ===== EMPTY STATE ===== */
+.auction-empty {
+  text-align: center;
+  padding: 56px 0;
+  color: #6b7280;
+}
+
+.auction-empty p {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.auction-empty span {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* ===== PAGINATION ===== */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.pagination button {
+  min-width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.pagination button.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .auction-page-header h2 {
+    font-size: 20px;
+  }
+
+  .auction-page-header .sub-text {
+    font-size: 13px;
+  }
+
+  .pagination {
+    margin-top: 20px;
+  }
+}

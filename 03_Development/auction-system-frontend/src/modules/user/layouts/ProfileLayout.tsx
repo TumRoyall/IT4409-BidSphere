@@ -22,8 +22,8 @@ const MENU_ITEMS = [
     icon: User,
     items: [
       { to: "/user/account/profile", label: "Hồ sơ cá nhân", icon: User },
-      { to: "/user/account/payment", label: "Ví của tôi", icon: CreditCard },
       { to: "/user/account/reset-password", label: "Đổi mật khẩu", icon: Lock },
+      { to: "/user/account/payment", label: "Ví của tôi", icon: CreditCard },
     ],
   },
   {
@@ -31,9 +31,9 @@ const MENU_ITEMS = [
     title: "Phiên đấu giá",
     icon: Gavel,
     items: [
-      { to: "/user/bid/history-bid", label: "Lịch sử đấu giá", icon: Activity },
-      { to: "/user/bid/auction-current-joined", label: "Phiên đang tham gia", icon: TrendingUp },
       { to: "/user/bid/won-products", label: "Đơn đấu giá", icon: ShoppingBag },
+      { to: "/user/bid/auction-current-joined", label: "Phiên đang tham gia", icon: TrendingUp },
+      { to: "/user/bid/history", label: "Lịch sử đấu giá", icon: Activity  }
     ],
   },
 ];
