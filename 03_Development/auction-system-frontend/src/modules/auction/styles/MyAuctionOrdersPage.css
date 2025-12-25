@@ -1,0 +1,124 @@
+.auction-orders-page {
+  background: #f9fafb;
+  padding: 20px;
+  border-radius: 14px;
+}
+
+/* ===== TABS ===== */
+.auction-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 18px;
+}
+
+.auction-tabs button {
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+  color: #6b7280;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.2s ease;
+}
+
+.auction-tabs button:hover {
+  background: #f3f4f6;
+}
+
+.auction-tabs button.active {
+  color: #2563eb;
+  background: #eff6ff;
+  border-bottom: 2px solid #2563eb;
+}
+
+/* ===== LIST ===== */
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* CARD nổi nhẹ */
+.order-card {
+  display: flex;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.order-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
+.order-info h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ===== RIGHT ===== */
+.order-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+/* ===== STATUS (PASTEL) ===== */
+.status {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #f3f4f6;
+}
+
+/* Nhạt – không gắt */
+.status.pending {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.status.shipped {
+  color: #1e40af;
+  background: #dbeafe;
+}
+
+.status.paid {
+  color: #065f46;
+  background: #d1fae5;
+}
+
+.status.done {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.status.cancelled {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+/* ===== BUTTON ===== */
+.primary {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
