@@ -99,11 +99,11 @@ CREATE TABLE Product (
   start_price DECIMAL(18,2),
   estimate_price DECIMAL(18,2),
   deposit DECIMAL(18,2),
-  image_url VARCHAR(255),
+  image_url TEXT,  -- sửa từ VARCHAR(255) sang TEXT
   status VARCHAR(20), -- CANCELLED, PENDING, SOLD, APPROVED
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (seller_id) REFERENCES User(user_id)
-);
+);  
 
 -- ========================
 -- Auctions
@@ -203,3 +203,4 @@ CREATE TABLE Image (
   is_thumbnail BOOLEAN DEFAULT FALSE,
   FOREIGN KEY (product_id) REFERENCES Product(product_id)
 );
+
