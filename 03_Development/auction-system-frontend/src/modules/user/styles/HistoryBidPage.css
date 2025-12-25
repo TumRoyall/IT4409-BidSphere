@@ -1,0 +1,101 @@
+.bid-history-page {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 14px;
+}
+
+.bid-history-page h2 {
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* SEARCH */
+.search-input {
+  padding: 8px 12px;
+  width: 260px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 14px;
+}
+
+/* TABLE */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-table th {
+  padding: 10px;
+  font-size: 14px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  color: #374151;
+  text-align: left;
+}
+
+.history-table td {
+  padding: 10px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+  color: #111827;
+}
+
+.history-table tr:hover {
+  background: #f9fafb;
+}
+
+.center {
+  text-align: center;
+}
+
+/* AUCTION LINK */
+.auction-link {
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auction-link:hover {
+  text-decoration: underline;
+}
+
+/* CHECKBOX */
+.auto-checkbox {
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb;
+}
+
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #1f2937;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* STATES */
+.loading {
+  color: #6b7280;
+}
+
+.empty {
+  color: #9ca3af;
+}
+
+/* Cột Auto bid */
+.history-table th.center,
+.history-table td.center {
+  text-align: center;
+  vertical-align: middle;
+}
+

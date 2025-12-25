@@ -21,17 +21,17 @@ const parsePrice = (value: any): number => {
 
 const transformProducts = (rawProducts: any[]): Product[] => {
   return rawProducts.map((p) => ({
-    productId: p.productId || p.product_id,
-    sellerId: p.sellerId || p.seller_id,
+    productId: p.productId,
+    sellerId: p.sellerId,
     name: p.name,
     category: p.category,
     description: p.description,
-    startPrice: parsePrice(p.startPrice || p.start_price),
-    estimatePrice: parsePrice(p.estimatePrice || p.estimate_price),
+    startPrice: parsePrice(p.startPrice),
+    estimatePrice: parsePrice(p.estimatePrice),
     deposit: parsePrice(p.deposit),
-    imageUrl: p.imageUrl || p.image_url || "",
+    imageUrl: p.imageUrl || "",
     status: p.status,
-    createdAt: p.createdAt || p.created_at,
+    createdAt: p.createdAt,
     images: p.images,
     auction: p.auction,
   }));
@@ -98,6 +98,14 @@ export const useSellerProducts = (initialFilters?: Partial<ProductFilters>) => {
         });
       }
       
+      // Apply status filter (draft → pending → approved/rejected/etc.)
+      const statusFilter = filters.status?.toLowerCase();
+      if (statusFilter && statusFilter !== "all") {
+        productData = productData.filter((p: any) =>
+          (p.status ?? "").toString().toLowerCase() === statusFilter
+        );
+      }
+
       // Apply search filter if present
       if (filters.search) {
         const searchLower = filters.search.toLowerCase();
@@ -115,15 +123,19 @@ export const useSellerProducts = (initialFilters?: Partial<ProductFilters>) => {
       
       // Adjust pagination based on filtered results (client-side when fallback used)
       const totalFiltered = productData.length;
-      const limit = filters.limit || totalFiltered;
+      const limit = filters.limit || totalFiltered || 10;
       const totalPages = Math.max(1, Math.ceil(totalFiltered / limit));
+
+      const backendTotal = (response.data && (response.data as any).totalElements) || totalFiltered;
+      const backendTotalPages = (response.data && (response.data as any).totalPages) || totalPages;
+      const isClientFiltered = (statusFilter && statusFilter !== "all") || Boolean(filters.search);
 
       setPagination((prev) => ({
         ...prev,
         page: filters.page || 1,
         limit,
-        total: (response.data && (response.data as any).totalElements) || totalFiltered,
-        totalPages: (response.data && (response.data as any).totalPages) || totalPages,
+        total: isClientFiltered ? totalFiltered : backendTotal,
+        totalPages: isClientFiltered ? totalPages : backendTotalPages,
       }));
     } catch (err: any) {
       const errorMsg = err.response?.data?.message || "Không thể tải danh sách sản phẩm";
@@ -132,7 +144,7 @@ export const useSellerProducts = (initialFilters?: Partial<ProductFilters>) => {
     } finally {
       setLoading(false);
     }
-  }, [user?.id, filters.page, filters.limit, filters.search]);
+  }, [user?.id, filters.page, filters.limit, filters.search, filters.status]);
 
   // Chỉ fetch khi component mount hoặc filter thay đổi
   useEffect(() => {
@@ -295,9 +307,11 @@ export const useSellerStatistics = () => {
 
       // Filter auctions by products of current seller
       const sellerProductIds = new Set(products.map(p => p.productId));
-      const sellerAuctions = auctions.filter((a: any) => 
-        sellerProductIds.has(a.productId || a.product_id)
-      );
+      const sellerAuctions = auctions.filter((a: any) => {
+        const legacyAuction = a as { product_id?: number };
+        const relatedProductId = a.productId ?? legacyAuction.product_id;
+        return relatedProductId ? sellerProductIds.has(relatedProductId) : false;
+      });
 
       const newStats = {
         total_products: products.length,

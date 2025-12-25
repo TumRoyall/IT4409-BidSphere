@@ -1,10 +1,6 @@
-
-/* Only affects list mode */
-.auction-card.list .participants {
-  margin-top: auto;        /* đẩy xuống dưới cùng trong khối phải */
-  text-align: right;       /* căn phải */
-  justify-content: flex-end;
-}
+/* =====================================================
+   BASE CARD
+   ===================================================== */
 
 .auction-card {
   position: relative;
@@ -21,7 +17,10 @@
   box-shadow: 0 4px 14px rgba(0,0,0,0.08);
 }
 
-/* ⭐ Favorite */
+/* =====================================================
+   FAVORITE
+   ===================================================== */
+
 .fav-btn {
   position: absolute;
   top: 10px;
@@ -30,7 +29,7 @@
   height: 32px;
   background: #ffffff;
   border: 1px solid #d1d5db;
-  border-radius: 8px; /* hình vuông bo góc */
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,9 +39,8 @@
 }
 
 .fav-btn:hover {
-  background: #fff9d6; /* tone vàng nhạt kiểu yêu thích */
+  background: #fff9d6;
   border-color: #facc15;
-  transform: translateY(-1px);
 }
 
 .fav-btn.active {
@@ -55,8 +53,10 @@
   stroke: #ca8a04;
 }
 
+/* =====================================================
+   IMAGE – GRID DEFAULT
+   ===================================================== */
 
-/* Image */
 .auction-img-wrapper {
   width: 100%;
   height: 200px;
@@ -67,28 +67,67 @@
 .auction-img-wrapper img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* GRID MODE */
 }
 
-/* Hover Detail Slide Up */
-.hover-detail {
+/* =====================================================
+   IMAGE – LIST MODE (BLUR BACKGROUND)
+   ===================================================== */
+
+.auction-card.list .auction-img-wrapper {
+  height: 240px;
+  border-radius: 10px;
+  background: #000;
+}
+
+/* blur background */
+.auction-card.list .auction-img-wrapper::before {
+  content: "";
   position: absolute;
-  bottom: -40px;
-  left: 0;
-  width: 100%;
-  background: rgba(0,0,0,0.55);
-  color: #fff;
-  text-align: center;
-  padding: 10px 0;
-  font-size: 14px;
-  transition: 0.25s;
+  inset: 0;
+  background-image: var(--bg-img);
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px);
+  transform: scale(1.15);
+  z-index: 0;
 }
 
-.auction-card:hover .hover-detail {
-  bottom: 0;
+/* overlay tối nhẹ */
+.auction-card.list .auction-img-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.15);
+  z-index: 0;
 }
 
-/* Arrows */
+/* ảnh gốc phía trước */
+.auction-card.list .auction-img-wrapper img {
+  position: relative;
+  z-index: 1;
+  object-fit: contain; /* LIST MODE */
+}
+
+/* =====================================================
+   BADGES / NAV / DOTS
+   ===================================================== */
+
+.badge-live,
+.badge-upcoming {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  z-index: 2;
+}
+
+.badge-live { background: #dc2626; }
+.badge-upcoming { background: #2563eb; }
+
 .nav-arrow {
   position: absolute;
   top: 50%;
@@ -105,7 +144,6 @@
 .nav-arrow.left { left: 5px; }
 .nav-arrow.right { right: 5px; }
 
-/* Dot indicators */
 .dot-container {
   position: absolute;
   bottom: 10px;
@@ -113,6 +151,7 @@
   transform: translateX(-50%);
   display: flex;
   gap: 4px;
+  z-index: 2;
 }
 
 .dot {
@@ -127,22 +166,10 @@
   background: #fff;
 }
 
-/* Badges */
-.badge-live,
-.badge-upcoming {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  color: white;
-  padding: 3px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-}
+/* =====================================================
+   BODY
+   ===================================================== */
 
-.badge-live { background: #dc2626; }
-.badge-upcoming { background: #2563eb; }
-
-/* Body */
 .auction-body {
   padding: 12px;
 }
@@ -156,7 +183,6 @@
 .seller {
   font-size: 13px;
   color: #6b7280;
-  margin-bottom: 4px;
 }
 
 .seller-link {
@@ -173,13 +199,11 @@
   font-size: 17px;
   font-weight: 700;
   color: #111827;
-  margin-bottom: 4px;
 }
 
 .countdown {
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: 6px;
 }
 
 .participants {
@@ -190,42 +214,48 @@
   color: #374151;
 }
 
-/* LIST MODE -------------------------------------- */
+/* =====================================================
+   LIST BODY LAYOUT
+   ===================================================== */
 
 .auction-card.list {
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  gap: 12px;
   padding: 12px;
-  border-radius: 12px;
-  margin-bottom: 14px;
-}
-
-.list-img {
-  width: 180px !important;
-  height: 140px !important;
+  margin-bottom: 16px;
 }
 
 .list-body {
   display: flex;
   justify-content: space-between;
-  width: 100%;
   gap: 20px;
 }
 
-/* Two columns */
 .info-col { flex: 2; }
 .auction-col { flex: 1; text-align: right; }
+
+.auction-card.list .participants {
+  margin-top: auto;
+  justify-content: flex-end;
+}
 
 .description {
   font-size: 13px;
   color: #555;
   margin: 6px 0;
-  max-height: 42px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  line-height: 1.5;
 
-/* spacing between list cards */
-.auction-card.list + .auction-card.list {
-  margin-top: 12px;
+  /* tự xuống dòng */
+  white-space: normal;
+
+  /* xử lý chuỗi dài, không có space */
+  word-break: break-word;
+  overflow-wrap: anywhere;
+
+  /* giới hạn số dòng (tuỳ chọn) */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;      /* 👈 đổi 3 / 4 / 5 tuỳ m */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

@@ -1,12 +1,12 @@
-// src/api/modules/auction.api.ts
 import axiosClient from "../axiosClient";
 
 // ==================== STATUS (const + type) ====================
 export const AUCTION_STATUS = {
-  CREATED: "created",
-  OPEN: "open",
-  CLOSED: "closed",
-  CANCELLED: "cancelled",
+  DRAFT: "draft",       // Seller tạo, chờ admin duyệt
+  PENDING: "pending",   // Admin đã duyệt, chờ đến giờ
+  OPEN: "open",         // Đang diễn ra
+  CLOSED: "closed",     // Đã kết thúc
+  CANCELLED: "cancelled", // Bị từ chối
 } as const;
 
 export type AuctionStatus =
@@ -116,19 +116,14 @@ const auctionApi = {
   getActiveAuctions: () =>
     axiosClient.get<AuctionResponse[]>("/auctions/active"),
 
-  // ✅ Approve / Reject
-  approveAuction: (
-    auctionId: number,
-    data: {
-      status: string;
-      startTime?: string;
-      endTime?: string;
-      rejectionReason?: string;
-    }
-  ) =>
+  // 📊 Get auctions của seller hiện tại (từ token)
+  getMyAuctions: () =>
+    axiosClient.get<AuctionResponse[]>("/auctions/me"),
+
+  // ✅ Approve / Reject (Admin duyệt auction: DRAFT -> PENDING hoặc CANCELLED)
+  approveAuction: (auctionId: number, status: string) =>
     axiosClient.put<AuctionResponse>(
-      `/auctions/${auctionId}/approve`,
-      data
+      `/auctions/${auctionId}/approve?status=${status}`
     ),
 };
 
