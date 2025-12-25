@@ -74,6 +74,9 @@ export default function AppRoutes() {
               </ProtectedRoute>
             }
           />
+
+          {/* PUBLIC SELLER PROFILE - view other seller's profile */}
+          <Route path="/seller/profile/:sellerId" element={<SellerProfile />} />
         </Route>
 
         {/* SELLER AREA – protected with SellerLayout (sidebar) */}

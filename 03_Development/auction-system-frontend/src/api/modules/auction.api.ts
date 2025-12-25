@@ -122,9 +122,13 @@ const auctionApi = {
 
   // ✅ Approve / Reject (Admin duyệt auction: DRAFT -> PENDING hoặc CANCELLED)
   approveAuction: (auctionId: number, status: string) =>
-    axiosClient.put<AuctionResponse>(
+    axiosClient.get<AuctionResponse>(
       `/auctions/${auctionId}/approve?status=${status}`
     ),
+
+  // 📊 Get auctions by seller ID (public - for seller profile)
+  getAuctionsBySellerId: (sellerId: number) =>
+    axiosClient.get<AuctionResponse[]>(`/auctions/seller/${sellerId}`),
 };
 
 export default auctionApi;

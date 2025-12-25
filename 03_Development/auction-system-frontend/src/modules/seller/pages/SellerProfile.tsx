@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import productApi from "@/api/modules/product.api";
-import type { ProductResponse } from "@/api/modules/product.api";
+import auctionApi from "@/api/modules/auction.api";
+import type { AuctionResponse } from "@/api/modules/auction.api";
 import { userApi } from "@/api/modules/user.api";
 import {
   MapPin,
@@ -39,30 +39,30 @@ const SellerProfile = (): React.ReactElement => {
 
   const [sellerData, setSellerData] = useState<SellerData | null>(null);
   const [stats, setStats] = useState<SellerStats | null>(null);
-  const [sellerProducts, setSellerProducts] = useState<ProductResponse[]>([]);
+  const [sellerAuctions, setSellerAuctions] = useState<AuctionResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const calculateStats = (products: ProductResponse[]): SellerStats => {
-    const totalProducts = products.length;
-    const normalizedStatuses = products.map((item) => (item.status || "").toLowerCase());
+  const calculateStats = (auctions: AuctionResponse[]): SellerStats => {
+    const totalProducts = auctions.length;
+    const normalizedStatuses = auctions.map((item) => (item.status || "").toLowerCase());
 
-    const activeStatuses = new Set(["active", "approved", "open"]);
-    const completedStatuses = new Set(["completed", "sold", "closed", "ended", "cancelled"]);
+    const activeStatuses = new Set(["open", "pending"]);
+    const completedStatuses = new Set(["closed", "cancelled"]);
 
     const activeProducts = normalizedStatuses.filter((status) => activeStatuses.has(status)).length;
     const completedProducts = normalizedStatuses.filter((status) => completedStatuses.has(status)).length;
-    const pendingProducts = normalizedStatuses.filter((status) => status === "pending").length;
-    const approvedProducts = normalizedStatuses.filter((status) => status === "approved" || status === "active").length;
+    const pendingProducts = normalizedStatuses.filter((status) => status === "pending" || status === "draft").length;
+    const approvedProducts = normalizedStatuses.filter((status) => status === "open" || status === "pending").length;
 
     const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
-    const recentListings = products.filter((product) => {
-      if (!product.createdAt) return false;
-      return new Date(product.createdAt).getTime() >= thirtyDaysAgo;
+    const recentListings = auctions.filter((auction) => {
+      if (!auction.createdAt) return false;
+      return new Date(auction.createdAt).getTime() >= thirtyDaysAgo;
     }).length;
 
-    const startPrices = products
-      .map((product) => Number(product.startPrice ?? 0))
+    const startPrices = auctions
+      .map((auction) => Number(auction.startPrice ?? auction.product?.startPrice ?? 0))
       .filter((price) => price > 0);
 
     const averageStartPrice = startPrices.length
@@ -71,8 +71,8 @@ const SellerProfile = (): React.ReactElement => {
     const highestStartPrice = startPrices.length ? Math.max(...startPrices) : 0;
 
     const categoryMap = new Map<string, number>();
-    products.forEach((product) => {
-      const category = (product.category || "Uncategorized").trim() || "Uncategorized";
+    auctions.forEach((auction) => {
+      const category = (auction.product?.category || "Uncategorized").trim() || "Uncategorized";
       categoryMap.set(category, (categoryMap.get(category) ?? 0) + 1);
     });
 
@@ -118,29 +118,19 @@ const SellerProfile = (): React.ReactElement => {
     return null;
   };
 
-  const loadSellerProducts = async (targetSellerId: number) => {
+  const loadSellerAuctions = async (targetSellerId: number) => {
     try {
-      const response = await productApi.getProductsPage(0, 100, { sellerId: targetSellerId });
-      const payload: any = response.data;
-      let productList: ProductResponse[] = [];
-
-      if (Array.isArray(payload)) {
-        productList = payload;
-      } else if (payload?.content && Array.isArray(payload.content)) {
-        productList = payload.content;
-      } else if (payload?.products && Array.isArray(payload.products)) {
-        productList = payload.products;
-      }
-
-      const normalizedList = productList.filter(
-        (product) => Number(product.sellerId ?? (product as any).seller_id) === Number(targetSellerId)
-      );
-
-      setSellerProducts(normalizedList);
-      setStats(calculateStats(normalizedList));
-    } catch (productErr) {
-      console.error("Failed to fetch seller products:", productErr);
-      setSellerProducts([]);
+      console.log("[SellerProfile] Loading auctions for sellerId:", targetSellerId);
+      const response = await auctionApi.getAuctionsBySellerId(targetSellerId);
+      console.log("[SellerProfile] API response:", response);
+      const auctionList: AuctionResponse[] = Array.isArray(response.data) ? response.data : [];
+      console.log("[SellerProfile] Final auctionList:", auctionList);
+      setSellerAuctions(auctionList);
+      setStats(calculateStats(auctionList));
+    } catch (err: any) {
+      console.error("[SellerProfile] Failed to fetch seller auctions:", err);
+      console.error("[SellerProfile] Error response:", err?.response);
+      setSellerAuctions([]);
       setStats(calculateStats([]));
     }
   };
@@ -165,9 +155,9 @@ const SellerProfile = (): React.ReactElement => {
 
         const resolvedId = sellerId ? Number(sellerId) : resolveSellerId(profileData);
         if (resolvedId) {
-          await loadSellerProducts(resolvedId);
+          await loadSellerAuctions(resolvedId);
         } else {
-          setSellerProducts([]);
+          setSellerAuctions([]);
           setStats(calculateStats([]));
         }
       } catch (err: any) {
@@ -199,10 +189,10 @@ const SellerProfile = (): React.ReactElement => {
     return statusMap[status?.toLowerCase()] || { label: status || "Unknown", className: "" };
   };
 
-  const filteredProducts = sellerProducts.filter((product) => {
-    const status = (product.status || "").toLowerCase();
-    if (activeTab === "active") return status === "approved";
-    return true; // "all" tab - show all products of this seller
+  const filteredAuctions = sellerAuctions.filter((auction) => {
+    const status = (auction.status || "").toLowerCase();
+    if (activeTab === "active") return status === "open" || status === "pending";
+    return true; // "all" tab - show all auctions of this seller
   });
 
   if (loading) {
@@ -441,11 +431,11 @@ const SellerProfile = (): React.ReactElement => {
         </div>
       </div>
 
-      {/* PRODUCTS */}
+      {/* AUCTIONS */}
       <div className="auctions-section">
         <div className="auctions-container">
           <div className="auctions-header">
-            <h2>Featured Products</h2>
+            <h2>Featured Auctions</h2>
             <div className="tabs">
               <button
                 className={`tab ${activeTab === "active" ? "active" : ""}`}
@@ -462,21 +452,21 @@ const SellerProfile = (): React.ReactElement => {
             </div>
           </div>
 
-          {filteredProducts.length > 0 ? (
+          {filteredAuctions.length > 0 ? (
             <div className="auctions-grid">
-              {filteredProducts.slice(0, 8).map((product) => {
-                const statusInfo = getStatusBadge(product.status || "");
-                const productId = product.productId || product.id || 0;
+              {filteredAuctions.slice(0, 8).map((auction) => {
+                const statusInfo = getStatusBadge(auction.status || "");
+                const auctionId = auction.auctionId || auction.id || 0;
                 const imageSrc =
-                  product.imageUrl ||
-                  product.images?.find((img) => img.isThumbnail)?.url ||
+                  auction.productImageUrl ||
+                  auction.product?.imageUrl ||
                   "/placeholder-auction.png";
                 return (
-                  <a href={`/product/${productId}`} key={productId} className="auction-card">
+                  <a href={`/auctions/${auctionId}`} key={auctionId} className="auction-card">
                     <div className="auction-image-box">
                       <img
                         src={imageSrc}
-                        alt={product.name}
+                        alt={auction.productName || auction.product?.name || "Auction"}
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = "/placeholder-auction.png";
                         }}
@@ -486,12 +476,14 @@ const SellerProfile = (): React.ReactElement => {
                       </span>
                     </div>
                     <div className="auction-info">
-                      <h3>{product.name}</h3>
+                      <h3>{auction.productName || auction.product?.name}</h3>
                       <p className="auction-date">
                         <Clock size={12} />
-                        {new Date(product.createdAt || Date.now()).toLocaleDateString("vi-VN")}
+                        {new Date(auction.endTime || Date.now()).toLocaleDateString("vi-VN")}
                       </p>
-                      <p className="auction-price">{formatCurrency(product.startPrice)}</p>
+                      <p className="auction-price">
+                        {formatCurrency(auction.currentBid || auction.highestCurrentPrice || auction.startPrice)}
+                      </p>
                     </div>
                   </a>
                 );
@@ -503,7 +495,7 @@ const SellerProfile = (): React.ReactElement => {
             </div>
           )}
 
-          {filteredProducts.length > 8 && (
+          {filteredAuctions.length > 8 && (
             <div className="view-more-btn">
               <button>
                 View All Auctions

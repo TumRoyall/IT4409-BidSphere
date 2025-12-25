@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Clock, Wallet, Users, HelpCircle } from "lucide-react";
 import auctionApi from "@/api/modules/auction.api";
 import { bidApi } from "@/api/modules/bid.api";
@@ -53,6 +53,7 @@ function getCountdownColor(ms: number) {
 export default function AuctionDetailPage() {
   const { id } = useParams();
   const auctionId = Number(id);
+  const navigate = useNavigate();
 
   const [auction, setAuction] = useState<any>(null);
   const [bids, setBids] = useState<any[]>([]);
@@ -125,14 +126,18 @@ export default function AuctionDetailPage() {
 
           <p className="auction-seller">
             Người bán:{" "}
-            <span
-              className="auction-seller-link"
-              onClick={() =>
-                (window.location.href = `/user/${auction.sellerId}`)
-              }
-            >
-              {auction.sellerName}
-            </span>
+            {auction.sellerId ? (
+              <span
+                className="auction-seller-link"
+                onClick={() =>
+                  navigate(`/seller/profile/${auction.sellerId}`)
+                }
+              >
+                {auction.sellerName || `Người bán #${auction.sellerId}`}
+              </span>
+            ) : (
+              <span>Không xác định</span>
+            )}
           </p>
 
           <BidPanel
