@@ -135,61 +135,76 @@ const AdminDashboardPage = () => {
             <h2>All Auctions (Admin)</h2>
 
             {/* Filter bar */}
-            <div className="filter-bar">
-                <div className="search-filter-group">
-                    <input
-                        type="text"
-                        className="search-input"
-                        placeholder="Search..."
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                    />
-                    <select
-                        className="category-select"
-                        value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
-                    >
-                        {categories.map(c => (
-                            <option key={c} value={c}>
-                                {c === "ALL" ? "All Categories" : c}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        className="status-select"
-                        value={selectedStatus}
-                        onChange={(e) => setSelectedStatus(e.target.value)}
-                    >
-                        {statuses.map(s => (
-                            <option key={s} value={s}>
-                                {s === "ALL" ? "All Statuses" : s}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+        <div className="filter-bar">
+        <div className="search-filter-group">
+            {/* Search input */}
+            <input
+            type="text"
+            className="search-input"
+            placeholder="🔍 Search..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            />
 
-                <select
-                    className="sort-select"
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value as any)}
-                >
-                    <option value="endTime">⏰ End Time</option>
-                    <option value="highestBid">💰 Highest Bid</option>
-                </select>
+            {/* Category select */}
+            <select
+            className="category-select colorful-select"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            data-type="category"
+            >
+            {categories.map(c => (
+                <option key={c} value={c}>
+                {c === "ALL" ? "📦 All Categories" : ` ${c}`}
+                </option>
+            ))}
+            </select>
 
-                <button
-                    className="clear-btn"
-                    onClick={() => {
-                        setSearchText("");
-                        setSelectedCategory("ALL");
-                        setSelectedStatus("ALL");
-                        setSortBy("endTime");
-                        setCurrentPage(1);
-                    }}
-                >
-                    Clear
-                </button>
-            </div>
+            {/* Status select */}
+            <select
+            className="status-select colorful-select"
+            value={selectedStatus}
+            onChange={(e) => setSelectedStatus(e.target.value)}
+            data-type="status"
+            >
+            {statuses.map(s => (
+                <option key={s} value={s}>
+                {s === "ALL" ? "📝 All Statuses" :
+                s === "DRAFT" ? "✏️ Draft" :
+                s === "PENDING" ? "⏳ Pending" :
+                s === "OPEN" ? "✅ Open" :
+                "❌ Closed"}
+                </option>
+            ))}
+            </select>
+        </div>
+
+        {/* Sort select */}
+        <select
+            className="sort-select colorful-select"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as any)}
+            data-type="sort"
+        >
+            <option value="endTime">⏰ End Time</option>
+            <option value="highestBid">💰 Highest Bid</option>
+        </select>
+
+        {/* Clear button */}
+        <button
+            className="clear-btn"
+            onClick={() => {
+            setSearchText("");
+            setSelectedCategory("ALL");
+            setSelectedStatus("ALL");
+            setSortBy("endTime");
+            setCurrentPage(1);
+            }}
+        >
+            🧹 Clear
+        </button>
+        </div>
+
 
             <div className="result-bar">
                 <span className="result-badge">{sortedAuctions.length} kết quả</span>
