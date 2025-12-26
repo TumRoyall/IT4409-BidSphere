@@ -21,23 +21,32 @@ const AdminDashboardPage = () => {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedCategory, setSelectedCategory] = useState("ALL");
+    const [selectedStatus, setSelectedStatus] = useState("ALL");
     const [sortBy, setSortBy] = useState<"endTime" | "highestBid">("endTime");
 
     const itemsPerPage = 5;
 
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [modalAuction, setModalAuction] = useState<AuctionResponse | null>(null);
+    const [modalAction, setModalAction] = useState<"OPEN" | "CLOSE" | null>(null);
+
     useEffect(() => {
-        fetchActiveAuctions();
+        fetchAllAuctions();
     }, []);
 
-    // reset page khi filter / search / sort
     useEffect(() => {
         setCurrentPage(1);
-    }, [searchText, selectedCategory, sortBy]);
+    }, [searchText, selectedCategory, selectedStatus, sortBy]);
 
-    const fetchActiveAuctions = async () => {
+    const fetchAllAuctions = async () => {
+        setLoading(true);
         try {
-            const res = await adminAuctionApi.getActive();
-            setAuctions(res.data.content || []);
+            const res = await adminAuctionApi.getAll({ page: 0, size: 100 });
+            const data = res.data.content || [];
+            setAuctions(data.map(a => ({
+                ...a,
+                status: a.status.toUpperCase() === "CANCELLED" ? "CLOSED" : a.status.toUpperCase()
+            })));
         } catch (error) {
             console.error("Lỗi khi load auctions:", error);
         } finally {
@@ -45,16 +54,25 @@ const AdminDashboardPage = () => {
         }
     };
 
+    const handleActionClick = (auction: AuctionResponse) => {
+        const status = auction.status.toUpperCase();
+        if (status === "OPEN") {
+            setModalAuction(auction);
+            setModalAction("CLOSE");
+            setShowConfirmModal(true);
+        } else if (status === "PENDING") {
+            setModalAuction(auction);
+            setModalAction("OPEN");
+            setShowConfirmModal(true);
+        }
+    };
+
     const categories = [
         "ALL",
-        ...Array.from(
-            new Set(
-                auctions
-                    .map(a => a.categoryName)
-                    .filter(Boolean)
-            )
-        ),
+        ...Array.from(new Set(auctions.map(a => a.categoryName).filter(Boolean))),
     ];
+
+    const statuses = ["ALL", "DRAFT", "PENDING", "OPEN", "CLOSED"];
 
     const formatDate = (str: string) =>
         new Date(str).toLocaleString("vi-VN", {
@@ -65,13 +83,9 @@ const AdminDashboardPage = () => {
             minute: "2-digit",
         });
 
-    // FILTER
     const filteredAuctions = auctions.filter(a => {
         const keyword = searchText.toLowerCase();
-
-        const safe = (v: any) =>
-            v !== null && v !== undefined ? v.toString().toLowerCase() : "";
-
+        const safe = (v: any) => (v !== null && v !== undefined ? v.toString().toLowerCase() : "");
         const matchSearch =
             safe(a.auctionId).includes(keyword) ||
             safe(a.productName).includes(keyword) ||
@@ -82,21 +96,30 @@ const AdminDashboardPage = () => {
             safe(a.highestBid).includes(keyword) ||
             safe(a.totalBidders).includes(keyword);
 
-        const matchCategory =
-            selectedCategory === "ALL" || a.categoryName === selectedCategory;
+        const matchCategory = selectedCategory === "ALL" || a.categoryName === selectedCategory;
+        const matchStatus = selectedStatus === "ALL" || a.status === selectedStatus;
 
-        return matchSearch && matchCategory;
+        return matchSearch && matchCategory && matchStatus;
     });
 
-    // SORT
+    // Sort ưu tiên status: OPEN -> PENDING -> DRAFT -> CLOSED
+    const statusPriority: Record<string, number> = {
+        "OPEN": 1,
+        "PENDING": 2,
+        "DRAFT": 3,
+        "CLOSED": 4
+    };
+
     const sortedAuctions = [...filteredAuctions].sort((a, b) => {
+        const statusDiff = (statusPriority[a.status] ?? 99) - (statusPriority[b.status] ?? 99);
+        if (statusDiff !== 0) return statusDiff;
+
         if (sortBy === "endTime") {
             return new Date(a.endTime).getTime() - new Date(b.endTime).getTime();
         }
         return (b.highestBid ?? 0) - (a.highestBid ?? 0);
     });
 
-    // PAGINATION
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentAuctions = sortedAuctions.slice(indexOfFirstItem, indexOfLastItem);
@@ -109,63 +132,67 @@ const AdminDashboardPage = () => {
 
     return (
         <div className="dashboard-container">
-            <h2>Active Auctions</h2>
+            <h2>All Auctions (Admin)</h2>
 
-        {/* FILTER BAR */}
-        <div className="filter-bar">
-            {/* SEARCH + CATEGORY (group nhỏ cạnh nhau) */}
-            <div className="search-filter-group">
-                <input
-                    type="text"
-                    className="search-input"
-                    placeholder="Search..."
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                />
+            {/* Filter bar */}
+            <div className="filter-bar">
+                <div className="search-filter-group">
+                    <input
+                        type="text"
+                        className="search-input"
+                        placeholder="Search..."
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                    />
+                    <select
+                        className="category-select"
+                        value={selectedCategory}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                    >
+                        {categories.map(c => (
+                            <option key={c} value={c}>
+                                {c === "ALL" ? "All Categories" : c}
+                            </option>
+                        ))}
+                    </select>
+                    <select
+                        className="status-select"
+                        value={selectedStatus}
+                        onChange={(e) => setSelectedStatus(e.target.value)}
+                    >
+                        {statuses.map(s => (
+                            <option key={s} value={s}>
+                                {s === "ALL" ? "All Statuses" : s}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
                 <select
-                    className="category-select"
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="sort-select"
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as any)}
                 >
-                    {categories.map(c => (
-                        <option key={c} value={c}>
-                            {c === "ALL" ? "All Categories" : c}
-                        </option>
-                    ))}
+                    <option value="endTime">⏰ End Time</option>
+                    <option value="highestBid">💰 Highest Bid</option>
                 </select>
+
+                <button
+                    className="clear-btn"
+                    onClick={() => {
+                        setSearchText("");
+                        setSelectedCategory("ALL");
+                        setSelectedStatus("ALL");
+                        setSortBy("endTime");
+                        setCurrentPage(1);
+                    }}
+                >
+                    Clear
+                </button>
             </div>
 
-            {/* SORT */}
-            <select
-                className="sort-select"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
-            >
-                <option value="endTime">⏰ End Time</option>
-                <option value="highestBid">💰 Highest Bid</option>
-            </select>
-
-            {/* CLEAR */}
-            <button
-                className="clear-btn"
-                onClick={() => {
-                    setSearchText("");
-                    setSelectedCategory("ALL");
-                    setSortBy("endTime");
-                    setCurrentPage(1);
-                }}
-            >
-                Clear
-            </button>
-        </div>
-
-
-            {/* RESULT COUNT */}
             <div className="result-bar">
-                <span className="result-badge">
-                    {sortedAuctions.length} kết quả
-                </span>
+                <span className="result-badge">{sortedAuctions.length} kết quả</span>
             </div>
 
             {loading ? (
@@ -187,6 +214,7 @@ const AdminDashboardPage = () => {
                                 <th>End Time</th>
                                 <th>Status</th>
                                 <th>Seller</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -200,10 +228,30 @@ const AdminDashboardPage = () => {
                                     <td>{a.totalBidders}</td>
                                     <td>{formatDate(a.startTime)}</td>
                                     <td>{formatDate(a.endTime)}</td>
-                                    <td className={`status ${a.status.toLowerCase()}`}>
-                                        {a.status}
+                                    <td className="status-cell">
+                                        <span className={`status ${a.status.toLowerCase()}`}>
+                                            {a.status}
+                                        </span>
                                     </td>
                                     <td>{a.sellerName}</td>
+                                    <td>
+                                        {a.status === "OPEN" && (
+                                            <button
+                                                onClick={() => handleActionClick(a)}
+                                                className="action-btn close"
+                                            >
+                                                Close
+                                            </button>
+                                        )}
+                                        {a.status === "PENDING" && (
+                                            <button
+                                                onClick={() => handleActionClick(a)}
+                                                className="action-btn open"
+                                            >
+                                                Open
+                                            </button>
+                                        )}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
@@ -235,6 +283,45 @@ const AdminDashboardPage = () => {
                         </button>
                     </div>
                 </>
+            )}
+
+            {showConfirmModal && modalAuction && modalAction && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h3>Xác nhận</h3>
+                        <p>
+                            Bạn có chắc muốn {modalAction === "OPEN" ? "mở" : "đóng"} phiên đấu giá #
+                            {modalAuction.auctionId}?
+                        </p>
+                        <div className="modal-buttons">
+                            <button
+                                className="btn-cancel"
+                                onClick={() => setShowConfirmModal(false)}
+                            >
+                                Hủy
+                            </button>
+                            <button
+                                className="btn-confirm"
+                                onClick={async () => {
+                                    try {
+                                        if (modalAction === "OPEN") {
+                                            await adminAuctionApi.startAuction(modalAuction.auctionId);
+                                        } else {
+                                            await adminAuctionApi.closeAuction(modalAuction.auctionId);
+                                        }
+                                        fetchAllAuctions();
+                                    } catch (error) {
+                                        console.error("Lỗi khi cập nhật trạng thái auction:", error);
+                                    } finally {
+                                        setShowConfirmModal(false);
+                                    }
+                                }}
+                            >
+                                Xác nhận
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );
