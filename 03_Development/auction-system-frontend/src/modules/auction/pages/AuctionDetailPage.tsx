@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Clock, Wallet, Users, HelpCircle } from "lucide-react";
 import auctionApi from "@/api/modules/auction.api";
 import { bidApi } from "@/api/modules/bid.api";
@@ -51,6 +51,8 @@ function getCountdownColor(ms: number) {
 // ===================== MAIN PAGE =====================
 
 export default function AuctionDetailPage() {
+    const navigate = useNavigate();
+    const [blocked, setBlocked] = useState(false);
   const { id } = useParams();
   const auctionId = Number(id);
 
@@ -64,8 +66,17 @@ export default function AuctionDetailPage() {
 
   const loadAuction = async () => {
     const res = await auctionApi.getAuctionById(auctionId);
+
+    const status = res.data.status;
+
+    if (status === "CLOSED" || status === "CANCELLED") {
+      setBlocked(true);
+      return;
+    }
+
     setAuction(res.data);
   };
+
 
   const loadBids = async () => {
     const res = await bidApi.getBidsByAuction(auctionId);
@@ -106,6 +117,27 @@ export default function AuctionDetailPage() {
     await loadBids();
     await loadUser(); // số dư thay đổi
   };
+
+  if (blocked) {
+      return (
+        <div className="auction-blocked-wrapper">
+          <div className="auction-blocked-box">
+            <h2>Phiên đấu giá đã kết thúc</h2>
+            <p>
+              Phiên đấu giá này đã kết thúc hoặc đã bị huỷ.<br />
+              Bạn không thể tiếp tục truy cập.
+            </p>
+
+            <button
+              className="btn-back"
+              onClick={() => navigate(-1)}
+            >
+              Quay lại
+            </button>
+          </div>
+        </div>
+      );
+    }
 
   if (loading)
     return <div className="auction-detail-loading">Đang tải...</div>;
@@ -171,7 +203,10 @@ export default function AuctionDetailPage() {
           {activeTab === "desc" && (
             <div className="auction-desc">
               <h3>Chi tiết sản phẩm</h3>
-              <p>{auction.productDescription || "Không có mô tả chi tiết."}</p>
+
+              <div className="auction-desc-box">
+                <p>{auction.productDescription || "Không có mô tả chi tiết."}</p>
+              </div>
             </div>
           )}
 
@@ -182,6 +217,7 @@ export default function AuctionDetailPage() {
             </div>
           )}
         </div>
+
 
       </div>
     </div>

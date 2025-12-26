@@ -4,6 +4,7 @@ import { Input } from "@/components/common/Input";
 import { Textarea } from "@/components/common/TextArea";
 import { CheckCircle2, XCircle, AlertCircle } from "lucide-react";
 import type { Product } from "@/modules/product/types";
+import { userApi } from "@/api/modules/user.api";
 
 interface ProductApprovalModalProps {
   product: Product | null;
@@ -20,6 +21,18 @@ export interface ProductApprovalRequest {
   rejectionReason?: string;
 }
 
+interface SellerInfo {
+  id?: number;
+  fullName?: string;
+  username?: string;
+  email?: string;
+  phone?: string;
+  status?: string;
+  createdAt?: string;
+  address?: string;
+  avatarUrl?: string;
+}
+
 const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
   product,
   loading: _loading,
@@ -28,14 +41,18 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
   onCancel,
 }) => {
   const [formData, setFormData] = useState<{
-    deposit: number;
-    estimatePrice: number;
+    deposit: string;
+    estimatePrice: string;
     rejectionReason: string;
   }>({
-    deposit: 0,
-    estimatePrice: 0,
+    deposit: "0",
+    estimatePrice: "0",
     rejectionReason: "",
   });
+
+  const [sellerInfo, setSellerInfo] = useState<SellerInfo | null>(null);
+  const [sellerInfoLoading, setSellerInfoLoading] = useState(false);
+  const [sellerInfoError, setSellerInfoError] = useState<string | null>(null);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -44,8 +61,8 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
   useEffect(() => {
     if (product) {
       setFormData({
-        deposit: product.deposit || 0,
-        estimatePrice: product.estimate_price ? Number(product.estimate_price) : 0,
+        deposit: product.deposit ? String(product.deposit) : "0",
+        estimatePrice: product.estimatePrice ? String(product.estimatePrice) : "0",
         rejectionReason: "",
       });
       setAction(null);
@@ -53,21 +70,86 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
     }
   }, [product]);
 
-  const handleChange = (
+  const handleTextChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]:
-        name === "rejectionReason"
-          ? value
-          : parseFloat(value) || 0,
+      [name]: value,
     }));
   };
 
+  const handleNumericChange = (field: "deposit" | "estimatePrice") =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const digitsOnly = e.target.value.replace(/[^0-9]/g, "");
+      setFormData((prev) => ({
+        ...prev,
+        [field]: digitsOnly,
+      }));
+    };
+
+  const handleNumericFocus = (field: "deposit" | "estimatePrice") => () => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: prev[field] === "0" ? "" : prev[field],
+    }));
+  };
+
+  const handleNumericBlur = (field: "deposit" | "estimatePrice") => () => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: prev[field] === "" ? "0" : prev[field],
+    }));
+  };
+
+  const depositNumber = Number(formData.deposit || "0");
+  const estimateNumber = Number(formData.estimatePrice || "0");
+
+  useEffect(() => {
+    let ignore = false;
+
+    const fetchSellerInfo = async () => {
+      if (!product?.sellerId) {
+        setSellerInfo(null);
+        setSellerInfoError(null);
+        setSellerInfoLoading(false);
+        return;
+      }
+
+      setSellerInfo(null);
+      setSellerInfoError(null);
+      setSellerInfoLoading(true);
+
+      try {
+        const info = await userApi.getPublicProfile(Number(product.sellerId));
+        if (!ignore) {
+          setSellerInfo(info);
+        }
+      } catch (err: any) {
+        if (!ignore) {
+          setSellerInfo(null);
+          setSellerInfoError(err?.message || "Không thể tải thông tin người bán");
+        }
+      } finally {
+        if (!ignore) {
+          setSellerInfoLoading(false);
+        }
+      }
+    };
+
+    fetchSellerInfo();
+
+    return () => {
+      ignore = true;
+    };
+  }, [product?.sellerId]);
+
   const handleApprove = async () => {
-    const productId = (product as any)?.product_id || (product as any)?.productId || (product as any)?.id;
+    const productId =
+      product?.productId ??
+      (product as any)?.id ??
+      (product as any)?.product_id;
     console.log("🔵 handleApprove called, product:", product);
     console.log("🔍 productId resolved to:", productId);
     if (!productId) {
@@ -80,16 +162,16 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
       setSubmitError(null);
 
       // Validate
-      if (formData.deposit < 0) {
+      if (depositNumber < 0) {
         throw new Error("Deposit cannot be negative");
       }
-      if (formData.estimatePrice < 0) {
+      if (estimateNumber < 0) {
         throw new Error("Estimate price cannot be negative");
       }
 
       const payload: ProductApprovalRequest = {
-        deposit: formData.deposit,
-        estimatePrice: formData.estimatePrice,
+        deposit: depositNumber,
+        estimatePrice: estimateNumber,
         status: "approved",
       };
 
@@ -117,7 +199,10 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
   };
 
   const handleReject = async () => {
-    const productId = (product as any)?.product_id || (product as any)?.productId || (product as any)?.id;
+    const productId =
+      product?.productId ??
+      (product as any)?.id ??
+      (product as any)?.product_id;
     console.log("🔴 handleReject called, product:", product);
     console.log("🔍 productId resolved to:", productId);
     if (!productId) {
@@ -162,6 +247,15 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
       currency: "VND",
       minimumFractionDigits: 0,
     }).format(price);
+  };
+
+  const formatDate = (value?: string) => {
+    if (!value) return "—";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return "—";
+    }
+    return date.toLocaleDateString("vi-VN");
   };
 
   if (!product) return null;
@@ -335,6 +429,123 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
         </div>
       </div>
 
+        {/* Seller Info */}
+        <div
+          style={{
+            background: "#fff",
+            border: "1px solid #e2e8f0",
+            borderRadius: "8px",
+            padding: "16px",
+            marginBottom: "20px",
+          }}
+        >
+          <h4
+            style={{
+              fontSize: "11px",
+              fontWeight: 700,
+              color: "#718096",
+              textTransform: "uppercase",
+              letterSpacing: "0.5px",
+              margin: "0 0 12px 0",
+            }}
+          >
+            Seller Information
+          </h4>
+
+          {sellerInfoLoading ? (
+            <p
+              style={{
+                margin: 0,
+                fontSize: "13px",
+                color: "#4a5568",
+                fontWeight: 500,
+              }}
+            >
+              Loading seller details...
+            </p>
+          ) : sellerInfoError ? (
+            <p
+              style={{
+                margin: 0,
+                fontSize: "13px",
+                color: "#b45309",
+                fontWeight: 500,
+              }}
+            >
+              {sellerInfoError}
+            </p>
+          ) : sellerInfo ? (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                gap: "12px",
+                fontSize: "13px",
+              }}
+            >
+              <div>
+                <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
+                  Seller
+                </span>
+                <p style={{ margin: "4px 0 0 0", color: "#1f2937", fontWeight: 600 }}>
+                  {sellerInfo.fullName || sellerInfo.username || "—"}
+                </p>
+              </div>
+              <div>
+                <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
+                  Seller ID
+                </span>
+                <p style={{ margin: "4px 0 0 0", color: "#1f2937", fontWeight: 600 }}>
+                  {product?.sellerId ?? "—"}
+                </p>
+              </div>
+              <div>
+                <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
+                  Email
+                </span>
+                <p style={{ margin: "4px 0 0 0", color: "#1f2937" }}>
+                  {sellerInfo.email || "—"}
+                </p>
+              </div>
+              <div>
+                <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
+                  Phone
+                </span>
+                <p style={{ margin: "4px 0 0 0", color: "#1f2937" }}>
+                  {sellerInfo.phone || "—"}
+                </p>
+              </div>
+              <div>
+                <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
+                  Status
+                </span>
+                <p style={{ margin: "4px 0 0 0", color: "#1f2937" }}>
+                  {sellerInfo.status || "—"}
+                </p>
+              </div>
+              <div>
+                <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
+                  Member Since
+                </span>
+                <p style={{ margin: "4px 0 0 0", color: "#1f2937" }}>
+                  {formatDate(sellerInfo.createdAt)}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <p
+              style={{
+                margin: 0,
+                fontSize: "13px",
+                color: "#4a5568",
+                fontWeight: 500,
+              }}
+            >
+              Không tìm thấy thông tin người bán.
+            </p>
+          )}
+        </div>
+
       {/* Approval Form */}
       {action === "approve" ? (
         <div style={{ marginBottom: "20px" }}>
@@ -366,9 +577,13 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
             <Input
               id="deposit"
               name="deposit"
-              type="number"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
               value={formData.deposit}
-              onChange={handleChange}
+              onChange={handleNumericChange("deposit")}
+              onFocus={handleNumericFocus("deposit")}
+              onBlur={handleNumericBlur("deposit")}
               placeholder="0"
               disabled={isSubmitting}
               style={{
@@ -378,7 +593,7 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
                 padding: "10px 12px",
               }}
             />
-            {formData.deposit > 0 && (
+            {depositNumber > 0 && (
               <p
                 style={{
                   fontSize: "12px",
@@ -387,7 +602,7 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
                   fontWeight: 600,
                 }}
               >
-                {formatPrice(formData.deposit)}
+                {formatPrice(depositNumber)}
               </p>
             )}
           </div>
@@ -408,9 +623,13 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
             <Input
               id="estimatePrice"
               name="estimatePrice"
-              type="number"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
               value={formData.estimatePrice}
-              onChange={handleChange}
+              onChange={handleNumericChange("estimatePrice")}
+              onFocus={handleNumericFocus("estimatePrice")}
+              onBlur={handleNumericBlur("estimatePrice")}
               placeholder="0"
               disabled={isSubmitting}
               style={{
@@ -420,7 +639,7 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
                 padding: "10px 12px",
               }}
             />
-            {formData.estimatePrice > 0 && (
+            {estimateNumber > 0 && (
               <p
                 style={{
                   fontSize: "12px",
@@ -429,7 +648,7 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
                   fontWeight: 600,
                 }}
               >
-                {formatPrice(formData.estimatePrice)}
+                {formatPrice(estimateNumber)}
               </p>
             )}
           </div>
@@ -465,7 +684,7 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
               id="rejectionReason"
               name="rejectionReason"
               value={formData.rejectionReason}
-              onChange={handleChange}
+              onChange={handleTextChange}
               placeholder="Explain why this product is being rejected..."
               rows={4}
               disabled={isSubmitting}
