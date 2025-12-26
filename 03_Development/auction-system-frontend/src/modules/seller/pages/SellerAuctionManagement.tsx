@@ -95,7 +95,7 @@ const SellerAuctionManagement = (): React.ReactElement => {
         const map: Record<string, { label: string; className: string }> = {
             draft: { label: "Chờ duyệt", className: "badge-pending" },
             pending: { label: "Sắp diễn ra", className: "badge-approved" },
-            open: { label: "Đang diễn ra", className: "badge-approved" },
+            open: { label: "🔴 Đang diễn ra", className: "badge-running" },
             closed: { label: "Đã kết thúc", className: "badge-sold" },
             cancelled: { label: "Đã hủy", className: "badge-rejected" },
         };

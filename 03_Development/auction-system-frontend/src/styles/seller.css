@@ -594,56 +594,95 @@
 
 .badge-pending {
   padding: 0.25rem 0.75rem;
-  background: #fef3c7;
-  color: #92400e;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #ffffff;
   border-radius: var(--seller-radius-sm);
   font-size: 0.75rem;
   font-weight: 600;
+  box-shadow: 0 2px 6px rgba(251, 191, 36, 0.4);
 }
 
 .badge-approved {
   padding: 0.25rem 0.75rem;
-  background: #d1fae5;
-  color: #065f46;
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  color: #ffffff;
   border-radius: var(--seller-radius-sm);
   font-size: 0.75rem;
   font-weight: 600;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
+}
+
+/* Badge cho auction đang diễn ra - màu nổi bật, đặt ở góc trên bên trái card */
+.badge-running {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  left: auto !important;
+  z-index: 10;
+  padding: 0.35rem 0.85rem;
+  background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+  color: #ffffff;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  animation: pulse-glow 2s ease-in-out infinite;
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.5);
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+  }
+
+  50% {
+    opacity: 0.9;
+    box-shadow: 0 2px 12px rgba(239, 68, 68, 0.6);
+  }
 }
 
 .badge-rejected {
   padding: 0.25rem 0.75rem;
-  background: #fee2e2;
-  color: #991b1b;
+  background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+  color: #ffffff;
   border-radius: var(--seller-radius-sm);
   font-size: 0.75rem;
   font-weight: 600;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
 }
 
 .badge-sold {
   padding: 0.25rem 0.75rem;
-  background: #dbeafe;
-  color: #1e40af;
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  color: #ffffff;
   border-radius: var(--seller-radius-sm);
   font-size: 0.75rem;
   font-weight: 600;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
 }
 
 .badge-removed {
   padding: 0.25rem 0.75rem;
-  background: #f3f4f6;
-  color: #6b7280;
+  background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+  color: #ffffff;
   border-radius: var(--seller-radius-sm);
   font-size: 0.75rem;
   font-weight: 600;
+  box-shadow: 0 2px 6px rgba(139, 92, 246, 0.4);
 }
 
 .badge-default {
   padding: 0.25rem 0.75rem;
-  background: #e5e7eb;
-  color: #374151;
+  background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+  color: #ffffff;
   border-radius: var(--seller-radius-sm);
   font-size: 0.75rem;
   font-weight: 600;
+  box-shadow: 0 2px 6px rgba(100, 116, 139, 0.4);
 }
 
 .product-description {
@@ -2067,6 +2106,8 @@
 }
 
 .auction-card-horizontal {
+  position: relative;
+  /* Anchor for badge positioning */
   display: flex;
   gap: var(--seller-spacing-lg);
   padding: var(--seller-spacing-lg);
@@ -2104,6 +2145,8 @@
 }
 
 .auction-header {
+  position: relative;
+  /* Fix badge positioning */
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
