@@ -48,6 +48,13 @@ import DepositPage from "@/modules/payment/pages/DepositPage";
 import MyAuctionOrdersPage from "@/modules/auction/pages/MyAuctionOrdersPage";
 import OrderDetail from "@/modules/auction/pages/OrderDetail";
 
+// SUperadmin area
+import AdminLayout from "../layouts/AdminLayout";
+import AdminUsersPage from "../modules/admin/pages/AdminUsersPage";
+import AdminDashboardPage from "../modules/admin/pages/AdminDashboardPage.tsx";
+import AdminReportsPage from "../modules/admin/pages/AdminReportsPage";
+import AdminUserWarningPage from "../modules/admin/pages/AdminUserWarningPage.tsx";
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -131,6 +138,22 @@ export default function AppRoutes() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Route>
+
+                        {/* ================= SUPER ADMIN ================= */}
+        <Route
+          path="/superadmin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="users" element={<AdminUsersPage />} />
+          <Route path="dashboard" element={<AdminDashboardPage />} />
+          <Route path="user-reports" element={<AdminReportsPage />} />
+          <Route path="user-warnings" element={<AdminUserWarningPage />} />
+          </Route>
+
 
         {/* ADMIN AREA (ProtectedRoute + MainLayout) */}
         <Route
