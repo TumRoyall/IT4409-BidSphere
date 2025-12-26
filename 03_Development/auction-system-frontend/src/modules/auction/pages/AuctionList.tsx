@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import auctionApi from "@/api/modules/auction.api";
-import AuctionCard from "@/components/home/AuctionCard";
+import AuctionCard from "../components/AuctionCard";
 import type { AuctionResponse } from "@/api/modules/auction.api";
 import "@/styles/auction-list.css";
 
 export default function AuctionList() {
+  const navigate = useNavigate();
   const [auctions, setAuctions] = useState<AuctionResponse[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -14,7 +16,7 @@ export default function AuctionList() {
       try {
         setIsLoading(true);
         setError(null);
-
+        
         // Try to get active auctions first
         try {
           const response = await auctionApi.getActiveAuctions();

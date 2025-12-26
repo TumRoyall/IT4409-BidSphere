@@ -2,10 +2,6 @@ package vn.team9.auction_system.transaction.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vn.team9.auction_system.auction.model.Bid;
 import vn.team9.auction_system.auction.repository.BidRepository;
@@ -192,33 +188,16 @@ public class AccountTransactionServiceImpl implements IAccountTransactionService
     // Lấy danh sách giao dịch
     // -------------------------------------------------------
     @Override
-    public Page<AccountTransactionResponse> getTransactionsByUser(
-            Long userId,
-            String status,
-            String type,
-            LocalDateTime from,
-            LocalDateTime to,
-            int page,
-            int size
-    ) {
+    public List<AccountTransactionResponse> getTransactionsByUser(Long userId) {
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-
-        Page<AccountTransaction> pageResult =
-                accountTransactionRepository.search(
-                        user,
-                        status,
-                        type,
-                        from,
-                        to,
-                        pageable
-                );
-
-        return pageResult.map(this::toResponse);
+        return accountTransactionRepository.findByUser(user)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
-
 
     @Override
     public AccountTransactionResponse transferBetweenUsers(Long fromUserId, Long toUserId, BigDecimal amount) {

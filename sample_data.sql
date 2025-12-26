@@ -1,12 +1,9 @@
 use auction_system;
 
 -- (Role)
-INSERT INTO role (role_name, description, is_active, is_deleted)
-VALUES
-  ('BIDDER', 'Người dùng đấu giá/bid', 1, 0),
-  ('SELLER', 'Người đăng và quản lý sản phẩm', 1, 0),
-  ('ADMIN', 'Quản trị hệ thống (super admin)', 1, 0),
-  ('MODERATOR', 'Kiểm duyệt (quản lý auction, product, duyệt yêu cầu)', 1, 0);
+INSERT INTO Role (role_name, description) VALUES ('Admin', 'Quản trị hệ thống');
+INSERT INTO Role (role_name, description) VALUES ('Seller', 'Người bán');
+INSERT INTO Role (role_name, description) VALUES ('Bidder', 'Người đấu giá');
 
 -- (User)
 -- (User)
@@ -689,104 +686,13 @@ INSERT INTO AdminLog (admin_id, action, ip_address, created_at) VALUES (10, 'Rep
 INSERT INTO AdminLog (admin_id, action, ip_address, created_at) VALUES (13, 'On drop than source part however idea appear.', '102.2.29.192', '2025-07-09 09:22:31');
 
 -- (Permission)
-INSERT INTO permission (permission_name, api_path, method, module, description) VALUES
--- Auth
-('AUTH_REGISTER', '/api/auth/register', 'POST', 'auth', 'Đăng ký tài khoản'),
-('AUTH_LOGIN', '/api/auth/login', 'POST', 'auth', 'Đăng nhập'),
-('AUTH_VERIFY', '/api/auth/verify', 'GET', 'auth', 'Xác thực email'),
-('AUTH_RESEND_VERIFICATION', '/api/auth/resend-verification', 'POST', 'auth', 'Gửi lại email xác thực'),
-
--- Roles
-('ROLE_CREATE', '/api/roles', 'POST', 'role', 'Tạo role'),
-('ROLE_LIST', '/api/roles', 'GET', 'role', 'Danh sách role'),
-('ROLE_GET', '/api/roles/{id}', 'GET', 'role', 'Xem role'),
-('ROLE_UPDATE', '/api/roles/{id}', 'PATCH', 'role', 'Cập nhật role'),
-('ROLE_DELETE', '/api/roles/{id}', 'DELETE', 'role', 'Xóa role'),
-
--- Permissions
-('PERMISSION_CREATE', '/api/permissions', 'POST', 'permission', 'Tạo permission'),
-('PERMISSION_LIST', '/api/permissions', 'GET', 'permission', 'Danh sách permission'),
-('PERMISSION_GET', '/api/permissions/{id}', 'GET', 'permission', 'Xem permission'),
-('PERMISSION_UPDATE', '/api/permissions/{id}', 'PATCH', 'permission', 'Cập nhật permission'),
-('PERMISSION_DELETE', '/api/permissions/{id}', 'DELETE', 'permission', 'Xóa permission'),
-
--- Auctions
-('AUCTION_CREATE', '/api/auctions', 'POST', 'auction', 'Tạo phiên đấu giá'),
-('AUCTION_LIST', '/api/auctions', 'GET', 'auction', 'Danh sách phiên đấu giá'),
-('AUCTION_GET', '/api/auctions/{id}', 'GET', 'auction', 'Xem phiên đấu giá'),
-('AUCTION_UPDATE', '/api/auctions/{id}', 'PUT', 'auction', 'Cập nhật phiên đấu giá'),
-('AUCTION_DELETE', '/api/auctions/{id}', 'DELETE', 'auction', 'Xóa phiên đấu giá'),
-('AUCTION_START', '/api/auctions/{auctionId}/start', 'POST', 'auction', 'Bắt đầu đấu giá'),
-('AUCTION_CLOSE', '/api/auctions/{auctionId}/close', 'POST', 'auction', 'Đóng đấu giá'),
-
--- Bids
-('BID_PLACE', '/api/bids', 'POST', 'bid', 'Đặt giá thầu'),
-('BID_AUTO', '/api/bids/auto', 'POST', 'bid', 'Đặt giá thầu tự động'),
-('BID_BY_AUCTION', '/api/bids/auction/{auctionId}', 'GET', 'bid', 'Danh sách bid theo auction'),
-('BID_HIGHEST', '/api/bids/auction/{auctionId}/highest', 'GET', 'bid', 'Bid cao nhất của auction'),
-('BID_BY_USER', '/api/bids/user/{userId}', 'GET', 'bid', 'Danh sách bid theo user'),
-
--- Upload
-('UPLOAD_SINGLE', '/api/upload', 'POST', 'upload', 'Upload ảnh đơn'),
-('UPLOAD_MULTIPLE', '/api/upload/multiple', 'POST', 'upload', 'Upload nhiều ảnh'),
-
--- Products
-('PRODUCT_CREATE', '/api/products', 'POST', 'product', 'Tạo sản phẩm'),
-('PRODUCT_UPDATE', '/api/products/{id}', 'PUT', 'product', 'Cập nhật sản phẩm'),
-('PRODUCT_PAGE', '/api/products/page', 'GET', 'product', 'Danh sách sản phẩm phân trang'),
-('PRODUCT_GET', '/api/products/{id}', 'GET', 'product', 'Xem sản phẩm'),
-('PRODUCT_DELETE', '/api/products/{id}', 'DELETE', 'product', 'Xóa sản phẩm'),
-('PRODUCT_MY_PAGE', '/api/products/seller/me/page', 'GET', 'product', 'Danh sách sản phẩm của tôi'),
-('PRODUCT_APPROVE', '/api/products/{id}/approve', 'PUT', 'product', 'Duyệt sản phẩm'),
-('PRODUCT_REQUEST_APPROVAL', '/api/products/{id}/approval-request', 'POST', 'product', 'Gửi yêu cầu duyệt'),
-
--- User warnings
-('WARNING_CREATE', '/api/warnings', 'POST', 'warning', 'Tạo cảnh báo'),
-('WARNING_LIST', '/api/warnings', 'GET', 'warning', 'Danh sách cảnh báo'),
-('WARNING_BY_USER', '/api/warnings/user/{userId}', 'GET', 'warning', 'Cảnh báo theo user'),
-('WARNING_BY_TXN', '/api/warnings/transaction/{txnId}', 'GET', 'warning', 'Cảnh báo theo giao dịch'),
-('WARNING_AUTO', '/api/warnings/auto-warn', 'POST', 'warning', 'Tự động cảnh báo'),
-
--- User reports
-('USER_REPORT_CREATE', '/api/user-reports', 'POST', 'user-report', 'Tạo báo cáo người dùng'),
-('USER_REPORT_BY_USER', '/api/user-reports/user/{userId}', 'GET', 'user-report', 'Báo cáo theo user'),
-('USER_REPORT_LIST', '/api/user-reports', 'GET', 'user-report', 'Danh sách báo cáo'),
-
--- Account transactions
-('ACCOUNT_DEPOSIT', '/api/account/deposit', 'POST', 'account', 'Nạp tiền'),
-('ACCOUNT_WITHDRAW', '/api/account/withdraw', 'POST', 'account', 'Rút tiền'),
-('ACCOUNT_CONFIRM_WITHDRAW', '/api/account/withdraw/confirm/{id}', 'POST', 'account', 'Xác nhận rút'),
-('ACCOUNT_BY_USER', '/api/account/user/{userId}', 'GET', 'account', 'Lịch sử giao dịch theo user'),
-('ACCOUNT_WITHDRAWABLE', '/api/account/user/{userId}/withdrawable', 'GET', 'account', 'Số dư khả dụng để rút'),
-
--- Transactions after auction
-('TXN_AFTER_PAY', '/api/transactions/after-auction/{txnId}/pay', 'POST', 'transaction', 'Thanh toán giao dịch sau đấu giá'),
-('TXN_AFTER_UPDATE_STATUS', '/api/transactions/after-auction/{txnId}/status', 'PUT', 'transaction', 'Cập nhật trạng thái giao dịch'),
-('TXN_AFTER_CANCEL', '/api/transactions/after-auction/{txnId}/cancel', 'PUT', 'transaction', 'Hủy giao dịch'),
-('TXN_AFTER_BY_USER', '/api/transactions/after-auction/user/{userId}', 'GET', 'transaction', 'Giao dịch theo user'),
-('TXN_AFTER_BY_AUCTION', '/api/transactions/after-auction/auction/{auctionId}', 'GET', 'transaction', 'Giao dịch theo phiên đấu'),
-
--- Users (self-service)
-('USER_ME', '/api/users/me', 'GET', 'user', 'Xem thông tin của tôi'),
-('USER_PUBLIC_PROFILE', '/api/users/{id}', 'GET', 'user', 'Xem public profile'),
-('USER_UPDATE_ME', '/api/users/me', 'PUT', 'user', 'Cập nhật thông tin của tôi'),
-('USER_CHANGE_PASSWORD', '/api/users/change-password', 'PATCH', 'user', 'Đổi mật khẩu'),
-('USER_UPDATE_AVATAR', '/api/users/me/avatar', 'PUT', 'user', 'Cập nhật avatar'),
-
--- Admin users
-('ADMIN_USERS_LIST', '/api/superadmin/users', 'GET', 'admin-user', 'Danh sách user'),
-('ADMIN_USER_GET', '/api/superadmin/users/{id}', 'GET', 'admin-user', 'Xem user'),
-('ADMIN_USER_UPDATE', '/api/superadmin/users/{id}', 'PUT', 'admin-user', 'Cập nhật user'),
-('ADMIN_USER_BAN', '/api/superadmin/users/{id}/ban', 'PUT', 'admin-user', 'Khóa user'),
-('ADMIN_USER_UNBAN', '/api/superadmin/users/{id}/unban', 'PUT', 'admin-user', 'Mở khóa user'),
-('ADMIN_USER_DELETE', '/api/superadmin/users/{id}', 'DELETE', 'admin-user', 'Xóa user'),
-('ADMIN_USER_SOFT_DELETE', '/api/superadmin/users/{id}/soft-delete', 'PUT', 'admin-user', 'Soft delete user'),
-('ADMIN_USER_TRANSACTIONS', '/api/superadmin/users/{id}/transactions', 'GET', 'admin-user', 'Lịch sử giao dịch user');
+INSERT INTO Permission (permission_name, description) VALUES ('Manage Users', 'Quyền quản lý người dùng');
+INSERT INTO Permission (permission_name, description) VALUES ('Manage Auctions', 'Quyền quản lý phiên đấu giá');
+INSERT INTO Permission (permission_name, description) VALUES ('View Reports', 'Quyền xem báo cáo');
 
 -- (RolePermission)
--- gán tất cả permission cho role ADMIN
-INSERT IGNORE INTO rolePermission (role_id, permission_id)
-SELECT r.role_id, p.permission_id
-FROM role r
-CROSS JOIN permission p
-WHERE UPPER(r.role_name) = 'ADMIN';
+INSERT INTO RolePermission (role_id, permission_id) VALUES (1, 1);
+INSERT INTO RolePermission (role_id, permission_id) VALUES (1, 2);
+INSERT INTO RolePermission (role_id, permission_id) VALUES (1, 3);
+INSERT INTO RolePermission (role_id, permission_id) VALUES (2, 2);
+INSERT INTO RolePermission (role_id, permission_id) VALUES (3, 2);

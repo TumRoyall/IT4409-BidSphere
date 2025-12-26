@@ -12,37 +12,25 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Lỗi nghiệp vụ (sai mật khẩu, không đủ tiền, ...)
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<Map<String, Object>> handleBusinessException(BusinessException ex) {
-        Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", LocalDateTime.now().toString());
-        body.put("status", 400);
-        body.put("error", "Business Error");
-        body.put("message", ex.getMessage());
-        return ResponseEntity.badRequest().body(body);
-    }
-
-    // RuntimeException khác (BUG)
+    // Bắt tất cả RuntimeException và trả message về FE
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, Object>> handleRuntimeException(RuntimeException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now().toString());
-        body.put("status", 500);
-        body.put("error", "Internal Server Error");
-        body.put("message", "Hệ thống đang gặp sự cố");
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+        body.put("status", 400);
+        body.put("error", "Bad Request");
+        body.put("message", ex.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
-    // Lỗi không lường trước
+    // Bắt lỗi chung khác (ví dụ NullPointer)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleOtherExceptions(Exception ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now().toString());
         body.put("status", 500);
         body.put("error", "Internal Server Error");
-        body.put("message", "Lỗi hệ thống");
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+        body.put("message", ex.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
-

@@ -2,8 +2,7 @@ import axiosClient from "../axiosClient";
 
 // ==================== TYPES & INTERFACES ====================
 export interface ImagePayload {
-  imageUrl?: string;
-  secureUrl?: string;
+  url: string;
   isThumbnail?: boolean;
 }
 
@@ -63,9 +62,17 @@ export interface ProductApprovalRequest {
 // ==================== API FUNCTIONS ====================
 
 const productApi = {
+  // Get all products
+  getProducts: () =>
+    axiosClient.get<ProductResponse[]>("/products"),
+
   // Get product by ID
   getProductById: (productId: number) =>
   axiosClient.get<ProductResponse>(`/products/${productId}`),
+
+  // Get products by seller ID
+  getProductsBySeller: (sellerId: number) =>
+  axiosClient.get<ProductResponse[]>(`/products/seller/${sellerId}`),
 
   // Get products for current seller (use token to resolve seller) with pagination
   getProductsBySellerMePage: async (page: number = 0, size: number = 10) => {
@@ -75,13 +82,9 @@ const productApi = {
   },
 
   // Get all products with pagination (for bidders)
-  getProductsPage: async (
-    page: number = 0,
-    size: number = 10,
-    extraParams: Record<string, unknown> = {}
-  ) => {
-    return axiosClient.get<ProductPage>(`/products/page`, {
-      params: { page, size, ...extraParams },
+  getProductsPage: async (page: number = 0, size: number = 10) => {
+    return axiosClient.get<ProductPage>(`/products/page`, { 
+       params: { page, size }
     });
   },
   // Create new product
@@ -98,18 +101,26 @@ const productApi = {
       `/products/${productId}`
     ),
 
-  // Upload image
+  // Upload image (if using separate endpoint)
   uploadImage: (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
-    return axiosClient.post<{
-      image_url?: string;
-      imageUrl?: string;
-      secure_url?: string;
-      secureUrl?: string;
-    }>("/upload", formData, {
+    return axiosClient.post<{ url: string }>("/upload", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
+  },
+
+  // Upload image with isThumbnail flag
+  uploadImageWithThumbnail: (file: File, productId: number, isThumbnail: boolean = false) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("productId", String(productId));
+    formData.append("isThumbnail", isThumbnail ? "1" : "0");
+    return axiosClient.post<{ url: string; imageId: number; isThumbnail: boolean }>(
+      "/upload",
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } }
+    );
   },
 
   // Approve or reject product (admin only)

@@ -22,8 +22,4 @@ export const bidApi = {
 
   getHighestBid: (auctionId: number) =>
     axiosClient.get(`/bids/auction/${auctionId}/highest`),
-
-  getBidHistoryByUser: (userId: number) =>
-      axiosClient.get(`/bids/user/${userId}`),
-
 };

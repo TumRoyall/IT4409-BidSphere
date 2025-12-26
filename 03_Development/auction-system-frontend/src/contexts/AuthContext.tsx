@@ -8,7 +8,6 @@ interface User {
   fullName: string;
   email: string;
   gender?: string;
-  avatarUrl?: string;
   role?: string;
   roles?: string;
   roleName?: string;
@@ -59,7 +58,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         fullName: userInfo.fullName,
         email: userInfo.email,
         gender: userInfo.gender,
-        avatarUrl: userInfo.avatarUrl,
         role: userInfo.roleName, // Backend returns roleName
         roleName: userInfo.roleName,
       };
@@ -75,7 +73,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         fullName: data.fullName || data.full_name,
         email: data.email,
         gender: data.gender,
-        avatarUrl: data.avatarUrl || data.avatar_url,
         role: data.role || data.roles || data.roleName || data.role_id,
         roles: data.roles,
         roleName: data.roleName,

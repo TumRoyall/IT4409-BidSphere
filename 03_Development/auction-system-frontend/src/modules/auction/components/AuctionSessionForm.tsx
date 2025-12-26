@@ -7,7 +7,7 @@ import "@/styles/auction-session-form.css";
 interface FormData {
   startTime: string;
   endTime: string;
-  bidStepAmount: number;
+  minBidIncrement: number;
 }
 
 interface FormErrors {
@@ -109,7 +109,7 @@ export const AuctionSessionForm = ({
     (value: string) => {
       const numValue = parseInt(value, 10);
       if (!isNaN(numValue)) {
-        onFieldChange("bidStepAmount", numValue);
+        onFieldChange("minBidIncrement", numValue);
       }
     },
     [onFieldChange]
@@ -189,32 +189,32 @@ export const AuctionSessionForm = ({
 
       {/* Minimum Bid Increment */}
       <div className="form-field">
-        <Label htmlFor="bidStepAmount" className="form-field-label">
+        <Label htmlFor="minBidIncrement" className="form-field-label">
           Minimum Bid Increment (VNĐ) <span className="required">*</span>
         </Label>
         <div className="input-with-currency">
           <span className="currency-prefix">₫</span>
           <Input
-            id="bidStepAmount"
+            id="minBidIncrement"
             type="number"
-            value={formData.bidStepAmount}
+            value={formData.minBidIncrement}
             onChange={(e) => handleBidIncrementChange(e.target.value)}
             min="1000"
             step="1000"
             placeholder="10000"
             className={`form-input currency-input ${
-              errors.bidStepAmount ? "error" : ""
+              errors.minBidIncrement ? "error" : ""
             }`}
-            aria-invalid={!!errors.bidStepAmount}
+            aria-invalid={!!errors.minBidIncrement}
             aria-describedby={
-              errors.bidStepAmount ? "err-bidStepAmount" : undefined
+              errors.minBidIncrement ? "err-minBidIncrement" : undefined
             }
           />
         </div>
-        {errors.bidStepAmount && (
-          <div id="err-bidStepAmount" className="field-error">
+        {errors.minBidIncrement && (
+          <div id="err-minBidIncrement" className="field-error">
             <AlertCircle size={16} />
-            {errors.bidStepAmount}
+            {errors.minBidIncrement}
           </div>
         )}
         <p className="field-hint">

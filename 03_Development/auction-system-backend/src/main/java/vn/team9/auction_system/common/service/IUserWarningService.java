@@ -15,7 +15,4 @@ public interface IUserWarningService {
 
     // Lấy log theo transaction
     List<UserWarningLogResponse> getWarningsByTransaction(Long transactionId);
-
-    // Lấy tất cả log cảnh báo
-    List<UserWarningLogResponse> getAllWarnings();
 }

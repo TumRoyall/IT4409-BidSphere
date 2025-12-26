@@ -70,7 +70,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       <div className="products-grid">
         {products.map((product, index) => (
           <ProductCard
-            key={product.productId || `product-${index}`}
+            key={product.product_id || `product-${index}`}
             product={product}
             onEdit={onEdit}
             onDelete={onDelete}

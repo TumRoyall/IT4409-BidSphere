@@ -24,7 +24,6 @@ export interface Product {
 
 // Runtime-safe constants compatible with "erasableSyntaxOnly"
 export const PRODUCT_STATUS = {
-  DRAFT: "draft",
   PENDING: "pending",
   APPROVED: "approved",
   REJECTED: "rejected",
@@ -35,13 +34,10 @@ export const PRODUCT_STATUS = {
 export type ProductStatus = typeof PRODUCT_STATUS[keyof typeof PRODUCT_STATUS];
 
 export interface ProductImage {
-  id?: number;
-  imageId?: number;
+  imageId: number;
   productId: number;
-  url?: string;
-  imageUrl?: string;
-  isThumbnail?: boolean;
-  thumbnail?: boolean;
+  url: string;
+  isThumbnail: boolean;
 }
 
 // ==========================================
@@ -54,8 +50,8 @@ export interface Auction {
   startTime: string;
   endTime: string;
   status: AuctionStatus;
-  highestBid: number;
-  bidStepAmount: number;
+  highestCurrentPrice: number;
+  bidStepAmount: string;
   winnerId: number | null;
   totalBids?: number;
 }
