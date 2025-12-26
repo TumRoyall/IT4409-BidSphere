@@ -155,6 +155,7 @@ const AdminProductApprovalPage: React.FC = () => {
           gap: "12px",
           marginBottom: "24px",
           alignItems: "center",
+          flexWrap: "wrap",
         }}
       >
         <Button
@@ -339,6 +340,7 @@ const AdminProductApprovalPage: React.FC = () => {
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
                     overflow: "hidden",
+                    wordBreak: "break-word",
                   }}
                 >
                   {product.name}
@@ -354,6 +356,7 @@ const AdminProductApprovalPage: React.FC = () => {
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
                     overflow: "hidden",
+                    wordBreak: "break-word",
                   }}
                 >
                   {product.description}

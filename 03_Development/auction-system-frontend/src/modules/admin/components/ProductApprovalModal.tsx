@@ -422,6 +422,9 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
               fontSize: "12px",
               margin: "4px 0 0 0",
               lineHeight: 1.4,
+              wordBreak: "break-word",
+              overflowWrap: "break-word",
+              whiteSpace: "pre-wrap",
             }}
           >
             {product.description || "—"}
@@ -429,122 +432,122 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
         </div>
       </div>
 
-        {/* Seller Info */}
-        <div
+      {/* Seller Info */}
+      <div
+        style={{
+          background: "#fff",
+          border: "1px solid #e2e8f0",
+          borderRadius: "8px",
+          padding: "16px",
+          marginBottom: "20px",
+        }}
+      >
+        <h4
           style={{
-            background: "#fff",
-            border: "1px solid #e2e8f0",
-            borderRadius: "8px",
-            padding: "16px",
-            marginBottom: "20px",
+            fontSize: "11px",
+            fontWeight: 700,
+            color: "#718096",
+            textTransform: "uppercase",
+            letterSpacing: "0.5px",
+            margin: "0 0 12px 0",
           }}
         >
-          <h4
+          Seller Information
+        </h4>
+
+        {sellerInfoLoading ? (
+          <p
             style={{
-              fontSize: "11px",
-              fontWeight: 700,
-              color: "#718096",
-              textTransform: "uppercase",
-              letterSpacing: "0.5px",
-              margin: "0 0 12px 0",
+              margin: 0,
+              fontSize: "13px",
+              color: "#4a5568",
+              fontWeight: 500,
             }}
           >
-            Seller Information
-          </h4>
-
-          {sellerInfoLoading ? (
-            <p
-              style={{
-                margin: 0,
-                fontSize: "13px",
-                color: "#4a5568",
-                fontWeight: 500,
-              }}
-            >
-              Loading seller details...
-            </p>
-          ) : sellerInfoError ? (
-            <p
-              style={{
-                margin: 0,
-                fontSize: "13px",
-                color: "#b45309",
-                fontWeight: 500,
-              }}
-            >
-              {sellerInfoError}
-            </p>
-          ) : sellerInfo ? (
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                gap: "12px",
-                fontSize: "13px",
-              }}
-            >
-              <div>
-                <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
-                  Seller
-                </span>
-                <p style={{ margin: "4px 0 0 0", color: "#1f2937", fontWeight: 600 }}>
-                  {sellerInfo.fullName || sellerInfo.username || "—"}
-                </p>
-              </div>
-              <div>
-                <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
-                  Seller ID
-                </span>
-                <p style={{ margin: "4px 0 0 0", color: "#1f2937", fontWeight: 600 }}>
-                  {product?.sellerId ?? "—"}
-                </p>
-              </div>
-              <div>
-                <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
-                  Email
-                </span>
-                <p style={{ margin: "4px 0 0 0", color: "#1f2937" }}>
-                  {sellerInfo.email || "—"}
-                </p>
-              </div>
-              <div>
-                <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
-                  Phone
-                </span>
-                <p style={{ margin: "4px 0 0 0", color: "#1f2937" }}>
-                  {sellerInfo.phone || "—"}
-                </p>
-              </div>
-              <div>
-                <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
-                  Status
-                </span>
-                <p style={{ margin: "4px 0 0 0", color: "#1f2937" }}>
-                  {sellerInfo.status || "—"}
-                </p>
-              </div>
-              <div>
-                <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
-                  Member Since
-                </span>
-                <p style={{ margin: "4px 0 0 0", color: "#1f2937" }}>
-                  {formatDate(sellerInfo.createdAt)}
-                </p>
-              </div>
+            Loading seller details...
+          </p>
+        ) : sellerInfoError ? (
+          <p
+            style={{
+              margin: 0,
+              fontSize: "13px",
+              color: "#b45309",
+              fontWeight: 500,
+            }}
+          >
+            {sellerInfoError}
+          </p>
+        ) : sellerInfo ? (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+              gap: "12px",
+              fontSize: "13px",
+            }}
+          >
+            <div>
+              <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
+                Seller
+              </span>
+              <p style={{ margin: "4px 0 0 0", color: "#1f2937", fontWeight: 600 }}>
+                {sellerInfo.fullName || sellerInfo.username || "—"}
+              </p>
             </div>
-          ) : (
-            <p
-              style={{
-                margin: 0,
-                fontSize: "13px",
-                color: "#4a5568",
-                fontWeight: 500,
-              }}
-            >
-              Không tìm thấy thông tin người bán.
-            </p>
-          )}
-        </div>
+            <div>
+              <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
+                Seller ID
+              </span>
+              <p style={{ margin: "4px 0 0 0", color: "#1f2937", fontWeight: 600 }}>
+                {product?.sellerId ?? "—"}
+              </p>
+            </div>
+            <div>
+              <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
+                Email
+              </span>
+              <p style={{ margin: "4px 0 0 0", color: "#1f2937" }}>
+                {sellerInfo.email || "—"}
+              </p>
+            </div>
+            <div>
+              <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
+                Phone
+              </span>
+              <p style={{ margin: "4px 0 0 0", color: "#1f2937" }}>
+                {sellerInfo.phone || "—"}
+              </p>
+            </div>
+            <div>
+              <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
+                Status
+              </span>
+              <p style={{ margin: "4px 0 0 0", color: "#1f2937" }}>
+                {sellerInfo.status || "—"}
+              </p>
+            </div>
+            <div>
+              <span style={{ color: "#718096", fontSize: "11px", fontWeight: 600 }}>
+                Member Since
+              </span>
+              <p style={{ margin: "4px 0 0 0", color: "#1f2937" }}>
+                {formatDate(sellerInfo.createdAt)}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <p
+            style={{
+              margin: 0,
+              fontSize: "13px",
+              color: "#4a5568",
+              fontWeight: 500,
+            }}
+          >
+            Không tìm thấy thông tin người bán.
+          </p>
+        )}
+      </div>
 
       {/* Approval Form */}
       {action === "approve" ? (

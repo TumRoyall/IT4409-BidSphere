@@ -54,8 +54,8 @@ function getCountdownColor(ms: number) {
 // ===================== MAIN PAGE =====================
 
 export default function AuctionDetailPage() {
-    const navigate = useNavigate();
-    const [blocked, setBlocked] = useState(false);
+  const navigate = useNavigate();
+  const [blocked, setBlocked] = useState(false);
   const { id } = useParams();
   const auctionId = Number(id);
 
@@ -122,25 +122,25 @@ export default function AuctionDetailPage() {
   };
 
   if (blocked) {
-      return (
-        <div className="auction-blocked-wrapper">
-          <div className="auction-blocked-box">
-            <h2>Phiên đấu giá đã kết thúc</h2>
-            <p>
-              Phiên đấu giá này đã kết thúc hoặc đã bị huỷ.<br />
-              Bạn không thể tiếp tục truy cập.
-            </p>
+    return (
+      <div className="auction-blocked-wrapper">
+        <div className="auction-blocked-box">
+          <h2>Phiên đấu giá đã kết thúc</h2>
+          <p>
+            Phiên đấu giá này đã kết thúc hoặc đã bị huỷ.<br />
+            Bạn không thể tiếp tục truy cập.
+          </p>
 
-            <button
-              className="btn-back"
-              onClick={() => navigate(-1)}
-            >
-              Quay lại
-            </button>
-          </div>
+          <button
+            className="btn-back"
+            onClick={() => navigate(-1)}
+          >
+            Quay lại
+          </button>
         </div>
-      );
-    }
+      </div>
+    );
+  }
 
   if (loading)
     return <div className="auction-detail-loading">Đang tải...</div>;
@@ -160,14 +160,18 @@ export default function AuctionDetailPage() {
 
           <p className="auction-seller">
             Người bán:{" "}
-            <span
-              className="auction-seller-link"
-              onClick={() =>
-                (window.location.href = `/user/${auction.sellerId}`)
-              }
-            >
-              {auction.sellerName}
-            </span>
+            {auction.sellerId ? (
+              <span
+                className="auction-seller-link"
+                onClick={() =>
+                  navigate(`/seller/profile/${auction.sellerId}`)
+                }
+              >
+                {auction.sellerName || `Người bán #${auction.sellerId}`}
+              </span>
+            ) : (
+              <span>Không xác định</span>
+            )}
           </p>
 
           <BidPanel
