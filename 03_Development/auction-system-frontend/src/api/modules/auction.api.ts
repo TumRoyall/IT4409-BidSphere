@@ -56,7 +56,8 @@ export interface AuctionResponse {
   currentBid?: number;
   highestCurrentPrice?: number;
   highestBid?: number;
-  totalBids?: number;
+  totalBids?: number;      // Tổng số lượt bid
+  totalBidders?: number;   // Số người bid khác nhau
 
   createdAt?: string;
   updatedAt?: string;

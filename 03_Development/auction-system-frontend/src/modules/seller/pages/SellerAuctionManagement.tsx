@@ -199,6 +199,10 @@ const SellerAuctionManagement = (): React.ReactElement => {
                                             <span className="meta-label">Số lượt bid</span>
                                             <span className="meta-value">{auction.totalBids || 0}</span>
                                         </div>
+                                        <div className="meta-item">
+                                            <span className="meta-label">Số người bid</span>
+                                            <span className="meta-value">{auction.totalBidders || 0}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
