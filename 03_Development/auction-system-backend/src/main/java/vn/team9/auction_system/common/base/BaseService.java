@@ -1,7 +1,7 @@
 package vn.team9.auction_system.common.base;
 
 /**
- * Base interface for specific services to extend.
+ * Interface base để các service cụ thể kế thừa.
  */
 public interface BaseService<TReq, TRes> {
     TRes create(TReq request);

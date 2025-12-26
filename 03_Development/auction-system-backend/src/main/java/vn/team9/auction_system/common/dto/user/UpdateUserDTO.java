@@ -1,5 +1,6 @@
 package vn.team9.auction_system.common.dto.user;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -8,7 +9,7 @@ public class UpdateUserDTO {
     @Size(max = 100)
     private String fullName;
 
-    // username usually doesn't change; if allowed, validate and check uniqueness
+    // username thường không đổi, nếu cho đổi thì validate và check uniqueness
     @Size(max = 50)
     private String username;
 
@@ -18,6 +19,6 @@ public class UpdateUserDTO {
     @Size(max = 20)
     private String gender;
 
-    // if admin: can change status
+    // nếu admin: có thể đổi status
     private String status;
 }

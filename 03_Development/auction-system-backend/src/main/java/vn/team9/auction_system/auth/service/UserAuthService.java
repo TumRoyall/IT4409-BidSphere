@@ -179,4 +179,5 @@ public class UserAuthService {
         emailService.sendVerificationEmail(user.getEmail(), user.getVerificationToken());
         System.out.println("📨 Đã gửi lại email xác thực cho " + user.getEmail());
     }
+
 }

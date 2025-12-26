@@ -27,74 +27,118 @@ public class UserWarningLogImpl implements IUserWarningService {
     private final UserRepository userRepo;
     private final TransactionAfterAuctionRepository transactionRepo;
 
-    // PUBLIC API
     @Override
     @Transactional
     public UserWarningLogResponse createWarning(UserWarningLogRequest request) {
+        User user = userRepo.findById(request.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        User user = getUserOrThrow(request.getUserId());
-        TransactionAfterAuction txn = getTransactionOrThrow(request.getTransactionId());
+        TransactionAfterAuction txn = transactionRepo.findById(request.getTransactionId())
+                .orElseThrow(() -> new RuntimeException("Transaction not found"));
 
-        UserWarningLog log = handleViolation(
-                user,
-                txn,
-                request.getType() != null ? request.getType() : "SHIPPED_NOT_PAID",
-                request.getDescription() != null ? request.getDescription() : "FOUND SUSPICIOUS BEHAVIOR"
-        );
+        int previousViolations = warningRepo.countByUserAndType(user, request.getType());
+        int currentViolationCount = previousViolations + 1;
 
-        return mapToResponse(log);
-    }
+        UserWarningLog log = new UserWarningLog();
+        log.setUser(user);
+        log.setTransaction(txn);
+        log.setType(request.getType() != null ? request.getType() : "SHIPPED_NOT_PAID");
+        log.setStatus(request.getStatus() != null ? request.getStatus() : "VIOLATION");
+        log.setDescription(request.getDescription() != null ? request.getDescription() : "FOUND NG BEHAVIOR");
+        log.setViolationCount(currentViolationCount);
+        log.setCreatedAt(LocalDateTime.now());
 
-    @Override
-    public List<UserWarningLogResponse> getAllWarnings() {
-        return warningRepo.findAll()
-                .stream()
-                .map(this::mapToResponse)
-                .toList();
+        warningRepo.save(log);
+
+        if (currentViolationCount >= 2) {
+            user.setStatus("BANNED");
+            user.setBannedUntil(null);
+            user.setBanReason("Vi phạm " + currentViolationCount + " lần loại " + log.getType());
+            userRepo.save(user);
+        }
+
+        UserWarningLogResponse response = new UserWarningLogResponse();
+        response.setLogId(log.getLogId());
+        response.setUserId(user.getUserId());
+        response.setTransactionId(txn.getTransactionId());
+        response.setType(log.getType());
+        response.setStatus(log.getStatus());
+        response.setDescription(log.getDescription());
+        response.setViolationCount(currentViolationCount);
+        response.setCreatedAt(log.getCreatedAt());
+
+        return response;
     }
 
     @Override
     public List<UserWarningLogResponse> getWarningsByUser(Long userId) {
-        User user = getUserOrThrow(userId);
-        return warningRepo.findByUser(user)
-                .stream()
-                .map(this::mapToResponse)
-                .toList();
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return warningRepo.findByUser(user).stream().map(log -> {
+            UserWarningLogResponse res = new UserWarningLogResponse();
+            res.setLogId(log.getLogId());
+            res.setUserId(user.getUserId());
+            res.setTransactionId(log.getTransaction().getTransactionId());
+            res.setType(log.getType());
+            res.setStatus(log.getStatus());
+            res.setDescription(log.getDescription());
+            res.setViolationCount(log.getViolationCount());
+            res.setCreatedAt(log.getCreatedAt());
+            return res;
+        }).toList();
     }
 
     @Override
     public List<UserWarningLogResponse> getWarningsByTransaction(Long transactionId) {
-        TransactionAfterAuction txn = getTransactionOrThrow(transactionId);
+        TransactionAfterAuction txn = transactionRepo.findById(transactionId)
+                .orElseThrow(() -> new RuntimeException("Transaction not found"));
         return warningRepo.findByTransaction_TransactionId(txn.getTransactionId())
                 .stream()
-                .map(this::mapToResponse)
-                .toList();
+                .map(log -> {
+                    UserWarningLogResponse res = new UserWarningLogResponse();
+                    res.setLogId(log.getLogId());
+                    res.setUserId(log.getUser().getUserId());
+                    res.setTransactionId(txn.getTransactionId());
+                    res.setType(log.getType());
+                    res.setStatus(log.getStatus());
+                    res.setDescription(log.getDescription());
+                    res.setViolationCount(log.getViolationCount());
+                    res.setCreatedAt(log.getCreatedAt());
+                    return res;
+                }).toList();
     }
 
-    // AUTO WARNING (SCHEDULER)
     /**
-     * Run immediately after server startup
+     * Tự động tạo cảnh báo cho các giao dịch SHIPPED > 36h
+     */
+    @Transactional
+    public void warnPendingTransactionsOver36h() {
+        NotiViolation();
+    }
+
+    /**
+     * Chạy ngay khi server khởi động xong
      */
     @EventListener(ApplicationReadyEvent.class)
     public void runOnStartup() {
-        processOverdueTransactions();
+        warnPendingTransactionsOver36h();
     }
 
     /**
-     * Auto run daily at 00:00
+     * Scheduler tự động tạo cảnh báo cho buyer chưa thanh toán sau 36h
+     * Chạy mỗi ngày lúc 00:00
      */
     @Scheduled(cron = "0 0 0 * * ?")
+    @Transactional
     public void autoWarnPendingTransactionsDaily() {
-        processOverdueTransactions();
+        NotiViolation();
     }
 
-    // CORE BUSINESS LOGIC
-    @Transactional
-    public void processOverdueTransactions() {
+    private void NotiViolation() {
         LocalDateTime threshold = LocalDateTime.now().minusHours(36);
 
-        List<TransactionAfterAuction> overdueTxns =
-                transactionRepo.findByStatusAndUpdatedAtBefore("SHIPPED", threshold);
+        List<TransactionAfterAuction> overdueTxns = transactionRepo
+                .findByStatusAndUpdatedAtBefore("SHIPPED", threshold);
 
         for (TransactionAfterAuction txn : overdueTxns) {
             User user = txn.getBuyer();
@@ -102,72 +146,28 @@ public class UserWarningLogImpl implements IUserWarningService {
             txn.setStatus("CANCELLED");
             transactionRepo.save(txn);
 
-            handleViolation(
-                    user,
-                    txn,
-                    "SHIPPED_NOT_PAID",
-                    "Buyer hasn't paid after 36h"
-            );
+            int previousViolations = warningRepo.countByUserAndType(user, "SHIPPED_NOT_PAID");
+            int currentViolationCount = previousViolations + 1;
+
+            UserWarningLog log = new UserWarningLog();
+            log.setUser(user);
+            log.setTransaction(txn);
+            log.setType("SHIPPED_NOT_PAID");
+            log.setStatus("VIOLATION");
+            log.setDescription("Buyer chưa thanh toán sau 36h");
+            log.setViolationCount(currentViolationCount);
+            log.setCreatedAt(LocalDateTime.now());
+
+            warningRepo.save(log);
+
+            if (currentViolationCount >= 2) {
+                user.setStatus("BANNED");
+                user.setBannedUntil(null);
+                user.setBanReason("Vi phạm " + currentViolationCount + " lần: chưa thanh toán sau 36h");
+                userRepo.save(user);
+            }
         }
     }
 
-    /**
-     * Centralized violation handling
-     */
-    private UserWarningLog handleViolation(
-            User user,
-            TransactionAfterAuction txn,
-            String type,
-            String description
-    ) {
-        int previousViolations = warningRepo.countByUserAndType(user, type);
-        int currentViolationCount = previousViolations + 1;
-
-        UserWarningLog log = new UserWarningLog();
-        log.setUser(user);
-        log.setTransaction(txn);
-        log.setType(type);
-        log.setStatus("VIOLATION");
-        log.setDescription(description);
-        log.setViolationCount(currentViolationCount);
-        log.setCreatedAt(LocalDateTime.now());
-
-        warningRepo.save(log);
-
-        if (currentViolationCount >= 2) {
-            banUser(user, type, currentViolationCount);
-        }
-
-        return log;
-    }
-
-    private void banUser(User user, String type, int count) {
-        user.setStatus("BANNED");
-        user.setBannedUntil(null);
-        user.setBanReason("Violated " + count + " times for type " + type);
-        userRepo.save(user);
-    }
-
-    private UserWarningLogResponse mapToResponse(UserWarningLog log) {
-        UserWarningLogResponse res = new UserWarningLogResponse();
-        res.setLogId(log.getLogId());
-        res.setUserId(log.getUser().getUserId());
-        res.setTransactionId(log.getTransaction().getTransactionId());
-        res.setType(log.getType());
-        res.setStatus(log.getStatus());
-        res.setDescription(log.getDescription());
-        res.setViolationCount(log.getViolationCount());
-        res.setCreatedAt(log.getCreatedAt());
-        return res;
-    }
-
-    private User getUserOrThrow(Long userId) {
-        return userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-    }
-
-    private TransactionAfterAuction getTransactionOrThrow(Long txnId) {
-        return transactionRepo.findById(txnId)
-                .orElseThrow(() -> new RuntimeException("Transaction not found"));
-    }
 }
+

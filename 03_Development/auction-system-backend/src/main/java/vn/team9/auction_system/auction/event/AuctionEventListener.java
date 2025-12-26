@@ -11,20 +11,20 @@ public class AuctionEventListener {
 
     @EventListener
     public void handleOutbid(OutbidEvent event) {
-        log.info("User {} got outbid in auction {}",
+        log.info("User {} bị outbid trong auction {}",
                 event.getOutbidUser().getUsername(),
                 event.getAuction().getAuctionId());
     }
 
     @EventListener
     public void handleAutoBidTriggered(AutoBidTriggeredEvent event) {
-        log.info("Auto-bid reactivated for auction {}",
+        log.info("Auto-bid được kích hoạt lại cho auction {}",
                 event.getAuction().getAuctionId());
     }
 
     @EventListener
     public void handleAuctionEnded(AuctionEndedEvent event) {
-        log.info("Auction {} has ended.",
+        log.info("Auction {} đã kết thúc.",
                 event.getAuction().getAuctionId());
     }
 }

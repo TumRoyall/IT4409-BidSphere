@@ -147,12 +147,7 @@ export const useSellerDashboard = () => {
   const deleteProduct = useCallback(
     async (product: Product) => {
       try {
-        const legacyProductId = (product as { id?: number }).id;
-        const productId = product.productId ?? legacyProductId;
-        if (!productId) {
-          throw new Error("Product is missing productId");
-        }
-        await actionsHook.deleteProduct(productId);
+        await actionsHook.deleteProduct(product.product_id);
         closeDeleteConfirm();
         productsHook.refresh();
         statsHook.refresh();

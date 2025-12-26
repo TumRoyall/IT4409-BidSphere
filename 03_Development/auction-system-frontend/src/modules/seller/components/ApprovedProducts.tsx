@@ -23,7 +23,6 @@ interface ApprovedProductsProps {
 }
 
 const STATUS_BADGE_CLASS: Record<string, string> = {
-  draft: "badge-default",
   pending: "badge-pending",
   approved: "badge-approved",
   rejected: "badge-rejected",
@@ -97,18 +96,21 @@ const ApprovedProducts: React.FC<ApprovedProductsProps> = ({
       {/* Products List */}
       <div className="products-list">
         {products.map((product, index) => (
-          <div key={product.productId || `product-${index}`} className="product-card">
+          <div key={product.product_id || `product-${index}`} className="product-card">
             {/* Product Content */}
             <div className="product-content">
               {/* Product Image */}
               <div className="product-image-wrapper">
                 <img
-                   src={
-                     (product.images?.find((img: any) => img.isThumbnail)?.imageUrl || product.images?.find((img: any) => img.isThumbnail)?.url) ||
-                     (product.images?.[0]?.imageUrl || product.images?.[0]?.url) ||
-                     product.imageUrl ||
-                     "/placeholder-product.png"
-                   }
+                  src={
+                    // Try to get thumbnail image first from images array
+                    product.images?.find((img: any) => img.is_thumbnail)?.image_url ||
+                    // Fallback to first image in array
+                    product.images?.[0]?.image_url ||
+                    // Fallback to product.image_url
+                    product.image_url ||
+                    "/placeholder-product.png"
+                  }
                   alt={product.name}
                   className="product-image"
                   onError={(e) => {
@@ -150,26 +152,26 @@ const ApprovedProducts: React.FC<ApprovedProductsProps> = ({
                   <div className="info-item">
                     <span className="info-label">Start Price</span>
                     <span className="info-value">
-                      {formatPrice(product.startPrice)}
+                      {formatPrice(product.start_price)}
                     </span>
                   </div>
 
                   <div className="info-item">
                     <span className="info-label">Category</span>
-                    <span className="info-value">{product.category}</span>
+                    <span className="info-value">{product.categories}</span>
                   </div>
 
                   <div className="info-item">
                     <span className="info-label">Deposit</span>
                     <span className="info-value">
-                      {formatPrice(product.deposit || 0)}
+                      {formatPrice(product.deposit)}
                     </span>
                   </div>
 
                   <div className="info-item">
                     <span className="info-label">Created</span>
                     <span className="info-value">
-                      {new Date(product.createdAt).toLocaleDateString(
+                      {new Date(product.created_at).toLocaleDateString(
                         "vi-VN"
                       )}
                     </span>

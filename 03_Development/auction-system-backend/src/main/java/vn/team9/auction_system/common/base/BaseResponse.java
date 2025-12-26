@@ -4,8 +4,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * Parent class for all Response DTOs.
- * Contains common response properties.
+ * Lớp cha cho tất cả Response DTO.
+ * Chứa các thuộc tính phản hồi chung.
  */
 @Data
 public abstract class BaseResponse {

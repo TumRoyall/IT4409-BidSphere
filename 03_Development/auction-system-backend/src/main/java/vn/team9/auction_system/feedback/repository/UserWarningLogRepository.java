@@ -10,12 +10,12 @@ import java.util.List;
 @Repository
 public interface UserWarningLogRepository extends JpaRepository<UserWarningLog, Long> {
 
-    // Count number of specific warning type violations for a user
+    // Đếm số lần vi phạm loại cảnh báo cụ thể của 1 user
     int countByUserAndType(User user, String type);
 
-    // Get log list of a user
+    // Lấy danh sách log của user
     List<UserWarningLog> findByUser(User user);
 
-    // Get log list by transaction
+    // Lấy danh sách log theo transaction
     List<UserWarningLog> findByTransaction_TransactionId(Long transactionId);
 }

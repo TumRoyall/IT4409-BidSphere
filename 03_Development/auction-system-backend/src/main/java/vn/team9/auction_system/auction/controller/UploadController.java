@@ -11,7 +11,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/upload")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173") // cho phép frontend truy cập
 @RequiredArgsConstructor
 public class UploadController {
 
@@ -20,11 +20,19 @@ public class UploadController {
     @PostMapping
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) {
         try {
-            return ResponseEntity.ok(uploadSingleFile(file));
+            Map<String, Object> uploadResult = cloudinary.uploader().upload(
+                    file.getBytes(),
+                    ObjectUtils.asMap("folder", "auction_images")
+            );
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("image_url", uploadResult.get("secure_url"));
+            return ResponseEntity.ok(response);
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError()
-                    .body("Upload failed: " + e.getMessage());
+                    .body("Upload thất bại: " + e.getMessage());
         }
     }
 
@@ -34,34 +42,19 @@ public class UploadController {
             List<Map<String, Object>> uploadedImages = new ArrayList<>();
 
             for (MultipartFile file : files) {
-                uploadedImages.add(uploadSingleFile(file));
+                Map<String, Object> uploadResult = cloudinary.uploader().upload(
+                        file.getBytes(),
+                        ObjectUtils.asMap("folder", "auction_images")
+                );
+                uploadedImages.add(uploadResult);
             }
 
             return ResponseEntity.ok(uploadedImages);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception e) {  // Bắt tất cả các loại lỗi
+            e.printStackTrace(); // In đầy đủ stack trace ra console
             return ResponseEntity.internalServerError()
-                    .body("Upload failed: " + e.getMessage());
+                    .body("Upload thất bại: " + e.getMessage());
         }
-    }
-
-    private Map<String, Object> uploadSingleFile(MultipartFile file) throws Exception {
-        @SuppressWarnings("unchecked")
-        Map<String, Object> uploadResult = cloudinary.uploader().upload(
-                file.getBytes(),
-                ObjectUtils.asMap("folder", "auction_images")
-        );
-
-        String secureUrl = Objects.toString(uploadResult.get("secure_url"), null);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("image_url", secureUrl);
-        response.put("imageUrl", secureUrl);
-        response.put("secure_url", secureUrl);
-        response.put("secureUrl", secureUrl);
-        response.put("public_id", uploadResult.get("public_id"));
-
-        return response;
     }
 }

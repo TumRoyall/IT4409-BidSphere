@@ -51,55 +51,51 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
     try {
       setIsLoadingProducts(true);
       const { default: productApi } = await import("@/api/modules/product.api");
-      console.log("Loading products eligible for auction (draft/rejected)");
-
-      // Load all pages to get all eligible products
-      let eligibleProducts: any[] = [];
+      console.log("Loading approved products for seller");
+      
+      // Load all pages to get all approved products
+      let allApprovedProducts: any[] = [];
       let pageNum = 0;
       let hasMore = true;
 
       while (hasMore) {
         const productsResponse = await productApi.getProductsBySellerMePage(pageNum, 10);
         const products = productsResponse.data.content || [];
-
-        // Filter products that can be submitted for auction: draft or rejected
-        const eligibleOnThisPage = products.filter(
-          (p: any) => {
-            const status = p.status?.toLowerCase();
-            return status === "draft" || status === "rejected";
-          }
+        
+        // Filter only approved products from this page
+        const approvedOnThisPage = products.filter(
+          (p: any) => p.status?.toLowerCase() === "approved"
         );
-
-        eligibleProducts = [...eligibleProducts, ...eligibleOnThisPage];
+        
+        allApprovedProducts = [...allApprovedProducts, ...approvedOnThisPage];
         hasMore = products.length === 10;
         pageNum++;
       }
-
-      console.log("Eligible products loaded:", eligibleProducts);
-
+      
+      console.log("Approved products loaded:", allApprovedProducts);
+      
       // Log product IDs for debugging
-      if (eligibleProducts && Array.isArray(eligibleProducts)) {
-        eligibleProducts.forEach((p, idx) => {
-          const legacyProduct = p as any;
-          console.log(`Product ${idx}:`, {
-            id: p?.id,
-            productId: p?.productId,
-            legacyProductId: legacyProduct?.product_id,
+      if (allApprovedProducts && Array.isArray(allApprovedProducts)) {
+        allApprovedProducts.forEach((p, idx) => {
+          console.log(`Product ${idx}:`, { 
+            id: p?.id, 
+            product_id: p?.product_id,
+            productId: (p as any)?.productId,
             name: p?.name,
             status: p?.status,
-            fullObject: p,
+            fullObject: p
           });
         });
       }
-
-      if (eligibleProducts.length === 0) {
+      
+      if (allApprovedProducts.length === 0) {
         setErrors((prev) => ({
           ...prev,
-          products: "Bạn không có sản phẩm nào có thể tạo đấu giá. Chỉ sản phẩm ở trạng thái 'draft' hoặc 'rejected' mới có thể đăng ký đấu giá.",
+          products: "You have no approved products. Submit a product for approval first.",
         }));
       }
-
-      setProducts(eligibleProducts);
+      
+      setProducts(allApprovedProducts);
     } catch (error: any) {
       console.error("Failed to load products:", error);
       setErrors((prev) => ({
@@ -133,25 +129,16 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
   // Handle product selection
   const handleSelectProduct = useCallback((product: Product) => {
     // Backend returns camelCase, but also support snake_case and id
-    const id = product?.productId ?? product?.id ?? (product as any)?.product_id;
+    const id = product?.productId || product?.product_id || product?.id;
     console.log("Selected product:", product);
-    console.log(
-      "Product ID extracted:",
-      id,
-      "from fields: productId=",
-      product?.productId,
-      "legacy product_id=",
-      (product as any)?.product_id,
-      "id=",
-      product?.id
-    );
-
+    console.log("Product ID extracted:", id, "from fields: productId=", product?.productId, "product_id=", product?.product_id, "id=", product?.id);
+    
     if (!id || id <= 0) {
       console.error("Product has no valid ID:", product);
       setErrors((prev) => ({ ...prev, productId: "Selected product has no valid ID" }));
       return;
     }
-
+    
     setSelectedProduct(product);
     setFormData((prev) => ({
       ...prev,
@@ -284,7 +271,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
       console.log("formData.productId before conversion:", formData.productId, typeof formData.productId);
       const productId = Number(formData.productId);
       console.log("productId after conversion:", productId, "isNaN:", isNaN(productId));
-
+      
       if (!productId || isNaN(productId)) {
         throw new Error(`Invalid product ID: ${formData.productId} (converted to ${productId})`);
       }
@@ -293,26 +280,24 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
         productId,
         startTime: formatDateTime(startDate),
         endTime: formatDateTime(endDate),
-        bidStepAmount: formData.minBidIncrement,
+        bidStepAmount: String(formData.minBidIncrement),
       };
 
       console.log("📤 Auction payload:", payload);
       const response = await auctionApi.createAuction(payload);
-      const auctionId = response.data?.auctionId ?? response.data?.id;
-
+      const auctionId = response.data?.auctionId || response.data?.id || response.data?.auction_id;
+      
       if (!auctionId) {
         throw new Error(`Invalid response: no auctionId found in response.data = ${JSON.stringify(response.data)}`);
       }
 
-      // Thông báo thành công và quay về dashboard
-      alert("✅ Yêu cầu đấu giá đã được gửi thành công!\nVui lòng chờ admin duyệt.");
-      onClose?.();
-      navigate("/seller/dashboard", {
-        state: { message: "Yêu cầu đấu giá đã được gửi, chờ admin duyệt" },
+      navigate(`/auctions/${auctionId}`, {
+        state: { message: "Auction created successfully" },
       });
+      onClose?.();
     } catch (error: any) {
       let errorMsg = "Failed to create auction";
-
+      
       if (error?.response?.data?.message) {
         errorMsg = error.response.data.message;
       } else if (error?.response?.data?.error) {
@@ -320,7 +305,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
       } else if (error?.message) {
         errorMsg = error.message;
       }
-
+      
       setErrors((prev) => ({ ...prev, submit: String(errorMsg) }));
       console.error("Create auction error:", error);
       console.error("Response data:", error?.response?.data);
@@ -389,23 +374,23 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                   }}
                 />
                 <input
-                  id="auction-product"
-                  type="text"
-                  placeholder={
-                    isLoadingProducts
-                      ? "Loading products..."
-                      : "Search product by name or category..."
-                  }
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    setShowDropdown(true);
-                  }}
-                  onFocus={() => setShowDropdown(true)}
-                  onBlur={() => setTimeout(() => setShowDropdown(false), 300)}
-                  disabled={isLoadingProducts}
-                  className="form-input"
-                  style={{ paddingLeft: "40px" }}
+                id="auction-product"
+                type="text"
+                placeholder={
+                isLoadingProducts
+                ? "Loading products..."
+                : "Search product by name or category..."
+                }
+                value={searchQuery}
+                onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setShowDropdown(true);
+                }}
+                onFocus={() => setShowDropdown(true)}
+                onBlur={() => setTimeout(() => setShowDropdown(false), 300)}
+                disabled={isLoadingProducts}
+                className="form-input"
+                style={{ paddingLeft: "40px" }}
                 />
               </div>
 
@@ -447,7 +432,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                     <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
                       {filteredProducts.map((product, index) => (
                         <li
-                          key={product.productId || product.id || `product-${index}`}
+                          key={product.id || product.product_id || `product-${index}`}
                           onClick={() => handleSelectProduct(product)}
                           style={{
                             padding: "12px 16px",
@@ -477,13 +462,13 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                               {product.name}
                             </p>
                             <p
-                              style={{
-                                margin: "2px 0 0 0",
-                                fontSize: "12px",
-                                color: "#999",
-                              }}
+                            style={{
+                            margin: "2px 0 0 0",
+                            fontSize: "12px",
+                            color: "#999",
+                            }}
                             >
-                              {product.categories || product.category}
+                            {product.categories || product.category}
                             </p>
                           </div>
                           <span
@@ -496,7 +481,9 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                             }}
                           >
                             ₫
-                            {(product.startPrice ?? 0).toLocaleString("vi-VN")}
+                            {(
+                              product.startPrice ?? product.start_price ?? 0
+                            ).toLocaleString("vi-VN")}
                           </span>
                         </li>
                       ))}
@@ -551,7 +538,9 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                 }}
               >
                 Start: ₫
-                {(selectedProduct.startPrice ?? 0).toLocaleString("vi-VN")}
+                {(
+                  selectedProduct.startPrice ?? selectedProduct.start_price ?? 0
+                ).toLocaleString("vi-VN")}
               </p>
             </div>
             <button
@@ -733,7 +722,9 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
                     </span>
                     <span style={{ color: "#667eea", fontWeight: 600, fontSize: "13px" }}>
                       ₫
-                      {(selectedProduct.startPrice ?? 0).toLocaleString("vi-VN")}
+                      {(
+                        selectedProduct.startPrice ?? selectedProduct.start_price ?? 0
+                      ).toLocaleString("vi-VN")}
                     </span>
                   </div>
                 </div>

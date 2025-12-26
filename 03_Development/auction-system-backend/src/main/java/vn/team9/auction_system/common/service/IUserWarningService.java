@@ -7,17 +7,12 @@ import java.util.List;
 
 public interface IUserWarningService {
 
-    // Create warning log
+    // Tạo log cảnh báo
     UserWarningLogResponse createWarning(UserWarningLogRequest request);
 
-    // Get logs by user
+    // Lấy log theo user
     List<UserWarningLogResponse> getWarningsByUser(Long userId);
 
-    // Get logs by transaction
+    // Lấy log theo transaction
     List<UserWarningLogResponse> getWarningsByTransaction(Long transactionId);
-
-    // Get all warning logs
-    List<UserWarningLogResponse> getAllWarnings();
-
-    void processOverdueTransactions();
 }

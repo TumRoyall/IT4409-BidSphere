@@ -8,7 +8,6 @@ import vn.team9.auction_system.common.dto.auction.BidResponse;
 import vn.team9.auction_system.user.model.User;
 import vn.team9.auction_system.user.repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractBidService {
@@ -17,6 +16,7 @@ public abstract class AbstractBidService {
     protected final BidRepository bidRepository;
     protected final UserRepository userRepository;
 
+    //Constructor protected có tham số
     protected AbstractBidService(AuctionRepository auctionRepository,
                                  BidRepository bidRepository,
                                  UserRepository userRepository) {
@@ -25,6 +25,7 @@ public abstract class AbstractBidService {
         this.userRepository = userRepository;
     }
 
+    //Các hàm tiện ích dùng chung
     protected Auction findAuction(Long auctionId) {
         return auctionRepository.findById(auctionId)
                 .orElseThrow(() -> new RuntimeException("Auction not found"));
@@ -36,34 +37,24 @@ public abstract class AbstractBidService {
     }
 
     protected BidResponse mapToResponse(Bid bid) {
-        return BidResponse.builder()
-                .id(bid.getBidId())
-                .auctionId(bid.getAuction().getAuctionId())
-                .bidderId(bid.getBidder().getUserId())
-                .bidAmount(bid.getBidAmount())
-                .maxAutoBidAmount(bid.getMaxAutobidAmount())
-                .stepAutoBidAmount(bid.getStepAutoBidAmount())
-                .createdAt(bid.getCreatedAt())
-                .success(true)
-                .message("Success")
-                .build();
+        BidResponse res = new BidResponse();
+        res.setId(bid.getBidId());
+        res.setAuctionId(bid.getAuction().getAuctionId());
+        res.setBidderId(bid.getBidder().getUserId());
+        res.setBidAmount(bid.getBidAmount());
+        res.setMaxAutoBidAmount(bid.getMaxAutobidAmount());
+        res.setStepAutoBidAmount(bid.getStepAutoBidAmount());
+        res.setCreatedAt(bid.getCreatedAt());
+        return res;
     }
 
     protected void resetHighestBidFlags(Long auctionId) {
         List<Bid> currentBids = bidRepository.findByAuction_AuctionId(auctionId);
-        List<Bid> bidsToUpdate = new ArrayList<>();
-
         for (Bid bid : currentBids) {
-            if (Boolean.TRUE.equals(bid.getIsHighest())) {
+            if (bid.getIsHighest()) {
                 bid.setIsHighest(false);
-                bidsToUpdate.add(bid);
+                bidRepository.save(bid);
             }
         }
-
-        if (!bidsToUpdate.isEmpty()) {
-            bidRepository.saveAll(bidsToUpdate);
-        }
     }
-
-
 }

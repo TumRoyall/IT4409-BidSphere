@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import productApi from "@/api/modules/product.api";
 import {
+  ActionToolBar,
   StatsOverview,
   ApprovedProducts,
   ActionButtons,
@@ -56,9 +57,9 @@ const ProductManagement = (): React.ReactElement => {
         const uploadResponses = await Promise.all(uploadPromises);
 
         imageRequests = uploadResponses.map((res: any, idx: number) => {
-          // backend UploadController returns { imageUrl } (or { url } in some contexts)
+          // backend UploadController returns { image_url: secure_url }
           const data = res?.data || res;
-          const secureUrl = data?.imageUrl || data?.url || data?.secure_url || data?.secureUrl || data?.secureurl;
+          const secureUrl = data?.image_url || data?.secure_url || data?.secureUrl || data?.secureurl;
           return {
             secure_url: secureUrl,
             isThumbnail: idx === 0,
@@ -118,8 +119,8 @@ const ProductManagement = (): React.ReactElement => {
 
   const handleSubmitEdit = async (productId: number, data: any) => {
     try {
-      console.log("📤 Updating product:", productId, JSON.stringify(data, null, 2));
-      const resp = await updateProduct(productId, data);
+  console.log("📤 Updating product:", productId, JSON.stringify(data, null, 2));
+  const resp = await updateProduct(productId, data);
       console.log("✅ Update API response:", resp);
 
       setIsEditModalOpen(false);
@@ -133,19 +134,19 @@ const ProductManagement = (): React.ReactElement => {
     } catch (error: any) {
       console.error("❌ Lỗi cập nhật sản phẩm:", error);
       // Show a visible error so users know update failed and we can inspect details
-      const errorMessage = error?.response?.data?.message ||
-        error?.response?.data?.error ||
-        error?.message ||
-        "Unknown error";
-      const errorDetails = error?.response?.data?.details ||
-        error?.response?.data?.fieldErrors ||
-        null;
-
+      const errorMessage = error?.response?.data?.message || 
+                          error?.response?.data?.error || 
+                          error?.message || 
+                          "Unknown error";
+      const errorDetails = error?.response?.data?.details || 
+                          error?.response?.data?.fieldErrors || 
+                          null;
+      
       let fullMessage = "Lỗi cập nhật sản phẩm: " + errorMessage;
       if (errorDetails) {
         fullMessage += "\n\n" + JSON.stringify(errorDetails, null, 2);
       }
-
+      
       alert(fullMessage);
       console.error("❗ Full error response:", error?.response);
       try {
@@ -157,16 +158,16 @@ const ProductManagement = (): React.ReactElement => {
   };
 
   const handleConfirmDelete = async (product: Product) => {
-    try {
-      console.log("🗑️ Deleting product:", product.productId);
-      await deleteProduct(product.productId);
+  try {
+  console.log("🗑️ Deleting product:", product.productId);
+  await deleteProduct(product.productId);
       setIsDeleteConfirmOpen(false);
       setSelectedProduct(null);
-
+      
       console.log("🔄 Refreshing products and stats after delete...");
       refresh();
       refreshStats();
-
+      
       console.log("✅ Xóa sản phẩm thành công!");
     } catch (error: any) {
       console.error("❌ Lỗi xóa sản phẩm:", error);
@@ -188,388 +189,292 @@ const ProductManagement = (): React.ReactElement => {
 
   return (
     <div className="product-management-page">
-      {/* Statistics - Đầu tiên */}
-      <div className="fade-in" style={{ animationDelay: "200ms" }}>
+      {/* Toolbar */}
+      <div className="fade-in" style={{ animationDelay: "400ms" }}>
+      <ActionToolBar
+      onCreateProduct={handleOpenCreateModal}
+      onCreateAuction={handleOpenCreateAuctionModal}
+      onSearch={handleSearch}
+      />
+      </div>
+
+      {/* Statistics */}
+      <div className="fade-in" style={{ animationDelay: "600ms" }}>
         <StatsOverview stats={stats} loading={loading} />
       </div>
 
-      {/* Action Buttons - Tạo sản phẩm & đấu giá */}
-      <div className="fade-in action-buttons-section" style={{ animationDelay: "400ms" }}>
-        <div className="section-header">
-          <h2 className="section-title">Quản lý sản phẩm</h2>
-          <div className="action-buttons-group">
-            <button
-              className="btn-secondary"
-              onClick={handleOpenCreateAuctionModal}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z" />
-                <path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
-                <path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z" />
-                <path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z" />
-                <path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z" />
-                <path d="M15.5 22H14v-1.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
-                <path d="M10 9.5C10 10.33 9.33 11 8.5 11h-5C2.67 11 2 10.33 2 9.5S2.67 8 3.5 8h5c.83 0 1.5.67 1.5 1.5z" />
-                <path d="M8.5 2H10v1.5c0 .83-.67 1.5-1.5 1.5S7 4.33 7 3.5 7.67 2 8.5 2z" />
-              </svg>
-              Tạo phiên đấu giá
-            </button>
-            <button
-              className="btn-primary"
-              onClick={handleOpenCreateModal}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 5v14M5 12h14" />
-              </svg>
-              Tạo sản phẩm mới
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Search Bar - Ngay trên list */}
-      <div className="fade-in search-section" style={{ animationDelay: "500ms" }}>
-        <div className="search-wrapper">
-          <svg className="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.35-4.35" />
-          </svg>
-          <input
-            type="text"
-            placeholder="Tìm kiếm sản phẩm..."
-            className="search-input-new"
-            onChange={(e) => handleSearch(e.target.value)}
-          />
-        </div>
-      </div>
-
       {/* Products List */}
-      <div className="fade-in" style={{ animationDelay: "600ms" }}>
-        <ApprovedProducts
-          products={products}
-          loading={loading}
-          error={error}
-          pagination={pagination}
-          onRefresh={refresh}
-          onEdit={handleEditProduct}
-          onDelete={handleDeleteProduct}
-          onViewDetails={handleViewDetails}
-          onViewAuctions={handleViewAuctions}
-        />
+      <div className="fade-in" style={{ animationDelay: "800ms" }}>
+      <ApprovedProducts
+      products={products}
+      loading={loading}
+      error={error}
+      pagination={pagination}
+      onRefresh={refresh}
+      onEdit={handleEditProduct}
+      onDelete={handleDeleteProduct}
+      onViewDetails={handleViewDetails}
+      onViewAuctions={handleViewAuctions}
+      />
       </div>
 
       {/* Create Product Modal */}
       <Modal
-        isOpen={isCreateModalOpen}
-        onClose={handleCloseCreateModal}
-        title="Create New Product"
-        subtitle="Fill in the product details below"
-        size="xl"
+      isOpen={isCreateModalOpen}
+      onClose={handleCloseCreateModal}
+      title="Create New Product"
+      subtitle="Fill in the product details below"
+      size="xl"
       >
-        <div className="modal-product-content">
-          <ProductDetails
-            onSubmit={handleSubmitProduct}
-            loading={submitting}
-          />
-          <ActionButtons
-            onCancel={handleCloseCreateModal}
-            loading={submitting}
-          />
-        </div>
+      <div className="modal-product-content">
+      <ProductDetails
+      onSubmit={handleSubmitProduct}
+      loading={submitting}
+      />
+      <ActionButtons
+      onCancel={handleCloseCreateModal}
+      loading={submitting}
+      />
+      </div>
       </Modal>
 
-      {/* Create Auction Session Modal */}
-      <Modal
-        isOpen={isCreateAuctionModalOpen}
-        onClose={handleCloseCreateAuctionModal}
-        title="Create Auction Session"
-        size="xl"
-      >
-        <CreateAuctionSession onClose={handleCloseCreateAuctionModal} />
-      </Modal>
+          {/* Create Auction Session Modal */}
+          <Modal
+          isOpen={isCreateAuctionModalOpen}
+          onClose={handleCloseCreateAuctionModal}
+          title="Create Auction Session"
+          size="xl"
+          >
+          <CreateAuctionSession onClose={handleCloseCreateAuctionModal} />
+          </Modal>
 
-      {/* Edit Product Modal */}
-      <Modal
-        isOpen={isEditModalOpen}
-        onClose={() => {
-          setIsEditModalOpen(false);
-          setSelectedProduct(null);
-        }}
-        title="Edit Product"
-        subtitle="Update product details"
-        size="xl"
-      >
-        <EditProductModal
-          product={selectedProduct}
-          loading={submitting}
-          onSubmit={handleSubmitEdit}
-          onCancel={() => {
+               {/* Edit Product Modal */}
+                 <Modal
+                   isOpen={isEditModalOpen}
+                   onClose={() => {
             setIsEditModalOpen(false);
             setSelectedProduct(null);
           }}
-        />
-      </Modal>
+          title="Edit Product"
+          subtitle="Update product details"
+          size="xl"
+        >
+          <EditProductModal
+            product={selectedProduct}
+            loading={submitting}
+            onSubmit={handleSubmitEdit}
+            onCancel={() => {
+              setIsEditModalOpen(false);
+              setSelectedProduct(null);
+            }}
+          />
+        </Modal>
 
-      {/* Delete Confirmation Modal */}
-      <Modal
-        isOpen={isDeleteConfirmOpen}
-        onClose={() => {
-          setIsDeleteConfirmOpen(false);
-          setSelectedProduct(null);
-        }}
-        title=""
-        size="md"
-      >
-        <DeleteConfirmation
-          product={selectedProduct}
-          loading={submitting}
-          onConfirm={handleConfirmDelete}
-          onCancel={() => {
+        {/* Delete Confirmation Modal */}
+        <Modal
+          isOpen={isDeleteConfirmOpen}
+          onClose={() => {
             setIsDeleteConfirmOpen(false);
             setSelectedProduct(null);
           }}
-        />
-      </Modal>
+          title=""
+          size="md"
+        >
+          <DeleteConfirmation
+            product={selectedProduct}
+            loading={submitting}
+            onConfirm={handleConfirmDelete}
+            onCancel={() => {
+              setIsDeleteConfirmOpen(false);
+              setSelectedProduct(null);
+            }}
+          />
+        </Modal>
 
-      {/* Auction Management Modal */}
-      <Modal
+        {/* Auction Management Modal */}
+        <Modal
         isOpen={isAuctionModalOpen}
         onClose={() => {
-          setIsAuctionModalOpen(false);
-          setSelectedProduct(null);
+        setIsAuctionModalOpen(false);
+        setSelectedProduct(null);
         }}
         title=""
         size="xl"
-      >
+        >
         <AuctionManagement
-          product={selectedProduct}
-          onClose={() => {
-            setIsAuctionModalOpen(false);
-            setSelectedProduct(null);
-          }}
-        />
-      </Modal>
-
-      {/* View Details Modal */}
-      <Modal
-        isOpen={isViewDetailsModalOpen}
+        product={selectedProduct}
         onClose={() => {
-          setIsViewDetailsModalOpen(false);
-          setSelectedProduct(null);
+        setIsAuctionModalOpen(false);
+        setSelectedProduct(null);
         }}
-        title="Product Details"
-        subtitle={selectedProduct?.name}
-        size="xl"
-      >
-        {selectedProduct && (
-          <div className="view-details-content" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px", alignItems: "start" }}>
-            {/* LEFT: Image Section */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              {/* Main Image */}
-              <div style={{
-                borderRadius: "12px",
-                overflow: "hidden",
-                border: "1px solid #e2e8f0",
-                background: "#f7fafc",
-                aspectRatio: "1",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}>
-                <img
-                  src={
-                    selectedProduct.images?.find((img: any) => img.isThumbnail)?.url ||
-                    selectedProduct.images?.[0]?.url ||
-                    selectedProduct.imageUrl ||
-                    "/placeholder-product.png"
-                  }
-                  alt={selectedProduct.name}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = "/placeholder-product.png";
-                  }}
-                />
-              </div>
+        />
+        </Modal>
 
-              {/* Images Gallery Thumbnails */}
-              {selectedProduct.images && selectedProduct.images.length > 1 && (
-                <div>
-                  <h4 style={{ fontSize: "12px", fontWeight: 600, color: "#718096", textTransform: "uppercase", marginBottom: "10px", margin: "0 0 10px 0" }}>
-                    All Images ({selectedProduct.images.length})
-                  </h4>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(70px, 1fr))", gap: "8px" }}>
-                    {selectedProduct.images.map((img: any, idx: number) => (
-                      <div
-                        key={img.imageId || idx}
-                        style={{
-                          borderRadius: "6px",
-                          overflow: "hidden",
-                          border: img.isThumbnail ? "2px solid #667eea" : "1px solid #e2e8f0",
-                          aspectRatio: "1",
-                          background: "#f7fafc",
-                          position: "relative",
-                          cursor: "pointer",
-                          transition: "transform 0.2s"
-                        }}
-                        onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLElement).style.transform = "scale(1.05)";
-                        }}
-                        onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLElement).style.transform = "scale(1)";
-                        }}
-                      >
-                        <img
-                          src={img.url || img.imageUrl}
-                          alt={`Product ${idx}`}
-                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = "/placeholder-product.png";
-                          }}
-                        />
-                        {img.isThumbnail && (
-                          <div style={{
-                            position: "absolute",
-                            top: "2px",
-                            right: "2px",
-                            background: "#667eea",
-                            color: "white",
-                            fontSize: "8px",
-                            fontWeight: 700,
-                            padding: "2px 4px",
-                            borderRadius: "3px"
-                          }}>
-                            MAIN
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+             {/* View Details Modal */}
+               <Modal
+                 isOpen={isViewDetailsModalOpen}
+                 onClose={() => {
+             setIsViewDetailsModalOpen(false);
+             setSelectedProduct(null);
+           }}
+           title="Product Details"
+           subtitle={selectedProduct?.name}
+           size="xl"
+         >
+           {selectedProduct && (
+             <div className="view-details-content">
+               <div className="details-image-container">
+                 {/* Main/Thumbnail Image */}
+                 <img
+                   src={
+                     // Try to get thumbnail image first from images array
+                     selectedProduct.images?.find((img: any) => img.isThumbnail)?.url ||
+                     // Fallback to first image in array
+                     selectedProduct.images?.[0]?.url ||
+                     // Fallback to product.imageUrl
+                     selectedProduct.imageUrl ||
+                     "/placeholder-product.png"
+                   }
+                   alt={selectedProduct.name}
+                   className="details-image"
+                   onError={(e) => {
+                     (e.target as HTMLImageElement).src = "/placeholder-product.png";
+                   }}
+                 />
+                 
+                 {/* All product images gallery (if multiple images) */}
+                 {selectedProduct.images && selectedProduct.images.length > 1 && (
+                   <div style={{ marginTop: "16px" }}>
+                     <h4 style={{ fontSize: "14px", fontWeight: 600, marginBottom: "8px", color: "#666" }}>
+                       All Images ({selectedProduct.images.length})
+                     </h4>
+                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(80px, 1fr))", gap: "8px" }}>
+                       {selectedProduct.images.map((img: any, idx: number) => (
+                         <div
+                           key={img.image_id || idx}
+                           style={{
+                             position: "relative",
+                             borderRadius: "6px",
+                             overflow: "hidden",
+                             border: img.is_thumbnail ? "2px solid #1e3a5f" : "1px solid #ddd",
+                             aspectRatio: "1",
+                           }}
+                         >
+                           <img
+                             src={img.image_url}
+                             alt={`Product image ${idx + 1}`}
+                             style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                             onError={(e) => {
+                               (e.target as HTMLImageElement).src = "/placeholder-product.png";
+                             }}
+                           />
+                           {img.is_thumbnail && (
+                             <div style={{
+                               position: "absolute",
+                               top: "4px",
+                               right: "4px",
+                               background: "#1e3a5f",
+                               color: "white",
+                               fontSize: "10px",
+                               fontWeight: 700,
+                               padding: "2px 4px",
+                               borderRadius: "3px"
+                             }}>
+                               THUMB
+                             </div>
+                           )}
+                         </div>
+                       ))}
+                     </div>
+                   </div>
+                 )}
+               </div>
 
-            {/* RIGHT: Info Section */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-              {/* Header */}
-              <div>
-                <h2 style={{ fontSize: "24px", fontWeight: 700, color: "#1a202c", margin: "0 0 12px 0" }}>
-                  {selectedProduct.name}
-                </h2>
-                <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
-                  {selectedProduct.status && (
-                    <span
-                      className={`badge badge-${selectedProduct.status}`}
-                      style={{
-                        display: "inline-block",
-                        padding: "6px 14px",
-                        borderRadius: "6px",
-                        fontSize: "12px",
-                        fontWeight: 600,
-                        textTransform: "capitalize"
-                      }}
-                    >
-                      {selectedProduct.status}
-                    </span>
-                  )}
-                  <span style={{ fontSize: "13px", color: "#718096" }}>
-                    Created: {new Date(selectedProduct.createdAt).toLocaleDateString("vi-VN")}
-                  </span>
-                </div>
-              </div>
+               <div className="details-content">
+                 <div className="detail-section">
+                   <h3 className="section-title">Product Information</h3>
+                   <div className="details-grid">
+                     <div className="detail-item">
+                       <div className="detail-label">Name</div>
+                       <div className="detail-value">{selectedProduct.name}</div>
+                     </div>
+                     <div className="detail-item">
+                       <div className="detail-label">Category</div>
+                       <div className="detail-value">{selectedProduct.category}</div>
+                     </div>
+                     <div className="detail-item">
+                       <div className="detail-label">Status</div>
+                       <div className="detail-value">
+                         <span className={`badge badge-${selectedProduct.status}`}>
+                           {selectedProduct.status}
+                         </span>
+                       </div>
+                     </div>
+                     <div className="detail-item">
+                       <div className="detail-label">Start Price</div>
+                       <div className="detail-value price-highlight">
+                         {new Intl.NumberFormat("vi-VN", {
+                           style: "currency",
+                           currency: "VND",
+                           minimumFractionDigits: 0,
+                         }).format(selectedProduct.startPrice)}
+                       </div>
+                     </div>
+                     {selectedProduct.estimatePrice && (
+                       <div className="detail-item">
+                         <div className="detail-label">Estimate Price</div>
+                         <div className="detail-value">
+                           {new Intl.NumberFormat("vi-VN", {
+                             style: "currency",
+                             currency: "VND",
+                             minimumFractionDigits: 0,
+                           }).format(Number(selectedProduct.estimatePrice))}
+                         </div>
+                       </div>
+                     )}
+                     <div className="detail-item">
+                       <div className="detail-label">Deposit Required</div>
+                       <div className="detail-value">
+                         {new Intl.NumberFormat("vi-VN", {
+                           style: "currency",
+                           currency: "VND",
+                           minimumFractionDigits: 0,
+                         }).format(selectedProduct.deposit || 0)}
+                       </div>
+                     </div>
+                     <div className="detail-item">
+                       <div className="detail-label">Created</div>
+                       <div className="detail-value">
+                         {new Date(selectedProduct.createdAt).toLocaleDateString("vi-VN")}
+                       </div>
+                     </div>
+                   </div>
+                 </div>
 
-              {/* Price Section */}
-              <div style={{
-                background: "linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%)",
-                border: "1px solid #e2e8f0",
-                borderRadius: "8px",
-                padding: "16px"
-              }}>
-                <div style={{ marginBottom: "12px" }}>
-                  <span style={{ fontSize: "12px", color: "#718096", fontWeight: 600 }}>STARTING PRICE</span>
-                  <p style={{ fontSize: "28px", fontWeight: 700, color: "#667eea", margin: "4px 0 0 0" }}>
-                    {new Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                      minimumFractionDigits: 0,
-                    }).format(selectedProduct.startPrice)}
-                  </p>
-                </div>
-                {selectedProduct.estimatePrice && (
-                  <div style={{ paddingTop: "12px", borderTop: "1px solid #cbd5e0" }}>
-                    <span style={{ fontSize: "12px", color: "#718096", fontWeight: 600 }}>ESTIMATE PRICE</span>
-                    <p style={{ fontSize: "16px", fontWeight: 600, color: "#2d3748", margin: "4px 0 0 0" }}>
-                      {new Intl.NumberFormat("vi-VN", {
-                        style: "currency",
-                        currency: "VND",
-                        minimumFractionDigits: 0,
-                      }).format(Number(selectedProduct.estimatePrice))}
-                    </p>
-                  </div>
-                )}
-              </div>
+                 <div className="detail-section">
+                   <h3 className="section-title">Description</h3>
+                   <div className="section-content description-text">
+                     {selectedProduct.description}
+                   </div>
+                 </div>
+               </div>
 
-              {/* Info Grid */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
-                <div style={{ padding: "12px", background: "#f7fafc", borderRadius: "6px" }}>
-                  <span style={{ fontSize: "11px", color: "#718096", fontWeight: 600, textTransform: "uppercase" }}>Category</span>
-                  <p style={{ margin: "6px 0 0 0", fontSize: "14px", fontWeight: 600, color: "#2d3748" }}>
-                    {selectedProduct.category || "—"}
-                  </p>
-                </div>
-                <div style={{ padding: "12px", background: "#f7fafc", borderRadius: "6px" }}>
-                  <span style={{ fontSize: "11px", color: "#718096", fontWeight: 600, textTransform: "uppercase" }}>Deposit</span>
-                  <p style={{ margin: "6px 0 0 0", fontSize: "14px", fontWeight: 600, color: "#2d3748" }}>
-                    {new Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                      minimumFractionDigits: 0,
-                    }).format(selectedProduct.deposit || 0)}
-                  </p>
-                </div>
-              </div>
-
-              {/* Description */}
-              <div>
-                <h3 style={{ fontSize: "14px", fontWeight: 600, color: "#2d3748", marginBottom: "8px" }}>Description</h3>
-                <p style={{ fontSize: "14px", color: "#4a5568", lineHeight: 1.6, margin: 0 }}>
-                  {selectedProduct.description || "No description provided"}
-                </p>
-              </div>
-            </div>
-
-            {/* Close Button */}
-            <div style={{ gridColumn: "1 / -1", paddingTop: "16px", borderTop: "1px solid #e2e8f0", display: "flex", justifyContent: "flex-end" }}>
-              <button
-                style={{
-                  padding: "10px 24px",
-                  background: "#667eea",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "6px",
-                  fontSize: "14px",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  transition: "background 0.2s"
-                }}
-                onClick={() => {
-                  setIsViewDetailsModalOpen(false);
-                  setSelectedProduct(null);
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = "#5568d3";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = "#667eea";
-                }}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        )}
-      </Modal>
-    </div>
-  );
-};
-
-export default ProductManagement;
+               <div className="details-actions">
+                 <button
+                   className="cancel-button"
+                   onClick={() => {
+                     setIsViewDetailsModalOpen(false);
+                     setSelectedProduct(null);
+                   }}
+                 >
+                   Close
+                 </button>
+               </div>
+             </div>
+           )}
+         </Modal>
+      </div>
+    );
+  };
+  
+  export default ProductManagement;

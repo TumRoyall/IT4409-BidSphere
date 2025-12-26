@@ -1,6 +1,7 @@
 package vn.team9.auction_system.common.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.transaction.annotation.Transactional;
 import vn.team9.auction_system.common.dto.auction.AuctionRequest;
 import vn.team9.auction_system.common.dto.auction.AuctionResponse;
 
@@ -9,39 +10,23 @@ import java.util.List;
 
 public interface IAuctionService {
 
-    // CRUD operations
+    // CRUD
     AuctionResponse createAuction(AuctionRequest request);
-
     AuctionResponse getAuctionById(Long id);
-
     AuctionResponse updateAuction(Long id, AuctionRequest request);
-
     void deleteAuction(Long id);
 
-    // Open/close auction
+    // Mở đóng aution
     void startAuction(Long auctionId);
-
     void closeAuction(Long auctionId);
 
-    // Admin approves auction (DRAFT -> PENDING or CANCELLED)
-    AuctionResponse approveAuction(Long auctionId, String status);
-
-    // Get auction list with filters
+    // Lấy danh sách aution theo filler
     Page<AuctionResponse> getAuctions(
             String status,
             String category,
-            String keyword, // Sort by product name
-            BigDecimal minPrice, // Current price of the item
+            String keyword, //sort theo tên sản phẩm
+            BigDecimal minPrice, // Giá hiện tại của món hàng
             BigDecimal maxPrice,
-            int page,
-            int size,
-            String sort);
-
-    // Get auction list of current seller (from token)
-    List<AuctionResponse> getAuctionsByCurrentSeller();
-
-    Page<AuctionResponse> getParticipatingOpenAuctions(
-            Long userId,
             int page,
             int size,
             String sort

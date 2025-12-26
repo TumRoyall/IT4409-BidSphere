@@ -2,10 +2,6 @@ package vn.team9.auction_system.transaction.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vn.team9.auction_system.auction.model.Bid;
 import vn.team9.auction_system.auction.repository.BidRepository;
@@ -20,10 +16,9 @@ import vn.team9.auction_system.user.repository.UserRepository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
+import java.util.stream.Collectors;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class AccountTransactionServiceImpl implements IAccountTransactionService {
 
@@ -32,7 +27,7 @@ public class AccountTransactionServiceImpl implements IAccountTransactionService
     private final BidRepository bidRepository;
 
     // -------------------------------------------------------
-    // FUNCTION 1: Calculate locked amount due to holding highest bids
+    // HÀM 1: Tính tiền bị khóa do đang giữ highest bid
     // -------------------------------------------------------
     public BigDecimal getLockedByBids(Long userId) {
         List<Bid> highestBids = bidRepository.findByBidder_UserId(userId)
@@ -48,23 +43,23 @@ public class AccountTransactionServiceImpl implements IAccountTransactionService
     }
 
     // -------------------------------------------------------
-    // FUNCTION 2: Calculate locked amount due to SHIPPED transactions (not paid)
+    // HÀM 2: Tính tiền bị khóa do giao dịch SHIPPED (chưa trả)
     // -------------------------------------------------------
     public BigDecimal getLockedByAuctionTransactions(Long userId) {
-        // Get user
+        // lấy user
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // 1) Escrow amount: buyer has PAY (balance deducted) -> AccountTransaction type = "TRANSFER" status = "PENDING"
+        // 1) Khoản escrow: buyer đã PAY (đã trừ balance) -> sẽ có AccountTransaction type = "TRANSFER" status = "PENDING"
         List<AccountTransaction> escrows = accountTransactionRepository
                 .findByUserAndTypeAndStatus(user, "TRANSFER", "PENDING");
 
         BigDecimal escrowLocked = escrows.stream()
-                // buyer TRANSFER has negative amount (e.g. -50.00). Take absolute value.
+                // buyer TRANSFER có amount negative (e.g. -50.00). Lấy absolute value.
                 .map(t -> t.getAmount().abs())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        // 2) Withdraw pending amount (user requested withdrawal)
+        // 2) Khoản withdraw pending (người dùng đã yêu cầu rút)
         List<AccountTransaction> withdrawPendings = accountTransactionRepository
                 .findByUserAndTypeAndStatus(user, "WITHDRAW", "PENDING");
 
@@ -72,36 +67,33 @@ public class AccountTransactionServiceImpl implements IAccountTransactionService
                 .map(AccountTransaction::getAmount) // withdraw amount is positive (requested)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        // Total locked amount from account transactions
+        // Tổng các khoản bị khóa do account transactions
         return escrowLocked.add(withdrawPendingLocked);
     }
 
     // -------------------------------------------------------
-    // FUNCTION 3: Calculate withdrawable balance
+    // HÀM 3: Tính tiền có thể rút
     // -------------------------------------------------------
     public BigDecimal getWithdrawable(Long userId) {
-        log.error("=== DEBUG getWithdrawable (NEW LOGIC) ===");
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        log.error("Total balance: {}", user.getBalance());
-
-        // 1) Locked by highest bids (only count is_highest = 1)
+        // 1) Lock bởi highest bids (bids đang giữ vị trí highest trên auction open/pending)
         BigDecimal lockedBids = getLockedByBids(userId);
-        log.error("Locked by bids (is_highest=1 only): {}", lockedBids);
 
-        // 2) Locked by account transactions
+        // 2) Lock bởi account transactions đã trừ tiền (escrow TRANSFER PENDING) và withdraw pending
         BigDecimal lockedByAccountTx = getLockedByAuctionTransactions(userId);
-        log.error("Locked by account tx: {}", lockedByAccountTx);
 
         // withdrawable = balance - lockedBids - lockedByAccountTx
         BigDecimal withdrawable = user.getBalance()
                 .subtract(lockedBids)
                 .subtract(lockedByAccountTx);
 
-        log.error("Final withdrawable: {}", withdrawable);
-
+        // đảm bảo không trả negative
+        if (withdrawable.compareTo(BigDecimal.ZERO) < 0) {
+            return BigDecimal.ZERO;
+        }
         return withdrawable;
     }
 
@@ -143,7 +135,7 @@ public class AccountTransactionServiceImpl implements IAccountTransactionService
         BigDecimal withdrawable = getWithdrawable(user.getUserId());
 
         if (withdrawable.compareTo(request.getAmount()) < 0) {
-            throw new RuntimeException("Insufficient available balance to withdraw");
+            throw new RuntimeException("Không đủ tiền khả dụng để rút");
         }
 
         AccountTransaction tx = new AccountTransaction();
@@ -180,9 +172,9 @@ public class AccountTransactionServiceImpl implements IAccountTransactionService
                 .subtract(lockedAuction);
 
         if (withdrawable.compareTo(tx.getAmount()) < 0) {
-            throw new RuntimeException("Insufficient balance after calculating locked amount");
+            throw new RuntimeException("Số dư không đủ sau khi tính locked balance");
         }
-        // Deduct money
+        // Trừ tiền
         user.setBalance(user.getBalance().subtract(tx.getAmount()));
         userRepository.save(user);
 
@@ -193,34 +185,18 @@ public class AccountTransactionServiceImpl implements IAccountTransactionService
     }
 
     // -------------------------------------------------------
-    // Get transaction list
+    // Lấy danh sách giao dịch
     // -------------------------------------------------------
     @Override
-    public Page<AccountTransactionResponse> getTransactionsByUser(
-            Long userId,
-            String status,
-            String type,
-            LocalDateTime from,
-            LocalDateTime to,
-            int page,
-            int size
-    ) {
+    public List<AccountTransactionResponse> getTransactionsByUser(Long userId) {
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-
-        Page<AccountTransaction> pageResult =
-                accountTransactionRepository.search(
-                        user,
-                        status,
-                        type,
-                        from,
-                        to,
-                        pageable
-                );
-
-        return pageResult.map(this::toResponse);
+        return accountTransactionRepository.findByUser(user)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
