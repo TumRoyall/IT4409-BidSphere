@@ -783,10 +783,124 @@ INSERT INTO permission (permission_name, api_path, method, module, description) 
 ('ADMIN_USER_SOFT_DELETE', '/api/superadmin/users/{id}/soft-delete', 'PUT', 'admin-user', 'Soft delete user'),
 ('ADMIN_USER_TRANSACTIONS', '/api/superadmin/users/{id}/transactions', 'GET', 'admin-user', 'Lịch sử giao dịch user');
 
+-- Auctions (bổ sung)
+('AUCTION_APPROVE', '/api/auctions/{auctionId}/approve', 'PUT', 'auction', 'Duyệt phiên đấu giá'),
+('AUCTION_ME', '/api/auctions/me', 'GET', 'auction', 'Danh sách auction của tôi'),
+-- Transactions after auction (bổ sung)
+('TXN_AFTER_BY_SELLER', '/api/transactions/after-auction/seller/{sellerId}', 'GET', 'transaction', 'Giao dịch theo seller'),
+('TXN_AFTER_WON_PRODUCTS', '/api/transactions/after-auction/{userId}/won-products', 'GET', 'transaction', 'Sản phẩm đã thắng'),
+-- Users (bổ sung)
+('USER_PARTICIPATING_AUCTIONS', '/api/users/{userId}/auctions/participating', 'GET', 'user', 'Auctions đang tham gia');
+
 -- (RolePermission)
--- gán tất cả permission cho role ADMIN
-INSERT IGNORE INTO rolePermission (role_id, permission_id)
-SELECT r.role_id, p.permission_id
-FROM role r
-CROSS JOIN permission p
-WHERE UPPER(r.role_name) = 'ADMIN';
+INSERT INTO rolePermission (role_id, permission_id)
+SELECT 3, permission_id FROM permission WHERE permission_id BETWEEN 1 AND 72;
+-- ====================================
+-- BIDDER (role_id = 1)
+-- Chỉ view, tìm kiếm, tham gia auction, đặt bid, xem profile seller
+-- Quản lý account transactions của mình
+-- ====================================
+INSERT INTO rolePermission (role_id, permission_id) VALUES
+-- Bids - đặt giá thầu
+(1, 22),  -- BID_PLACE
+(1, 23),  -- BID_AUTO
+(1, 24),  -- BID_BY_AUCTION
+(1, 25),  -- BID_HIGHEST
+(1, 26),  -- BID_BY_USER
+-- Upload (để upload avatar)
+(1, 27),  -- UPLOAD_SINGLE
+(1, 28),  -- UPLOAD_MULTIPLE
+-- Account transactions - quản lý tiền của mình
+(1, 45),  -- ACCOUNT_DEPOSIT
+(1, 46),  -- ACCOUNT_WITHDRAW
+(1, 47),  -- ACCOUNT_CONFIRM_WITHD
+(1, 48),  -- ACCOUNT_BY_USER
+(1, 49),  -- ACCOUNT_WITHDRAWABLE
+-- Transaction after auction - thanh toán khi thắng
+(1, 50),  -- TXN_AFTER_PAY
+(1, 53),  -- TXN_AFTER_BY_USER
+(1, 71),  -- TXN_AFTER_WON_PRODUCTS
+-- User profile - quản lý chính mình
+(1, 55),  -- USER_ME
+(1, 56),  -- USER_PUBLIC_PROFILE (xem seller profile)
+(1, 57),  -- USER_UPDATE_ME
+(1, 58),  -- USER_CHANGE_PASSWORD
+(1, 59),  -- USER_UPDATE_AVATAR
+(1, 72);  -- USER_PARTICIPATING_AUCTIONS
+-- ====================================
+-- SELLER (role_id = 2)
+-- Tất cả quyền BIDDER + tạo/sửa product, yêu cầu tạo auction
+-- KHÔNG có quyền duyệt (approve)
+-- ====================================
+INSERT INTO rolePermission (role_id, permission_id) VALUES
+-- Bids - SELLER cũng có thể bid (nếu cho phép)
+(2, 22),  -- BID_PLACE
+(2, 23),  -- BID_AUTO
+(2, 24),  -- BID_BY_AUCTION
+(2, 25),  -- BID_HIGHEST
+(2, 26),  -- BID_BY_USER
+-- Upload
+(2, 27),  -- UPLOAD_SINGLE
+(2, 28),  -- UPLOAD_MULTIPLE
+-- Products - SELLER tạo/sửa/xóa products của mình
+(2, 29),  -- PRODUCT_CREATE
+(2, 30),  -- PRODUCT_UPDATE
+(2, 33),  -- PRODUCT_DELETE
+(2, 34),  -- PRODUCT_MY_PAGE
+(2, 36),  -- PRODUCT_REQUEST_APPROVAL (yêu cầu duyệt)
+-- Auctions - SELLER tạo/sửa auctions (KHÔNG duyệt)
+(2, 15),  -- AUCTION_CREATE
+(2, 18),  -- AUCTION_UPDATE
+(2, 19),  -- AUCTION_DELETE
+(2, 69),  -- AUCTION_ME (danh sách auction của tôi)
+-- Account transactions
+(2, 45),  -- ACCOUNT_DEPOSIT
+(2, 46),  -- ACCOUNT_WITHDRAW
+(2, 47),  -- ACCOUNT_CONFIRM_WITHD
+(2, 48),  -- ACCOUNT_BY_USER
+(2, 49),  -- ACCOUNT_WITHDRAWABLE
+-- Transaction after auction - SELLER cập nhật trạng thái giao hàng
+(2, 50),  -- TXN_AFTER_PAY
+(2, 51),  -- TXN_AFTER_UPDATE_STATUS (cập nhật SHIPPED, etc.)
+(2, 53),  -- TXN_AFTER_BY_USER
+(2, 70),  -- TXN_AFTER_BY_SELLER
+(2, 71),  -- TXN_AFTER_WON_PRODUCTS
+-- User profile
+(2, 55),  -- USER_ME
+(2, 56),  -- USER_PUBLIC_PROFILE
+(2, 57),  -- USER_UPDATE_ME
+(2, 58),  -- USER_CHANGE_PASSWORD
+(2, 59),  -- USER_UPDATE_AVATAR
+(2, 72);  -- USER_PARTICIPATING_AUCTIONS
+-- ====================================
+-- MODERATOR (role_id = 4)
+-- Quản lý product và auction: xóa, đóng, duyệt
+-- Quản lý warnings và reports
+-- ====================================
+INSERT INTO rolePermission (role_id, permission_id) VALUES
+-- Products - MODERATOR duyệt, xóa products
+(4, 31),  -- PRODUCT_PAGE (xem danh sách)
+(4, 32),  -- PRODUCT_GET
+(4, 33),  -- PRODUCT_DELETE (xóa product vi phạm)
+(4, 35),  -- PRODUCT_APPROVE (duyệt product)
+-- Auctions - MODERATOR duyệt, đóng, xóa auctions
+(4, 16),  -- AUCTION_LIST
+(4, 17),  -- AUCTION_GET
+(4, 19),  -- AUCTION_DELETE (xóa auction vi phạm)
+(4, 21),  -- AUCTION_CLOSE (đóng auction lập tức)
+(4, 68),  -- AUCTION_APPROVE (duyệt yêu cầu tạo auction)
+-- Warnings - quản lý cảnh báo user
+(4, 37),  -- WARNING_CREATE
+(4, 38),  -- WARNING_LIST
+(4, 39),  -- WARNING_BY_USER
+(4, 40),  -- WARNING_BY_TXN
+(4, 41),  -- WARNING_AUTO
+-- User reports - xem reports từ users
+(4, 42),  -- USER_REPORT_CREATE
+(4, 43),  -- USER_REPORT_BY_USER
+(4, 44),  -- USER_REPORT_LIST
+-- User profile (self)
+(4, 55),  -- USER_ME
+(4, 57),  -- USER_UPDATE_ME
+(4, 58),  -- USER_CHANGE_PASSWORD
+(4, 59);  -- USER_UPDATE_AVATAR
