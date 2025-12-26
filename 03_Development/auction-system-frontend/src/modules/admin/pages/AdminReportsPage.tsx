@@ -4,10 +4,10 @@ import "@/modules/admin/styles/AdminReportsPage.css";
 
 // Interface khớp với backend UserReportResponse
 interface UserReport {
-  id: number;       // Long -> number
-  userId: number;   // Long -> number
+  id: number;
+  userId: number;
   content: string;
-  createdAt: string; // LocalDateTime -> ISO string
+  createdAt: string;
 }
 
 export default function AdminReportsPage() {
@@ -15,27 +15,69 @@ export default function AdminReportsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [searchText, setSearchText] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
   useEffect(() => {
-    adminUserReportApi.getAll()
-      .then(res => {
-        setReports(res.data.map(r => ({
+    fetchReports();
+  }, []);
+
+  const fetchReports = async () => {
+    try {
+      const res = await adminUserReportApi.getAll();
+      setReports(
+        res.data.map((r) => ({
           id: r.id!,
           userId: r.userId!,
           content: r.content || "",
           createdAt: r.createdAt || new Date().toISOString(),
-        })));
-        setError(null);
-      })
-      .catch(err => {
-        console.error(err);
-        setError("Không thể tải dữ liệu.");
-      })
-      .finally(() => setLoading(false));
-  }, []);
+        }))
+      );
+      setError(null);
+    } catch (err) {
+      console.error(err);
+      setError("Không thể tải dữ liệu.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Filter reports theo searchText
+  const filteredReports = reports.filter((r) => {
+    const lowerSearch = searchText.toLowerCase();
+    return (
+      r.id.toString().includes(lowerSearch) ||
+      r.userId.toString().includes(lowerSearch) ||
+      r.content.toLowerCase().includes(lowerSearch)
+    );
+  });
+
+  // Pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentReports = filteredReports.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredReports.length / itemsPerPage);
 
   return (
     <div className="admin-reports-page">
-      <h2>User Reports</h2>
+      <h2>
+        User Reports <span className="count-badge">{filteredReports.length}</span>
+      </h2>
+
+      <div className="filter-bar">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search..."
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+            setCurrentPage(1);
+          }}
+        />
+      </div>
+
       {loading && <p>Đang tải dữ liệu...</p>}
       {error && <p className="error">{error}</p>}
 
@@ -50,8 +92,8 @@ export default function AdminReportsPage() {
             </tr>
           </thead>
           <tbody>
-            {reports.length > 0 ? (
-              reports.map(report => (
+            {currentReports.length > 0 ? (
+              currentReports.map((report) => (
                 <tr key={report.id}>
                   <td data-label="ID">{report.id}</td>
                   <td data-label="User ID">{report.userId}</td>
@@ -62,7 +104,7 @@ export default function AdminReportsPage() {
                       month: "2-digit",
                       year: "numeric",
                       hour: "2-digit",
-                      minute: "2-digit"
+                      minute: "2-digit",
                     })}
                   </td>
                 </tr>
@@ -77,6 +119,21 @@ export default function AdminReportsPage() {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="pagination">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => setCurrentPage(i + 1)}
+              className={currentPage === i + 1 ? "active" : ""}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

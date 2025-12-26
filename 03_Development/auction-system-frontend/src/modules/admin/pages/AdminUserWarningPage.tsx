@@ -8,6 +8,10 @@ export default function AdminUserWarningPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [searchText, setSearchText] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
   useEffect(() => {
     fetchWarnings();
   }, []);
@@ -25,9 +29,45 @@ export default function AdminUserWarningPage() {
     }
   };
 
+  // Filter warnings theo searchText
+  const filteredWarnings = warnings.filter((w) => {
+    const lowerSearch = searchText.toLowerCase();
+    return (
+      w.logId.toString().includes(lowerSearch) ||
+      w.userId.toString().includes(lowerSearch) ||
+      w.transactionId.toString().includes(lowerSearch) ||
+      w.type.toLowerCase().includes(lowerSearch) ||
+      w.status.toLowerCase().includes(lowerSearch) ||
+      w.description.toLowerCase().includes(lowerSearch) ||
+      w.violationCount.toString().includes(lowerSearch)
+    );
+  });
+
+  // Pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentWarnings = filteredWarnings.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredWarnings.length / itemsPerPage);
+
   return (
     <div className="admin-user-warning-page">
-      <h2>All User Warnings</h2>
+      <h2>
+        All User Warnings <span className="count-badge">{filteredWarnings.length}</span>
+      </h2>
+
+      <div className="filter-bar">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search..."
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+            setCurrentPage(1); // reset page khi search
+          }}
+        />
+      </div>
+
       {loading && <p>Đang tải dữ liệu...</p>}
       {error && <p className="error">{error}</p>}
 
@@ -46,16 +86,22 @@ export default function AdminUserWarningPage() {
             </tr>
           </thead>
           <tbody>
-            {warnings.length > 0 ? (
-              warnings.map((w) => (
+            {currentWarnings.length > 0 ? (
+              currentWarnings.map((w) => (
                 <tr key={w.logId}>
                   <td data-label="Log ID">{w.logId}</td>
                   <td data-label="User ID">{w.userId}</td>
                   <td data-label="Transaction ID">{w.transactionId}</td>
-                  <td data-label="Type">{w.type}</td>
-                  <td data-label="Status">{w.status}</td>
+                  <td data-label="Type">
+                    <span className={`type-badge ${w.type.toLowerCase()}`}>{w.type}</span>
+                  </td>
+                  <td data-label="Status">
+                    <span className={`status-badge ${w.status.toLowerCase()}`}>{w.status}</span>
+                  </td>
                   <td data-label="Description">{w.description}</td>
-                  <td data-label="Violation Count">{w.violationCount}</td>
+                  <td data-label="Violation Count">
+                    <span className="violation-count">{w.violationCount}</span>
+                  </td>
                   <td data-label="Created At">
                     {new Date(w.createdAt).toLocaleString("vi-VN", {
                       day: "2-digit",
@@ -77,6 +123,21 @@ export default function AdminUserWarningPage() {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="pagination">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => setCurrentPage(i + 1)}
+              className={currentPage === i + 1 ? "active" : ""}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

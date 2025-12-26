@@ -11,8 +11,8 @@ interface UserResponse {
   phone: string;
   gender?: string;
   status?: string;        // "active" | "pending" | "banned"
-  reason?: string;        // lý do bị banned
-  bannedUntil?: string;   // thời gian hết hạn ban (ISO string)
+  reason?: string;
+  bannedUntil?: string;
 }
 
 interface TransactionResponse {
@@ -23,34 +23,31 @@ interface TransactionResponse {
   amount: number;
 }
 
-// --- Các trạng thái filter ---
 const STATUSES = ["active", "pending", "banned"];
 
 const AdminUsersPage: React.FC = () => {
-  // --- State quản lý dữ liệu ---
   const [users, setUsers] = useState<UserResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [searchText, setSearchText] = useState("");           // text search
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]); // filter status
-  const [openActionId, setOpenActionId] = useState<number | null>(null); // id user mở action menu
+  const [searchText, setSearchText] = useState("");
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [openActionId, setOpenActionId] = useState<number | null>(null);
 
   const [selectedTransactions, setSelectedTransactions] = useState<TransactionResponse[] | null>(null);
-  const [showTransactionsId, setShowTransactionsId] = useState<number | null>(null); // id user đang show transaction
+  const [showTransactionsId, setShowTransactionsId] = useState<number | null>(null);
 
-  const [modalType, setModalType] = useState<"edit" | "ban" | null>(null); // loại modal
+  const [modalType, setModalType] = useState<"edit" | "ban" | null>(null);
   const [selectedUser, setSelectedUser] = useState<UserResponse | null>(null);
-  const [banReason, setBanReason] = useState(""); 
-  const [banDate, setBanDate] = useState(""); // yyyy-MM-dd
-  const [banTime, setBanTime] = useState(""); // HH:mm
+  const [banReason, setBanReason] = useState("");
+  const [banDate, setBanDate] = useState("");
+  const [banTime, setBanTime] = useState("");
 
-  const [currentPage, setCurrentPage] = useState(1); // phân trang
+  const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
-  const [dropdownOpen, setDropdownOpen] = useState(false); // trạng thái dropdown filter
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // --- Click outside dropdown để đóng ---
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -61,133 +58,121 @@ const AdminUsersPage: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // --- Lấy danh sách users từ API ---
   const fetchUsers = async () => {
     try {
       setLoading(true);
       const res = await adminUserApi.getAll();
       setUsers(res.data);
-    } catch (err) {
-      console.error(err);
+    } catch {
       setError("Lỗi khi tải dữ liệu users.");
     } finally {
       setLoading(false);
     }
   };
 
-  // --- Load users lần đầu ---
   useEffect(() => { fetchUsers(); }, []);
 
-// --- Xóa mềm user ---
   const handleSoftDelete = async (id: number) => {
     if (!window.confirm("Bạn có chắc muốn xóa user này?")) return;
-    try { 
-      await adminUserApi.softDelete(id); 
-      fetchUsers(); 
-    } catch { 
+    try {
+      await adminUserApi.softDelete(id);
+      fetchUsers();
+    } catch {
       alert("Xóa user thất bại!");
     }
   };
 
-
-  // --- Gỡ ban user ---
   const handleUnban = async (user: UserResponse) => {
-    try { 
-      await adminUserApi.unban(user.userId); 
-      fetchUsers(); 
-    } catch { 
-      alert("Unban user thất bại!"); 
+    try {
+      await adminUserApi.unban(user.userId);
+      fetchUsers();
+    } catch {
+      alert("Unban user thất bại!");
     }
   };
 
-  // --- Xem lịch sử giao dịch user ---
   const handleViewTransactions = async (user: UserResponse) => {
-    if (showTransactionsId === user.userId) { 
-      // click lại sẽ đóng
-      setShowTransactionsId(null); 
-      setSelectedTransactions(null); 
-      return; 
+    if (showTransactionsId === user.userId) {
+      setShowTransactionsId(null);
+      setSelectedTransactions(null);
+      return;
     }
     try {
       const res = await adminUserApi.getAllTransactionsById(user.userId);
       setSelectedTransactions(res.data);
       setShowTransactionsId(user.userId);
-    } catch { 
-      alert("Lỗi khi tải lịch sử giao dịch!"); 
+    } catch {
+      alert("Lỗi khi tải lịch sử giao dịch!");
     }
   };
 
-  // --- Toggle filter status ---
   const toggleStatus = (status: string) => {
     setSelectedStatuses(prev =>
       prev.includes(status) ? prev.filter(s => s !== status) : [...prev, status]
     );
   };
 
-  // --- Hàm kiểm tra trạng thái frontend và hiển thị ban info ---
-  const getFrontendStatus = (user: UserResponse): {
-    status: "Active" | "Banned" | "Pending";
-    showBanInfo: boolean;
-  } => {
-    if (user.status?.toLowerCase() === "pending") return { status: "Pending", showBanInfo: false };
-    if (!user.bannedUntil) return { status: "Active", showBanInfo: false };
-
-    const now = new Date();
-    const bannedTime = new Date(user.bannedUntil);
-
-    // nếu thời gian ban > now thì vẫn Banned, ngược lại Active
-    return bannedTime > now ? { status: "Banned", showBanInfo: true } : { status: "Active", showBanInfo: false };
+  // ⭐ NEW: click card để filter
+  const handleStatClick = (type: "all" | "active" | "pending" | "banned") => {
+    if (type === "all") setSelectedStatuses([]);
+    else setSelectedStatuses([type]);
   };
 
-  // --- Filter users dựa trên search + status ---
+  const getFrontendStatus = (user: UserResponse) => {
+    if (user.status?.toLowerCase() === "pending") return { status: "Pending", showBanInfo: false };
+    if (!user.bannedUntil) return { status: "Active", showBanInfo: false };
+    return new Date(user.bannedUntil) > new Date()
+      ? { status: "Banned", showBanInfo: true }
+      : { status: "Active", showBanInfo: false };
+  };
+
   const filteredUsers = users.filter(u => {
     const matchesSearch =
       u.userId.toString().includes(searchText) ||
-      (u.username?.toLowerCase().includes(searchText.toLowerCase()) ?? false) ||
-      (u.fullName?.toLowerCase().includes(searchText.toLowerCase()) ?? false) ||
-      (u.email?.toLowerCase().includes(searchText.toLowerCase()) ?? false) ||
-      (u.phone?.includes(searchText) ?? false);
+      u.username?.toLowerCase().includes(searchText.toLowerCase()) ||
+      u.fullName?.toLowerCase().includes(searchText.toLowerCase()) ||
+      u.email?.toLowerCase().includes(searchText.toLowerCase()) ||
+      u.phone?.includes(searchText);
 
     const frontendStatus = getFrontendStatus(u);
-    const matchesStatus = selectedStatuses.length === 0 || selectedStatuses.includes(frontendStatus.status.toLowerCase());
+    const matchesStatus =
+      selectedStatuses.length === 0 ||
+      selectedStatuses.includes(frontendStatus.status.toLowerCase());
 
     return matchesSearch && matchesStatus;
   });
 
-  // --- Phân trang ---
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
-  // --- Thiết lập min date/time cho input ban ---
-  const now = new Date();
-  const minBanDate = now.toISOString().split("T")[0]; // yyyy-MM-dd
-  const currentTimeStr = now.toTimeString().slice(0,5); // HH:mm
-
-  // --- Reset page khi filter/search thay đổi ---
   useEffect(() => { setCurrentPage(1); }, [searchText, selectedStatuses]);
 
-  // --- Xác nhận ban user ---
+  // ⭐ NEW: thống kê
+  const totalUsers = users.length;
+  const activeUsers = users.filter(u => getFrontendStatus(u).status === "Active").length;
+  const pendingUsers = users.filter(u => getFrontendStatus(u).status === "Pending").length;
+  const bannedUsers = users.filter(u => getFrontendStatus(u).status === "Banned").length;
+
+  const now = new Date();
+  const minBanDate = now.toISOString().split("T")[0];
+  const currentTimeStr = now.toTimeString().slice(0,5);
+
   const handleBanConfirm = async () => {
-    if (!banDate || !banTime) { alert("Vui lòng chọn ngày và giờ!"); return; }
+    if (!banDate || !banTime) return alert("Vui lòng chọn ngày và giờ!");
+    const [y,m,d] = banDate.split("-").map(Number);
+    const [h,min] = banTime.split(":").map(Number);
+    const local = new Date(y, m-1, d, h, min);
+    if (local <= new Date()) return alert("Không thể chọn thời gian quá khứ!");
 
-    const [year, month, day] = banDate.split("-").map(Number);
-    const [hours, minutes] = banTime.split(":").map(Number);
-
-    const selectedLocal = new Date(year, month-1, day, hours, minutes, 0);
-
-    if (selectedLocal <= new Date()) { alert("Không thể chọn thời gian trong quá khứ!"); return; }
-
-    // chuyển sang UTC trước khi gửi lên server
-    const offset = selectedLocal.getTimezoneOffset();
-    const selectedUTC = new Date(selectedLocal.getTime() - offset*60*1000);
+    const utc = new Date(local.getTime() - local.getTimezoneOffset()*60000);
 
     try {
       await adminUserApi.ban(selectedUser!.userId, {
         userId: selectedUser!.userId,
         reason: banReason,
-        bannedUntil: selectedUTC.toISOString(),
+        bannedUntil: utc.toISOString()
       });
       setModalType(null);
       fetchUsers();
@@ -200,24 +185,64 @@ const AdminUsersPage: React.FC = () => {
     <div className="admin-users-page">
       <h1>Quản lý Users</h1>
 
-      {/* --- Top bar: search + filter --- */}
+      {/* --- Search + Filter --- */}
       <div className="top-bar">
-        <input type="text" placeholder="Search by ID, username, email, phone" value={searchText} onChange={e => setSearchText(e.target.value)} />
+        <input
+          type="text"
+          placeholder="Search by ID, username, email, phone"
+          value={searchText}
+          onChange={e => setSearchText(e.target.value)}
+        />
 
-        <div className="status-dropdown" ref={dropdownRef}>
-          <div className="dropdown-button" onClick={() => setDropdownOpen(!dropdownOpen)}>
-             Status {selectedStatuses.length > 0 ? `(${selectedStatuses.length})` : ""}
-          </div>
-          {dropdownOpen && (
-            <div className="dropdown-content">
-              {STATUSES.map(status => (
-                <div key={status} className="dropdown-item">
-                  <input type="checkbox" checked={selectedStatuses.includes(status)} onChange={() => toggleStatus(status)} />
-                  <span>{status.charAt(0).toUpperCase() + status.slice(1)}</span>
-                </div>
-              ))}
-            </div>
-          )}
+<div className="status-dropdown" ref={dropdownRef}>
+  <div
+    className="dropdown-button"
+    onClick={() => setDropdownOpen(!dropdownOpen)}
+  >
+    Status {selectedStatuses.length > 0 ? `(${selectedStatuses.length})` : ""}
+  </div>
+
+  {dropdownOpen && (
+    <div className="dropdown-content">
+      {STATUSES.map(status => (
+        <div
+          key={status}
+          className={`dropdown-item ${status}`}
+          onClick={() => toggleStatus(status)}
+        >
+          <input
+            type="checkbox"
+            checked={selectedStatuses.includes(status)}
+            readOnly
+          />
+          <span className={`status-pill ${status}`}>
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </span>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+      </div>
+
+      {/* ⭐ NEW: Statistics cards */}
+      <div className="user-stats">
+        <div className={`stat-card ${selectedStatuses.length===0?"selected":""}`} onClick={()=>handleStatClick("all")}>
+          <div className="stat-title">All Users</div>
+          <div className="stat-value">{totalUsers}</div>
+        </div>
+        <div className={`stat-card active ${selectedStatuses.includes("active")?"selected":""}`} onClick={()=>handleStatClick("active")}>
+          <div className="stat-title">Active Users</div>
+          <div className="stat-value">{activeUsers}</div>
+        </div>
+        <div className={`stat-card pending ${selectedStatuses.includes("pending")?"selected":""}`} onClick={()=>handleStatClick("pending")}>
+          <div className="stat-title">Pending Users</div>
+          <div className="stat-value">{pendingUsers}</div>
+        </div>
+        <div className={`stat-card banned ${selectedStatuses.includes("banned")?"selected":""}`} onClick={()=>handleStatClick("banned")}>
+          <div className="stat-title">Banned Users</div>
+          <div className="stat-value">{bannedUsers}</div>
         </div>
       </div>
 
