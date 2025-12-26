@@ -56,7 +56,8 @@ export interface AuctionResponse {
   currentBid?: number;
   highestCurrentPrice?: number;
   highestBid?: number;
-  totalBids?: number;
+  totalBids?: number;      // Tổng số lượt bid
+  totalBidders?: number;   // Số người bid khác nhau
 
   createdAt?: string;
   updatedAt?: string;
@@ -122,9 +123,13 @@ const auctionApi = {
 
   // ✅ Approve / Reject (Admin duyệt auction: DRAFT -> PENDING hoặc CANCELLED)
   approveAuction: (auctionId: number, status: string) =>
-    axiosClient.put<AuctionResponse>(
+    axiosClient.get<AuctionResponse>(
       `/auctions/${auctionId}/approve?status=${status}`
     ),
+
+  // 📊 Get auctions by seller ID (public - for seller profile)
+  getAuctionsBySellerId: (sellerId: number) =>
+    axiosClient.get<AuctionResponse[]>(`/auctions/seller/${sellerId}`),
 };
 
 export default auctionApi;
