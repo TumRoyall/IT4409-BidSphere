@@ -784,6 +784,7 @@ INSERT INTO permission (permission_name, api_path, method, module, description) 
 ('ADMIN_USER_TRANSACTIONS', '/api/superadmin/users/{id}/transactions', 'GET', 'admin-user', 'Lịch sử giao dịch user');
 
 -- Auctions (bổ sung)
+INSERT INTO permission (permission_name, api_path, method, module, description) VALUES
 ('AUCTION_APPROVE', '/api/auctions/{auctionId}/approve', 'PUT', 'auction', 'Duyệt phiên đấu giá'),
 ('AUCTION_ME', '/api/auctions/me', 'GET', 'auction', 'Danh sách auction của tôi'),
 -- Transactions after auction (bổ sung)

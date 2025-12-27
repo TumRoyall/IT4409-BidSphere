@@ -1,18 +1,27 @@
 import { useEffect, useState } from "react";
 import "@/components/styles/HomeBanner.css"
+
+import banner1 from "@/assets/banners/banner1.png";
+import banner2 from "@/assets/banners/banner2.png";
+import banner3 from "@/assets/banners/banner3.jpeg";
+import banner4 from "@/assets/banners/banner4.png";
+import banner5 from "@/assets/banners/banner5.png";
+import bannerPhu1 from "@/assets/banners/banner_phu_1.png";
+import bannerPhu2 from "@/assets/banners/banner_phu_2.jpeg";
+
 const mainBanners = [
-  { image: "https://placehold.co/1200x400/ff7b00/ffffff?text=Tao" },
-  { image: "https://placehold.co/1200x400/0c6efd/ffffff?text=Là" },
-  { image: "https://placehold.co/1200x400/f44336/ffffff?text=Bố" },
-  { image: "https://placehold.co/1200x400/ff7b00/ffffff?text=Chúng" },
-   { image: "https://placehold.co/1200x400/0c6efd/ffffff?text=Mày" },
+  { image: banner1 },
+  { image: banner2 },
+  { image: banner3 },
+  { image: banner4 },
+  { image: banner5 },
 ];
 
 const rightTop = {
-  image: "https://placehold.co/600x190/fb4e32/ffffff?text=Nạp rút 1 phút",
+  image: bannerPhu1,
 };
 const rightBottom = {
-  image: "https://placehold.co/600x190/009688/ffffff?text=Tiền tý 3 phút",
+  image: bannerPhu2,
 };
 
 export default function HomeBanner() {

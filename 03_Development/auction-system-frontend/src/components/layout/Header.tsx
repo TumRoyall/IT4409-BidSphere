@@ -63,7 +63,7 @@ export default function Header() {
       </div>
 
       {/* ===== Thanh chính ===== */}
-      <div className={styles.mainBar}>
+      <div className={`${styles.mainBar} snow-cap`}>
         <div className={styles.mainInner}>
           {/* Logo */}
           <Link to="/" className={styles.logo}>
@@ -72,12 +72,12 @@ export default function Header() {
           </Link>
 
           {/* Ô tìm kiếm */}
-            <div className={styles.search}>
-              <input type="text" placeholder="Tìm kiếm sản phẩm đấu giá..." />
-              <button>
-                <Search size={18} />
-              </button>
-            </div>
+          <div className={styles.search}>
+            <input type="text" placeholder="Tìm kiếm sản phẩm đấu giá..." />
+            <button>
+              <Search size={18} />
+            </button>
+          </div>
 
           {/* Actions bên phải */}
           <div className={styles.actions}>

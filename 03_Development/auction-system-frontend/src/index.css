@@ -2,16 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---------- Custom Global Styles for 1xBid ---------- */
+/* ---------- Custom Global Styles for 1xBid (Winter Edition ❄️) ---------- */
 
 /* 🌐 Font + Base Colors */
 :root {
-  --color-primary: #0b2b4c; /* navy */
-  --color-secondary: #133a66;
-  --color-accent: #1e4e8c;
-  --color-text: #333;
-  --color-gray-light: #f5f6f7;
-  --color-gray-border: #e2e2e2;
+  /* Winter Luxury Palette */
+  --color-primary: #0b2b4c;
+  /* Midnight Blue */
+  --color-secondary: #D4AF37;
+  /* Gold */
+  --color-accent: #E63946;
+  /* Holiday Red */
+  --color-text: #1e293b;
+  --color-gray-light: #F0F8FF;
+  /* Alice Blue */
+  --color-gray-border: #dae3ea;
+
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  /* Frosty */
+  --glass-border: rgba(255, 255, 255, 0.6);
+
   --transition-fast: all 0.25s ease-in-out;
 }
 
@@ -20,6 +30,52 @@ body {
   background-color: var(--color-gray-light);
   color: var(--color-text);
   overflow-x: hidden;
+  /* Radiant Winter Gradient */
+  background: radial-gradient(circle at 50% 0%, #1e4e8c 0%, #F0F8FF 60%);
+  background-attachment: fixed;
+}
+
+/* ---------- Utility Classes ---------- */
+
+/* ❄️ Interactive Snow Pile Effect */
+/* Apply this class to cards, headers, or any block element */
+.snow-cap {
+  position: relative;
+  overflow: visible !important;
+}
+
+.snow-cap::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 0;
+  right: 0;
+  height: 25px;
+  background: #FFD700;
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.3));
+  z-index: 100;
+  pointer-events: auto;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 1;
+}
+
+/* Hover Dispersal Effect - Falling Down */
+.snow-cap:hover::before {
+  transform: translateY(40px) rotate(15deg) skewX(10deg);
+  /* Slides/falls down */
+  opacity: 0;
+  filter: blur(4px);
+  transition: transform 0.6s cubic-bezier(0.55, 0.085, 0.68, 0.53), opacity 0.4s ease-in 0.2s;
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 /* ---------- Buttons ---------- */
@@ -32,23 +88,41 @@ button,
   background-color: var(--color-primary);
   color: white;
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(11, 43, 76, 0.2);
 }
 
 .btn-primary:hover {
+  background-color: #164370;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
   background-color: var(--color-secondary);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(212, 175, 55, 0.25);
+}
+
+.btn-secondary:hover {
+  background-color: #bfa345;
+  transform: translateY(-1px);
 }
 
 .btn-outline {
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .btn-outline:hover {
   background-color: var(--color-primary);
   color: white;
+  border-color: var(--color-primary);
 }
 
 /* ---------- Header ---------- */
@@ -58,35 +132,42 @@ header a {
 }
 
 header a:hover {
-  color: var(--color-accent);
+  color: var(--color-secondary);
+  text-shadow: 0 0 5px rgba(212, 175, 55, 0.4);
 }
 
 /* ---------- Search Bar ---------- */
 input[type="text"],
 input[type="search"] {
   transition: var(--transition-fast);
+  border-radius: 8px;
 }
 
 input[type="text"]:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(11, 43, 76, 0.3);
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+  outline: none;
 }
 
 /* ---------- Category Bar ---------- */
 .category-link {
-  color: #e2e8f0;
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
   transition: var(--transition-fast);
 }
 
 .category-link:hover {
-  color: #fff;
+  color: var(--color-secondary);
+  transform: translateY(-2px);
 }
 
 /* ---------- Footer ---------- */
 footer {
-  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  background: linear-gradient(135deg, var(--color-primary), #051424);
   color: #f8fafc;
+  border-top: 4px solid var(--color-secondary);
+  position: relative;
+  /* For snow accumulation logic if needed */
 }
 
 footer a {
@@ -95,7 +176,7 @@ footer a {
 }
 
 footer a:hover {
-  color: white;
+  color: var(--color-secondary);
 }
 
 /* ---------- Hover animations ---------- */
@@ -104,8 +185,8 @@ footer a:hover {
 }
 
 .hover-raise:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
 /* ---------- Scrollbar ---------- */
@@ -113,19 +194,25 @@ footer a:hover {
   width: 8px;
 }
 
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 ::-webkit-scrollbar-thumb {
-  background-color: var(--color-secondary);
+  background-color: rgba(11, 43, 76, 0.2);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-accent);
+  background-color: var(--color-primary);
 }
+
 @keyframes fade-down {
   0% {
     opacity: 0;
     transform: translateY(-15px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
