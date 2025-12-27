@@ -183,7 +183,7 @@ export default function CreateProduct() {
       console.log("Product payload:", productPayload);
 
       if (isEditMode && id) {
-  await productApi.updateProduct(Number(id), productPayload);
+        await productApi.updateProduct(Number(id), productPayload);
         alert("✅ Product updated successfully!");
       } else {
         const response = await productApi.createProduct(productPayload);
@@ -246,214 +246,245 @@ export default function CreateProduct() {
   );
 
   return (
-    <FormLayout
-      title={isEditMode ? "Edit Product" : "Create New Product"}
-      onClose={handleClose}
-      footer={footerContent}
-    >
-      <form onSubmit={handleSubmit} className="form-submit">
-        {/* Basic Information Section */}
-        <div className="form-section create-form-section">
-          <div className="create-form-section-header">
-            <div className="create-form-section-indicator"></div>
-            <h2 className="create-form-section-title">Basic Information</h2>
-          </div>
-
-          <div className="form-field">
-            <Label htmlFor="name" className="form-field-label">
-              Product Name <span className="form-field-required">*</span>
-            </Label>
-            <Input
-              id="name"
-              type="text"
-              placeholder="Enter product name"
-              value={formData.name}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
-              className={`form-input ${errors.name ? "input-error" : ""}`}
-              required
-            />
-            {errors.name && (
-              <div className="form-validation-error">{errors.name}</div>
-            )}
-          </div>
-
-          <div className="form-field">
-            <Label htmlFor="category" className="form-field-label">
-              Category <span className="form-field-required">*</span>
-            </Label>
-            <CategorySelect
-              value={formData.category}
-              onChange={(value) =>
-                setFormData({ ...formData, category: value })
-              }
-              error={!!errors.category}
-              categories={categories}
-              placeholder="Select a category"
-            />
-            {errors.category && (
-              <div className="form-validation-error">{errors.category}</div>
-            )}
-          </div>
-
-          <div className="form-field">
-            <Label htmlFor="description" className="form-field-label">
-              Description <span className="form-field-required">*</span>
-            </Label>
-            <textarea
-              id="description"
-              placeholder="Describe your product in detail..."
-              value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
-              className={`form-textarea ${
-                errors.description ? "input-error" : ""
-              }`}
-              required
-            />
-            {errors.description && (
-              <div className="form-validation-error">
-                {errors.description}
-              </div>
-            )}
-          </div>
+    <div className="max-w-4xl mx-auto p-4 md:p-8">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        {/* Header */}
+        <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
+          <h1 className="text-xl font-bold text-gray-800">
+            {isEditMode ? "Edit Product" : "Create New Product"}
+          </h1>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleClose}
+            className="text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+          >
+            Cancel
+          </Button>
         </div>
 
-        {/* Pricing Section */}
-        <div className="form-section create-form-section">
-          <div className="create-form-section-header">
-            <div className="create-form-section-indicator"></div>
-            <h2 className="create-form-section-title">Pricing</h2>
-          </div>
+        <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-8">
+          {/* Basic Information Section */}
+          <div className="form-section create-form-section">
+            <div className="create-form-section-header">
+              <div className="create-form-section-indicator"></div>
+              <h2 className="create-form-section-title">Basic Information</h2>
+            </div>
 
-          <div className="form-row form-row-2">
             <div className="form-field">
-              <Label htmlFor="startPrice" className="form-field-label">
-                Start Price <span className="form-field-required">*</span>
+              <Label htmlFor="name" className="form-field-label">
+                Product Name <span className="form-field-required">*</span>
               </Label>
-              <div className="form-input-with-prefix">
-                <span className="form-input-prefix">$</span>
-                <Input
-                  id="startPrice"
-                  type="number"
-                  placeholder="0.00"
-                  value={formData.startPrice}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      startPrice: Number(e.target.value),
-                    })
-                  }
-                  className={`form-input ${
-                    errors.startPrice ? "input-error" : ""
-                  }`}
-                  step="0.01"
-                  min="0"
-                  required
-                />
-              </div>
-              {errors.startPrice && (
-                <div className="form-validation-error">
-                  {errors.startPrice}
-                </div>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Enter product name"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                className={`form-input ${errors.name ? "input-error" : ""}`}
+                required
+              />
+              {errors.name && (
+                <div className="form-validation-error">{errors.name}</div>
               )}
             </div>
 
-            {/* Deposit controlled by admin upon approval; sellers cannot set it */}
-          </div>
-        </div>
+            <div className="form-field">
+              <Label htmlFor="category" className="form-field-label">
+                Category <span className="form-field-required">*</span>
+              </Label>
+              <CategorySelect
+                value={formData.category}
+                onChange={(value) =>
+                  setFormData({ ...formData, category: value })
+                }
+                error={!!errors.category}
+                categories={categories}
+                placeholder="Select a category"
+              />
+              {errors.category && (
+                <div className="form-validation-error">{errors.category}</div>
+              )}
+            </div>
 
-        {/* Images Section */}
-        <div className="form-section create-form-section">
-          <div className="create-form-section-header">
-            <div className="create-form-section-indicator"></div>
-            <h2 className="create-form-section-title">Product Images</h2>
-          </div>
-
-          <div className="form-image-upload-area">
-            <Upload size={32} className="form-image-upload-icon" />
-            <span className="form-image-upload-text">
-              Drag & drop images here or click to select
-            </span>
-            <span className="form-image-upload-subtext">
-              PNG, JPG, GIF up to 10MB
-            </span>
-            <input
-              type="file"
-              multiple
-              accept="image/*"
-              onChange={handleImageUpload}
-              style={{ display: "none" }}
-              id="imageInput"
-            />
-            <label htmlFor="imageInput" style={{ cursor: "pointer" }}>
-              {/* Invisible label for accessibility */}
-            </label>
-          </div>
-
-          {/* Image Previews */}
-          {formData.imagePreviews.length > 0 && (
-            <div className="form-image-preview-grid">
-              {formData.imagePreviews.map((preview, index) => (
-                <div key={index} className="form-image-preview-item">
-                  <img
-                    src={preview}
-                    alt={`Preview ${index + 1}`}
-                    className="form-image-preview"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveImage(index)}
-                    className="form-image-remove-btn"
-                    title="Remove image"
-                  >
-                    ✕
-                  </button>
+            <div className="form-field">
+              <Label htmlFor="description" className="form-field-label">
+                Description <span className="form-field-required">*</span>
+              </Label>
+              <textarea
+                id="description"
+                placeholder="Describe your product in detail..."
+                value={formData.description}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
+                className={`form-textarea ${errors.description ? "input-error" : ""
+                  }`}
+                required
+              />
+              {errors.description && (
+                <div className="form-validation-error">
+                  {errors.description}
                 </div>
-              ))}
+              )}
             </div>
-          )}
-
-          {errors.images && (
-            <div className="form-validation-error">{errors.images}</div>
-          )}
-        </div>
-
-        {/* Preview Section */}
-        <div className="form-preview-section">
-          <h3 className="form-preview-title">Preview</h3>
-          <div className="form-preview-grid">
-            <div className="form-preview-item">
-              <span className="form-preview-label">Product Name</span>
-              <span className="form-preview-value">
-                {formData.name || "—"}
-              </span>
-            </div>
-            <div className="form-preview-item">
-              <span className="form-preview-label">Category</span>
-              <span className="form-preview-value">
-                {formData.category || "—"}
-              </span>
-            </div>
-            <div className="form-preview-item">
-              <span className="form-preview-label">Start Price</span>
-              <span className="form-preview-value">
-                ${(formData.startPrice ?? 0).toFixed(2)}
-              </span>
-            </div>
-            {/* Deposit is assigned by admin upon approval; preview omitted for sellers */}
           </div>
 
-          <div className="form-preview-note">
-            <p>
-              📌 <strong>Note:</strong> Once approved by admin, this product can
-              be used in auction sessions.
-            </p>
+          {/* Pricing Section */}
+          <div className="form-section create-form-section">
+            <div className="create-form-section-header">
+              <div className="create-form-section-indicator"></div>
+              <h2 className="create-form-section-title">Pricing</h2>
+            </div>
+
+            <div className="form-row form-row-2">
+              <div className="form-field">
+                <Label htmlFor="startPrice" className="form-field-label">
+                  Start Price <span className="form-field-required">*</span>
+                </Label>
+                <div className="form-input-with-prefix">
+                  <span className="form-input-prefix">$</span>
+                  <Input
+                    id="startPrice"
+                    type="number"
+                    placeholder="0.00"
+                    value={formData.startPrice}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        startPrice: Number(e.target.value),
+                      })
+                    }
+                    className={`form-input ${errors.startPrice ? "input-error" : ""
+                      }`}
+                    step="0.01"
+                    min="0"
+                    required
+                  />
+                </div>
+                {errors.startPrice && (
+                  <div className="form-validation-error">
+                    {errors.startPrice}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </form>
-    </FormLayout>
+
+          {/* Images Section */}
+          <div className="form-section create-form-section">
+            <div className="create-form-section-header">
+              <div className="create-form-section-indicator"></div>
+              <h2 className="create-form-section-title">Product Images</h2>
+            </div>
+
+            <div className="form-image-upload-area">
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={handleImageUpload}
+                style={{ display: "none" }}
+                id="imageInput"
+              />
+              <label htmlFor="imageInput" style={{ cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+                <Upload size={32} className="form-image-upload-icon" />
+                <span className="form-image-upload-text">
+                  Drag & drop images here or click to select
+                </span>
+                <span className="form-image-upload-subtext">
+                  PNG, JPG, GIF up to 10MB
+                </span>
+              </label>
+            </div>
+
+            {/* Image Previews */}
+            {formData.imagePreviews.length > 0 && (
+              <div className="form-image-preview-grid">
+                {formData.imagePreviews.map((preview, index) => (
+                  <div key={index} className="form-image-preview-item">
+                    <img
+                      src={preview}
+                      alt={`Preview ${index + 1}`}
+                      className="form-image-preview"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveImage(index)}
+                      className="form-image-remove-btn"
+                      title="Remove image"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {errors.images && (
+              <div className="form-validation-error">{errors.images}</div>
+            )}
+          </div>
+
+          {/* Preview Section */}
+          <div className="form-preview-section">
+            <h3 className="form-preview-title">Preview</h3>
+            <div className="form-preview-grid">
+              <div className="form-preview-item">
+                <span className="form-preview-label">Product Name</span>
+                <span className="form-preview-value">
+                  {formData.name || "—"}
+                </span>
+              </div>
+              <div className="form-preview-item">
+                <span className="form-preview-label">Category</span>
+                <span className="form-preview-value">
+                  {formData.category || "—"}
+                </span>
+              </div>
+              <div className="form-preview-item">
+                <span className="form-preview-label">Start Price</span>
+                <span className="form-preview-value">
+                  ${(formData.startPrice ?? 0).toFixed(2)}
+                </span>
+              </div>
+            </div>
+
+            <div className="form-preview-note">
+              <p>
+                📌 <strong>Note:</strong> Once approved by admin, this product can
+                be used in auction sessions.
+              </p>
+            </div>
+          </div>
+
+          {/* Footer Buttons integrated into form flow */}
+          <div className="flex justify-end gap-4 pt-6 border-t border-gray-100">
+            <Button
+              variant="outline"
+              type="button"
+              onClick={handleClose}
+              disabled={loading}
+              className="px-6"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSubmit}
+              disabled={loading}
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 hover:from-blue-700 hover:to-indigo-700 shadow-sm hover:shadow-md transition-all"
+            >
+              {loading
+                ? "Creating..."
+                : isEditMode
+                  ? "Update Product"
+                  : "Create Product"}
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }

@@ -138,7 +138,7 @@ const GlobalSnow: React.FC = () => {
                 top: 0,
                 left: 0,
                 pointerEvents: 'none', // Allow clicks to pass through
-                zIndex: 9999, // On top of everything
+                zIndex: 999999, // Above modal (99999) - Christmas effects always on top!
             }}
         />
     );

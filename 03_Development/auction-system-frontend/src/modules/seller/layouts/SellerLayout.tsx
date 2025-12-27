@@ -33,7 +33,15 @@ export default function SellerLayout() {
         },
     ];
 
-    const isFormPage = location.pathname.endsWith('/create') || location.pathname.endsWith('/edit');
+    // Check if current route is a form page (create or edit product/auction)
+    const isFormPage =
+        location.pathname.includes('/products/create') ||
+        location.pathname.includes('/products/') && location.pathname.includes('/edit') ||
+        location.pathname.includes('/auctions/create') ||
+        location.pathname.includes('/auctions/') && location.pathname.includes('/edit');
+
+    console.log('SellerLayout - Current path:', location.pathname);
+    console.log('SellerLayout - Is form page:', isFormPage);
 
     if (isFormPage) {
         return (

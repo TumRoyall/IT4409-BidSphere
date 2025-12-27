@@ -264,7 +264,7 @@ const ProductManagement = (): React.ReactElement => {
         onClose={handleCloseCreateModal}
         title="Create New Product"
         subtitle="Fill in the product details below"
-        size="xl"
+        size="lg"
       >
         <div className="modal-product-content">
           <ProductDetails
@@ -283,7 +283,7 @@ const ProductManagement = (): React.ReactElement => {
         isOpen={isCreateAuctionModalOpen}
         onClose={handleCloseCreateAuctionModal}
         title="Create Auction Session"
-        size="xl"
+        size="lg"
       >
         <CreateAuctionSession onClose={handleCloseCreateAuctionModal} />
       </Modal>
@@ -297,7 +297,7 @@ const ProductManagement = (): React.ReactElement => {
         }}
         title="Edit Product"
         subtitle="Update product details"
-        size="xl"
+        size="lg"
       >
         <EditProductModal
           product={selectedProduct}
@@ -339,7 +339,7 @@ const ProductManagement = (): React.ReactElement => {
           setSelectedProduct(null);
         }}
         title=""
-        size="xl"
+        size="lg"
       >
         <AuctionManagement
           product={selectedProduct}
@@ -359,11 +359,11 @@ const ProductManagement = (): React.ReactElement => {
         }}
         title="Product Details"
         subtitle={selectedProduct?.name}
-        size="xl"
+        size="lg"
       >
         {selectedProduct && (
-          <div className="view-details-content" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px", alignItems: "start" }}>
-            {/* LEFT: Image Section */}
+          <div className="view-details-content" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+            {/* Image Section */}
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
               {/* Main Image */}
               <div style={{

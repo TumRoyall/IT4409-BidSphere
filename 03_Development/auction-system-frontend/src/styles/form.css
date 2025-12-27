@@ -39,11 +39,9 @@
   --form-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
 
   /* Gradients */
-  --form-gradient: linear-gradient(
-    315deg,
-    var(--form-primary) 64.64%,
-    var(--form-secondary) 135.36%
-  );
+  --form-gradient: linear-gradient(315deg,
+      var(--form-primary) 64.64%,
+      var(--form-secondary) 135.36%);
 
   /* Transitions */
   --form-transition: all 0.2s ease;
@@ -55,6 +53,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -66,6 +65,7 @@
     opacity: 0;
     transform: translateY(-1rem);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -77,6 +77,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -85,12 +86,13 @@
 
 /* ===== 📦 FORM CONTAINER ===== */
 .form-container {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
   padding: var(--form-spacing-md);
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .form-card {
@@ -504,11 +506,9 @@
 .form-preview-section {
   padding: var(--form-spacing-lg);
   border-radius: var(--form-radius-md);
-  background: linear-gradient(
-    315deg,
-    rgba(102, 126, 234, 0.08) 64.64%,
-    rgba(118, 75, 162, 0.08) 135.36%
-  );
+  background: linear-gradient(315deg,
+      rgba(102, 126, 234, 0.08) 64.64%,
+      rgba(118, 75, 162, 0.08) 135.36%);
   display: flex;
   flex-direction: column;
   gap: var(--form-spacing-md);
@@ -769,6 +769,33 @@
     padding: var(--form-spacing-sm);
   }
 
+  /* Full Page Form Overrides to prevent double scrollbar */
+  .form-container.full-page-form {
+    padding: 0;
+    background: transparent;
+    align-items: flex-start;
+  }
+
+  .form-container.full-page-form .form-card {
+    max-width: 100%;
+    box-shadow: none;
+    height: auto;
+    overflow: visible;
+  }
+
+  .form-container.full-page-form .form-content {
+    max-height: none;
+    overflow: visible;
+    padding: var(--form-spacing-lg) 0;
+  }
+
+  .form-container.full-page-form .form-header {
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom: 2px solid var(--form-gray-100);
+  }
+
+
   .form-card {
     max-width: 100%;
   }
@@ -820,12 +847,10 @@
 }
 
 .form-skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--form-gray-200) 25%,
-    var(--form-gray-100) 50%,
-    var(--form-gray-200) 75%
-  );
+  background: linear-gradient(90deg,
+      var(--form-gray-200) 25%,
+      var(--form-gray-100) 50%,
+      var(--form-gray-200) 75%);
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
 }
@@ -834,6 +859,7 @@
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }

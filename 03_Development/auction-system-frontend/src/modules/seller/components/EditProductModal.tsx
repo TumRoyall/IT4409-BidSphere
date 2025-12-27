@@ -42,10 +42,10 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
 
       const initialImages = (product.images || []).map((img: any) => ({
         imageId: img.imageId,
-        url: img.url,
+        url: img.url || img.imageUrl,  // Support both field names
         isThumbnail: !!img.isThumbnail,
         file: null,
-        preview: img.url,
+        preview: img.url || img.imageUrl,  // Support both field names
       }));
       setImagesList(initialImages);
     }
@@ -148,14 +148,14 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
   };
 
   const CATEGORIES = [
-    "Electronics",
-    "Furniture",
-    "Jewelry",
-    "Art",
-    "Collectibles",
-    "Fashion",
-    "Books",
-    "Other",
+    "Điện tử",
+    "Nội thất",
+    "Trang sức",
+    "Nghệ thuật",
+    "Sưu tầm",
+    "Thời trang",
+    "Sách",
+    "Khác",
   ];
 
   const formatPrice = (price: number) => {
@@ -169,7 +169,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
   if (!product) return null;
 
   return (
-    <form onSubmit={handleSubmit} className="edit-product-form" style={{ paddingBottom: "20px" }}>
+    <form onSubmit={handleSubmit} className="edit-product-form" style={{ paddingBottom: "20px", width: "100%" }}>
       {/* Error Alert */}
       {submitError && (
         <div style={{
@@ -219,24 +219,6 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
           </button>
         </div>
       )}
-
-      {/* Header */}
-      <div style={{ marginBottom: "28px", paddingBottom: "20px", borderBottom: "2px solid #e2e8f0", background: "linear-gradient(135deg, #f8fafc 0%, rgba(102, 126, 234, 0.03) 100%)", padding: "16px 16px 20px 16px", marginLeft: "-16px", marginRight: "-16px", marginTop: "-16px", paddingLeft: "16px", paddingRight: "16px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
-          <div style={{ background: "#667eea", padding: "8px", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <Edit2 size={18} style={{ color: "white" }} />
-          </div>
-          <div>
-            <h3 style={{ margin: 0, fontSize: "18px", fontWeight: 700, color: "#1a202c", lineHeight: 1.2 }}>
-              Edit Product Details
-            </h3>
-            <p style={{ margin: "6px 0 0 0", fontSize: "13px", color: "#718096", fontWeight: 500 }}>
-              Updating: <strong style={{ color: "#2d3748" }}>{product.name}</strong>
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* Basic Information Section */}
       <div style={{ marginBottom: "28px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
@@ -246,34 +228,38 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
           </h4>
         </div>
 
-        <div className="form-group" style={{ marginBottom: "16px" }}>
-          <label htmlFor="product-name" style={{ fontSize: "13px", fontWeight: 600, marginBottom: "8px", display: "block", color: "#2d3748" }}>
-            Product Name <span style={{ color: "#ef4444" }}>*</span>
-          </label>
-          <Input
-            id="product-name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter product name"
-            disabled={isSubmitting}
-            style={{ width: "100%", borderRadius: "6px", borderColor: "#cbd5e0", padding: "10px 12px" }}
-          />
+        {/* 2-column grid for Name and Category */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
+          <div className="form-group">
+            <label htmlFor="product-name" style={{ fontSize: "13px", fontWeight: 600, marginBottom: "8px", display: "block", color: "#2d3748" }}>
+              Product Name <span style={{ color: "#ef4444" }}>*</span>
+            </label>
+            <Input
+              id="product-name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter product name"
+              disabled={isSubmitting}
+              style={{ width: "100%", borderRadius: "6px", borderColor: "#cbd5e0", padding: "10px 12px" }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="product-category" style={{ fontSize: "13px", fontWeight: 600, marginBottom: "8px", display: "block", color: "#2d3748" }}>
+              Category <span style={{ color: "#ef4444" }}>*</span>
+            </label>
+            <CategorySelect
+              value={formData.category}
+              onChange={handleCategoryChange}
+              disabled={isSubmitting}
+              categories={CATEGORIES}
+              placeholder="Select a category"
+            />
+          </div>
         </div>
 
-        <div className="form-group" style={{ marginBottom: "16px" }}>
-          <label htmlFor="product-category" style={{ fontSize: "13px", fontWeight: 600, marginBottom: "8px", display: "block", color: "#2d3748" }}>
-            Category <span style={{ color: "#ef4444" }}>*</span>
-          </label>
-          <CategorySelect
-            value={formData.category}
-            onChange={handleCategoryChange}
-            disabled={isSubmitting}
-            categories={CATEGORIES}
-            placeholder="Select a category"
-          />
-        </div>
-
+        {/* Description - full width */}
         <div className="form-group">
           <label htmlFor="product-description" style={{ fontSize: "13px", fontWeight: 600, marginBottom: "8px", display: "block", color: "#2d3748" }}>
             Description
@@ -506,20 +492,22 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
       </div>
 
       {/* Actions */}
-      <div style={{ display: "flex", gap: "12px", justifyContent: "flex-end", paddingTop: "16px", borderTop: "1px solid #e2e8f0" }}>
+      <div className="action-buttons-section" style={{ display: "flex", justifyContent: "center", gap: "16px", paddingTop: "24px", borderTop: "1px solid #e2e8f0" }}>
         <Button
           type="button"
           variant="outline"
+          className="cancel-button"
           onClick={onCancel}
           disabled={isSubmitting}
-          style={{ minWidth: "120px", borderRadius: "6px" }}
+          style={{ width: "auto", minWidth: "140px" }}
         >
           Cancel
         </Button>
         <Button
           type="submit"
+          className="create-product-button"
           disabled={isSubmitting}
-          style={{ minWidth: "140px", borderRadius: "6px", background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", boxShadow: "0 4px 12px rgba(102, 126, 234, 0.4)" }}
+          style={{ width: "auto", minWidth: "140px" }}
         >
           {isSubmitting ? "Updating..." : "Update Product"}
         </Button>

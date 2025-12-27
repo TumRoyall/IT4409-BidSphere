@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { Button } from "./Button";
 import "@/styles/modal.css";
@@ -40,6 +41,8 @@ export interface ModalProps {
  * A simple modal component with overlay. It locks scrolling while open and
  * listens for the ESC key to trigger the `onClose` callback. Styling is
  * provided via an external CSS file in `styles/modal.css`.
+ * 
+ * Uses React Portal to render at document.body level to avoid z-index stacking issues.
  */
 export const Modal: React.FC<ModalProps> = ({
   isOpen,
@@ -86,15 +89,15 @@ export const Modal: React.FC<ModalProps> = ({
     }
   };
 
-  return (
+  const modalContent = (
     <div className="modal-overlay" onClick={handleOverlayClick}>
       <div className={`modal-container modal-${size} ${className ?? ""}`} role="dialog" aria-modal="true">
         {/* Header */}
         <div className="modal-header">
-        <div className="modal-header-content">
-        <h2 className="modal-title">{title}</h2>
-        {subtitle && <p className="modal-subtitle">{subtitle}</p>}
-        </div>
+          <div className="modal-header-content">
+            <h2 className="modal-title">{title}</h2>
+            {subtitle && <p className="modal-subtitle">{subtitle}</p>}
+          </div>
           <Button
             variant="ghost"
             size="sm"
@@ -110,6 +113,9 @@ export const Modal: React.FC<ModalProps> = ({
       </div>
     </div>
   );
+
+  // Render modal at document.body level using Portal
+  return createPortal(modalContent, document.body);
 };
 
 Modal.displayName = "Modal";

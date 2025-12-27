@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Bell } from "lucide-react";
 import styles from "@/components/styles/layout.module.css";
 import { useNotificationContext } from "@/contexts/NotificationContext";
@@ -9,17 +9,35 @@ export default function NotificationDropdown() {
   const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotificationContext();
   const [visibleCount, setVisibleCount] = useState(5);
   const navigate = useNavigate();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
 
   const handleRead = (id: number, type?: string, category?: string, actionUrl?: string) => {
     markAsRead(id);
     setOpen(false);
-    
+
     // Prefer actionUrl from notification if available
     if (actionUrl) {
       navigate(actionUrl);
       return;
     }
-    
+
     // Fallback to type-based routing
     switch (type) {
       case "SYSTEM":
@@ -44,7 +62,7 @@ export default function NotificationDropdown() {
   };
 
   return (
-    <div className={styles.notiWrapper}>
+    <div className={styles.notiWrapper} ref={dropdownRef}>
       <button onClick={() => setOpen(!open)} className={styles.notiButton}>
         <Bell size={20} />
         {unreadCount > 0 && <span className={styles.notiBadge}>{unreadCount}</span>}
@@ -108,8 +126,8 @@ export default function NotificationDropdown() {
           >
             Xem tất cả thông báo →
           </button>
-          </div>
-          )}
-          </div>
-          );
-          }
+        </div>
+      )}
+    </div>
+  );
+}
