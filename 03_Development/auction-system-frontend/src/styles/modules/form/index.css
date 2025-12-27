@@ -1,0 +1,12 @@
+/* ===================================================================
+   📦 FORM MODULE INDEX - Unified Import File
+   =================================================================== */
+
+/* This file imports all form-related CSS modules in the correct order.
+   Import this single file instead of individual modules for better organization. */
+
+/* Form Modules */
+@import './form-appearance.css';   /* CSS variables, buttons, responsive */
+@import './form-container.css';    /* Form structure and layout */
+@import './form-inputs.css';       /* All input fields and controls */
+@import './form-validation.css';   /* Validation messages and states */

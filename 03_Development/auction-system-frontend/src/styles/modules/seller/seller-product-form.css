@@ -1,0 +1,345 @@
+/* ===================================================================
+   📝 SELLER PRODUCT FORM MODULE - Product Creation & Editing
+   =================================================================== */
+
+/* NOTE: This module contains:
+   - Product Form Layout
+   - Form Fields & Groups
+   - Form Inputs & Styling
+   - Form Actions & Buttons
+   - Form Validation
+   - Form Responsive
+   
+   Content extracted from seller.css lines 778-1107
+*/
+
+/* ===== 📝 PRODUCT FORM ===== */
+.product-details-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seller-spacing-lg);
+  padding: var(--seller-spacing-lg);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.edit-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seller-spacing-lg);
+  padding: var(--seller-spacing-lg);
+}
+
+.section-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seller-spacing-md);
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--seller-gray-900);
+  margin-bottom: var(--seller-spacing-sm);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seller-spacing-sm);
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--seller-gray-900);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seller-spacing-sm);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--seller-spacing-md);
+}
+
+.field-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--seller-gray-700);
+}
+
+.form-input,
+.form-select-trigger,
+.form-textarea {
+  padding: 0.75rem var(--seller-spacing-md);
+  background: var(--seller-surface);
+  border: 1px solid var(--seller-border);
+  border-radius: var(--seller-radius-md);
+  font-size: 0.875rem;
+  font-family: inherit;
+  transition: var(--seller-transition);
+}
+
+.form-input:focus,
+.form-select-trigger:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--seller-primary);
+  box-shadow: var(--seller-focus-ring);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Delete Confirmation Modal */
+.delete-confirmation-modal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seller-spacing-lg);
+  padding: var(--seller-spacing-xl);
+  text-align: center;
+}
+
+.delete-confirmation-modal .modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seller-spacing-lg);
+  align-items: center;
+}
+
+.delete-confirmation-modal .alert-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: var(--danger-light);
+  border-radius: 50%;
+}
+
+.delete-confirmation-modal .modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--seller-gray-900);
+  margin: 0;
+}
+
+.delete-confirmation-modal .modal-description {
+  font-size: 0.95rem;
+  color: var(--seller-gray-700);
+  margin: 0;
+}
+
+.delete-confirmation-modal .modal-warning {
+  font-size: 0.875rem;
+  color: var(--seller-error);
+  background: var(--danger-light);
+  padding: var(--seller-spacing-md);
+  border-radius: var(--seller-radius-md);
+  margin: 0;
+}
+
+.delete-confirmation-modal .modal-actions {
+  display: flex;
+  gap: var(--seller-spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--seller-spacing-md);
+}
+
+/* Image Upload */
+.image-upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--seller-spacing-md);
+  padding: var(--seller-spacing-xl);
+  background: var(--seller-surface-alt);
+  border: 2px dashed var(--seller-border);
+  border-radius: var(--seller-radius-md);
+  cursor: pointer;
+  transition: var(--seller-transition);
+}
+
+.image-upload-area:hover {
+  border-color: var(--seller-primary);
+  background: var(--seller-surface);
+}
+
+.upload-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background: var(--seller-gray-200);
+  border-radius: 50%;
+}
+
+.upload-icon-svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--seller-gray-600);
+}
+
+.upload-text-primary {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--seller-gray-700);
+}
+
+.upload-text-secondary {
+  font-size: 0.75rem;
+  color: var(--seller-gray-600);
+}
+
+/* Image Preview Grid */
+.image-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: var(--seller-spacing-md);
+  margin-top: var(--seller-spacing-md);
+}
+
+.image-preview-item {
+  position: relative;
+  border-radius: var(--seller-radius-md);
+  overflow: hidden;
+  background: var(--seller-gray-100);
+}
+
+.image-preview {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  display: block;
+}
+
+.image-filename {
+  font-size: 0.625rem;
+  color: var(--seller-gray-600);
+  padding: var(--seller-spacing-xs) var(--seller-spacing-sm);
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.image-remove-button {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--seller-transition);
+}
+
+.image-remove-button:hover {
+  background: var(--seller-error);
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--seller-gray-200);
+}
+
+/* Auction Session Section */
+.auction-session-section {
+  padding: var(--seller-spacing-lg);
+  background: var(--seller-gray-50);
+  border-radius: var(--seller-radius-md);
+}
+
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--seller-spacing-md);
+}
+
+.session-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--seller-gray-900);
+}
+
+.session-description {
+  font-size: 0.875rem;
+  color: var(--seller-gray-600);
+  margin-bottom: var(--seller-spacing-md);
+}
+
+.session-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seller-spacing-md);
+}
+
+/* Category Selector */
+.category-selector-wrapper {
+  width: 100%;
+}
+
+.custom-category-input-group {
+  display: flex;
+  gap: var(--seller-spacing-sm);
+  width: 100%;
+}
+
+.custom-category-input-group .form-input {
+  flex: 1;
+}
+
+.category-back-button {
+  padding: 0.75rem 1rem;
+  background: var(--seller-surface);
+  color: var(--seller-text);
+  border: 1px solid var(--seller-border);
+  border-radius: var(--seller-radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--seller-transition);
+  white-space: nowrap;
+}
+
+.category-back-button:hover {
+  background: var(--seller-surface-muted);
+  color: var(--seller-text);
+}
+
+/* Confirmation Section */
+.confirmation-section {
+  display: flex;
+  align-items: center;
+  gap: var(--seller-spacing-md);
+  padding: var(--seller-spacing-md);
+  background: var(--seller-surface-alt);
+  border-radius: var(--seller-radius-md);
+  border: 1px solid var(--seller-border);
+}
+
+.confirmation-label {
+  font-size: 0.875rem;
+  color: var(--seller-gray-700);
+  cursor: pointer;
+}

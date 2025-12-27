@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import { UploadIcon, AlertCircle } from "lucide-react";
 import { Checkbox } from "@/components/common/CheckBox";
 import { Input } from "@/components/common/Input";
@@ -15,7 +15,7 @@ import { PRODUCT_CATEGORIES } from "../types";
 import type { ProductFormData } from "../types";
 import productApi from "@/api/modules/product.api";
 import { useAuth } from "@/hooks/useAuth";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 interface ProductDetailsProps {
   onSubmit?: (data: ProductFormData) => void;
@@ -114,7 +114,9 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event?: FormEvent<HTMLFormElement>) => {
+    event?.preventDefault();
+
     const currentUser = user || (() => {
       const savedUser = localStorage.getItem("user");
       return savedUser ? JSON.parse(savedUser) : null;
@@ -186,7 +188,12 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
   };
 
   return (
-    <section className="product-details-section" aria-busy={!!loading}>
+    <form
+      id="product-form"
+      onSubmit={handleSubmit}
+      className="product-details-section"
+      aria-busy={!!loading}
+    >
       {/* Error Alert */}
       {errors.submit && (
         <div style={{ background: "#fee", borderLeft: "4px solid #e74c3c", padding: "16px", borderRadius: "6px", marginBottom: "20px" }}>
@@ -440,15 +447,7 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
         </div>
       )}
 
-      {/* Hidden submit button */}
-      <button
-        type="button"
-        style={{ display: "none" }}
-        onClick={handleSubmit}
-        id="submit-product-form"
-        disabled={loading}
-      />
-    </section>
+    </form>
   );
 };
 

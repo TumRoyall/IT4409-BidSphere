@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CreditCard, Smartphone, QrCode, Wallet, Building2, CheckCircle, Copy } from "lucide-react";
+import { QrCode, Wallet, Building2, CheckCircle, Copy } from "lucide-react";
 
 import { userApi } from "@/api/modules/user.api";
 import { transactionApi } from "@/api/modules/transaction.api";

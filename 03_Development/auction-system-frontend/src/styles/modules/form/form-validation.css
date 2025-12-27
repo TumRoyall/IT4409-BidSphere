@@ -1,0 +1,45 @@
+/* ===================================================================
+   ✅ FORM VALIDATION MODULE - Validation & Error Handling
+   =================================================================== */
+
+/* NOTE: This module contains:
+   - Validation Messages
+   - Error States & Styling
+   - Success States & Styling
+   - Required Indicators
+   - Error Icons
+   - Validation Responsive
+   
+   Content extracted from form.css
+*/
+
+/* ===== ✅ VALIDATION ===== */
+.form-validation-error,
+.form-validation-warning,
+.form-validation-success {
+  padding: var(--form-spacing-md);
+  border-radius: var(--form-radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--form-spacing-sm);
+}
+
+.form-validation-error {
+  background: var(--danger-light);
+  color: var(--danger-dark);
+  border-left: 4px solid var(--form-error);
+}
+
+.form-validation-warning {
+  background: var(--warning-light);
+  color: var(--warning-dark);
+  border-left: 4px solid var(--form-warning);
+}
+
+.form-validation-success {
+  background: var(--success-light);
+  color: var(--success-dark);
+  border-left: 4px solid var(--form-success);
+}

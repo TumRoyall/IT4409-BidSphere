@@ -7,9 +7,7 @@ import {
   Clock,
   Gavel,
   LogOut,
-  MessageCircle,
   Search,
-  ChevronDown,
   Receipt,
   Activity
 } from "lucide-react";
@@ -29,11 +27,6 @@ export default function Header() {
     navigate(path);
     setShowMenu(false);
   };
-
-  // Check if user is admin or moderator
-  const rawRole = (user as any)?.role || (user as any)?.roles || (user as any)?.roleName || "";
-  const role = String(rawRole).toUpperCase();
-  const isAdminOrModerator = role === "ADMIN" || role === "MODERATOR";
 
   const CATEGORY_MAP: Record<string, string> = {
     "Xe cộ": "vehicle",

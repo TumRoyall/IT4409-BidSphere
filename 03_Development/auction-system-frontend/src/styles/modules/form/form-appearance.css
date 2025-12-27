@@ -1,0 +1,196 @@
+/* ===================================================================
+   🎨 FORM APPEARANCE MODULE - Typography & Styling
+   =================================================================== */
+
+/* NOTE: This module contains:
+   - Form Typography & Fonts
+   - Form Color Scheme
+   - Form Spacing System
+   - Form Animations
+   - Form Visual Effects
+   
+   Content extracted from form.css
+*/
+
+:root {
+  /* Local form-specific variable overrides (uses global as fallback) */
+  --form-primary: var(--primary);
+  --form-primary-dark: var(--primary-dark);
+  --form-secondary: var(--secondary);
+  --form-success: var(--success);
+  --form-warning: var(--warning);
+  --form-error: var(--error);
+  --form-info: var(--primary-light);
+
+  /* Neutral palette mapped to global grays */
+  --form-gray-50: var(--gray-50);
+  --form-gray-100: var(--gray-100);
+  --form-gray-200: var(--gray-200);
+  --form-gray-300: var(--gray-300);
+  --form-gray-400: var(--gray-400);
+  --form-gray-500: var(--gray-500);
+  --form-gray-600: var(--gray-600);
+  --form-gray-700: var(--gray-700);
+  --form-gray-800: var(--gray-800);
+  --form-gray-900: var(--gray-900);
+
+  /* Spacing scale aligned with global spacing */
+  --form-spacing-xs: var(--spacing-xs);
+  --form-spacing-sm: var(--spacing-sm);
+  --form-spacing-md: var(--spacing-md);
+  --form-spacing-lg: var(--spacing-lg);
+  --form-spacing-xl: var(--spacing-xl);
+  --form-spacing-2xl: var(--spacing-2xl);
+
+  /* Border Radius (NOW USING GLOBAL SYSTEM) */
+  --form-radius-sm: var(--radius-sm);
+  --form-radius-md: var(--radius-md);
+  --form-radius-lg: var(--radius-lg);
+
+  /* Shadows (use global) */
+  --form-shadow-sm: var(--shadow-sm);
+  --form-shadow-md: var(--shadow-md);
+  --form-shadow-lg: var(--shadow-lg);
+
+  /* Gradients */
+  --form-gradient: linear-gradient(
+    315deg,
+    var(--form-primary) 64.64%,
+    var(--form-secondary) 135.36%
+  );
+
+  /* Transitions */
+  --form-transition: var(--transition-base);
+
+  /* Focus ring */
+  --form-focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* NOTE: All @keyframes removed - they are now in animations.css */
+/* Import animations.css in your HTML: <link rel="stylesheet" href="animations.css"> */
+
+/* ===== 🔘 BUTTONS ===== */
+.form-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--form-radius-md);
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: var(--form-transition);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--form-spacing-sm);
+}
+
+.form-btn-primary {
+  background: var(--form-gradient);
+  color: white;
+  box-shadow: var(--form-shadow-md);
+}
+
+.form-btn-primary:hover:not(:disabled) {
+  box-shadow: var(--form-shadow-lg);
+  transform: translateY(-2px);
+}
+
+.form-btn-outline {
+  background: white;
+  color: var(--form-primary);
+  border: 2px solid var(--form-primary);
+}
+
+.form-btn-outline:hover:not(:disabled) {
+  background: var(--form-gray-50);
+}
+
+.form-btn-secondary {
+  background: var(--form-gray-200);
+  color: var(--form-gray-900);
+}
+
+.form-btn-secondary:hover:not(:disabled) {
+  background: var(--form-gray-300);
+}
+
+.form-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== 📱 RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .form-container {
+    padding: var(--form-spacing-sm);
+  }
+
+  .form-card {
+    max-width: 100%;
+  }
+
+  .form-header,
+  .form-content,
+  .form-footer {
+    padding: var(--form-spacing-md) var(--form-spacing-lg);
+  }
+
+  .form-title {
+    font-size: 1.25rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .form-selected-card {
+    flex-direction: column;
+  }
+
+  .form-selected-card-image {
+    width: 100%;
+    height: 200px;
+  }
+
+  .form-footer {
+    flex-direction: column;
+  }
+
+  .form-btn {
+    width: 100%;
+  }
+
+  .form-image-preview-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+}
+
+/* ===== 🎯 LOADING STATE ===== */
+.form-loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.form-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--form-gray-200) 25%,
+    var(--form-gray-100) 50%,
+    var(--form-gray-200) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

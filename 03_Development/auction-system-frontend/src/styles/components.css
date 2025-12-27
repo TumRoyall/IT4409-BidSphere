@@ -5,25 +5,25 @@
   /* TODO: Add button styles */
 }
 
-/* Force select trigger and content to have solid background and sit above overlays */
+/* Ensure select/dropdown components have solid background */
 .form-select-trigger,
 .form-select-content,
 [role="listbox"],
 [role="option"] {
-  background: white !important;
-  color: #111827; /* text color */
+  background: white;
+  color: #111827;
 }
 
-/* Ensure dropdown content appears above overlays */
+/* Ensure dropdown content appears above modals */
 .form-select-content,
 [role="listbox"] {
-  z-index: 2000 !important;
+  z-index: var(--z-dropdown);
 }
 
-/* If you use a specific dropdown wrapper class from the select lib, add it here too */
-.rc-select-dropdown, /* example for rc-select */
-.select-dropdown, /* generic */
+/* Dropdown wrappers */
+.rc-select-dropdown,
+.select-dropdown,
 .select-content {
-  background: white !important;
-  z-index: 2000 !important;
+  background: white;
+  z-index: var(--z-dropdown);
 }

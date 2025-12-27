@@ -1,6 +1,5 @@
 import { useSearchParams } from "react-router-dom";
 import FilterSidebar from "@/modules/auction/components/FilterSidebar";
-import SortBar from "@/modules/auction/components/SortBar";
 import ActiveFilters from "@/modules/auction/components/ActiveFilters";
 import AuctionGrid from "@/modules/auction/components/AuctionGrid";
 

@@ -1,0 +1,11 @@
+/* ===================================================================
+   📦 SELLER PROFILE MODULE INDEX - Unified Import File
+   =================================================================== */
+
+/* This file imports all seller-profile-related CSS modules in the correct order.
+   Import this single file instead of individual modules for better organization. */
+
+/* Seller Profile Modules */
+@import './seller-profile-hero.css';     /* Profile header and banner */
+@import './seller-profile-content.css';  /* Main content and tabs */
+@import './seller-profile-reviews.css';  /* Reviews and ratings section */

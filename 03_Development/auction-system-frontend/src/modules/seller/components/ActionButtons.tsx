@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
+import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/common/Button";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 interface ActionButtonsProps {
   onCancel: () => void;
@@ -8,14 +9,6 @@ interface ActionButtonsProps {
 }
 
 const ActionButtons = ({ onCancel, loading }: ActionButtonsProps): ReactElement => {
-  const handleSubmit = () => {
-    // Trigger hidden submit button trong ProductDetails
-    const submitButton = document.getElementById("submit-product-form");
-    if (submitButton) {
-      submitButton.click();
-    }
-  };
-
   return (
     <footer className="action-buttons-section">
       <Button
@@ -29,10 +22,19 @@ const ActionButtons = ({ onCancel, loading }: ActionButtonsProps): ReactElement 
 
       <Button
         className="create-product-button"
-        onClick={handleSubmit}
+        type="submit"
+        form="product-form"
         disabled={loading}
+        aria-busy={loading}
       >
-        {loading ? "Creating..." : "Create Product"}
+        {loading ? (
+          <>
+            <CheckCircle2 size={18} />
+            Creating...
+          </>
+        ) : (
+          "Create Product"
+        )}
       </Button>
     </footer>
   );

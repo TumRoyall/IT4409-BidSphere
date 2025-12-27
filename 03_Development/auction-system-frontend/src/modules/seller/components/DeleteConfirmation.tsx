@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "@/components/common/Button";
 import { AlertCircle } from "lucide-react";
 import type { Product } from "../types/seller.types";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 interface DeleteConfirmationProps {
   product: Product | null;

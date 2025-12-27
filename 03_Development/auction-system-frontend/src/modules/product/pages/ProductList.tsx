@@ -3,7 +3,7 @@ import { Filter, Search } from "lucide-react";
 import productApi from "@/api/modules/product.api";
 import ProductCard from "../components/ProductCard";
 import type { ProductResponse, ProductPage } from "@/api/modules/product.api";
-import "@/styles/product-list.css";
+import "@/styles/modules/product-list/index.css";
 
 export default function ProductList() {
   const [products, setProducts] = useState<ProductResponse[]>([]);

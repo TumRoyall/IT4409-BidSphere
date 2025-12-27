@@ -1,6 +1,79 @@
-/* Feedback Module Styles - Member 5 */
-/* TODO: Add styles for feedback, notifications */
+/* Feedback module: submissions and notifications */
 
 .feedback-page {
-  /* TODO: Add styles here */
+  display: grid;
+  gap: var(--spacing-lg);
+}
+
+.feedback-panel {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-lg);
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.feedback-panel__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.feedback-list {
+  display: grid;
+  gap: var(--spacing-sm);
+}
+
+.feedback-item {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  background: var(--bg-secondary);
+  display: grid;
+  gap: var(--spacing-xs);
+}
+
+.feedback-item__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.feedback-item__title {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.feedback-item__body {
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.notification-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.notification-banner.is-success {
+  background: var(--success-light);
+  color: var(--success-dark);
+}
+
+.notification-banner.is-warning {
+  background: var(--warning-light);
+  color: var(--warning-dark);
+}
+
+.notification-banner.is-danger {
+  background: var(--danger-light);
+  color: var(--danger-dark);
 }

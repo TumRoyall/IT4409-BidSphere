@@ -3,7 +3,7 @@ import { Eye, Edit2, Trash2 } from "lucide-react";
 import { Button } from "@/components/common";
 import ProductDetailsModal from "./ProductDetailsModal";
 import type { Product } from "../types/seller.types";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 interface ProductCardProps {
   product: Product;

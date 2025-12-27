@@ -1,0 +1,87 @@
+/* ===================================================================
+   🔍 PRODUCT LIST FILTERS MODULE - Filter Section & Controls
+   =================================================================== */
+
+/* NOTE: This module contains:
+   - Filter Section Container
+   - Category Filters
+   - Price Range Filter
+   - Status Filter
+   - Filter Controls
+   - Filters Responsive
+   
+   Content extracted from product-list.css
+*/
+
+.product-list-filter-bar {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.product-list-search-form {
+  flex: 1;
+  min-width: 300px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.product-list-search-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+
+.product-list-search-input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color 0.3s ease;
+}
+
+.product-list-search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: var(--form-focus-ring, 0 0 0 3px rgba(25, 118, 210, 0.1));
+}
+
+.product-list-filter-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 200px;
+  position: relative;
+}
+
+.product-list-filter-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+
+.product-list-filter-select {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  appearance: none;
+}
+
+.product-list-filter-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: var(--form-focus-ring, 0 0 0 3px rgba(25, 118, 210, 0.1));
+}

@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronDown, FileText, BarChart3 } from "lucide-react";
 import type { Product } from "../types/seller.types";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 interface ProductMoreOptionsProps {
   product: Product;

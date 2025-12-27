@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent } from "@/components/common/Card";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 interface StatsOverviewProps {
   stats: {

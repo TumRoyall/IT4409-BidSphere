@@ -4,7 +4,7 @@ import { Button } from "@/components/common/Button";
 import auctionApi from "@/api/modules/auction.api";
 import AuctionApprovalModal from "@/modules/admin/components/AuctionApprovalModal";
 import type { AuctionResponse } from "@/api/modules/auction.api";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 const AdminAuctionApprovalPage: React.FC = () => {
   const [auctions, setAuctions] = useState<AuctionResponse[]>([]);
@@ -20,7 +20,13 @@ const AdminAuctionApprovalPage: React.FC = () => {
     try {
       setLoading(true);
       const res = await auctionApi.getAllAuctions();
-      const list = res.data || [];
+      let list: AuctionResponse[] = [];
+      // Handle both array and paginated response
+      if (Array.isArray(res.data)) {
+        list = res.data;
+      } else if (res.data && 'content' in res.data) {
+        list = res.data.content;
+      }
       filterAuctions(list);
     } catch (err) {
       console.error("Failed to load auctions", err);

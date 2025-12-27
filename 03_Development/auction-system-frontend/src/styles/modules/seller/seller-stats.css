@@ -1,0 +1,103 @@
+/* ===================================================================
+   📊 SELLER STATS MODULE - Statistics Cards & Overview
+   =================================================================== */
+
+/* ===== STATS OVERVIEW CONTAINER ===== */
+.stats-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--seller-spacing-md);
+  margin-bottom: 8px;
+}
+
+/* ===== STAT CARD - Individual Statistics ===== */
+.stat-card {
+  background: var(--seller-surface);
+  border: 1px solid var(--seller-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: var(--seller-transition);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--seller-primary);
+}
+
+.stat-card:focus-visible {
+  outline: none;
+  transform: translateY(-1px);
+  border-color: var(--seller-primary);
+  box-shadow: var(--shadow-sm), var(--seller-focus-ring);
+}
+
+/* ===== STAT CONTENT - Inner Container ===== */
+.stat-content {
+  padding: var(--seller-spacing-lg);
+}
+
+/* ===== STAT LABEL - Category Label ===== */
+.stat-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--seller-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--seller-spacing-xs);
+}
+
+/* ===== STAT VALUE - Number Display ===== */
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--seller-text);
+  margin-bottom: var(--seller-spacing-xs);
+  line-height: 1;
+}
+
+/* ===== STAT CHANGE - Change Indicator ===== */
+.stat-change {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--success);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .stats-overview {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .stat-content {
+    padding: 16px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-overview {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stat-card {
+    border-radius: var(--radius-md);
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+  }
+
+  .stat-change {
+    font-size: 12px;
+  }
+}
