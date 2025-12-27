@@ -145,24 +145,24 @@ export default function OrderDetail() {
 
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-3 justify-end">
-          {order.transactionStatus === "PENDING" && (
-            <button
-              onClick={handleCancel}
-              className="px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 transition-all shadow-md hover:shadow-lg flex items-center gap-2"
-            >
-              <XCircle className="w-5 h-5" />
-              Hủy giao dịch
-            </button>
-          )}
-
           {order.transactionStatus === "SHIPPED" && (
-            <button
-              onClick={handlePay}
-              className="px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 transition-all shadow-md hover:shadow-lg flex items-center gap-2"
-            >
-              <DollarSign className="w-5 h-5" />
-              Thanh toán ngay
-            </button>
+            <>
+              <button
+                onClick={handleCancel}
+                className="px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+              >
+                <XCircle className="w-5 h-5" />
+                Hủy giao dịch
+              </button>
+              
+              <button
+                onClick={handlePay}
+                className="px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+              >
+                <DollarSign className="w-5 h-5" />
+                Thanh toán ngay
+              </button>
+            </>
           )}
 
           {order.transactionStatus === "PAID" && (
@@ -172,6 +172,16 @@ export default function OrderDetail() {
             >
               <CheckCircle className="w-5 h-5" />
               Xác nhận hoàn tất
+            </button>
+          )}
+
+          {order.transactionStatus === "SHIPPED" && (
+            <button
+              onClick={handleDone}
+              className="px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+            >
+              <CheckCircle className="w-5 h-5" />
+              Đã nhận hàng
             </button>
           )}
 

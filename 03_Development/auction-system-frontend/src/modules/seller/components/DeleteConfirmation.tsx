@@ -121,18 +121,19 @@ const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
       </div>
 
       {/* Action Buttons */}
-      <div style={{
+      <div className="action-buttons-section" style={{
         display: "flex",
-        gap: "12px",
+        gap: "16px",
         justifyContent: "center",
-        paddingTop: "8px"
+        paddingTop: "24px"
       }}>
         <Button
           variant="outline"
+          className="cancel-button"
           onClick={onCancel}
           disabled={loading}
-          size="lg"
           style={{
+            width: "auto",
             minWidth: "140px"
           }}
         >
@@ -142,8 +143,8 @@ const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
           variant="destructive"
           onClick={handleConfirm}
           disabled={loading}
-          size="lg"
           style={{
+            width: "auto",
             minWidth: "140px"
           }}
         >

@@ -55,6 +55,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
     <div
       className={`category-select ${disabled ? "category-select-disabled" : ""} ${error ? "category-select-error" : ""}`}
       ref={containerRef}
+      style={{ position: "relative", zIndex: isOpen ? 10000 : 1 }}
     >
       <button
         type="button"
@@ -74,7 +75,23 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
       </button>
 
       {isOpen && (
-        <div className="category-select-dropdown">
+        <div
+          className="category-dropdown"
+          style={{
+            position: "absolute",
+            top: "100%",
+            left: 0,
+            right: 0,
+            marginTop: "4px",
+            background: "white",
+            border: "1px solid #cbd5e0",
+            borderRadius: "6px",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+            maxHeight: "200px",
+            overflowY: "auto",
+            zIndex: 9999, // Very high to be above other dropdowns
+          }}
+        >
           {categories.map((category) => (
             <button
               key={category}
@@ -83,11 +100,10 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
                 onChange(category);
                 setIsOpen(false);
               }}
-              className={`category-select-item ${
-                value.toLowerCase() === category.toLowerCase()
-                  ? "category-select-item-selected"
-                  : ""
-              }`}
+              className={`category-select-item ${value.toLowerCase() === category.toLowerCase()
+                ? "category-select-item-selected"
+                : ""
+                }`}
               role="option"
               aria-selected={
                 value.toLowerCase() === category.toLowerCase()

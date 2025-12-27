@@ -5,7 +5,8 @@
     width: 100%;
     height: 120px;
     pointer-events: none;
-    z-index: 50;
+    z-index: 999999;
+    /* Above modal (99999) - Christmas effects always on top! */
     overflow: hidden;
 }
 
@@ -19,9 +20,18 @@
 }
 
 .reindeer {
-    width: 320px;
+    width: 420px;
     height: auto;
     overflow: visible;
+}
+
+.leg {
+    transform-origin: center 58px;
+    /* Hip joint */
+}
+
+.giftTrail {
+    animation: bobGifts 0.5s ease-in-out infinite alternate;
 }
 
 /* Animations */
@@ -36,25 +46,33 @@
     /* Pivot near runners */
 }
 
-/* Leg Animations - Gentle Trot */
-.frontLegLeft {
-    animation: gallop 0.8s ease-in-out infinite alternate;
-    animation-delay: 0s;
-}
-
-.frontLegRight {
-    animation: gallop 0.8s ease-in-out infinite alternate;
-    animation-delay: 0.4s;
-}
-
+/* Leg Animations - Pendulum Swing */
 .backLegLeft {
-    animation: gallop 0.8s ease-in-out infinite alternate-reverse;
+    transform-origin: 38px 58px;
+    /* Hip joint for back left leg */
+    animation: pendulumSwing 0.8s ease-in-out infinite;
     animation-delay: 0s;
 }
 
 .backLegRight {
-    animation: gallop 0.8s ease-in-out infinite alternate-reverse;
+    transform-origin: 48px 58px;
+    /* Hip joint for back right leg */
+    animation: pendulumSwing 0.8s ease-in-out infinite;
     animation-delay: 0.4s;
+}
+
+.frontLegLeft {
+    transform-origin: 68px 58px;
+    /* Hip joint for front left leg */
+    animation: pendulumSwing 0.8s ease-in-out infinite;
+    animation-delay: 0.2s;
+}
+
+.frontLegRight {
+    transform-origin: 78px 58px;
+    /* Hip joint for front right leg */
+    animation: pendulumSwing 0.8s ease-in-out infinite;
+    animation-delay: 0.6s;
 }
 
 .throwingArm {
@@ -70,22 +88,36 @@
 /* Global Movement */
 @keyframes runAcross {
     0% {
-        transform: translateX(-400px);
+        transform: translateX(-500px);
     }
 
     100% {
-        transform: translateX(calc(100vw + 400px));
+        transform: translateX(calc(100vw + 500px));
     }
 }
 
-/* Internal Mechanics */
-@keyframes gallop {
+/* Pendulum Swing - Pure rotation */
+@keyframes pendulumSwing {
     0% {
-        transform: rotate(-5deg);
+        transform: rotate(-15deg);
+    }
+
+    50% {
+        transform: rotate(15deg);
     }
 
     100% {
-        transform: rotate(10deg);
+        transform: rotate(-15deg);
+    }
+}
+
+@keyframes bobGifts {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-3px);
     }
 }
 

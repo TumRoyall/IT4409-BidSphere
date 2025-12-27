@@ -6,6 +6,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { Label } from "@/components/common/Label";
 import { Input } from "@/components/common/Input";
 import { Search as SearchIcon, AlertCircle } from "lucide-react";
+import "@/styles/seller.css";
+import { Button } from "@/components/common/Button";
 
 interface FormData {
   productId: string | null;
@@ -51,7 +53,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
     try {
       setIsLoadingProducts(true);
       const { default: productApi } = await import("@/api/modules/product.api");
-      console.log("Loading products eligible for auction (draft/rejected)");
+      console.log("Loading products eligible for auction (draft only)");
 
       // Load all pages to get all eligible products
       let eligibleProducts: any[] = [];
@@ -62,11 +64,11 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
         const productsResponse = await productApi.getProductsBySellerMePage(pageNum, 10);
         const products = productsResponse.data.content || [];
 
-        // Filter products that can be submitted for auction: draft or rejected
+        // Filter products that can be submitted for auction: draft only
         const eligibleOnThisPage = products.filter(
           (p: any) => {
             const status = p.status?.toLowerCase();
-            return status === "draft" || status === "rejected";
+            return status === "draft";
           }
         );
 
@@ -95,7 +97,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
       if (eligibleProducts.length === 0) {
         setErrors((prev) => ({
           ...prev,
-          products: "Bạn không có sản phẩm nào có thể tạo đấu giá. Chỉ sản phẩm ở trạng thái 'draft' hoặc 'rejected' mới có thể đăng ký đấu giá.",
+          products: "Bạn không có sản phẩm nào có thể tạo đấu giá. Chỉ sản phẩm ở trạng thái 'draft' mới có thể đăng ký đấu giá.",
         }));
       }
 
@@ -208,28 +210,29 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
     if (formData.startTime && formData.endTime) {
       const startDate = new Date(formData.startTime);
       const endDate = new Date(formData.endTime);
-      const now = new Date();
 
       if (isNaN(startDate.getTime())) {
         newErrors.startTime = "Invalid start date format";
       } else if (isNaN(endDate.getTime())) {
         newErrors.endTime = "Invalid end date format";
       } else {
-        const minStartTime = new Date(now.getTime() + 60 * 60 * 1000);
-        if (startDate < minStartTime) {
-          newErrors.startTime = "Start time must be at least 1 hour from now";
-        }
+        // COMMENTED FOR DEMO: Allow creating auctions with shorter time periods
+        // const minStartTime = new Date(now.getTime() + 60 * 60 * 1000);
+        // if (startDate < minStartTime) {
+        //   newErrors.startTime = "Start time must be at least 1 hour from now";
+        // }
 
         if (endDate <= startDate) {
           newErrors.endTime = "End time must be after start time";
         } else {
           const duration = endDate.getTime() - startDate.getTime();
-          const ONE_HOUR = 60 * 60 * 1000;
+          // const ONE_HOUR = 60 * 60 * 1000;
           const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
 
-          if (duration < ONE_HOUR) {
-            newErrors.endTime = "Auction must last at least 1 hour";
-          }
+          // COMMENTED FOR DEMO: Allow auctions shorter than 1 hour
+          // if (duration < ONE_HOUR) {
+          //   newErrors.endTime = "Auction must last at least 1 hour";
+          // }
           if (duration > THIRTY_DAYS) {
             newErrors.endTime = "Auction cannot exceed 30 days";
           }
