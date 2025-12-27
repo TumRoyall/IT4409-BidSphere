@@ -71,17 +71,6 @@ VALUES ('leminhtri', 'f36c6d2692826bf6fd0e69a789f3fba2397ffc93902c32c8056e062d93
 INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('danghoanglong', 'c2b6496549a8d243c97335836f90e0f1d767fd20a808d9f2d44036f25bdc7e62', 'danghoanglong@gmail.com', '0903668795', 1, 7385479.66, 'pending', '2024-05-28 09:22:31');
 
-
--- Test Accounts (Password: 123456)
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
-VALUES ('admin_test', '$2a$10$8.UnVuG9HHgffUDAlk8qfOpDaXDPeaDE0.k6etpe2.q8v.o51qj.y', 'admin_test@gmail.com', '0900000001', 3, 0, 'active', NOW());
-
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
-VALUES ('bidder_test', '$2a$10$8.UnVuG9HHgffUDAlk8qfOpDaXDPeaDE0.k6etpe2.q8v.o51qj.y', 'bidder_test@gmail.com', '0900000002', 1, 10000000, 'active', NOW());
-
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
-VALUES ('seller_test', '$2a$10$8.UnVuG9HHgffUDAlk8qfOpDaXDPeaDE0.k6etpe2.q8v.o51qj.y', 'seller_test@gmail.com', '0900000003', 2, 5000000, 'active', NOW());
-
 -- (AccountTransaction)
 INSERT INTO AccountTransaction (user_id, amount, type, status, created_at) VALUES (4, 547863.5, 'payment', 'failed', '2023-07-18 09:22:31');
 INSERT INTO AccountTransaction (user_id, amount, type, status, created_at) VALUES (3, 448774.02, 'withdraw', 'pending', '2023-12-21 09:22:31');
