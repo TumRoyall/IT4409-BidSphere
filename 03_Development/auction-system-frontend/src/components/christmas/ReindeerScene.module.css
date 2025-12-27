@@ -1,0 +1,111 @@
+.sceneContainer {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    pointer-events: none;
+    z-index: 50;
+    overflow: hidden;
+}
+
+.reindeerWrapper {
+    position: absolute;
+    bottom: 0;
+    left: -200px;
+    animation: runAcross 25s linear infinite;
+    /* Faster run */
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+}
+
+.reindeer {
+    width: 180px;
+    height: auto;
+    overflow: visible;
+}
+
+/* Animations */
+.bodyGroup {
+    animation: bodyBob 0.6s ease-in-out infinite alternate;
+    transform-origin: center;
+}
+
+.leg {
+    transform-origin: 50% 40px;
+    /* Approximate hip/shoulder joint */
+}
+
+/* Leg Animations - Opposite phases for running gait */
+.frontLegLeft {
+    animation: legSwing 0.6s ease-in-out infinite alternate;
+}
+
+.frontLegRight {
+    animation: legSwing 0.6s ease-in-out infinite alternate-reverse;
+}
+
+.backLegLeft {
+    animation: legSwing 0.6s ease-in-out infinite alternate-reverse;
+}
+
+.backLegRight {
+    animation: legSwing 0.6s ease-in-out infinite alternate;
+}
+
+.antlers {
+    filter: drop-shadow(0 0 2px #ffd700);
+    animation: glowPulse 2s infinite alternate;
+}
+
+/* Global Movement */
+@keyframes runAcross {
+    0% {
+        transform: translateX(-200px) rotate(0deg);
+    }
+
+    10% {
+        transform: translateX(10vw) rotate(-2deg);
+    }
+
+    /* Slight bounding arc */
+    20% {
+        transform: translateX(20vw) rotate(0deg);
+    }
+
+    100% {
+        transform: translateX(calc(100vw + 200px));
+    }
+}
+
+/* Internal Mechanics */
+@keyframes legSwing {
+    0% {
+        transform: rotate(-25deg);
+    }
+
+    100% {
+        transform: rotate(25deg);
+    }
+}
+
+@keyframes bodyBob {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes glowPulse {
+    0% {
+        stroke: #D4AF37;
+        stroke-opacity: 0.8;
+    }
+
+    100% {
+        stroke: #FFF;
+        stroke-opacity: 1;
+    }
+}

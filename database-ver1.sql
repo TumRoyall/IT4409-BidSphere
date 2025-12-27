@@ -122,9 +122,16 @@ CREATE TABLE rolePermission (
   CREATE TABLE Notification (
     noti_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT,
+    title VARCHAR(255),
     message TEXT,
-    type VARCHAR(50), -- AUCTION, SYSTEM, PAYMENT
+    type VARCHAR(50), -- AUCTION, SYSTEM, PAYMENT, BID
+    category VARCHAR(100), -- BID_PLACED, OUTBID, AUCTION_WON, etc.
+    priority VARCHAR(20) DEFAULT 'MEDIUM',
+    action_url VARCHAR(255),
+    action_label VARCHAR(100),
+    metadata TEXT, -- JSON string
     is_read BOOLEAN DEFAULT FALSE,
+    is_deleted BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES User(user_id)
   );

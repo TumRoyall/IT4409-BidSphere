@@ -3,6 +3,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import "@/modules/user/styles/ProfileLayout.css";
 import { LayoutDashboard, User, Gavel, ShoppingBag } from "lucide-react";
+import GlobalSnow from "@/components/christmas/GlobalSnow";
+import ReindeerScene from "@/components/christmas/ReindeerScene";
 
 export default function SellerLayout() {
     const location = useLocation();
@@ -31,10 +33,15 @@ export default function SellerLayout() {
     ];
 
     return (
-        <div className="profile-layout">
-            <Header />
+        <div className="profile-layout relative">
+            <GlobalSnow />
+            <ReindeerScene />
 
-            <main className="profile-container">
+            <div className="snow-cap sticky top-0 z-50">
+                <Header />
+            </div>
+
+            <main className="profile-container relative z-10">
                 {/* ==== SIDEBAR ==== */}
                 <aside className="sidebar">
                     <div className="sidebar-header">

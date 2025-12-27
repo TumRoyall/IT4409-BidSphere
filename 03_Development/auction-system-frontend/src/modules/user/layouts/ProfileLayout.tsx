@@ -4,6 +4,8 @@ import { Bell, User, Gavel, ChevronDown, Receipt, CreditCard, Lock, Activity, Tr
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import GlobalSnow from "@/components/christmas/GlobalSnow";
+import ReindeerScene from "@/components/christmas/ReindeerScene";
 
 const MENU_ITEMS = [
   {
@@ -33,7 +35,7 @@ const MENU_ITEMS = [
     items: [
       { to: "/user/bid/won-products", label: "Đơn đấu giá", icon: ShoppingBag },
       { to: "/user/bid/auction-current-joined", label: "Phiên đang tham gia", icon: TrendingUp },
-      { to: "/user/bid/history", label: "Lịch sử đấu giá", icon: Activity  }
+      { to: "/user/bid/history", label: "Lịch sử đấu giá", icon: Activity }
     ],
   },
 ];
@@ -53,10 +55,15 @@ export default function ProfileLayout() {
     setOpenMenu((prev) => (prev === menu ? "" : menu));
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <Header />
+    <div className="flex flex-col min-h-screen bg-gray-50 relative">
+      <GlobalSnow />
+      <ReindeerScene />
 
-      <main className="flex gap-6 px-6 md:px-10 py-6 flex-1">
+      <div className="snow-cap sticky top-0 z-50">
+        <Header />
+      </div>
+
+      <main className="flex gap-6 px-6 md:px-10 py-6 flex-1 relative z-10">
         {/* Sidebar */}
         <aside className="w-72 flex-shrink-0 block">
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm sticky top-6">
@@ -76,8 +83,8 @@ export default function ProfileLayout() {
                     <button
                       onClick={() => toggleMenu(menu.id)}
                       className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all ${isOpen
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-700 hover:bg-gray-50"
+                        ? "bg-gray-900 text-white"
+                        : "text-gray-700 hover:bg-gray-50"
                         }`}
                     >
                       <div className="flex items-center gap-3">
