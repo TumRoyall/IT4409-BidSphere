@@ -1,6 +1,111 @@
-/* User Module Styles - Member 1 */
-/* TODO: Add styles for profile, balance pages */
+/* User module: profile + balance surfaces */
 
 .user-page {
-  /* TODO: Add styles here */
+  display: grid;
+  gap: var(--spacing-lg);
+}
+
+.user-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-lg);
+}
+
+.user-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.user-card__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.user-meta {
+  display: inline-flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  color: var(--text-secondary);
+}
+
+.balance-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: calc(var(--spacing-xs) + 2px) var(--spacing-sm);
+  border-radius: var(--radius-full);
+  background: var(--gradient-primary);
+  color: var(--text-inverse);
+  font-weight: 700;
+}
+
+.user-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.user-stat {
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+  display: grid;
+  gap: var(--spacing-xs);
+}
+
+.user-stat__label {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.user-stat__value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.user-list {
+  display: grid;
+  gap: var(--spacing-sm);
+}
+
+.user-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  background: var(--bg-primary);
+  transition: var(--transition-base);
+}
+
+.user-list__item:hover {
+  border-color: var(--border-dark);
+  box-shadow: var(--shadow-xs);
+}
+
+.user-list__meta {
+  display: grid;
+  gap: 2px;
+  color: var(--text-secondary);
+}
+
+.user-list__name {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .user-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

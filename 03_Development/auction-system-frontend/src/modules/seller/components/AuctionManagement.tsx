@@ -6,7 +6,7 @@ import { Package, X, TrendingUp } from "lucide-react";
 import auctionApi from "@/api/modules/auction.api";
 import BiddingHistory from "./BiddingHistory";
 import type { Product } from "../types/seller.types";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 interface AuctionManagementProps {
   product?: Product | null;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Search, Package, Gavel } from "lucide-react";
 import { Button, Input } from "@/components/common";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 type ActionToolBarProps = {
   onSearch?: (keyword: string) => void;

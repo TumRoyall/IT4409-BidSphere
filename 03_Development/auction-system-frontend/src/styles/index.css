@@ -1,12 +1,27 @@
 /**
  * Main Styles Entry Point
- * Import all CSS files here
+ * Import all CSS files here in proper order
  */
 
 @import './tailwind.css';
 
-/* Global Styles */
+/* === FOUNDATION LAYER === */
+/* Global design system - colors, spacing, shadows, z-index */
 @import './global.css';
+
+/* === ANIMATIONS LAYER === */
+/* All @keyframes animations - consolidated */
+@import './animations.css';
+
+/* === COMPONENTS LAYER === */
+/* Unified button styles - primary, secondary, icons, special buttons */
+@import './buttons.css';
+
+/* Modal styles */
+@import './modal.css';
+
+/* Form styles */
+@import './form.css';
 
 /* Layout Styles */
 @import './layout.css';
@@ -14,7 +29,8 @@
 /* Component Styles */
 @import './components.css';
 
-/* Module Styles */
+/* === MODULE LAYER === */
+/* Module-specific styles */
 @import './auth.css';
 @import './user.css';
 @import './product.css';
@@ -22,5 +38,21 @@
 @import './payment.css';
 @import './feedback.css';
 
-/* Utilities */
+/* Modularized CSS - Clean architecture with organized modules */
+@import './modules/seller/index.css';         /* 7 seller modules */
+@import './modules/seller-profile/index.css'; /* 3 seller-profile modules */
+@import './modules/form/index.css';            /* 4 form modules */
+@import './modules/product-list/index.css';    /* 3 product-list modules */
+@import './modules/layout/index.css';          /* 4 layout modules */
+
+/* Other module-specific styles */
+@import './category-select.css';
+@import './product-selector.css';
+@import './auction-list.css';
+@import './auction-session-form.css';
+@import './auction-session-preview.css';
+
+/* === UTILITIES LAYER === */
+/* Utility classes and helpers */
 @import './utilities.css';
+@import './validation-error.css';

@@ -15,7 +15,7 @@ import {
   Heart,
   ChevronRight
 } from "lucide-react";
-import "@/styles/seller-profile.css";
+import "@/styles/modules/seller-profile/index.css";
 
 type SellerData = any;
 
@@ -53,12 +53,18 @@ const SellerProfile = (): React.ReactElement => {
     const activeProducts = normalizedStatuses.filter((status) => activeStatuses.has(status)).length;
     const completedProducts = normalizedStatuses.filter((status) => completedStatuses.has(status)).length;
     const pendingProducts = normalizedStatuses.filter((status) => status === "pending" || status === "draft").length;
-    const approvedProducts = normalizedStatuses.filter((status) => status === "open" || status === "pending").length;
+    
+    // Since we're showing auctions (which are already created from approved products),
+    // calculate approval as: all auctions except cancelled/rejected
+    const approvedProducts = normalizedStatuses.filter((status) => 
+      status !== "cancelled" && status !== "rejected"
+    ).length;
 
     const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
     const recentListings = auctions.filter((auction) => {
-      if (!auction.createdAt) return false;
-      return new Date(auction.createdAt).getTime() >= thirtyDaysAgo;
+      const dateField = auction.createdAt || auction.startTime || auction.timestamp;
+      if (!dateField) return false;
+      return new Date(dateField).getTime() >= thirtyDaysAgo;
     }).length;
 
     const startPrices = auctions
@@ -72,7 +78,9 @@ const SellerProfile = (): React.ReactElement => {
 
     const categoryMap = new Map<string, number>();
     auctions.forEach((auction) => {
-      const category = (auction.product?.category || "Uncategorized").trim() || "Uncategorized";
+      // API returns category as 'categoryName' property
+      const rawCategory = auction.categoryName || auction.category || auction.product?.category;
+      const category = (rawCategory || "Uncategorized").toString().trim() || "Uncategorized";
       categoryMap.set(category, (categoryMap.get(category) ?? 0) + 1);
     });
 
@@ -121,9 +129,20 @@ const SellerProfile = (): React.ReactElement => {
   const loadSellerAuctions = async (targetSellerId: number) => {
     try {
       console.log("[SellerProfile] Loading auctions for sellerId:", targetSellerId);
-      const response = await auctionApi.getAuctionsBySellerId(targetSellerId);
+      const response = await auctionApi.getAuctionsBySellerId(targetSellerId, {
+        page: 0,
+        size: 20,
+        sort: "createdAt,DESC"
+      });
       console.log("[SellerProfile] API response:", response);
-      const auctionList: AuctionResponse[] = Array.isArray(response.data) ? response.data : [];
+
+      const data: any = response.data;
+      const auctionList: AuctionResponse[] = Array.isArray(data)
+        ? data
+        : Array.isArray(data?.content)
+          ? data.content
+          : [];
+
       console.log("[SellerProfile] Final auctionList:", auctionList);
       setSellerAuctions(auctionList);
       setStats(calculateStats(auctionList));
@@ -347,22 +366,26 @@ const SellerProfile = (): React.ReactElement => {
               </section>
             )}
 
-            {stats?.topCategories?.length ? (
+            {stats && (
               <section className="card">
                 <div className="card-header">
                   <h2 className="card-title">Top Categories</h2>
                   <span className="card-subtitle">Lĩnh vực hoạt động nổi bật</span>
                 </div>
                 <div className="category-chips">
-                  {stats.topCategories.map((category) => (
-                    <div key={category.name} className="category-chip">
-                      <span>{category.name}</span>
-                      <small>{category.count} sản phẩm</small>
-                    </div>
-                  ))}
+                  {stats.topCategories && stats.topCategories.length > 0 ? (
+                    stats.topCategories.map((category) => (
+                      <div key={category.name} className="category-chip">
+                        <span>{category.name}</span>
+                        <small>{category.count} sản phẩm</small>
+                      </div>
+                    ))
+                  ) : (
+                    <p style={{ color: '#999', fontSize: '14px' }}>No category data available</p>
+                  )}
                 </div>
               </section>
-            ) : null}
+            )}
 
             {/* CONTACT */}
             <section className="card">

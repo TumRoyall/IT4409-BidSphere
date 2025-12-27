@@ -2,14 +2,12 @@
 import React, { useState, useEffect } from "react";
 import auctionApi from "@/api/modules/auction.api";
 import type { AuctionResponse } from "@/api/modules/auction.api";
-import { useAuth } from "@/hooks/useAuth";
 import { Clock, Gavel, Calendar, TrendingUp } from "lucide-react";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 type TabType = "waiting" | "upcoming" | "running" | "completed";
 
 const SellerAuctionManagement = (): React.ReactElement => {
-    const { user } = useAuth();
     const [activeTab, setActiveTab] = useState<TabType>("running");
     const [auctions, setAuctions] = useState<AuctionResponse[]>([]);
     const [loading, setLoading] = useState(true);

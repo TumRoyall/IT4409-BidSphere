@@ -18,11 +18,11 @@ export interface ModalProps {
   /**
    * Heading displayed at the top of the modal.
    */
-  title: string;
+  title: React.ReactNode;
   /**
    * Optional subtitle displayed below the title.
    */
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   /**
    * Content of the modal. Can be any React nodes.
    */
@@ -35,6 +35,10 @@ export interface ModalProps {
    * Optional class applied to the modal container for custom styling.
    */
   className?: string;
+  /**
+   * Optional class applied to the modal content wrapper for custom styling.
+   */
+  contentClassName?: string;
 }
 
 /**
@@ -52,6 +56,7 @@ export const Modal: React.FC<ModalProps> = ({
   children,
   size = "lg",
   className,
+  contentClassName,
 }) => {
   // Prevent body scrolling when the modal is open
   useEffect(() => {
@@ -109,7 +114,7 @@ export const Modal: React.FC<ModalProps> = ({
           </Button>
         </div>
         {/* Content */}
-        <div className="modal-content">{children}</div>
+        <div className={`modal-content ${contentClassName ?? ""}`}>{children}</div>
       </div>
     </div>
   );

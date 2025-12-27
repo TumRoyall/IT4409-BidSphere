@@ -41,7 +41,7 @@ export default function HistoryBidPage() {
 
         const statusMap: AuctionStatusMap = {};
         await Promise.all(
-          auctionIds.map(async id => {
+          auctionIds.map(async (id: any) => {
             try {
               const resAuction = await auctionApi.getAuctionById(id);
               statusMap[id] = resAuction.data.status;

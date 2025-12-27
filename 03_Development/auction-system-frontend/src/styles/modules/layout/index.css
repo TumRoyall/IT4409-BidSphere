@@ -1,0 +1,12 @@
+/* ===================================================================
+   📦 LAYOUT MODULE INDEX - Unified Import File
+   =================================================================== */
+
+/* This file imports all layout-related CSS modules in the correct order.
+   Import this single file instead of individual modules for better organization. */
+
+/* Layout Modules */
+@import './layout-header.css';      /* Top navigation, logo, search, user menu */
+@import './layout-sidebar.css';     /* Sidebar navigation (placeholder) */
+@import './layout-main.css';        /* Main content area (intro, auctions, users) */
+@import './layout-components.css';  /* Footer and dropdown menus */

@@ -1,0 +1,316 @@
+/* ===================================================================
+   🔝 LAYOUT HEADER MODULE - Top Navigation & Header
+   =================================================================== */
+
+/* NOTE: This module contains:
+   - Header Container
+   - Logo & Branding
+   - Navigation Menu
+   - User Account Menu
+   - Header Responsive
+   
+   Content extracted from layout.module.css
+*/
+
+/* 1xBid Theme */
+
+/* ======================== */
+/* 🧭 HEADER (3 tầng)       */
+/* ======================== */
+
+/* ---------- Top bar ---------- */
+.topBar {
+  background-color: #0b2b4c;
+  color: #d1d5db;
+  font-size: 12px;
+  padding: 6px 0;
+}
+
+.topBarLinks {
+  display: flex;
+  justify-content: flex-start;
+  gap: 16px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.topBarLinks a {
+  color: #d1d5db;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.topBarLinks a:hover {
+  color: #ffffff;
+}
+
+/* ---------- Main bar ---------- */
+.mainBar {
+  background-color: #ffffff;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.mainInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover img {
+  transform: scale(1.05);
+}
+
+.logo span {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0b2b4c;
+}
+
+/* ---------- Search box ---------- */
+.search {
+  flex: 1;
+  margin: 0 24px;
+  position: relative;
+}
+
+.search input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 40px 8px 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search input:focus {
+  border-color: #0b2b4c;
+  box-shadow: 0 0 0 2px rgba(11, 43, 76, 0.2);
+}
+
+.search button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.search button:hover {
+  color: #0b2b4c;
+}
+
+/* ---------- Right side buttons ---------- */
+.mainRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menuLink {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0b2b4c;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.menuLink:hover {
+  background: #f3f4f6;
+}
+
+.ctaLink {
+  background-color: #0b2b4c;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s ease, background-color 0.2s ease;
+}
+
+.ctaLink:hover {
+  background-color: #133a66;
+  transform: scale(1.05);
+}
+
+.notiWrapper {
+  position: relative;
+}
+
+.notiButton {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #0b2b4c;
+}
+
+.notiBadge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ef4444;
+  color: white;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 600;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notiDropdown {
+  position: absolute;
+  right: 0;
+  top: 30px;
+  width: 300px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 50;
+}
+
+.notiDropdown h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #0b2b4c;
+}
+
+.notiDropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.notiItem {
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.notiItem:hover {
+  background: #f3f4f6;
+}
+
+.unread {
+  background: #e6f0ff;
+  font-weight: 600;
+}
+
+.read {
+  opacity: 0.7;
+}
+
+.notiMoreBtn {
+  width: 100%;
+  padding: 6px 0;
+  background: none;
+  border: none;
+  color: #0b2b4c;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.notiMoreBtn:hover {
+  background-color: #f3f4f6;
+}
+
+.userMenuWrapper {
+  position: relative;
+}
+
+.userButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #e5e7eb;
+  object-fit: cover;
+}
+
+.avatar[data-gender="male"] {
+  border-color: #007bff;
+}
+
+.avatar[data-gender="female"] {
+  border-color: #ff69b4;
+}
+
+.username {
+  font-weight: 600;
+  color: #0b2b4c;
+}
+
+/* ---------- Navigation ---------- */
+.nav {
+  background-color: #133a66;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.navInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.navLink {
+  font-size: 14px;
+  font-weight: 500;
+  color: #d1d5db;
+  text-decoration: none;
+  padding: 12px 0;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.navLink:hover,
+.navLinkActive {
+  color: #ffffff;
+}

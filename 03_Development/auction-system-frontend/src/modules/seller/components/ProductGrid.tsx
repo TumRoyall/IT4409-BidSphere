@@ -2,7 +2,7 @@ import React from "react";
 import { Button, ProductListSkeleton } from "@/components/common";
 import ProductCard from "./ProductCard";
 import type { Product } from "../types/seller.types";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 interface ProductGridProps {
   products: Product[];
@@ -17,6 +17,7 @@ interface ProductGridProps {
   onRefresh?: () => void;
   onEdit?: (product: Product) => void;
   onDelete?: (product: Product) => void;
+  onPageChange?: (page: number) => void;
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({
@@ -27,6 +28,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   onRefresh,
   onEdit,
   onDelete,
+  onPageChange,
 }) => {
   if (loading) {
     return <ProductListSkeleton count={3} />;
@@ -84,9 +86,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           <Button
             variant="outline"
             disabled={pagination.page <= 1}
-            onClick={() => {
-              /* Handle previous page */
-            }}
+            onClick={() => onPageChange?.(pagination.page - 1)}
           >
             ← Previous
           </Button>
@@ -96,9 +96,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           <Button
             variant="outline"
             disabled={pagination.page >= pagination.totalPages}
-            onClick={() => {
-              /* Handle next page */
-            }}
+            onClick={() => onPageChange?.(pagination.page + 1)}
           >
             Next →
           </Button>

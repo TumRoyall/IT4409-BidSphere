@@ -4,7 +4,7 @@ import { Button } from "@/components/common/Button";
 import ProductApprovalModal, { type ProductApprovalRequest } from "../components/ProductApprovalModal";
 import productApi from "@/api/modules/product.api";
 import type { Product } from "@/modules/product/types";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 const AdminProductApprovalPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);

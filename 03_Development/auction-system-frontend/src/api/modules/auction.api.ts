@@ -63,6 +63,11 @@ export interface AuctionResponse {
   updatedAt?: string;
   winnerId?: number | null;
 
+  // Additional optional fields observed in responses
+  categoryName?: string;   // Some endpoints return category as categoryName
+  category?: string;       // Fallback category field at auction level
+  timestamp?: string | number; // Generic time marker used by some APIs
+
   // UI fields
   productImageUrl?: string;
   productName?: string;
@@ -70,9 +75,20 @@ export interface AuctionResponse {
   estimatePrice?: number;
 }
 
+// Paginated Response wrapper for list endpoints
+export interface PaginatedResponse<T> {
+  content: T[];
+  totalPages: number;
+  totalElements: number;
+  number: number; // current page (0-indexed)
+  size: number;   // page size
+  last: boolean;
+  first: boolean;
+}
+
 // ==================== API FUNCTIONS ====================
 const auctionApi = {
-  // 📊 Get auctions with filter (từ HEAD)
+  // 📊 Get auctions with filter (paginated response)
   getAuctions: (params?: {
     status?: string;
     category?: string;
@@ -83,15 +99,15 @@ const auctionApi = {
     size?: number;
     sort?: string;
   }) =>
-    axiosClient.get<AuctionResponse[]>("/auctions", { params }),
+    axiosClient.get<PaginatedResponse<AuctionResponse>>("/auctions", { params }),
 
   // ✨ Create
   createAuction: (data: AuctionRequest) =>
     axiosClient.post<AuctionResponse>("/auctions", data),
 
-  // 📊 Get all
+  // 📊 Get all (returns array or paginated)
   getAllAuctions: () =>
-    axiosClient.get<AuctionResponse[]>("/auctions"),
+    axiosClient.get<AuctionResponse[] | PaginatedResponse<AuctionResponse>>("/auctions"),
 
   // 🔍 Get by ID
   getAuctionById: (auctionId: number) =>
@@ -113,23 +129,29 @@ const auctionApi = {
   closeAuction: (auctionId: number) =>
     axiosClient.post<void>(`/auctions/${auctionId}/close`),
 
-  // 📊 Active
+  // 📊 Active (paginated)
   getActiveAuctions: () =>
-    axiosClient.get<AuctionResponse[]>("/auctions/active"),
+    axiosClient.get<PaginatedResponse<AuctionResponse>>("/auctions/active"),
 
-  // 📊 Get auctions của seller hiện tại (từ token)
+  // 📊 Get auctions của seller hiện tại (paginated)
   getMyAuctions: () =>
-    axiosClient.get<AuctionResponse[]>("/auctions/me"),
+    axiosClient.get<PaginatedResponse<AuctionResponse>>("/auctions/me"),
 
   // ✅ Approve / Reject (Admin duyệt auction: DRAFT -> PENDING hoặc CANCELLED)
   approveAuction: (auctionId: number, status: string) =>
-    axiosClient.get<AuctionResponse>(
+    axiosClient.post<AuctionResponse>(
       `/auctions/${auctionId}/approve?status=${status}`
     ),
 
-  // 📊 Get auctions by seller ID (public - for seller profile)
-  getAuctionsBySellerId: (sellerId: number) =>
-    axiosClient.get<AuctionResponse[]>(`/auctions/seller/${sellerId}`),
+  // 📊 Get auctions by seller ID (public - for seller profile, paginated or array fallback)
+  getAuctionsBySellerId: (
+    sellerId: number,
+    params?: { page?: number; size?: number; sort?: string; status?: string }
+  ) =>
+    axiosClient.get<PaginatedResponse<AuctionResponse> | AuctionResponse[]>(
+      `/auctions/seller/${sellerId}`,
+      { params }
+    ),
 };
 
 export default auctionApi;

@@ -97,10 +97,10 @@ export default function MyAuctionOrdersPage() {
           <AuctionOrderCard
             key={order.transactionId}
             order={order}
-            onPay={(txnId) => {
+            onPay={(txnId: string) => {
               navigate(`/deposit?txn=${txnId}`);
             }}
-            onDone={(txnId) => {
+            onDone={(txnId: string) => {
               console.log("DONE txn:", txnId);
             }}
           />

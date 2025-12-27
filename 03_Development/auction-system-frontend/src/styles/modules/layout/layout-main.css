@@ -1,0 +1,134 @@
+/* ===================================================================
+   📄 LAYOUT MAIN MODULE - Main Content Area
+   =================================================================== */
+
+/* NOTE: This module contains:
+   - Main Content Container
+   - Page Container
+   - Content Spacing
+   - Grid System
+   - Main Responsive
+   
+   Content extracted from layout.module.css
+*/
+
+/* ======================== */
+/* 📢 INTRO / GIỚI THIỆU   */
+/* ======================== */
+.intro {
+  text-align: center;
+  padding: 24px 16px;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.intro h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0b2b4c;
+  margin-bottom: 8px;
+}
+
+.intro p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #374151;
+}
+
+/* ======================== */
+/* 🔥 HOT AUCTIONS          */
+/* ======================== */
+.hotAuctions {
+  max-width: 1280px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.hotAuctions h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #133a66;
+}
+
+.auctionList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.auctionCard {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.auctionCard:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.auctionTitle {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.auctionPrice {
+  display: block;
+  margin-bottom: 10px;
+  color: #e53935;
+  font-weight: 600;
+}
+
+.bidBtn {
+  background: #0b2b4c;
+  color: #fff;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.25s ease, background-color 0.2s ease;
+}
+
+.bidBtn:hover {
+  transform: scale(1.05);
+  background-color: #133a66;
+}
+
+/* ======================== */
+/* 🏆 TOP USERS             */
+/* ======================== */
+.topUsers {
+  background-color: #f3f4f6;
+  padding: 24px 16px;
+  max-width: 1280px;
+  margin: 0 auto 24px auto;
+  border-radius: 8px;
+}
+
+.topUsers h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #0b2b4c;
+}
+
+.topUsers ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.topUsers li {
+  padding: 8px 0;
+  border-bottom: 1px dashed #d1d5db;
+  font-size: 14px;
+  color: #374151;
+}
+.topUsers li:last-child {
+  border-bottom: none;
+}

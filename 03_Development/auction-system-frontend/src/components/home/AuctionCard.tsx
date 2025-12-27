@@ -100,7 +100,7 @@ export default function AuctionCard({ auction, viewMode = "grid" }: any) {
         {/* DOTS */}
         {images.length > 1 && (
           <div className="dot-container">
-            {images.map((_, i) => (
+            {images.map((_: string, i: number) => (
               <span
                 key={i}
                 className={`dot ${i === index ? "active" : ""}`}

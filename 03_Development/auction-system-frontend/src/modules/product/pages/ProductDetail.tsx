@@ -4,7 +4,7 @@ import { ArrowLeft, Calendar, DollarSign, Tag } from "lucide-react";
 import productApi from "@/api/modules/product.api";
 import type { ProductResponse } from "@/api/modules/product.api";
 import { Button } from "@/components/common/Button";
-import "@/styles/product-list.css";
+import "@/styles/modules/product-list/index.css";
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();

@@ -43,7 +43,7 @@ const AdminDashboardPage = () => {
         try {
             const res = await adminAuctionApi.getAll({ page: 0, size: 100 });
             const data = res.data.content || [];
-            setAuctions(data.map(a => ({
+            setAuctions(data.map((a: any) => ({
                 ...a,
                 status: a.status.toUpperCase() === "CANCELLED" ? "CLOSED" : a.status.toUpperCase()
             })));

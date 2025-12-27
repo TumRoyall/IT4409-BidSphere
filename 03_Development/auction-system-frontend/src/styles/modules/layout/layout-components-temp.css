@@ -1,0 +1,226 @@
+/* TEMP FILE - Footer and dropdown components */
+
+/* ======================== */
+/* 🦶 FOOTER                */
+/* ======================== */
+.footer {
+  background: linear-gradient(90deg, #0b2b4c, #133a66);
+  color: #f9fafb;
+  padding-top: 40px;
+  margin-top: 40px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.footerContent {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.footer h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+.footer p,
+.footer a {
+  font-size: 14px;
+  color: #d1d5db;
+  text-decoration: none;
+  line-height: 1.6;
+  transition: color 0.2s ease;
+}
+
+.footer a:hover {
+  color: #ffffff;
+}
+
+.footerLogo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.footerLogo img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.footerLogo img:hover {
+  transform: rotate(-5deg) scale(1.05);
+}
+
+.footerLogo span {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.footerText {
+  font-size: 14px;
+  color: #d1d5db;
+  line-height: 1.6;
+  max-width: 320px;
+}
+
+.footerTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+.footerLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerLinks li {
+  margin-bottom: 8px;
+}
+
+.footerLinks a {
+  font-size: 14px;
+  color: #d1d5db;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footerLinks a:hover {
+  color: #ffffff;
+}
+
+.footerContact p {
+  font-size: 14px;
+  color: #d1d5db;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.footerContact span {
+  color: #fff;
+  font-weight: 500;
+}
+
+.footerBottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  padding: 16px 0;
+  font-size: 13px;
+  color: #e5e7eb;
+  margin-top: 24px;
+}
+
+.footerBottom span {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* ======================== */
+/* DROPDOWN MENUS           */
+/* ======================== */
+
+.dropdownMenu {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  width: 220px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dropdownMenu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: #374151;
+}
+
+.dropdownMenu button svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #475569;
+}
+
+.dropdownMenu button:hover {
+  background: #f3f4f6;
+}
+
+.menuLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 12px;
+  margin: 4px 8px;
+  border-radius: 8px;
+  letter-spacing: 0.2px;
+}
+
+.dropdownGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #dc2626 !important;
+  font-weight: 600;
+}
+
+.logoutBtn:hover {
+  background-color: #fee2e2 !important;
+}
+
+.auction-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sectionAccount {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.sectionAccount svg {
+  color: #2563eb;
+}
+
+.sectionAuction {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.sectionAuction svg {
+  color: #facc15;
+}

@@ -1,0 +1,260 @@
+/* ===================================================================
+   📱 SELLER PROFILE CONTENT MODULE - Profile Tabs & Content Areas
+   =================================================================== */
+
+/* NOTE: This module contains:
+   - Tab Navigation
+   - Tab Content Areas
+   - Product List in Profile
+   - Product Grid in Profile
+   - Content Responsive
+   
+   Content extracted from seller-profile.css lines 347-581
+*/
+
+/* ==============================
+   MAIN CONTENT
+   ============================== */
+
+.seller-content {
+  padding: 40px 20px;
+  background: var(--bg-secondary);
+}
+
+.content-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 32px;
+}
+
+.content-left {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+  transition: var(--transition-base);
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.card-title {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.card-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* STAT BOXES */
+
+.stat-boxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.stat-box {
+  text-align: center;
+  padding: 16px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+}
+
+.stat-box.accent {
+  background: linear-gradient(120deg, rgba(37, 99, 235, 0.08), rgba(59, 130, 246, 0.02));
+  border-color: rgba(37, 99, 235, 0.2);
+}
+
+.stat-box-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.stat-box-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.stat-box-hint {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.insight-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.insight-card {
+  padding: 18px;
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-light);
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.insight-card span {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.4px;
+  display: flex;
+  justify-content: center;
+}
+
+.insight-card strong {
+  font-size: 18px;
+  color: var(--primary);
+  display: flex;
+  justify-content: center;
+}
+
+.category-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.category-chip {
+  padding: 12px 16px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  background: rgba(37, 99, 235, 0.08);
+  min-width: 160px;
+}
+
+.category-chip span {
+  display: block;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--primary);
+  display: flex;
+  justify-content: center;
+}
+
+.category-chip small {
+  font-size: 11px;
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: center;
+}
+
+/* CONTACT */
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-link {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: var(--transition);
+  align-items: flex-start;
+}
+
+.contact-link:hover {
+  background: var(--bg-primary);
+  border-color: var(--primary);
+}
+
+.contact-link svg {
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.contact-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.contact-value {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-top: 4px;
+  word-break: break-word;
+}
+
+/* SIDEBAR */
+
+.content-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+
+
+.detail-item {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 13px;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-item span {
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: center;
+}
+
+.detail-item strong {
+  color: var(--primary);
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+}

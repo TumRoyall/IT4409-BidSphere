@@ -5,7 +5,7 @@ import type { TransactionAfterAuction } from "@/api/modules/transactionAfterAuct
 import auctionApi from "@/api/modules/auction.api";
 import { useAuth } from "@/hooks/useAuth";
 import { Package, Truck, Check, AlertCircle, Clock, X, AlertTriangle } from "lucide-react";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 // Extended type với auction info
 interface OrderWithAuction extends TransactionAfterAuction {
@@ -149,99 +149,99 @@ const SellerOrders = (): React.ReactElement => {
     };
 
     return (
-        <div className="seller-orders-page">
+        <div className="so-page">
             {/* Header */}
-            <div className="page-header">
-                <h1 className="page-title">Đơn hàng cần xử lý</h1>
-                <p className="page-subtitle">Quản lý các đơn hàng từ phiên đấu giá đã kết thúc</p>
+            <div className="so-page-header">
+                <h1 className="so-page-title">Đơn hàng cần xử lý</h1>
+                <p className="so-page-subtitle">Quản lý các đơn hàng từ phiên đấu giá đã kết thúc</p>
             </div>
 
             {/* Content */}
             {loading ? (
-                <div className="loading-state">
-                    <div className="spinner"></div>
+                <div className="so-loading-state">
+                    <div className="so-spinner"></div>
                     <p>Đang tải...</p>
                 </div>
             ) : error ? (
-                <div className="error-state">
+                <div className="so-error-state">
                     <AlertCircle size={48} strokeWidth={1.5} />
                     <p>{error}</p>
-                    <button onClick={fetchTransactions} className="btn-primary">
+                    <button onClick={fetchTransactions} className="so-btn-primary">
                         Thử lại
                     </button>
                 </div>
             ) : transactions.length === 0 ? (
-                <div className="empty-state">
+                <div className="so-empty-state">
                     <Package size={48} strokeWidth={1.5} />
-                    <p className="empty-state-text">Không có đơn hàng nào</p>
-                    <p className="empty-state-subtext">
+                    <p className="so-empty-state-text">Không có đơn hàng nào</p>
+                    <p className="so-empty-state-subtext">
                         Các đơn hàng sẽ xuất hiện ở đây sau khi phiên đấu giá kết thúc
                     </p>
                 </div>
             ) : (
-                <div className="orders-list">
+                <div className="so-orders-list">
                     {transactions.map((txn) => {
                         const statusInfo = getStatusInfo(txn.status);
                         const StatusIcon = statusInfo.icon;
                         const canShip = txn.status === "PENDING";
 
                         return (
-                            <div key={txn.id || txn.txnId} className="order-card">
-                                <div className="order-header">
-                                    <div className="order-id">
-                                        <span className="order-label">Mã đơn:</span>
-                                        <span className="order-value">#{txn.id || txn.txnId}</span>
+                            <div key={txn.id || txn.txnId} className="so-order-card">
+                                <div className="so-order-header">
+                                    <div className="so-order-id">
+                                        <span className="so-order-label">Mã đơn:</span>
+                                        <span className="so-order-value">#{txn.id || txn.txnId}</span>
                                     </div>
-                                    <div className={`order-status ${statusInfo.className}`}>
+                                    <div className={`so-order-status so-${statusInfo.className}`}>
                                         <StatusIcon size={16} />
                                         <span>{statusInfo.label}</span>
                                     </div>
                                 </div>
 
-                                <div className="order-body">
-                                    <div className="order-product">
+                                <div className="so-order-body">
+                                    <div className="so-order-product">
                                         <img
                                             src={txn.auctionInfo?.productImageUrl || "/placeholder-product.png"}
                                             alt={txn.auctionInfo?.productName || "Sản phẩm"}
-                                            className="order-product-image"
+                                            className="so-order-product-image"
                                             onError={(e) => {
                                                 (e.target as HTMLImageElement).src = "/placeholder-product.png";
                                             }}
                                         />
-                                        <div className="order-product-info">
-                                            <h3 className="product-name">{txn.auctionInfo?.productName || `Phiên đấu giá #${txn.auctionId}`}</h3>
-                                            <p className="product-auction">Auction ID: {txn.auctionId}</p>
+                                        <div className="so-order-product-info">
+                                            <h3 className="so-product-name">{txn.auctionInfo?.productName || `Phiên đấu giá #${txn.auctionId}`}</h3>
+                                            <p className="so-product-auction">Auction ID: {txn.auctionId}</p>
                                         </div>
                                     </div>
 
-                                    <div className="order-details">
-                                        <div className="detail-item">
-                                            <span className="detail-label">Người mua</span>
-                                            <span className="detail-value">
+                                    <div className="so-order-details">
+                                        <div className="so-detail-item">
+                                            <span className="so-detail-label">Người mua</span>
+                                            <span className="so-detail-value">
                                                 {txn.buyerName || txn.buyerUsername || txn.buyer?.fullName || `User #${txn.buyerId}`}
                                             </span>
                                         </div>
-                                        <div className="detail-item">
-                                            <span className="detail-label">Số tiền</span>
-                                            <span className="detail-value highlight">{formatCurrency(txn.amount)}</span>
+                                        <div className="so-detail-item">
+                                            <span className="so-detail-label">Số tiền</span>
+                                            <span className="so-detail-value so-highlight">{formatCurrency(txn.amount)}</span>
                                         </div>
-                                        <div className="detail-item">
-                                            <span className="detail-label">Cập nhật</span>
-                                            <span className="detail-value">{formatDate(txn.updatedAt)}</span>
+                                        <div className="so-detail-item">
+                                            <span className="so-detail-label">Cập nhật</span>
+                                            <span className="so-detail-value">{formatDate(txn.updatedAt)}</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 {canShip && (
-                                    <div className="order-actions">
+                                    <div className="so-order-actions">
                                         <button
-                                            className="btn-ship"
+                                            className="so-btn-ship"
                                             onClick={() => openConfirmModal(txn)}
                                             disabled={updatingId === txn.txnId}
                                         >
                                             {updatingId === txn.txnId ? (
                                                 <>
-                                                    <span className="spinner-small"></span>
+                                                    <span className="so-spinner-small"></span>
                                                     Đang cập nhật...
                                                 </>
                                             ) : (
@@ -261,41 +261,41 @@ const SellerOrders = (): React.ReactElement => {
 
             {/* Confirmation Modal */}
             {showModal && selectedTxn && (
-                <div className="modal-overlay" onClick={closeModal}>
-                    <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+                <div className="so-modal-overlay" onClick={closeModal}>
+                    <div className="so-modal-container" onClick={(e) => e.stopPropagation()}>
                         {/* Modal Header */}
-                        <div className="modal-header">
-                            <div className="modal-icon-wrapper warning">
+                        <div className="so-modal-header">
+                            <div className="so-modal-icon-wrapper so-warning">
                                 <AlertTriangle size={28} />
                             </div>
-                            <button className="modal-close-btn" onClick={closeModal}>
+                            <button className="so-modal-close-btn" onClick={closeModal}>
                                 <X size={20} />
                             </button>
                         </div>
 
                         {/* Modal Body */}
-                        <div className="modal-body">
-                            <h2 className="modal-title">Xác nhận giao hàng</h2>
-                            <p className="modal-description">
+                        <div className="so-modal-body">
+                            <h2 className="so-modal-title">Xác nhận giao hàng</h2>
+                            <p className="so-modal-description">
                                 Bạn đang xác nhận <strong>đã gửi hàng</strong> cho đơn hàng <strong>#{selectedTxn.id || selectedTxn.txnId}</strong>
                             </p>
 
-                            <div className="modal-info-box">
-                                <div className="info-row">
-                                    <span className="info-label">📦 Sản phẩm:</span>
-                                    <span className="info-value">{selectedTxn.auctionInfo?.productName || `Auction #${selectedTxn.auctionId}`}</span>
+                            <div className="so-modal-info-box">
+                                <div className="so-info-row">
+                                    <span className="so-info-label">📦 Sản phẩm:</span>
+                                    <span className="so-info-value">{selectedTxn.auctionInfo?.productName || `Auction #${selectedTxn.auctionId}`}</span>
                                 </div>
-                                <div className="info-row">
-                                    <span className="info-label">👤 Người mua:</span>
-                                    <span className="info-value">{selectedTxn.buyerName || selectedTxn.buyer?.fullName || `User #${selectedTxn.buyerId}`}</span>
+                                <div className="so-info-row">
+                                    <span className="so-info-label">👤 Người mua:</span>
+                                    <span className="so-info-value">{selectedTxn.buyerName || selectedTxn.buyer?.fullName || `User #${selectedTxn.buyerId}`}</span>
                                 </div>
-                                <div className="info-row">
-                                    <span className="info-label">💰 Giá trị:</span>
-                                    <span className="info-value highlight">{formatCurrency(selectedTxn.amount)}</span>
+                                <div className="so-info-row">
+                                    <span className="so-info-label">💰 Giá trị:</span>
+                                    <span className="so-info-value so-highlight">{formatCurrency(selectedTxn.amount)}</span>
                                 </div>
                             </div>
 
-                            <div className="modal-warning">
+                            <div className="so-modal-warning">
                                 <AlertCircle size={16} />
                                 <span>
                                     Khi xác nhận, bạn cam kết sẽ <strong>giao hàng đúng như mô tả</strong> cho người mua.
@@ -305,18 +305,18 @@ const SellerOrders = (): React.ReactElement => {
                         </div>
 
                         {/* Modal Footer */}
-                        <div className="modal-footer">
-                            <button className="btn-cancel" onClick={closeModal}>
+                        <div className="so-modal-footer">
+                            <button className="so-btn-cancel" onClick={closeModal}>
                                 Hủy bỏ
                             </button>
                             <button
-                                className="btn-confirm"
+                                className="so-btn-confirm"
                                 onClick={handleConfirmShipped}
                                 disabled={updatingId === selectedTxn.txnId}
                             >
                                 {updatingId === selectedTxn.txnId ? (
                                     <>
-                                        <span className="spinner-small"></span>
+                                        <span className="so-spinner-small"></span>
                                         Đang xử lý...
                                     </>
                                 ) : (

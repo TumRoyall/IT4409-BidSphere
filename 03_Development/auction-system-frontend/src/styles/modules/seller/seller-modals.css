@@ -1,0 +1,607 @@
+/* ===================================================================
+   📋 SELLER MODALS MODULE - Modal Dialogs & Popups
+   =================================================================== */
+
+/* NOTE: This module contains:
+   - Product Details Modal
+   - View Details Modal
+   - More Options Modal
+   - Confirmation Modal
+   - Modal Animations
+   - Modal Responsive
+   
+   Content extracted from seller.css lines:
+   - 1235-1252 (Modal Specific Styles)
+   - 1410-1606 (Product Details Modal)
+   - 1686-1799 (View Details Modal)
+   - 1607-1685 (More Options Modal)
+   - 2404-2638 (Confirmation Modal)
+*/
+
+/* ===== 📋 PRODUCT DETAILS MODAL ===== */
+.product-details-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seller-spacing-lg);
+  /* Let the outer modal handle scrolling to avoid nested scrollbars */
+  max-height: none;
+  overflow: visible;
+  background: var(--seller-surface);
+  border-radius: var(--seller-radius-lg);
+}
+
+
+
+/* Two-column layout for image + details on wide modals */
+.product-details-modal .details-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* balanced columns */
+  gap: var(--seller-spacing-lg);
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .product-details-modal .details-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--seller-spacing-lg);
+  border-bottom: 1px solid var(--seller-gray-200);
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--seller-gray-900);
+  margin: 0;
+}
+
+.close-button {
+  background: transparent;
+  border: none;
+  color: var(--seller-gray-600);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--seller-transition);
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--seller-radius-md);
+}
+
+.close-button:hover {
+  background: var(--seller-gray-100);
+  color: var(--seller-gray-900);
+}
+
+.close-button:focus-visible {
+  outline: none;
+  box-shadow: var(--seller-focus-ring);
+}
+
+.details-image-container {
+  width: 100%;
+  height: 100%;
+  max-height: 500px;
+  background: var(--seller-gray-100);
+  border-radius: var(--seller-radius-lg);
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--seller-shadow-sm);
+}
+
+.details-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.details-image-container:hover .details-image {
+  transform: scale(1.02);
+}
+
+.details-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seller-spacing-lg);
+  padding-top: var(--seller-spacing-md);
+}
+
+.details-header {
+  display: flex;
+  align-items: center;
+  gap: var(--seller-spacing-md);
+  flex-wrap: wrap;
+}
+
+.auction-badge-small {
+  padding: 0.35rem 0.75rem;
+  background: var(--seller-warning);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--seller-radius-sm);
+}
+
+.detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seller-spacing-md);
+  padding: var(--seller-spacing-md);
+  background: var(--seller-surface-alt);
+  border: 1px solid var(--seller-border);
+  border-radius: var(--seller-radius-md);
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--seller-gray-900);
+  margin: 0;
+}
+
+.section-content {
+  font-size: 0.875rem;
+  color: var(--seller-gray-700);
+  line-height: 1.6;
+}
+
+.description-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--seller-spacing-lg);
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seller-spacing-sm);
+  padding: var(--seller-spacing-md);
+  background: var(--seller-gray-50);
+  border-radius: var(--seller-radius-md);
+  border: 1px solid var(--seller-gray-200);
+  box-shadow: var(--seller-shadow-xs);
+}
+
+.detail-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--seller-gray-600);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--seller-gray-900);
+}
+
+.price-highlight {
+  font-size: 1.25rem;
+  color: var(--seller-primary);
+}
+
+.mono {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+
+.copy-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  background: var(--seller-gray-100);
+  border: 1px solid var(--seller-gray-200);
+  border-radius: var(--seller-radius-sm);
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--seller-gray-600);
+  transition: var(--seller-transition);
+}
+
+.copy-button:hover {
+  background: var(--seller-primary);
+  color: white;
+  border-color: var(--seller-primary);
+}
+
+.copy-button:focus-visible {
+  outline: none;
+  box-shadow: var(--seller-focus-ring);
+}
+
+.details-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--seller-spacing-md);
+  padding-top: var(--seller-spacing-lg);
+  border-top: 1px solid var(--seller-gray-200);
+  flex-wrap: wrap;
+  background: var(--seller-surface);
+  border-radius: var(--seller-radius-md);
+}
+
+.action-btn-secondary {
+  flex: 0;
+  margin-right: auto;
+}
+
+.action-buttons-group {
+  display: flex;
+  gap: var(--seller-spacing-md);
+}
+
+.action-btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--seller-shadow-sm);
+}
+
+.action-btn-danger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--seller-shadow-sm);
+}
+
+/* ===== 📱 Responsive Tweaks ===== */
+@media (max-width: 768px) {
+  .product-details-modal .modal-content {
+    padding: var(--seller-spacing-md);
+  }
+
+  .details-image-container {
+    max-height: 320px;
+    border-radius: var(--seller-radius-md);
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+    gap: var(--seller-spacing-md);
+  }
+
+  .detail-section {
+    padding: var(--seller-spacing-sm);
+  }
+
+  .details-actions {
+    padding-top: var(--seller-spacing-md);
+  }
+}
+
+/* ===== 🎛️ PRODUCT MORE OPTIONS ===== */
+.product-more-options {
+  position: relative;
+}
+
+.more-options-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--seller-surface);
+  border: 1px solid var(--seller-border);
+  border-radius: var(--seller-radius-md);
+  color: var(--seller-gray-600);
+  cursor: pointer;
+  transition: var(--seller-transition);
+  flex-shrink: 0;
+}
+
+.more-options-toggle:hover {
+  background: var(--seller-gray-50);
+  color: var(--seller-primary);
+  border-color: var(--seller-primary);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+}
+
+.more-options-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--seller-focus-ring);
+}
+
+.more-options-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: var(--seller-surface);
+  border: 1px solid var(--seller-border);
+  border-radius: var(--seller-radius-md);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  min-width: 200px;
+  animation: slideDown 0.2s ease-out;
+  overflow: hidden;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--seller-spacing-md);
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--seller-gray-700);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--seller-transition);
+  text-align: left;
+}
+
+.menu-item:hover {
+  background: var(--seller-gray-50);
+  color: var(--seller-primary);
+}
+
+.menu-item svg {
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+/* ===== 🎯 CONFIRMATION MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-popover);
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-container.confirmation-modal {
+  background: white;
+  border-radius: 16px;
+  max-width: 420px; /* narrower than modal-md to better fit content */
+  width: auto;      /* fit container to content width */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px 24px 0 24px;
+}
+
+.modal-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-icon-wrapper.warning {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #f59e0b;
+}
+
+.modal-icon-wrapper.success {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #10b981;
+}
+
+.modal-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #f3f4f6;
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.modal-body {
+  padding: 20px 24px;
+}
+
+.modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+}
+
+.modal-description {
+  font-size: 15px;
+  color: #6b7280;
+  margin: 0 0 20px 0;
+  line-height: 1.5;
+}
+
+.modal-description strong {
+  color: #374151;
+}
+
+.modal-info-box {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.info-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.info-value.highlight {
+  color: #059669;
+  font-size: 16px;
+}
+
+.modal-warning {
+  display: flex;
+  gap: 10px;
+  padding: 14px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  color: #991b1b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.modal-warning svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.modal-warning strong {
+  color: #7f1d1d;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 12px;
+  padding: 20px 24px 24px 24px;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btn-cancel {
+  flex: 1;
+  padding: 14px 20px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.btn-confirm {
+  flex: 1.5;
+  padding: 14px 20px;
+  border: none;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-confirm:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+.btn-confirm:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Mobile responsive for modal */
+@media (max-width: 480px) {
+  .modal-container.confirmation-modal {
+    margin: 0 10px;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+  }
+
+  .btn-cancel,
+  .btn-confirm {
+    flex: none;
+    width: 100%;
+  }
+}

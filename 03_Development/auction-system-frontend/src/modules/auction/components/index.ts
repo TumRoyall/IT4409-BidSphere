@@ -1,7 +1,5 @@
 // src/modules/auction/components/index.ts
 
-export { default as AuctionCard } from "./AuctionCard";
-export { default as BidForm } from "./BidForm";
 export { AuctionSessionForm } from "./AuctionSessionForm";
 export { AuctionSessionPreview } from "./AuctionSessionPreview";
 export { default as ProductSelector } from "./ProductSelector";

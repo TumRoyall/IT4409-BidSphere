@@ -7,8 +7,7 @@
   align-items: flex-start;
   /* Changed from center to flex-start so modal starts at top */
   justify-content: center;
-  z-index: 99999;
-  /* Very high to be above everything including header (z-50) */
+  z-index: var(--z-modal);
   padding: 20px;
   animation: overlayFadeIn 0.2s ease-out;
   backdrop-filter: blur(2px);
@@ -19,20 +18,17 @@
 
 .modal-container {
   background: white;
-  border-radius: 0;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  width: 100% !important;
-  max-height: 85vh;
-  /* Limit height to viewport */
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2xl);
+  /* Fit container to content width, bounded by size classes */
+  width: auto;
+  max-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: stretch !important;
   /* Force children to stretch */
   animation: modalSlideIn 0.3s ease-out;
-  border: 1px solid #e5e7eb;
-  margin: 20px 0;
-  overflow-y: auto;
-  /* Enable vertical scroll if needed */
+  border: 1px solid var(--border-light);
 }
 
 /* Kích thước modal */
@@ -49,18 +45,23 @@
 }
 
 .modal-xl {
-  max-width: 1600px !important;
+  max-width: 1200px;
+}
+
+/* Larger modal for view details to fit all content */
+.view-details-modal.modal-container {
+  max-width: 1400px;
 }
 
 /* Header */
 .modal-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   padding: 24px 24px 16px;
   border-bottom: 1px solid #f3f4f6;
   background: #fafafa;
-  border-radius: 0;
+  border-radius: var(--radius-lg);
 }
 
 .modal-header-content {
@@ -74,6 +75,13 @@
   margin: 0 0 4px 0;
 }
 
+.modal-title-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .modal-subtitle {
   font-size: 0.875rem;
   color: #6b7280;
@@ -82,7 +90,7 @@
 
 .modal-close-button {
   padding: 8px;
-  border-radius: 0;
+  border-radius: var(--radius-md);
   color: #6b7280;
 }
 
@@ -96,9 +104,8 @@
   padding: 16px;
   /* Reduced from 24px for more width */
   overflow-y: auto;
-  /* Enable vertical scroll */
+  /* Avoid horizontal scrollbars due to inner layout rounding */
   overflow-x: hidden;
-  /* Prevent horizontal scroll */
   flex: 1;
   min-height: 0;
   /* Important for flex scroll to work */
@@ -141,12 +148,12 @@
 
 .modal-content::-webkit-scrollbar-track {
   background: #f8fafc;
-  border-radius: 0;
+  border-radius: var(--radius-sm);
 }
 
 .modal-content::-webkit-scrollbar-thumb {
   background: #cbd5e1;
-  border-radius: 0;
+  border-radius: var(--radius-sm);
 }
 
 .modal-content::-webkit-scrollbar-thumb:hover {

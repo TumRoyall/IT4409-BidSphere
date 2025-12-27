@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Clock, Wallet, Users, HelpCircle } from "lucide-react";
+import { Clock, Wallet, HelpCircle } from "lucide-react";
 import auctionApi from "@/api/modules/auction.api";
 import { bidApi } from "@/api/modules/bid.api";
 import { userApi } from "@/api/modules/user.api";
@@ -294,7 +294,6 @@ interface BidPanelProps {
 function BidPanel({
   auction,
   user,
-  bids,
   loading,
   setLoading,
   error,
