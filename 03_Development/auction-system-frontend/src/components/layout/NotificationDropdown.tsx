@@ -10,10 +10,17 @@ export default function NotificationDropdown() {
   const [visibleCount, setVisibleCount] = useState(5);
   const navigate = useNavigate();
 
-  const handleRead = (id: number, type?: string, category?: string) => {
+  const handleRead = (id: number, type?: string, category?: string, actionUrl?: string) => {
     markAsRead(id);
     setOpen(false);
-    // Route based on notification type and category
+    
+    // Prefer actionUrl from notification if available
+    if (actionUrl) {
+      navigate(actionUrl);
+      return;
+    }
+    
+    // Fallback to type-based routing
     switch (type) {
       case "SYSTEM":
         // Check category to differentiate between admin approval requests and seller notifications
@@ -65,7 +72,7 @@ export default function NotificationDropdown() {
                 key={n.notiId}
                 className={`${styles.notiItem} ${n.isRead ? styles.read : styles.unread
                   }`}
-                onClick={() => handleRead(n.notiId, n.type, n.category)}
+                onClick={() => handleRead(n.notiId, n.type, n.category, n.actionUrl)}
               >
                 <div className="flex flex-col">
                   <span className="font-semibold text-sm">{n.title}</span>

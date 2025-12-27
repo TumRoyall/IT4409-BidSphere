@@ -9,11 +9,17 @@ export default function NotificationPage() {
   const { notifications, markAsRead, markAllAsRead } = useNotificationContext();
   const [sortBy, setSortBy] = useState<"newest" | "oldest">("newest");
 
-  // Handle notification click - navigate based on type/category
+  // Handle notification click - navigate based on actionUrl or type/category
   const handleNotificationClick = (n: any) => {
     markAsRead(n.notiId);
     
-    // Route based on type
+    // Prefer actionUrl from notification if available
+    if (n.actionUrl) {
+      navigate(n.actionUrl);
+      return;
+    }
+    
+    // Fallback to type-based routing
     switch (n.type) {
       case "SYSTEM":
         if (n.category === "AUCTION_PENDING_APPROVAL") {
@@ -203,17 +209,32 @@ export default function NotificationPage() {
                   )}
                 </div>
                 <p style={{ margin: 0, fontSize: 14, color: "#666", marginBottom: 8 }}>
-                  {n.message}
-                </p>
-                <small style={{ color: "#999", fontSize: 12 }}>
-                  {new Date(n.createdAt).toLocaleString("vi-VN", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                  })}
-                </small>
+                   {n.message}
+                 </p>
+                {n.actionLabel && (
+                  <div style={{ marginBottom: 6 }}>
+                    <span style={{
+                      display: "inline-block",
+                      padding: "4px 10px",
+                      background: "#dbeafe",
+                      color: "#1e40af",
+                      borderRadius: 4,
+                      fontSize: 12,
+                      fontWeight: 500,
+                    }}>
+                      {n.actionLabel}
+                    </span>
+                  </div>
+                )}
+                 <small style={{ color: "#999", fontSize: 12 }}>
+                   {new Date(n.createdAt).toLocaleString("vi-VN", {
+                     hour: "2-digit",
+                     minute: "2-digit",
+                     day: "2-digit",
+                     month: "2-digit",
+                     year: "numeric",
+                   })}
+                 </small>
               </div>
               {n.isRead && (
                 <div style={{ marginLeft: 12, color: "#999", flexShrink: 0 }}>

@@ -5,6 +5,7 @@ import "@/modules/user/styles/ProfileLayout.css";
 import { LayoutDashboard, User, Gavel, ShoppingBag } from "lucide-react";
 import GlobalSnow from "@/components/christmas/GlobalSnow";
 import ReindeerScene from "@/components/christmas/ReindeerScene";
+import ChristmasLightsSide from "@/components/christmas/ChristmasLightsSide";
 
 export default function SellerLayout() {
     const location = useLocation();
@@ -32,12 +33,26 @@ export default function SellerLayout() {
         },
     ];
 
+    const isFormPage = location.pathname.endsWith('/create') || location.pathname.endsWith('/edit');
+
+    if (isFormPage) {
+        return (
+            <div className="relative min-h-screen">
+                <GlobalSnow />
+                <ReindeerScene />
+                <ChristmasLightsSide />
+                <Outlet />
+            </div>
+        );
+    }
+
     return (
         <div className="profile-layout relative">
             <GlobalSnow />
             <ReindeerScene />
+            <ChristmasLightsSide />
 
-            <div className="snow-cap sticky top-0 z-50">
+            <div className="relative z-50">
                 <Header />
             </div>
 

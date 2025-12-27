@@ -4,15 +4,17 @@ import Footer from "@/components/layout/Footer";
 import ChatWidget from "@/components/chat/ChatWidget";
 import GlobalSnow from "@/components/christmas/GlobalSnow";
 import ReindeerScene from "@/components/christmas/ReindeerScene";
+import ChristmasLightsSide from "@/components/christmas/ChristmasLightsSide";
 
 export default function MainLayout() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 relative overflow-x-hidden">
       <GlobalSnow />
       <ReindeerScene />
+      <ChristmasLightsSide />
 
       {/* Header luôn ở trên */}
-      <div className="snow-cap z-50 sticky top-0">
+      <div className="z-50 relative">
         <Header />
       </div>
 

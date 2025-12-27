@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import GlobalSnow from "@/components/christmas/GlobalSnow";
 import ReindeerScene from "@/components/christmas/ReindeerScene";
+import ChristmasLightsSide from "@/components/christmas/ChristmasLightsSide";
 
 const MENU_ITEMS = [
   {
@@ -58,8 +59,9 @@ export default function ProfileLayout() {
     <div className="flex flex-col min-h-screen bg-gray-50 relative">
       <GlobalSnow />
       <ReindeerScene />
+      <ChristmasLightsSide />
 
-      <div className="snow-cap sticky top-0 z-50">
+      <div className="relative z-50">
         <Header />
       </div>
 
