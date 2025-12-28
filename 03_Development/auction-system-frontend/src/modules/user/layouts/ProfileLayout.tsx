@@ -56,7 +56,7 @@ export default function ProfileLayout() {
     setOpenMenu((prev) => (prev === menu ? "" : menu));
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 relative">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-100 relative">
       <GlobalSnow />
       <ReindeerScene />
       <ChristmasLightsSide />
@@ -65,75 +65,100 @@ export default function ProfileLayout() {
         <Header />
       </div>
 
-      <main className="flex gap-6 px-6 md:px-10 py-6 flex-1 relative z-10">
-        {/* Sidebar */}
-        <aside className="w-72 flex-shrink-0 block">
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm sticky top-6">
-            <div className="p-4 border-b border-gray-100">
-              <h2 className="text-lg font-bold text-gray-900">Quản lý tài khoản</h2>
-              <p className="text-xs text-gray-500 mt-1">Cài đặt và tùy chỉnh</p>
-            </div>
-
-            <nav className="p-2">
-              {MENU_ITEMS.map((menu) => {
-                const MenuIcon = menu.icon;
-                const isOpen = openMenu === menu.id;
-
-                return (
-                  <div key={menu.id} className="mb-1">
-                    {/* Menu Title */}
-                    <button
-                      onClick={() => toggleMenu(menu.id)}
-                      className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all ${isOpen
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-700 hover:bg-gray-50"
-                        }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <MenuIcon className="w-5 h-5" />
-                        <span className="font-medium text-sm">{menu.title}</span>
-                      </div>
-                      <ChevronDown
-                        className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""
-                          }`}
-                      />
-                    </button>
-
-                    {/* Sub Menu */}
-                    {isOpen && (
-                      <div className="mt-1 ml-4 space-y-1">
-                        {menu.items.map((item) => {
-                          const ItemIcon = item.icon;
-
-                          return (
-                            <NavLink
-                              key={item.to}
-                              to={item.to}
-                              className={({ isActive }) =>
-                                `w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all ${isActive
-                                  ? "bg-emerald-50 text-emerald-700 font-semibold"
-                                  : "text-gray-600 hover:bg-gray-50"
-                                }`
-                              }
-                            >
-                              <ItemIcon className="w-4 h-4" />
-                              <span>{item.label}</span>
-                            </NavLink>
-                          );
-                        })}
-                      </div>
-                    )}
+      <main className="container mx-auto px-4 md:px-6 lg:px-8 py-8 flex-1 relative z-10">
+        <div className="flex flex-col lg:flex-row gap-6 max-w-7xl mx-auto">
+          {/* Sidebar */}
+          <aside className="w-full lg:w-80 flex-shrink-0">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 shadow-lg sticky top-6 overflow-hidden">
+              {/* Header with gradient */}
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-white">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                    <User className="w-6 h-6" />
                   </div>
-                );
-              })}
-            </nav>
-          </div>
-        </aside>
+                  <div>
+                    <h2 className="text-xl font-bold tracking-tight">Quản lý tài khoản</h2>
+                    <p className="text-xs text-blue-100 mt-0.5">Cài đặt và tùy chỉnh</p>
+                  </div>
+                </div>
+              </div>
 
-        {/* Content */}
-        <section className="flex-1 bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-          <Outlet />
-        </section>
+              <nav className="p-3">
+                {MENU_ITEMS.map((menu) => {
+                  const MenuIcon = menu.icon;
+                  const isOpen = openMenu === menu.id;
+
+                  return (
+                    <div key={menu.id} className="mb-2">
+                      {/* Menu Title */}
+                      <button
+                        onClick={() => toggleMenu(menu.id)}
+                        className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl transition-all duration-200 group ${
+                          isOpen
+                            ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+                            : "text-gray-700 hover:bg-gray-50 hover:shadow-sm"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`p-1.5 rounded-lg ${isOpen ? "bg-white/20" : "bg-gray-100 group-hover:bg-gray-200"}`}>
+                            <MenuIcon className="w-5 h-5" />
+                          </div>
+                          <span className="font-semibold text-sm">{menu.title}</span>
+                        </div>
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform duration-300 ${
+                            isOpen ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
+
+                      {/* Sub Menu with animation */}
+                      {isOpen && (
+                        <div className="mt-2 ml-2 space-y-1 pl-4 border-l-2 border-blue-100">
+                          {menu.items.map((item) => {
+                            const ItemIcon = item.icon;
+
+                            return (
+                              <NavLink
+                                key={item.to}
+                                to={item.to}
+                                className={({ isActive }) =>
+                                  `w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200 group ${
+                                    isActive
+                                      ? "bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 font-semibold shadow-sm border border-emerald-200/50"
+                                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:translate-x-1"
+                                  }`
+                                }
+                              >
+                                {({ isActive }) => (
+                                  <>
+                                    <div className={`p-1.5 rounded-lg transition-colors ${
+                                      isActive ? "bg-emerald-100" : "bg-gray-100 group-hover:bg-gray-200"
+                                    }`}>
+                                      <ItemIcon className="w-4 h-4" />
+                                    </div>
+                                    <span>{item.label}</span>
+                                  </>
+                                )}
+                              </NavLink>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </nav>
+            </div>
+          </aside>
+
+          {/* Content Area */}
+          <section className="flex-1 min-w-0">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 shadow-lg p-6 md:p-8">
+              <Outlet />
+            </div>
+          </section>
+        </div>
       </main>
 
       <Footer />

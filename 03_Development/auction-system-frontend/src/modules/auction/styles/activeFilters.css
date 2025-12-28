@@ -3,7 +3,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .active-filters .title {
@@ -15,17 +15,26 @@
   display: flex;
   align-items: center;
   padding: 4px 10px;
-  background: #f3f4f6;
-  border: 1px solid #d1d5db;
-  border-radius: 20px;
-  font-size: 14px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  font-size: 13px;
   gap: 6px;
+  color: #374151;
 }
 
 .filter-tag button {
   background: transparent;
   border: none;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #6b7280;
+  padding: 2px 6px;
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.filter-tag button:hover {
+  background: #eef2f7;
+  color: #111827;
 }

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Clock, Wallet, HelpCircle } from "lucide-react";
+import { Clock, Wallet, HelpCircle, AlertTriangle } from "lucide-react";
 import auctionApi from "@/api/modules/auction.api";
 import { bidApi } from "@/api/modules/bid.api";
 import { userApi } from "@/api/modules/user.api";
+import { userReportApi } from "@/api/modules/userReport.api";
 import "@/modules/auction/styles/auctionDetail.css";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -66,6 +67,9 @@ export default function AuctionDetailPage() {
   const [bidLoading, setBidLoading] = useState(false);
   const [error, setError] = useState<string>("");
   const [activeTab, setActiveTab] = useState<"desc" | "history">("desc");
+  const [isReportOpen, setIsReportOpen] = useState(false);
+  const [reportContent, setReportContent] = useState("");
+  const [reportSaving, setReportSaving] = useState(false);
 
   const loadAuction = async () => {
     const res = await auctionApi.getAuctionById(auctionId);
@@ -98,6 +102,29 @@ export default function AuctionDetailPage() {
   const reloadAll = async () => {
     await Promise.all([loadAuction(), loadBids(), loadUser()]);
     setLoading(false);
+  };
+
+  const submitReport = async () => {
+    if (!user?.userId) {
+      toast.error('Bạn cần đăng nhập để báo cáo');
+      return;
+    }
+    const content = reportContent.trim();
+    if (!content) {
+      toast.error('Vui lòng nhập nội dung báo cáo');
+      return;
+    }
+    try {
+      setReportSaving(true);
+      await userReportApi.create({ userId: user.userId, content });
+      setIsReportOpen(false);
+      setReportContent("");
+      toast.success('Báo cáo đã được gửi thành công!');
+    } catch (e: any) {
+      toast.error(e?.response?.data?.message || 'Gửi báo cáo thất bại');
+    } finally {
+      setReportSaving(false);
+    }
   };
 
   useEffect(() => {
@@ -183,9 +210,37 @@ export default function AuctionDetailPage() {
             error={error}
             setError={setError}
             onBidSuccess={handleBidSuccess}
+            onOpenReport={() => setIsReportOpen(true)}
           />
         </div>
       </div>
+
+      {/* QUICK ACTIONS (moved into bid panel) */}
+
+      {isReportOpen && (
+        <div className="report-modal">
+          <div className="report-modal-card">
+            <div className="report-modal-header">
+              <h3>Báo cáo vấn đề</h3>
+              <button className="report-close" onClick={() => setIsReportOpen(false)}>✕</button>
+            </div>
+            <div className="report-modal-body">
+              <label>Nội dung báo cáo</label>
+              <textarea
+                value={reportContent}
+                onChange={(e) => setReportContent(e.target.value)}
+                placeholder="Mô tả vấn đề bạn gặp phải..."
+              />
+            </div>
+            <div className="report-modal-footer">
+              <button className="report-cancel" onClick={() => setIsReportOpen(false)}>Hủy</button>
+              <button className="report-submit" onClick={submitReport} disabled={reportSaving}>
+                {reportSaving ? "Đang gửi..." : "Gửi báo cáo"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* BOTTOM TABS */}
       <div className="auction-detail-bottom">
@@ -289,6 +344,7 @@ interface BidPanelProps {
   error: string;
   setError: (s: string) => void;
   onBidSuccess: () => void;
+  onOpenReport: () => void;
 }
 
 function BidPanel({
@@ -299,6 +355,7 @@ function BidPanel({
   error,
   setError,
   onBidSuccess,
+  onOpenReport,
 }: BidPanelProps) {
 
   const { id } = useParams();
@@ -494,34 +551,46 @@ function BidPanel({
     <div className="bid-panel">
       {/* STATUS + COUNTDOWN */}
       <div className="bid-status-row">
-        <span
-          className="bid-status-badge"
-          style={{ backgroundColor: STATUS_COLOR[auction.status] || "#6b7280" }}
-        >
-          {STATUS_LABEL[auction.status] || auction.status}
-        </span>
+        <div className="bid-status-left">
+          <span
+            className="bid-status-badge"
+            style={{ backgroundColor: STATUS_COLOR[auction.status] || "#6b7280" }}
+          >
+            {STATUS_LABEL[auction.status] || auction.status}
+          </span>
 
-        <div className="bid-countdown">
-          <Clock size={16} />
-          {isUpcoming && (
-            <span>
-              Bắt đầu sau{" "}
-              <strong style={{ color: getCountdownColor(timeLeft) }}>
-                {formatTimeLeft(timeLeft)}
-              </strong>
-            </span>
-          )}
-          {isOpen && (
-            <span>
-              Kết thúc sau{" "}
-              <strong style={{ color: getCountdownColor(timeLeft) }}>
-                {formatTimeLeft(timeLeft)}
-              </strong>
-            </span>
-          )}
-          {isClosed && (
-            <span>Đã kết thúc lúc {formatDateTime(auction.endTime)}</span>
-          )}
+          <div className="bid-countdown">
+            <Clock size={16} />
+            {isUpcoming && (
+              <span>
+                Bắt đầu sau{" "}
+                <strong style={{ color: getCountdownColor(timeLeft) }}>
+                  {formatTimeLeft(timeLeft)}
+                </strong>
+              </span>
+            )}
+            {isOpen && (
+              <span>
+                Kết thúc sau{" "}
+                <strong style={{ color: getCountdownColor(timeLeft) }}>
+                  {formatTimeLeft(timeLeft)}
+                </strong>
+              </span>
+            )}
+            {isClosed && (
+              <span>Đã kết thúc lúc {formatDateTime(auction.endTime)}</span>
+            )}
+          </div>
+        </div>
+
+        <div className="bid-actions">
+          <button
+            className="report-btn"
+            title="Báo cáo vấn đề"
+            onClick={onOpenReport}
+          >
+            <AlertTriangle size={16} />
+          </button>
         </div>
       </div>
 

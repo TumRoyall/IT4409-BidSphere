@@ -152,6 +152,20 @@
   gap: 8px;
 }
 
+/* Group left side (status + countdown) */
+.bid-status-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Right-side actions within status row */
+.bid-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .bid-status-badge {
   display: inline-flex;
   align-items: center;
@@ -418,6 +432,114 @@
   padding: 12px 14px 16px;
   background: #ffffff;
 }
+
+/* REPORT ACTION */
+.report-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.25);
+}
+.report-btn:hover {
+  filter: brightness(1.05);
+}
+
+/* REPORT MODAL */
+.report-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.report-modal-card {
+  width: 520px;
+  max-width: 95vw;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  padding: 16px;
+}
+.report-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.report-modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0b2b4c;
+}
+.report-close {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+.report-close:hover { background: #f8fafc; color: #111827; }
+
+.report-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.report-modal-body label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0b2b4c;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.report-modal-body textarea {
+  min-height: 120px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  resize: vertical;
+}
+.report-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+.report-cancel {
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #374151;
+  font-weight: 600;
+  cursor: pointer;
+}
+.report-submit {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.25);
+}
+.report-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .auction-tabs {
   display: flex;

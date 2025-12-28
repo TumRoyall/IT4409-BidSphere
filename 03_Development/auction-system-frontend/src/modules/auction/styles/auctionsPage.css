@@ -10,12 +10,12 @@
   max-width: 1300px;
   margin: 0 auto;
   display: flex;
-  gap: 22px;
+  gap: 24px;
 }
 
 /* LỌC BÊN TRÁI */
 .filter-sidebar-wrapper {
-  width: 260px;
+  width: 280px;
 }
 
 /* KHỐI MAIN BÊN PHẢI */
@@ -30,4 +30,20 @@
   border-radius: 14px;
   border: 1px solid #e5e7eb;
   box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+}
+
+/* Responsive: stack on medium screens */
+@media (max-width: 1024px) {
+  .auction-wrapper {
+    flex-direction: column;
+  }
+  .filter-sidebar-wrapper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .auction-content-card {
+    padding: 16px;
+  }
 }
