@@ -74,7 +74,7 @@ export default function Header() {
 
           {/* Actions bên phải */}
           <div className={styles.actions}>
-            <Link to="/auctions">Đấu giá ▾</Link>
+            <Link to="/auctions">Đấu giá</Link>
             <NotificationDropdown />
 
             {/* =================== */}

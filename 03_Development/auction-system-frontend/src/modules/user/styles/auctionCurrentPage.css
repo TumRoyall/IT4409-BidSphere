@@ -3,92 +3,120 @@
    =============================== */
 
 .auction-page-wrapper {
-  padding: 12px 4px 24px;
+  padding: 20px 16px 32px;
 }
 
-/* ===== HEADER ===== */
+/* ============ HEADER ============ */
 .auction-page-header {
-  margin-bottom: 20px;
+  margin-bottom: 28px;
+  padding: 24px;
+  background: linear-gradient(135deg, #0b2b4c, #133a66);
+  border-radius: 16px;
+  color: white;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 0 8px 24px rgba(11, 43, 76, 0.15);
 }
 
 .auction-page-header h2 {
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 700;
-  color: #111827;
-  margin-bottom: 4px;
+  color: #f8fafc;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
 }
 
 .auction-page-header .sub-text {
   font-size: 14px;
-  color: #6b7280;
+  color: #cbd5f5;
+  opacity: 0.9;
+  margin: 0;
 }
 
-/* ===== LOADING ===== */
+/* ============ LOADING ============ */
 .auction-loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 48px 0;
-  font-size: 15px;
-  color: #6b7280;
-}
-
-/* ===== EMPTY STATE ===== */
-.auction-empty {
-  text-align: center;
-  padding: 56px 0;
-  color: #6b7280;
-}
-
-.auction-empty p {
+  padding: 60px 20px;
   font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.auction-empty span {
-  font-size: 13px;
   color: #9ca3af;
 }
 
-/* ===== PAGINATION ===== */
+/* ============ EMPTY STATE ============ */
+.auction-empty {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #f8fafc, #f0f4f8);
+  border-radius: 14px;
+  border: 1px dashed rgba(59, 130, 246, 0.3);
+}
+
+.auction-empty p {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0b2b4c;
+  margin-bottom: 8px;
+}
+
+.auction-empty span {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* ============ PAGINATION ============ */
 .pagination {
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin-top: 28px;
+  margin-top: 32px;
+  flex-wrap: wrap;
 }
 
 .pagination button {
-  min-width: 34px;
-  height: 34px;
+  min-width: 36px;
+  height: 36px;
   border-radius: 8px;
   border: 1px solid #e5e7eb;
-  background: #ffffff;
+  background: white;
   font-size: 14px;
-  font-weight: 500;
-  color: #374151;
+  font-weight: 600;
+  color: #0b2b4c;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
-.pagination button:hover {
-  border-color: #2563eb;
-  color: #2563eb;
-  transform: translateY(-1px);
+.pagination button:hover:not(.active) {
+  border-color: rgba(59, 130, 246, 0.4);
+  background: linear-gradient(135deg, #f8fafc, #f0f4f8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
 }
 
 .pagination button.active {
-  background: #2563eb;
-  border-color: #2563eb;
-  color: #ffffff;
-  font-weight: 600;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
-/* ===== RESPONSIVE ===== */
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============ RESPONSIVE ============ */
 @media (max-width: 768px) {
+  .auction-page-wrapper {
+    padding: 12px 8px 20px;
+  }
+
+  .auction-page-header {
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
   .auction-page-header h2 {
-    font-size: 20px;
+    font-size: 22px;
   }
 
   .auction-page-header .sub-text {
@@ -97,5 +125,11 @@
 
   .pagination {
     margin-top: 20px;
+  }
+
+  .pagination button {
+    min-width: 32px;
+    height: 32px;
+    font-size: 13px;
   }
 }

@@ -1,101 +1,169 @@
 .bid-history-page {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 14px;
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .bid-history-page h2 {
-  margin-bottom: 12px;
-  font-weight: 600;
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 26px;
+  color: #0b2b4c;
+  letter-spacing: -0.3px;
 }
 
-/* SEARCH */
+/* ============ SEARCH ============ */
 .search-input {
-  padding: 8px 12px;
-  width: 260px;
-  border-radius: 8px;
+  padding: 10px 14px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
   border: 1px solid #e5e7eb;
-  margin-bottom: 14px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  background: linear-gradient(135deg, #f8fafc, white);
 }
 
-/* TABLE */
+.search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background: white;
+}
+
+/* ============ TABLE ============ */
 .history-table {
   width: 100%;
   border-collapse: collapse;
 }
 
 .history-table th {
-  padding: 10px;
-  font-size: 14px;
-  background: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
-  color: #374151;
+  padding: 14px;
+  font-size: 13px;
+  background: linear-gradient(135deg, #f8fafc, #f0f4f8);
+  border-bottom: 2px solid #e5e7eb;
+  color: #0b2b4c;
   text-align: left;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 .history-table td {
-  padding: 10px;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e5e7eb;
   font-size: 14px;
-  color: #111827;
+  color: #1f2937;
 }
 
 .history-table tr:hover {
-  background: #f9fafb;
+  background: linear-gradient(135deg, #f8fafc, #f0f4f8);
 }
 
 .center {
   text-align: center;
 }
 
-/* AUCTION LINK */
+/* ============ AUCTION LINK ============ */
 .auction-link {
-  color: #2563eb;
-  font-weight: 600;
+  color: #3b82f6;
+  font-weight: 700;
   cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
 }
 
 .auction-link:hover {
+  color: #2563eb;
   text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
-/* CHECKBOX */
+/* ============ CHECKBOX ============ */
 .auto-checkbox {
   display: inline-block;
   vertical-align: middle;
-  width: 16px;
-  height: 16px;
-  accent-color: #2563eb;
+  width: 18px;
+  height: 18px;
+  accent-color: #3b82f6;
+  cursor: pointer;
 }
 
-
-/* TOAST */
+/* ============ TOAST ============ */
 .toast {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background: #1f2937;
+  background: linear-gradient(135deg, #0b2b4c, #133a66);
   color: #fff;
-  padding: 12px 16px;
+  padding: 14px 18px;
   border-radius: 10px;
   font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 32px rgba(11, 43, 76, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideIn 0.3s ease;
 }
 
-/* STATES */
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ============ STATES ============ */
 .loading {
   color: #6b7280;
+  font-style: italic;
 }
 
 .empty {
   color: #9ca3af;
+  text-align: center;
+  padding: 40px 20px;
 }
 
-/* Cột Auto bid */
+/* ============ TABLE COLUMNS ============ */
 .history-table th.center,
 .history-table td.center {
   text-align: center;
   vertical-align: middle;
 }
 
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .bid-history-page {
+    padding: 16px;
+  }
+
+  .bid-history-page h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .search-input {
+    max-width: 100%;
+  }
+
+  .history-table th,
+  .history-table td {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+
+  .toast {
+    bottom: 16px;
+    right: 16px;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+}

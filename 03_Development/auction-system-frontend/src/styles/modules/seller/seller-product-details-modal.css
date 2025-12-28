@@ -98,6 +98,12 @@
   color: white;
 }
 
+.product-view-modal .status-badge.badge-draft {
+  background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+  color: white;
+  box-shadow: 0 2px 6px rgba(67, 56, 202, 0.35);
+}
+
 .product-view-modal .status-badge.badge-sold {
   background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
   color: white;
@@ -231,6 +237,8 @@
   color: #1a202c;
   margin: 0 0 12px 0;
   line-height: 1.2;
+  display: flex;
+  justify-content: center;
 }
 
 .product-view-meta {
@@ -285,6 +293,8 @@
   letter-spacing: 0.5px;
   margin-bottom: 6px;
   display: block;
+  display: flex;
+  justify-content: center;
 }
 
 .product-view-price-value {
@@ -293,6 +303,8 @@
   color: #667eea;
   margin: 0;
   line-height: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .product-view-price-value.secondary {
@@ -322,7 +334,8 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
-  display: block;
+  display: flex;
+  justify-content: center;
 }
 
 .product-view-info-value {
@@ -330,6 +343,8 @@
   font-size: 15px;
   font-weight: 700;
   color: #2d3748;
+  display: flex;
+  justify-content: center;
 }
 
 /* Description Section */
@@ -345,6 +360,8 @@
   font-weight: 700;
   color: #2d3748;
   margin: 0 0 12px 0;
+  display: flex;
+  justify-content: center;
 }
 
 .product-view-description-text {
@@ -355,6 +372,8 @@
   white-space: pre-wrap;
   word-break: break-word;
   overflow-wrap: anywhere;
+  display: flex;
+  justify-content: center;
 }
 
 /* Footer Actions */

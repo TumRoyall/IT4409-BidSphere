@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Check, CheckCheck } from "lucide-react";
 import { useNotificationContext } from "@/contexts/NotificationContext";
+import "@/modules/user/styles/NotificationPage.css";
 
 export default function NotificationPage() {
   const navigate = useNavigate();
@@ -73,50 +74,28 @@ export default function NotificationPage() {
   const pageTitle = category ? categoryLabels[category] || "🔔 Thông báo" : "🔔 Tất cả thông báo";
 
   return (
-    <div style={{ maxWidth: 800, margin: "0 auto", padding: "24px 20px" }}>
+    <div className="notification-page">
       {/* Header */}
-      <div style={{ marginBottom: 24, display: "flex", alignItems: "center", gap: 12 }}>
+      <div className="notification-header">
         <button
           onClick={() => navigate(-1)}
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: 8,
-            fontSize: 20,
-          }}
+          className="back-button"
         >
           <ArrowLeft size={24} />
         </button>
-        <h1 style={{ margin: 0 }}>{pageTitle}</h1>
+        <h1 className="notification-title">{pageTitle}</h1>
       </div>
 
       {/* Controls */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 20,
-          padding: "12px",
-          background: "#f3f4f6",
-          borderRadius: 8,
-        }}
-      >
-        <div style={{ fontSize: 14, color: "#666" }}>
+      <div className="notification-controls">
+        <div className="control-info">
           Tổng cộng: <strong>{sorted.length}</strong> thông báo
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className="control-actions">
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as "newest" | "oldest")}
-            style={{
-              padding: "6px 12px",
-              border: "1px solid #d1d5db",
-              borderRadius: 4,
-              fontSize: 13,
-              cursor: "pointer",
-            }}
+            className="sort-select"
           >
             <option value="newest">Mới nhất</option>
             <option value="oldest">Cũ nhất</option>
@@ -124,18 +103,7 @@ export default function NotificationPage() {
           {sorted.some((n) => !n.isRead) && (
             <button
               onClick={markAllAsRead}
-              style={{
-                padding: "6px 12px",
-                background: "#3b82f6",
-                color: "white",
-                border: "none",
-                borderRadius: 4,
-                fontSize: 13,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-              }}
+              className="mark-all-btn"
             >
               <CheckCheck size={14} /> Đánh dấu đã đọc hết
             </button>
@@ -145,88 +113,38 @@ export default function NotificationPage() {
 
       {/* List */}
       {sorted.length === 0 ? (
-        <div
-          style={{
-            padding: 40,
-            textAlign: "center",
-            color: "#999",
-          }}
-        >
-          <div style={{ fontSize: 32, marginBottom: 12 }}>📭</div>
+        <div className="notification-empty">
+          <div className="empty-icon">📭</div>
           Chưa có thông báo nào
         </div>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <div className="notification-list">
           {sorted.map((n) => (
             <div
                key={n.notiId}
                onClick={() => handleNotificationClick(n)}
-               style={{
-                padding: 16,
-                background: n.isRead ? "white" : "#eff6ff",
-                border: `1px solid ${n.isRead ? "#e5e7eb" : "#bfdbfe"}`,
-                borderRadius: 8,
-                cursor: "pointer",
-                transition: "all 0.2s",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-              }}
-              onMouseEnter={(e) => {
-                if (!n.isRead) {
-                  (e.currentTarget as HTMLElement).style.background = "#dbeafe";
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!n.isRead) {
-                  (e.currentTarget as HTMLElement).style.background = "#eff6ff";
-                }
-              }}
+               className={`notification-item ${n.isRead ? 'read' : 'unread'}`}
             >
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
-                    marginBottom: 6,
-                  }}
-                >
-                  <h3 style={{ margin: 0, fontSize: 15, fontWeight: 600, flex: 1 }}>
+              <div className="notification-content">
+                <div className="notification-header-row">
+                  <h3 className="notification-title-text">
                     {n.title}
                   </h3>
                   {!n.isRead && (
-                    <span
-                      style={{
-                        display: "inline-block",
-                        width: 8,
-                        height: 8,
-                        background: "#3b82f6",
-                        borderRadius: "50%",
-                        flexShrink: 0,
-                      }}
-                    />
+                    <span className="unread-badge" />
                   )}
                 </div>
-                <p style={{ margin: 0, fontSize: 14, color: "#666", marginBottom: 8 }}>
+                <p className="notification-message">
                    {n.message}
                  </p>
                 {n.actionLabel && (
-                  <div style={{ marginBottom: 6 }}>
-                    <span style={{
-                      display: "inline-block",
-                      padding: "4px 10px",
-                      background: "#dbeafe",
-                      color: "#1e40af",
-                      borderRadius: 4,
-                      fontSize: 12,
-                      fontWeight: 500,
-                    }}>
+                  <div className="notification-action">
+                    <span className="action-badge">
                       {n.actionLabel}
                     </span>
                   </div>
                 )}
-                 <small style={{ color: "#999", fontSize: 12 }}>
+                 <small className="notification-time">
                    {new Date(n.createdAt).toLocaleString("vi-VN", {
                      hour: "2-digit",
                      minute: "2-digit",
@@ -237,7 +155,7 @@ export default function NotificationPage() {
                  </small>
               </div>
               {n.isRead && (
-                <div style={{ marginLeft: 12, color: "#999", flexShrink: 0 }}>
+                <div className="read-check">
                   <Check size={18} />
                 </div>
               )}
