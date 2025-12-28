@@ -51,8 +51,8 @@ export default function AuctionCard({ auction, viewMode = "grid" }: any) {
   const targetTime = isUpcoming
     ? new Date(auction.startTime).getTime()
     : isOpen
-    ? new Date(auction.endTime).getTime()
-    : null;
+      ? new Date(auction.endTime).getTime()
+      : null;
 
   const [timeLeft, setTimeLeft] = useState(targetTime ? targetTime - Date.now() : 0);
 
@@ -100,7 +100,7 @@ export default function AuctionCard({ auction, viewMode = "grid" }: any) {
         {/* DOTS */}
         {images.length > 1 && (
           <div className="dot-container">
-            {images.map((_, i) => (
+            {images.map((_: string, i: number) => (
               <span
                 key={i}
                 className={`dot ${i === index ? "active" : ""}`}
