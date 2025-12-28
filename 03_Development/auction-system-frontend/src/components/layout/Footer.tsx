@@ -3,7 +3,7 @@ import logo from "@/assets/logo.png";
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={`${styles.footer} snow-cap`}>
       <div className={styles.footerContent}>
         {/* Cột 1: Logo + mô tả */}
         <div>
@@ -13,8 +13,8 @@ export default function Footer() {
           </div>
           <p className={styles.footerText}>
             <strong>1xBid - nền tảng đấu giá trực tuyến hàng đầu Việt Nam.</strong><br />
-                      Tham gia đấu giá và sở hữu sản phẩm chất lượng với giá tốt nhất.<br />
-                      <em>Nạp rút trong vòng 1 phút, tiền tỷ là 3 phút.</em>
+            Tham gia đấu giá và sở hữu sản phẩm chất lượng với giá tốt nhất.<br />
+            <em>Nạp rút trong vòng 1 phút, tiền tỷ là 3 phút.</em>
           </p>
         </div>
 

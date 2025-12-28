@@ -1,0 +1,16 @@
+/* ===================================================================
+   📦 SELLER MODULE INDEX - Unified Import File
+   =================================================================== */
+
+/* This file imports all seller-related CSS modules in the correct order.
+   Import this single file instead of individual modules for better organization. */
+
+/* Core Seller Modules */
+@import './seller-stats.css';                    /* Dashboard statistics cards */
+@import './seller-products.css';                 /* Product list and management */
+@import './seller-product-form.css';             /* Product creation/edit forms */
+@import './seller-product-card.css';             /* Individual product card component */
+@import './seller-modals.css';                   /* Modal dialogs (edit, delete, etc.) */
+@import './seller-product-details-modal.css';    /* Product view/create modal styling */
+@import './seller-auctions.css';                 /* Auction management */
+@import './seller-utility.css';                  /* Helper classes and utilities */

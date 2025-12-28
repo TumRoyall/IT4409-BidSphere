@@ -101,7 +101,7 @@
   box-shadow: var(--cat-shadow-md);
   max-height: 300px;
   overflow-y: auto;
-  z-index: 1000;
+  z-index: var(--z-dropdown);
   animation: slideDown 0.2s ease-out;
 }
 

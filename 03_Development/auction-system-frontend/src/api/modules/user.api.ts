@@ -47,22 +47,33 @@ export const userApi = {
   },
 
   changePassword: (body: { currentPassword: string; newPassword: string }) =>
-      axiosClient.patch("/users/change-password", body),
+    axiosClient.patch("/users/change-password", body),
 
   // Lấy các phiên đấu giá user đang tham gia (từ token)
   async getParticipatingAuctions(
-      userId: number,
-      params?: {
-        page?: number;
-        size?: number;
-        sort?: string;
-      }
-    ) {
-      const res = await axiosClient.get(
-        `/users/${userId}/auctions/participating`,
-        { params }
-      );
-      return res.data; // Page<Auction>
-    },
+    userId: number,
+    params?: {
+      page?: number;
+      size?: number;
+      sort?: string;
+    }
+  ) {
+    const res = await axiosClient.get(
+      `/users/${userId}/auctions/participating`,
+      { params }
+    );
+    return res.data; // Page<Auction>
+  },
+
+  // Upgrade role from BIDDER to SELLER
+  async upgradeToSeller() {
+    try {
+      const res = await axiosClient.put("/users/upgrade-to-seller");
+      return res.data;
+    } catch (err: any) {
+      console.error("[userApi.upgradeToSeller] Error:", err);
+      throw err.response?.data || { message: "Không thể nâng cấp tài khoản" };
+    }
+  },
 
 };

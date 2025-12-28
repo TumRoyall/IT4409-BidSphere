@@ -2,14 +2,12 @@
 import React, { useState, useEffect } from "react";
 import auctionApi from "@/api/modules/auction.api";
 import type { AuctionResponse } from "@/api/modules/auction.api";
-import { useAuth } from "@/hooks/useAuth";
 import { Clock, Gavel, Calendar, TrendingUp } from "lucide-react";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 type TabType = "waiting" | "upcoming" | "running" | "completed";
 
 const SellerAuctionManagement = (): React.ReactElement => {
-    const { user } = useAuth();
     const [activeTab, setActiveTab] = useState<TabType>("running");
     const [auctions, setAuctions] = useState<AuctionResponse[]>([]);
     const [loading, setLoading] = useState(true);
@@ -95,7 +93,7 @@ const SellerAuctionManagement = (): React.ReactElement => {
         const map: Record<string, { label: string; className: string }> = {
             draft: { label: "Chờ duyệt", className: "badge-pending" },
             pending: { label: "Sắp diễn ra", className: "badge-approved" },
-            open: { label: "Đang diễn ra", className: "badge-approved" },
+            open: { label: "🔴 Đang diễn ra", className: "badge-running" },
             closed: { label: "Đã kết thúc", className: "badge-sold" },
             cancelled: { label: "Đã hủy", className: "badge-rejected" },
         };
@@ -198,6 +196,10 @@ const SellerAuctionManagement = (): React.ReactElement => {
                                         <div className="meta-item">
                                             <span className="meta-label">Số lượt bid</span>
                                             <span className="meta-value">{auction.totalBids || 0}</span>
+                                        </div>
+                                        <div className="meta-item">
+                                            <span className="meta-label">Số người bid</span>
+                                            <span className="meta-value">{auction.totalBidders || 0}</span>
                                         </div>
                                     </div>
                                 </div>

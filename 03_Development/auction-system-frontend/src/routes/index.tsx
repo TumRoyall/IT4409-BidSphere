@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "@/layouts/MainLayout";
 import AuthLayout from "@/layouts/AuthLayout";
 import ProtectedRoute from "./ProtectedRoute";
+import RoleBasedRoute from "./RoleBasedRoute";
+import { ROLES } from "@/constants/roles";
 
 // Main pages
 import HomePage from "@/modules/home/pages/HomePage";
@@ -41,12 +43,18 @@ import ProductDetail from "@/modules/product/pages/ProductDetail";
 
 // Admin pages (from HEAD - seller_profile branch)
 import AdminProductApprovalPage from "@/modules/admin/pages/ProductApprovalPage";
-import AdminAuctionApprovalPage from "@/modules/admin/pages/AuctionApprovalPage";
 
 // Payment & Orders pages (from main branch)
 import DepositPage from "@/modules/payment/pages/DepositPage";
 import MyAuctionOrdersPage from "@/modules/auction/pages/MyAuctionOrdersPage";
 import OrderDetail from "@/modules/auction/pages/OrderDetail";
+
+// SUperadmin area
+import AdminLayout from "../layouts/AdminLayout";
+import AdminUsersPage from "../modules/admin/pages/AdminUsersPage";
+import AdminDashboardPage from "../modules/admin/pages/AdminDashboardPage.tsx";
+import AdminReportsPage from "../modules/admin/pages/AdminReportsPage";
+import AdminUserWarningPage from "../modules/admin/pages/AdminUserWarningPage.tsx";
 
 export default function AppRoutes() {
   return (
@@ -74,6 +82,9 @@ export default function AppRoutes() {
               </ProtectedRoute>
             }
           />
+
+          {/* PUBLIC SELLER PROFILE - view other seller's profile */}
+          <Route path="/seller/profile/:sellerId" element={<SellerProfile />} />
         </Route>
 
         {/* SELLER AREA – protected with SellerLayout (sidebar) */}
@@ -129,17 +140,32 @@ export default function AppRoutes() {
           <Route path="/register" element={<RegisterPage />} />
         </Route>
 
-        {/* ADMIN AREA (ProtectedRoute + MainLayout) */}
+        {/* ================= SUPER ADMIN ================= */}
         <Route
-          path="/admin"
+          path="/superadmin"
           element={
-            <ProtectedRoute>
-              <MainLayout />
-            </ProtectedRoute>
+            <RoleBasedRoute allowedRoles={[ROLES.ADMIN, ROLES.MODERATOR]}>
+              <AdminLayout />
+            </RoleBasedRoute>
           }
         >
-          <Route path="products/approval" element={<AdminProductApprovalPage />} />
-          <Route path="auctions/approval" element={<AdminAuctionApprovalPage />} />
+          <Route path="users" element={
+            <RoleBasedRoute allowedRoles={[ROLES.ADMIN]} redirectTo="/superadmin/dashboard">
+              <AdminUsersPage />
+            </RoleBasedRoute>
+          } />
+          <Route path="dashboard" element={<AdminDashboardPage />} />
+          <Route path="user-reports" element={
+            <RoleBasedRoute allowedRoles={[ROLES.ADMIN]} redirectTo="/superadmin/dashboard">
+              <AdminReportsPage />
+            </RoleBasedRoute>
+          } />
+          <Route path="user-warnings" element={
+            <RoleBasedRoute allowedRoles={[ROLES.ADMIN]} redirectTo="/superadmin/dashboard">
+              <AdminUserWarningPage />
+            </RoleBasedRoute>
+          } />
+          <Route path="auction/approval" element={<AdminProductApprovalPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

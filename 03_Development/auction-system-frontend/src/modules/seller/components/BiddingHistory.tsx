@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/common/Card";
 import { TrendingUp, X } from "lucide-react";
 import auctionApi from "@/api/modules/auction.api";
 import type { AuctionResponse } from "@/api/modules/auction.api";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 interface BiddingHistoryProps {
   auctionId: number;

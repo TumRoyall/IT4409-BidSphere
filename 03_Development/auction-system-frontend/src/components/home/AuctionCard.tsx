@@ -132,7 +132,7 @@ export default function AuctionCard({ auction, viewMode = "grid" }: any) {
               className="seller-link"
               onClick={(e) => {
                 e.stopPropagation();
-                window.location.href = `/user/${auction.sellerId}`;
+                window.location.href = `/seller/profile/${auction.sellerId}`;
               }}
             >
               {auction.sellerName}

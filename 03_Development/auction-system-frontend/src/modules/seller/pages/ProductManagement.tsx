@@ -14,7 +14,7 @@ import CreateAuctionSession from "@/modules/auction/pages/CreateAuctionSession";
 import { Modal } from "@/components/common/Modal";
 import { useSellerProducts, useProductActions, useSellerStatistics } from "../hooks/useSellerProducts";
 import type { Product } from "../types/seller.types";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 const ProductManagement = (): React.ReactElement => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -26,7 +26,7 @@ const ProductManagement = (): React.ReactElement => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   // Sử dụng custom hooks
-  const { products, loading, error, pagination, updateFilters, refresh } = useSellerProducts();
+  const { products, loading, error, pagination, updateFilters, changePage, refresh } = useSellerProducts();
   const { createProduct, updateProduct, deleteProduct, loading: submitting } = useProductActions();
   const { stats, refresh: refreshStats } = useSellerStatistics();
 
@@ -199,6 +199,7 @@ const ProductManagement = (): React.ReactElement => {
           <h2 className="section-title">Quản lý sản phẩm</h2>
           <div className="action-buttons-group">
             <button
+              id="btn-create-auction"
               className="btn-secondary"
               onClick={handleOpenCreateAuctionModal}
             >
@@ -215,6 +216,7 @@ const ProductManagement = (): React.ReactElement => {
               Tạo phiên đấu giá
             </button>
             <button
+              id="btn-create-product"
               className="btn-primary"
               onClick={handleOpenCreateModal}
             >
@@ -255,6 +257,7 @@ const ProductManagement = (): React.ReactElement => {
           onDelete={handleDeleteProduct}
           onViewDetails={handleViewDetails}
           onViewAuctions={handleViewAuctions}
+          onPageChange={changePage}
         />
       </div>
 
@@ -264,7 +267,7 @@ const ProductManagement = (): React.ReactElement => {
         onClose={handleCloseCreateModal}
         title="Create New Product"
         subtitle="Fill in the product details below"
-        size="xl"
+        size="lg"
       >
         <div className="modal-product-content">
           <ProductDetails
@@ -283,7 +286,7 @@ const ProductManagement = (): React.ReactElement => {
         isOpen={isCreateAuctionModalOpen}
         onClose={handleCloseCreateAuctionModal}
         title="Create Auction Session"
-        size="xl"
+        size="lg"
       >
         <CreateAuctionSession onClose={handleCloseCreateAuctionModal} />
       </Modal>
@@ -297,7 +300,7 @@ const ProductManagement = (): React.ReactElement => {
         }}
         title="Edit Product"
         subtitle="Update product details"
-        size="xl"
+        size="lg"
       >
         <EditProductModal
           product={selectedProduct}
@@ -319,6 +322,7 @@ const ProductManagement = (): React.ReactElement => {
         }}
         title=""
         size="md"
+        className="confirmation-modal"
       >
         <DeleteConfirmation
           product={selectedProduct}
@@ -339,7 +343,7 @@ const ProductManagement = (): React.ReactElement => {
           setSelectedProduct(null);
         }}
         title=""
-        size="xl"
+        size="lg"
       >
         <AuctionManagement
           product={selectedProduct}
@@ -357,215 +361,169 @@ const ProductManagement = (): React.ReactElement => {
           setIsViewDetailsModalOpen(false);
           setSelectedProduct(null);
         }}
-        title="Product Details"
-        subtitle={selectedProduct?.name}
-        size="xl"
-      >
-        {selectedProduct && (
-          <div className="view-details-content" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px", alignItems: "start" }}>
-            {/* LEFT: Image Section */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              {/* Main Image */}
-              <div style={{
-                borderRadius: "12px",
-                overflow: "hidden",
-                border: "1px solid #e2e8f0",
-                background: "#f7fafc",
-                aspectRatio: "1",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}>
-                <img
-                  src={
-                    selectedProduct.images?.find((img: any) => img.isThumbnail)?.url ||
-                    selectedProduct.images?.[0]?.url ||
-                    selectedProduct.imageUrl ||
-                    "/placeholder-product.png"
-                  }
-                  alt={selectedProduct.name}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = "/placeholder-product.png";
-                  }}
-                />
-              </div>
-
-              {/* Images Gallery Thumbnails */}
-              {selectedProduct.images && selectedProduct.images.length > 1 && (
-                <div>
-                  <h4 style={{ fontSize: "12px", fontWeight: 600, color: "#718096", textTransform: "uppercase", marginBottom: "10px", margin: "0 0 10px 0" }}>
-                    All Images ({selectedProduct.images.length})
-                  </h4>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(70px, 1fr))", gap: "8px" }}>
-                    {selectedProduct.images.map((img: any, idx: number) => (
-                      <div
-                        key={img.imageId || idx}
-                        style={{
-                          borderRadius: "6px",
-                          overflow: "hidden",
-                          border: img.isThumbnail ? "2px solid #667eea" : "1px solid #e2e8f0",
-                          aspectRatio: "1",
-                          background: "#f7fafc",
-                          position: "relative",
-                          cursor: "pointer",
-                          transition: "transform 0.2s"
-                        }}
-                        onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLElement).style.transform = "scale(1.05)";
-                        }}
-                        onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLElement).style.transform = "scale(1)";
-                        }}
-                      >
-                        <img
-                          src={img.url || img.imageUrl}
-                          alt={`Product ${idx}`}
-                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = "/placeholder-product.png";
-                          }}
-                        />
-                        {img.isThumbnail && (
-                          <div style={{
-                            position: "absolute",
-                            top: "2px",
-                            right: "2px",
-                            background: "#667eea",
-                            color: "white",
-                            fontSize: "8px",
-                            fontWeight: 700,
-                            padding: "2px 4px",
-                            borderRadius: "3px"
-                          }}>
-                            MAIN
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
+        title={
+          <div className="product-view-modal">
+            <div className="modal-title-wrapper">
+              <span className="modal-title-text">Product Details</span>
+              {selectedProduct?.status && (
+                <span className={`status-badge badge-${selectedProduct.status}`}>
+                  {selectedProduct.status}
+                </span>
               )}
             </div>
-
-            {/* RIGHT: Info Section */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-              {/* Header */}
-              <div>
-                <h2 style={{ fontSize: "24px", fontWeight: 700, color: "#1a202c", margin: "0 0 12px 0" }}>
-                  {selectedProduct.name}
-                </h2>
-                <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
-                  {selectedProduct.status && (
-                    <span
-                      className={`badge badge-${selectedProduct.status}`}
-                      style={{
-                        display: "inline-block",
-                        padding: "6px 14px",
-                        borderRadius: "6px",
-                        fontSize: "12px",
-                        fontWeight: 600,
-                        textTransform: "capitalize"
-                      }}
-                    >
-                      {selectedProduct.status}
-                    </span>
-                  )}
-                  <span style={{ fontSize: "13px", color: "#718096" }}>
-                    Created: {new Date(selectedProduct.createdAt).toLocaleDateString("vi-VN")}
-                  </span>
+          </div>
+        }
+        subtitle={selectedProduct?.name}
+        size="xl"
+        className="product-view-modal"
+        contentClassName="product-view-modal-content"
+      >
+        {selectedProduct && (
+          <>
+            <div className="product-view-details-content">
+              {/* LEFT: Image Section */}
+              <div className="product-view-images">
+                {/* Main Image */}
+                <div className="product-view-main-image">
+                  <img
+                    src={
+                      selectedProduct.images?.find((img: any) => img.isThumbnail)?.url ||
+                      selectedProduct.images?.[0]?.url ||
+                      selectedProduct.imageUrl ||
+                      "/placeholder-product.png"
+                    }
+                    alt={selectedProduct.name}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "/placeholder-product.png";
+                    }}
+                  />
                 </div>
-              </div>
 
-              {/* Price Section */}
-              <div style={{
-                background: "linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%)",
-                border: "1px solid #e2e8f0",
-                borderRadius: "8px",
-                padding: "16px"
-              }}>
-                <div style={{ marginBottom: "12px" }}>
-                  <span style={{ fontSize: "12px", color: "#718096", fontWeight: 600 }}>STARTING PRICE</span>
-                  <p style={{ fontSize: "28px", fontWeight: 700, color: "#667eea", margin: "4px 0 0 0" }}>
-                    {new Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                      minimumFractionDigits: 0,
-                    }).format(selectedProduct.startPrice)}
-                  </p>
-                </div>
-                {selectedProduct.estimatePrice && (
-                  <div style={{ paddingTop: "12px", borderTop: "1px solid #cbd5e0" }}>
-                    <span style={{ fontSize: "12px", color: "#718096", fontWeight: 600 }}>ESTIMATE PRICE</span>
-                    <p style={{ fontSize: "16px", fontWeight: 600, color: "#2d3748", margin: "4px 0 0 0" }}>
-                      {new Intl.NumberFormat("vi-VN", {
-                        style: "currency",
-                        currency: "VND",
-                        minimumFractionDigits: 0,
-                      }).format(Number(selectedProduct.estimatePrice))}
-                    </p>
+                {/* Images Gallery Thumbnails */}
+                {selectedProduct.images && selectedProduct.images.length > 1 && (
+                  <div className="product-view-thumbnails">
+                    <h4 className="product-view-thumbnails-header">
+                      All Images ({selectedProduct.images.length})
+                    </h4>
+                    <div className="product-view-thumbnails-grid">
+                      {selectedProduct.images.map((img: any, idx: number) => (
+                        <div
+                          key={img.imageId || idx}
+                          className={`product-view-thumbnail ${img.isThumbnail ? 'is-main' : ''}`}
+                        >
+                          <img
+                            src={img.url || img.imageUrl}
+                            alt={`Product ${idx}`}
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = "/placeholder-product.png";
+                            }}
+                          />
+                          {img.isThumbnail && (
+                            <div className="product-view-thumbnail-badge">
+                              MAIN
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
 
-              {/* Info Grid */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
-                <div style={{ padding: "12px", background: "#f7fafc", borderRadius: "6px" }}>
-                  <span style={{ fontSize: "11px", color: "#718096", fontWeight: 600, textTransform: "uppercase" }}>Category</span>
-                  <p style={{ margin: "6px 0 0 0", fontSize: "14px", fontWeight: 600, color: "#2d3748" }}>
-                    {selectedProduct.category || "—"}
-                  </p>
+              {/* RIGHT: Info Section */}
+              <div className="product-view-info">
+                {/* Header */}
+                <div className="product-view-header">
+                  <h2 className="product-view-name">
+                    {selectedProduct.name}
+                  </h2>
+                  <div className="product-view-meta">
+                    {selectedProduct.status && (
+                      <span className={`status-badge badge-${selectedProduct.status}`}>
+                        {selectedProduct.status}
+                      </span>
+                    )}
+                    <span className="product-view-created">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                      </svg>
+                      Created: {new Date(selectedProduct.createdAt).toLocaleDateString("vi-VN")}
+                    </span>
+                  </div>
                 </div>
-                <div style={{ padding: "12px", background: "#f7fafc", borderRadius: "6px" }}>
-                  <span style={{ fontSize: "11px", color: "#718096", fontWeight: 600, textTransform: "uppercase" }}>Deposit</span>
-                  <p style={{ margin: "6px 0 0 0", fontSize: "14px", fontWeight: 600, color: "#2d3748" }}>
-                    {new Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                      minimumFractionDigits: 0,
-                    }).format(selectedProduct.deposit || 0)}
-                  </p>
-                </div>
-              </div>
 
-              {/* Description */}
-              <div>
-                <h3 style={{ fontSize: "14px", fontWeight: 600, color: "#2d3748", marginBottom: "8px" }}>Description</h3>
-                <p style={{ fontSize: "14px", color: "#4a5568", lineHeight: 1.6, margin: 0 }}>
-                  {selectedProduct.description || "No description provided"}
-                </p>
+                {/* Price Section */}
+                <div className="product-view-price-section">
+                  <div className="product-view-price-item">
+                    <span className="product-view-price-label">Starting Price</span>
+                    <p className="product-view-price-value">
+                      {new Intl.NumberFormat("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                        minimumFractionDigits: 0,
+                      }).format(selectedProduct.startPrice)}
+                    </p>
+                  </div>
+                  {selectedProduct.estimatePrice && (
+                    <div className="product-view-price-item">
+                      <span className="product-view-price-label">Estimate Price</span>
+                      <p className="product-view-price-value secondary">
+                        {new Intl.NumberFormat("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                          minimumFractionDigits: 0,
+                        }).format(Number(selectedProduct.estimatePrice))}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Info Grid */}
+                <div className="product-view-info-grid">
+                  <div className="product-view-info-item">
+                    <span className="product-view-info-label">Category</span>
+                    <p className="product-view-info-value">
+                      {selectedProduct.category || "—"}
+                    </p>
+                  </div>
+                  <div className="product-view-info-item">
+                    <span className="product-view-info-label">Deposit</span>
+                    <p className="product-view-info-value">
+                      {new Intl.NumberFormat("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                        minimumFractionDigits: 0,
+                      }).format(selectedProduct.deposit || 0)}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div className="product-view-description">
+                  <h3 className="product-view-description-title">Description</h3>
+                  <p className="product-view-description-text">
+                    {selectedProduct.description || "No description provided"}
+                  </p>
+                </div>
               </div>
             </div>
 
             {/* Close Button */}
-            <div style={{ gridColumn: "1 / -1", paddingTop: "16px", borderTop: "1px solid #e2e8f0", display: "flex", justifyContent: "flex-end" }}>
+            <div className="product-view-footer">
               <button
-                style={{
-                  padding: "10px 24px",
-                  background: "#667eea",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "6px",
-                  fontSize: "14px",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  transition: "background 0.2s"
-                }}
+                className="product-view-close-btn"
                 onClick={() => {
                   setIsViewDetailsModalOpen(false);
                   setSelectedProduct(null);
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = "#5568d3";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = "#667eea";
                 }}
               >
                 Close
               </button>
             </div>
-          </div>
+          </>
         )}
       </Modal>
     </div>

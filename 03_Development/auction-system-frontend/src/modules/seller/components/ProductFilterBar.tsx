@@ -1,7 +1,7 @@
 // src/modules/seller/components/ProductFilterBar.tsx
 import React, { useState } from "react";
 import { Filter, X } from "lucide-react";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 interface ProductFilterBarProps {
   onFilterChange: (filters: FilterState) => void;

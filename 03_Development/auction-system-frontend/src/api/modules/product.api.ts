@@ -65,12 +65,12 @@ export interface ProductApprovalRequest {
 const productApi = {
   // Get product by ID
   getProductById: (productId: number) =>
-  axiosClient.get<ProductResponse>(`/products/${productId}`),
+    axiosClient.get<ProductResponse>(`/products/${productId}`),
 
   // Get products for current seller (use token to resolve seller) with pagination
   getProductsBySellerMePage: async (page: number = 0, size: number = 10) => {
-  return axiosClient.get<ProductPage>(`/products/seller/me/page`, { 
-       params: { page, size }
+    return axiosClient.get<ProductPage>(`/products/seller/me/page`, {
+      params: { page, size }
     });
   },
 
@@ -82,6 +82,17 @@ const productApi = {
   ) => {
     return axiosClient.get<ProductPage>(`/products/page`, {
       params: { page, size, ...extraParams },
+    });
+  },
+
+  // Get products by specific seller ID (public - for viewing other seller's profile)
+  getProductsBySellerPage: async (
+    sellerId: number,
+    page: number = 0,
+    size: number = 100
+  ) => {
+    return axiosClient.get<ProductPage>(`/products/seller/${sellerId}/page`, {
+      params: { page, size },
     });
   },
   // Create new product

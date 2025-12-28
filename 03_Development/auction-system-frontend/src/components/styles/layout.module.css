@@ -33,10 +33,14 @@
 
 /* ---------- Main bar ---------- */
 .mainBar {
-  background-color: #ffffff;
+  background-color: var(--glass-bg);
+  /* Use variable */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 10px 0;
-  border-bottom: 1px solid #e5e7eb;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  /* Sticky is handled by parent or kept here, let's keep it clean here */
 }
 
 .mainInner {
@@ -433,7 +437,7 @@
 }
 
 .auctionCard:hover {
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .auctionTitle {
@@ -495,6 +499,7 @@
   font-size: 14px;
   color: #374151;
 }
+
 .topUsers li:last-child {
   border-bottom: none;
 }
@@ -528,7 +533,7 @@
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   min-width: 180px;
@@ -652,12 +657,15 @@
 }
 
 .avatar[data-gender="male"] {
-  border-color: #007bff; /* xanh đậm */
+  border-color: #007bff;
+  /* xanh đậm */
 }
 
 .avatar[data-gender="female"] {
-  border-color: #ff69b4; /* hồng nhạt */
+  border-color: #ff69b4;
+  /* hồng nhạt */
 }
+
 .userMenuWrapper {
   position: relative;
 }
@@ -735,17 +743,22 @@
 .logoutBtn:hover {
   background-color: #fee2e2 !important;
 }
+
 .auction-badge {
   display: inline-flex;
   align-items: center;
-  gap: 4px; /* khoảng cách icon - chữ */
+  gap: 4px;
+  /* khoảng cách icon - chữ */
 }
 
 /* ===== Dropdown menu item ===== */
 .dropdownMenu button {
-  display: flex;              /* 👈 QUAN TRỌNG */
-  align-items: center;        /* canh giữa theo chiều dọc */
-  gap: 10px;                  /* khoảng cách icon - chữ */
+  display: flex;
+  /* 👈 QUAN TRỌNG */
+  align-items: center;
+  /* canh giữa theo chiều dọc */
+  gap: 10px;
+  /* khoảng cách icon - chữ */
   width: 100%;
   padding: 10px 12px;
   background: none;
@@ -760,7 +773,8 @@
 .dropdownMenu button svg {
   width: 18px;
   height: 18px;
-  flex-shrink: 0;             /* icon không bị méo */
+  flex-shrink: 0;
+  /* icon không bị méo */
   color: #475569;
 }
 
@@ -771,7 +785,8 @@
 
 /* ===== Menu label (Tài khoản của tôi / Phiên đấu giá) ===== */
 .menuLabel {
-  display: flex;              /* 👈 icon + chữ ngang */
+  display: flex;
+  /* 👈 icon + chữ ngang */
   align-items: center;
   gap: 8px;
   font-size: 12px;
@@ -783,7 +798,8 @@
 
 /* ===== Logout ===== */
 .logoutBtn {
-  display: flex;              /* 👈 icon + chữ ngang */
+  display: flex;
+  /* 👈 icon + chữ ngang */
   align-items: center;
   gap: 10px;
   color: #dc2626;
@@ -806,20 +822,24 @@
 
 /* ===== Tài khoản của tôi ===== */
 .sectionAccount {
-  background: #f1f5f9;          /* xám nhạt */
+  background: #f1f5f9;
+  /* xám nhạt */
   color: #0f172a;
 }
 
 .sectionAccount svg {
-  color: #2563eb;               /* xanh */
+  color: #2563eb;
+  /* xanh */
 }
 
 /* ===== Phiên đấu giá ===== */
 .sectionAuction {
-  background: #f1f5f9;          /* xám nhạt */
-    color: #0f172a;
+  background: #f1f5f9;
+  /* xám nhạt */
+  color: #0f172a;
 }
 
 .sectionAuction svg {
-  color: #facc15;               /* vàng nổi */
+  color: #facc15;
+  /* vàng nổi */
 }

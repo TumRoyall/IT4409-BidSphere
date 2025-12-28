@@ -1,0 +1,11 @@
+/* ===================================================================
+   📦 PRODUCT LIST MODULE INDEX - Unified Import File
+   =================================================================== */
+
+/* This file imports all product-list-related CSS modules in the correct order.
+   Import this single file instead of individual modules for better organization. */
+
+/* Product List Modules */
+@import './product-list-layout.css';   /* Container, grid, pagination, detail layout */
+@import './product-list-items.css';    /* Product cards and detail sections */
+@import './product-list-filters.css';  /* Filter bar, search, and controls */

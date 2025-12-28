@@ -7,9 +7,7 @@ import {
   Clock,
   Gavel,
   LogOut,
-  MessageCircle,
   Search,
-  ChevronDown,
   Receipt,
   Activity
 } from "lucide-react";
@@ -19,6 +17,7 @@ import logo from "@/assets/logo.png";
 import { useAuth } from "@/hooks/useAuth";
 import NotificationDropdown from "./NotificationDropdown";
 import { getAvatarUrl } from "@/utils/avatar";
+import { ROLES, hasRoleAccess } from "@/constants/roles";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -29,11 +28,6 @@ export default function Header() {
     navigate(path);
     setShowMenu(false);
   };
-
-  // Check if user is admin or moderator
-  const rawRole = (user as any)?.role || (user as any)?.roles || (user as any)?.roleName || "";
-  const role = String(rawRole).toUpperCase();
-  const isAdminOrModerator = role === "ADMIN" || role === "MODERATOR";
 
   const CATEGORY_MAP: Record<string, string> = {
     "Xe cộ": "vehicle",
@@ -55,6 +49,9 @@ export default function Header() {
           <Link to="/help">Trợ giúp</Link>
           <Link to="/how-to-buy">Hướng dẫn mua</Link>
           <Link to="/seller/dashboard">Kênh người bán</Link>
+          {user && hasRoleAccess(user.role || user.roleName, [ROLES.ADMIN, ROLES.MODERATOR]) && (
+            <Link to="/superadmin/dashboard">Kênh Admin</Link>
+          )}
           <a href="#">
             Trò chuyện
           </a>
@@ -63,7 +60,7 @@ export default function Header() {
       </div>
 
       {/* ===== Thanh chính ===== */}
-      <div className={styles.mainBar}>
+      <div className={`${styles.mainBar} snow-cap`}>
         <div className={styles.mainInner}>
           {/* Logo */}
           <Link to="/" className={styles.logo}>
@@ -72,12 +69,12 @@ export default function Header() {
           </Link>
 
           {/* Ô tìm kiếm */}
-            <div className={styles.search}>
-              <input type="text" placeholder="Tìm kiếm sản phẩm đấu giá..." />
-              <button>
-                <Search size={18} />
-              </button>
-            </div>
+          <div className={styles.search}>
+            <input type="text" placeholder="Tìm kiếm sản phẩm đấu giá..." />
+            <button>
+              <Search size={18} />
+            </button>
+          </div>
 
           {/* Actions bên phải */}
           <div className={styles.actions}>

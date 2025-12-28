@@ -3,6 +3,8 @@ import { Clock, Package, CheckCircle2, XCircle, ChevronRight } from "lucide-reac
 
 type Props = {
   order: any;
+  onPay?: (txnId: string) => void;
+  onDone?: (txnId: string) => void;
 };
 
 const CATEGORY_MAP: Record<string, string> = {

@@ -3,7 +3,7 @@ import { Button, ProductListSkeleton } from "@/components/common";
 import { Edit2, Trash2 } from "lucide-react";
 import ProductMoreOptions from "./ProductMoreOptions";
 import type { Product } from "../types/seller.types";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 interface ApprovedProductsProps {
   products: Product[];
@@ -20,6 +20,7 @@ interface ApprovedProductsProps {
   onDelete?: (product: Product) => void;
   onViewDetails?: (product: Product) => void;
   onViewAuctions?: (product: Product) => void;
+  onPageChange?: (page: number) => void;
 }
 
 const STATUS_BADGE_CLASS: Record<string, string> = {
@@ -55,6 +56,7 @@ const ApprovedProducts: React.FC<ApprovedProductsProps> = ({
   onDelete,
   onViewDetails,
   onViewAuctions,
+  onPageChange,
 }) => {
   if (loading) {
     return <ProductListSkeleton count={3} />;
@@ -225,9 +227,7 @@ const ApprovedProducts: React.FC<ApprovedProductsProps> = ({
           <Button
             variant="outline"
             disabled={pagination.page <= 1}
-            onClick={() => {
-              /* Handle previous page */
-            }}
+            onClick={() => onPageChange?.(pagination.page - 1)}
           >
             ← Previous
           </Button>
@@ -237,9 +237,7 @@ const ApprovedProducts: React.FC<ApprovedProductsProps> = ({
           <Button
             variant="outline"
             disabled={pagination.page >= pagination.totalPages}
-            onClick={() => {
-              /* Handle next page */
-            }}
+            onClick={() => onPageChange?.(pagination.page + 1)}
           >
             Next →
           </Button>

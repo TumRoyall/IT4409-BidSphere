@@ -9,26 +9,67 @@ VALUES
   ('MODERATOR', 'Kiểm duyệt (quản lý auction, product, duyệt yêu cầu)', 1, 0);
 
 -- (User)
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user01', 'aa77dcf3dc8e327a40950c09d8d772a720ae3d4e2fa25a2a87426efc00a552f6', 'user01@gmail.com', '0906059826', 2, 8755465.14, 'active', '2023-11-24 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user02', 'dce789a2b1e560ac2c7f995774557a0b0121e6e7e5dcdf2ef30ab5887ceba1ae', 'user02@gmail.com', '0902376946', 2, 810151.87, 'banned', '2023-06-29 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user03', 'a7c75fc69cc970b2dc33cb5daf417b93d617215597952ca4cab4af98f49dfddf', 'user03@gmail.com', '0909247366', 1, 8234969.85, 'pending', '2024-04-16 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user04', '1d91730ee2cbb5cfc6064562f87bcbc49951529c09d27a02d71521ee3f67a5f0', 'user04@gmail.com', '0905816710', 1, 7960870.05, 'banned', '2023-07-28 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user05', '24c57b81657fcefdc9fadbd00e39f3248f53a209cb9e66534b101d682b910853', 'user05@gmail.com', '0904412087', 1, 6083306.84, 'active', '2024-03-10 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user06', '875109af682dc553750f1c924ae2bb49288ef09d72a96e7d3834f291ea79ce1a', 'user06@gmail.com', '0906603367', 3, 6963678.9, 'active', '2023-07-17 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user07', '8c3595b573feb3a0635bc593a92335d1ae2acbd067b771469b411523ac413b9f', 'user07@gmail.com', '0904829476', 2, 8721229.94, 'active', '2023-05-20 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user08', '1756a1918b626bee0da6b1f96162d808c9933b53a6c8f49f1d7c4c543dfc897c', 'user08@gmail.com', '0907321817', 2, 1761040.27, 'pending', '2025-06-06 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user09', 'a1f6c0a15019f9d7cd65ae33f531530877d22618cea384175fc444fe556acf43', 'user09@gmail.com', '0904355934', 2, 3045521.1, 'banned', '2024-05-13 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user10', '848244c3188b3bfc15473564ef7f0fad3d90f094ed33a22b459e5c105781dbaf', 'user10@gmail.com', '0903764831', 2, 569302.92, 'banned', '2025-09-13 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user11', 'a598a006b9d162f432e35b2014c274165e9a7f0968ead27b8ab45b26aa1384ee', 'user11@gmail.com', '0903562008', 3, 1374273.73, 'banned', '2023-06-28 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user12', 'c45f5884947ce6d0b75f909a25bb9660800e9cb675df3c2efda822bbb818f5f6', 'user12@gmail.com', '0903096981', 3, 2135387.07, 'pending', '2023-04-24 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user13', '7b10d61e75b2d728c6d8fefac96ebfb6b153802feb53c0c837f83a7a19c379d9', 'user13@gmail.com', '0909158712', 1, 4705648.92, 'banned', '2024-12-08 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user14', 'ffb60b98d325729d305ffa377dacc4b6917d874f6c1a5a38a5c37b1bfb470665', 'user14@gmail.com', '0902588889', 2, 2152791.52, 'banned', '2024-09-24 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user15', '4034b526b3904fbe89367f9709ecdb9fe4629ff5142fb35e02e2d9ca13de72ac', 'user15@gmail.com', '0908048002', 1, 9228732.73, 'active', '2024-01-30 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user16', '8bb38d410b9925255a6a35ac4f2925aed868e224322af665e8ef14282abe7f2f', 'user16@gmail.com', '0909861084', 2, 2041390.33, 'pending', '2025-05-14 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user17', '1206ca9a614919e8e06119403acdac4b67c80abb6fdf73bdeba17f30fea77da7', 'user17@gmail.com', '0903144117', 2, 3337677.42, 'pending', '2025-07-12 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user18', '0c105699355ab70ef62d5562adfc9af526e9f17430e0a9f9ad64cf157b7c1982', 'user18@gmail.com', '0908704126', 2, 9058717.19, 'active', '2024-06-19 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user19', 'f36c6d2692826bf6fd0e69a789f3fba2397ffc93902c32c8056e062d938b4a6b', 'user19@gmail.com', '0901492493', 2, 6230250.17, 'banned', '2024-01-12 09:22:31');
-INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at) VALUES ('user20', 'c2b6496549a8d243c97335836f90e0f1d767fd20a808d9f2d44036f25bdc7e62', 'user20@gmail.com', '0903668795', 1, 7385479.66, 'pending', '2024-05-28 09:22:31');
+-- (User)
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('nguyenvana', 'aa77dcf3dc8e327a40950c09d8d772a720ae3d4e2fa25a2a87426efc00a552f6', 'nguyenvana@gmail.com', '0906059826', 2, 8755465.14, 'active', '2023-11-24 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('tranthibich', 'dce789a2b1e560ac2c7f995774557a0b0121e6e7e5dcdf2ef30ab5887ceba1ae', 'tranthibich@gmail.com', '0902376946', 2, 810151.87, 'banned', '2026-06-29 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('lehoangnam', 'a7c75fc69cc970b2dc33cb5daf417b93d617215597952ca4cab4af98f49dfddf', 'lehoangnam@gmail.com', '0909247366', 1, 8234969.85, 'pending', '2024-04-16 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('phamthilan', '1d91730ee2cbb5cfc6064562f87bcbc49951529c09d27a02d71521ee3f67a5f0', 'phamthilan@gmail.com', '0905816710', 1, 7960870.05, 'banned', '2026-07-28 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('vominhtuan', '24c57b81657fcefdc9fadbd00e39f3248f53a209cb9e66534b101d682b910853', 'vominhtuan@gmail.com', '0904412087', 1, 6083306.84, 'active', '2024-03-10 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('dangthanhson', '875109af682dc553750f1c924ae2bb49288ef09d72a96e7d3834f291ea79ce1a', 'dangthanhson@gmail.com', '0906603367', 3, 6963678.9, 'active', '2023-07-17 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('nguyenthuha', '8c3595b573feb3a0635bc593a92335d1ae2acbd067b771469b411523ac413b9f', 'nguyenthuha@gmail.com', '0904829476', 2, 8721229.94, 'active', '2023-05-20 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('buiducanh', '1756a1918b626bee0da6b1f96162d808c9933b53a6c8f49f1d7c4c543dfc897c', 'buiducanh@gmail.com', '0907321817', 2, 1761040.27, 'pending', '2025-06-06 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('phamquanghai', 'a1f6c0a15019f9d7cd65ae33f531530877d22618cea384175fc444fe556acf43', 'phamquanghai@gmail.com', '0904355934', 2, 3045521.1, 'banned', '2026-05-13 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('trankhanhlinh', '848244c3188b3bfc15473564ef7f0fad3d90f094ed33a22b459e5c105781dbaf', 'trankhanhlinh@gmail.com', '0903764831', 2, 569302.92, 'banned', '2026-09-13 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('hoangminhquan', 'a598a006b9d162f432e35b2014c274165e9a7f0968ead27b8ab45b26aa1384ee', 'hoangminhquan@gmail.com', '0903562008', 3, 1374273.73, 'banned', '2026-06-28 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('doanhthuong', 'c45f5884947ce6d0b75f909a25bb9660800e9cb675df3c2efda822bbb818f5f6', 'doanhthuong@gmail.com', '0903096981', 3, 2135387.07, 'pending', '2023-04-24 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('luongtuananh', '7b10d61e75b2d728c6d8fefac96ebfb6b153802feb53c0c837f83a7a19c379d9', 'luongtuananh@gmail.com', '0909158712', 1, 4705648.92, 'banned', '2024-12-08 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('nguyenphuongthao', 'ffb60b98d325729d305ffa377dacc4b6917d874f6c1a5a38a5c37b1bfb470665', 'nguyenphuongthao@gmail.com', '0902588889', 2, 2152791.52, 'banned', '2026-09-24 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('phamductrung', '4034b526b3904fbe89367f9709ecdb9fe4629ff5142fb35e02e2d9ca13de72ac', 'phamductrung@gmail.com', '0908048002', 1, 9228732.73, 'active', '2024-01-30 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('tranhoainam', '8bb38d410b9925255a6a35ac4f2925aed868e224322af665e8ef14282abe7f2f', 'tranhoainam@gmail.com', '0909861084', 2, 2041390.33, 'pending', '2025-05-14 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('vuquocviet', '1206ca9a614919e8e06119403acdac4b67c80abb6fdf73bdeba17f30fea77da7', 'vuquocviet@gmail.com', '0903144117', 2, 3337677.42, 'pending', '2025-07-12 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('nguyenthanhdat', '0c105699355ab70ef62d5562adfc9af526e9f17430e0a9f9ad64cf157b7c1982', 'nguyenthanhdat@gmail.com', '0908704126', 2, 9058717.19, 'active', '2024-06-19 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('leminhtri', 'f36c6d2692826bf6fd0e69a789f3fba2397ffc93902c32c8056e062d938b4a6b', 'leminhtri@gmail.com', '0901492493', 2, 6230250.17, 'banned', '2026-01-12 09:22:31');
+
+INSERT INTO User (username, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('danghoanglong', 'c2b6496549a8d243c97335836f90e0f1d767fd20a808d9f2d44036f25bdc7e62', 'danghoanglong@gmail.com', '0903668795', 1, 7385479.66, 'pending', '2024-05-28 09:22:31');
 
 -- (AccountTransaction)
 INSERT INTO AccountTransaction (user_id, amount, type, status, created_at) VALUES (4, 547863.5, 'payment', 'failed', '2023-07-18 09:22:31');
@@ -53,48 +94,467 @@ INSERT INTO AccountTransaction (user_id, amount, type, status, created_at) VALUE
 INSERT INTO AccountTransaction (user_id, amount, type, status, created_at) VALUES (13, 466971.76, 'deposit', 'completed', '2024-04-25 09:22:31');
 
 -- (Product)
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (17, 'Profit-focused intermediate orchestration', 'Điện tử', 'Test image bank general box meeting without garden. Avoid same stay shoulder.', 3750598.04, '5902509', 375059.8, 'https://example.com/img/1.jpg', 'cancelled', '2025-08-21 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (6, 'Public-key value-added customer loyalty', 'Điện tử', 'Smile growth be. Wear north score prevent institution work.', 4388954.75, '8184622', 438895.48, 'https://example.com/img/2.jpg', 'approved', '2024-01-01 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (8, 'Face-to-face well-modulated throughput', 'Thời trang', 'Its manager simply position door color attention. Away as begin research democratic there.', 1475846.1, '2417798', 147584.61, 'https://example.com/img/3.jpg', 'sold', '2025-03-21 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (19, 'Realigned bi-directional database', 'Điện tử', 'Gas strong pull claim. To similar president brother between.', 257087.23, '314243', 25708.72, 'https://example.com/img/4.jpg', 'pending', '2024-05-19 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (6, 'Persevering hybrid utilization', 'Thời trang', 'Can budget feel game red house. Position choose while have yet dark woman team.', 3583916.77, '4154489', 358391.68, 'https://example.com/img/5.jpg', 'cancelled', '2023-04-09 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (7, 'Self-enabling encompassing protocol', 'Thời trang', 'Box his station not difficult of.', 2487313.5, '2843168', 248731.35, 'https://example.com/img/6.jpg', 'approved', '2025-08-02 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (2, 'Implemented full-range website', 'Nội thất', 'Sea PM against buy smile voice. Almost as week school not. News design eat suggest event.', 1310095.29, '1632905', 131009.53, 'https://example.com/img/7.jpg', 'approved', '2024-09-09 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (11, 'Synergistic optimizing forecast', 'Thời trang', 'Establish chair project give nothing. Hold data deep never much. Edge before government tonight.', 2954481.45, '4132622', 295448.15, 'https://example.com/img/8.jpg', 'sold', '2024-12-07 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (2, 'Balanced attitude-oriented Graphical User Interface', 'Nội thất', 'Sport others these court miss plant detail. Number leader nor traditional power inside.', 4340734.17, '5986819', 434073.42, 'https://example.com/img/9.jpg', 'pending', '2023-05-29 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (19, 'Sharable encompassing access', 'Nội thất', 'Whole majority community medical create. Particularly former write stay air whatever day.', 2454366.06, '4819743', 245436.61, 'https://example.com/img/10.jpg', 'approved', '2025-01-23 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (4, 'Customer-focused contextually-based task-force', 'Nội thất', 'Political Mrs he technology economic argue really. Find evidence become truth.', 664706.24, '1159904', 66470.62, 'https://example.com/img/11.jpg', 'cancelled', '2023-04-23 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (17, 'Upgradable directional product', 'Sưu tầm', 'On forward rest throughout threat teach two. Decision machine season class add career.', 4816504.04, '6721116', 481650.4, 'https://example.com/img/12.jpg', 'sold', '2025-03-03 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (15, 'Cross-group multi-state Local Area Network', 'Điện tử', 'Serious pull red participant decide. Sport music board guy much.', 1408840.66, '2776439', 140884.07, 'https://example.com/img/13.jpg', 'approved', '2025-01-07 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (20, 'Programmable object-oriented success', 'Xe cộ', 'People little bit successful. Room bit watch prevent attention poor stage stop.', 2651407.14, '3616311', 265140.71, 'https://example.com/img/14.jpg', 'sold', '2024-07-05 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (19, 'Pre-emptive dynamic neural-net', 'Điện tử', 'Space themselves adult something official kid billion.', 793287.11, '1395202', 79328.71, 'https://example.com/img/15.jpg', 'sold', '2025-03-18 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (12, 'Self-enabling zero tolerance leverage', 'Thời trang', 'West least which hundred result cover. Large music member chance economic.', 4256874.1, '6295708', 425687.41, 'https://example.com/img/16.jpg', 'approved', '2025-02-17 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (16, 'Quality-focused context-sensitive leverage', 'Nội thất', 'Number decision whatever cell something. Despite risk might alone others.', 3207644.22, '4630360', 320764.42, 'https://example.com/img/17.jpg', 'approved', '2024-08-17 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (11, 'Synergistic systematic instruction set', 'Điện tử', 'Sort start debate authority newspaper. Rather letter cause. Sea decision in suddenly pull.', 2933515.85, '3603931', 293351.59, 'https://example.com/img/18.jpg', 'cancelled', '2024-09-16 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (9, 'Streamlined human-resource pricing structure', 'Nội thất', 'Operation authority everybody. Late sister fine opportunity rule both with.', 507009.96, '633693', 50701.0, 'https://example.com/img/19.jpg', 'cancelled', '2024-04-24 09:22:31');
-INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) VALUES (9, 'Enhanced optimizing ability', 'Sưu tầm', 'Language talk budget affect.', 4819758.42, '7571984', 481975.84, 'https://example.com/img/20.jpg', 'cancelled', '2024-08-23 09:22:31');
+-- Product 1 (Điện tử)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  17,
+  'Điện thoại Samsung Galaxy S25',
+  'Điện tử',
+  'Điện thoại cao cấp với màn hình AMOLED 6.7 inch, camera 108MP và pin 5000mAh.',
+  3750598.04,
+  '5902509',
+  375059.8,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441194/auction_images/udxcgvfq9htxkvlcvgkr.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441195/auction_images/rmxqnljlhaxsoa9pbizk.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441198/auction_images/kzinchuhuhvj2c738x9v.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441200/auction_images/u8w1omzxamlettjstsaw.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441201/auction_images/jbfonr130muwmqwbmx70.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441203/auction_images/ehz51hkpme3eissie2vs.jpg',
+  'cancelled',
+  '2025-08-21 09:22:31'
+);
+
+-- Product 2 (Điện tử)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  6,
+  'Laptop Dell XPS 15',
+  'Điện tử',
+  'Laptop hiệu năng cao với chip Intel i9, RAM 32GB, SSD 1TB và màn hình 4K.',
+  4388954.75,
+  '8184622',
+  438895.48,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441194/auction_images/udxcgvfq9htxkvlcvgkr.jpg'  ,
+  'approved',
+  '2024-01-01 09:22:31'
+);
+
+-- Product 3 (Thời trang)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  8,
+  'Áo khoác nam mùa đông',
+  'Thời trang',
+  'Áo khoác dáng dài, chống thấm nước, lót nỉ giữ ấm tuyệt vời cho mùa lạnh.',
+  1475846.1,
+  '2417798',
+  147584.61,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447312/auction_images/cpce8cgwwrjscyhwrtst.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447314/auction_images/f40gchliupyofg6twufc.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447316/auction_images/wmvaou9bykecw3cefbum.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447317/auction_images/r2fj7twbbwdaxpkiwgmx.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447319/auction_images/wdbqwxzxiu4fqjfvkgl7.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447321/auction_images/icszk93t63ikblgfivd6.jpg',
+  'sold',
+  '2025-03-21 09:22:31'
+);
+
+-- Product 4 (Điện tử)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  19,
+  'Tai nghe Sony WH-1000XM5',
+  'Điện tử',
+  'Tai nghe chống ồn chủ động, pin 30 giờ, kết nối Bluetooth ổn định.',
+  257087.23,
+  '314243',
+  25708.72,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477506/auction_images/av6ggt81so03jysbuvsz.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477508/auction_images/wmll0shpwvsiqogyg3j2.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477511/auction_images/w71ogacx9l7xtkammjs8.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477513/auction_images/uyy4kbwteoohw5cylv0g.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477515/auction_images/rcmp1krhot3ke5p53rgl.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477517/auction_images/bbcksox2h7yn7b0imzad.jpg',
+  'pending',
+  '2024-05-19 09:22:31'
+);
+
+-- Product 5 (Thời trang)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  6,
+  'Váy nữ dạ hội',
+  'Thời trang',
+  'Váy satin dài, kiểu dáng sang trọng, phù hợp cho sự kiện và tiệc tối.',
+  3583916.77,
+  '4154489',
+  358391.68,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501778/auction_images/blg9l4ua6oey99sw4squ.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501781/auction_images/htuawd443pm6znigbzge.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501783/auction_images/bfs1fibpht0ebcnmco9o.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501784/auction_images/f6dy9d0ln1a0xgi4gut9.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501786/auction_images/nyebv4myighpdz76pqih.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501788/auction_images/uoxjgborh0vorphmfpy0.jpg',
+  'cancelled',
+  '2023-04-09 09:22:31'
+);
+
+-- Product 6 (Thời trang)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  7,
+  'Giày thể thao nam Nike Air Max 1',
+  'Thời trang',
+  'Giày thể thao êm chân, thiết kế trẻ trung, phù hợp tập luyện và đi dạo hàng ngày.',
+  2487313.5,
+  '2843168',
+  248731.35,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502020/auction_images/uvlsicje6nbhj8sue7wu.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502026/auction_images/gpimoduu7gkf3l4eokrg.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502030/auction_images/grvxyocaltcxlcyhxftv.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502034/auction_images/xmtzesqvpzdrm7ild2gs.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502036/auction_images/g7fjcvjpq5yir57myaxw.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502038/auction_images/oia9omzx9barpunsn19s.jpg',
+  'approved',
+  '2025-08-02 09:22:31'
+);
+
+-- Product 7 (Nội thất)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  2,
+  'Bàn làm việc gỗ sồi',
+  'Nội thất',
+  'Bàn làm việc bằng gỗ sồi tự nhiên, chắc chắn, thiết kế hiện đại, phù hợp văn phòng và gia đình.',
+  1310095.29,
+  '1632905',
+  131009.53,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502367/auction_images/ooixfvmotqaq0m4ubj9u.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502373/auction_images/mlvzynhk4gedwxaf8nfl.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502375/auction_images/hqluaqdvqqggh8kigmuf.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502377/auction_images/pkxqpxqv3hu4zkg15yfv.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502380/auction_images/szenqxuvbeqyamcnh3ov.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502384/auction_images/belb3ylt4hmdupie27vs.jpg',
+  'approved',
+  '2024-09-09 09:22:31'
+);
+
+-- Product 8 (Thời trang)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  11,
+  'Đầm dạ tiệc nữ',
+  'Thời trang',
+  'Đầm thiết kế sang trọng, chất liệu mềm mại, màu sắc trang nhã, thích hợp dự tiệc và sự kiện đặc biệt.',
+  2954481.45,
+  '4132622',
+  295448.15,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502651/auction_images/m3vpg2gglxgzk5sqlwl1.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502653/auction_images/dtyhmbu9ezddpocynrp0.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502655/auction_images/oqbjzazza7gu3hrcqo2x.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502658/auction_images/xgiwnhw5cunf2emgerua.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502660/auction_images/dykomkxi9we9yrubiubz.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502662/auction_images/dqubewykvu4xdzp7bm88.jpg',
+  'sold',
+  '2024-12-07 09:22:31'
+);
+
+-- Product 9 (Nội thất)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  2,
+  'Ghế sofa phòng khách',
+  'Nội thất',
+  'Ghế sofa da bò, cấu trúc nhẹ và bay bổng, màu be nhạt, phù hợp phòng khách hiện đại.',
+  4340734.17,
+  '5986819',
+  434073.42,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445481/auction_images/shqjsthyjoka4skiy15n.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445484/auction_images/cyel0scnrkety37sgwks.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445486/auction_images/fgo1kl4refht0fv9i2mq.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445488/auction_images/chzairocxu5bzdnrficr.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445490/auction_images/jrocv0bizz8li177rman.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445491/auction_images/lbopdroyvbppr3xscyuh.jpg',
+  'pending',
+  '2023-05-29 09:22:31'
+);
+
+-- Product 10 (Nội thất)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  19,
+  'Tủ sách gỗ Vân Sồi',
+  'Nội thất',
+  'Tủ sách gỗ Vân Sồi chắc chắn, nhiều tầng, tiện lợi, phù hợp trưng bày sách và đồ trang trí.',
+  2454366.06,
+  '4819743',
+  245436.61,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506811/auction_images/ocvchtv6jjsboiqpa21v.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506814/auction_images/xh7xn2dxqotfxkgsygoy.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506817/auction_images/fomodp8wliyizt14ljse.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506819/auction_images/ij2rk81wrv4ontp7w9ro.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506821/auction_images/s5nk8tbucavbd2mkcwu4.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506824/auction_images/nxv7axkpyatdpprepp4x.jpg',
+  'approved',
+  '2025-01-23 09:22:31'
+);
+
+-- Product 11 (Nội thất)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  4,
+  'Bàn trà gỗ óc chó',
+  'Nội thất',
+  'Bàn trà kích thước vừa, bề mặt gỗ óc chó bóng mịn, chân sắt chắc chắn, phù hợp phòng khách hiện đại.',
+  6647060.24,
+  '1159904',
+  366470.62,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507332/auction_images/jgzcsr6z9mdhvqh7nmwv.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507334/auction_images/hs2ncpnwlgwyq99uvnhp.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507337/auction_images/k8n2g0kyryfmfwlqlt8o.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507339/auction_images/wkqa5igdgnd4uc47ss8b.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507342/auction_images/sf0ruvi3qexwz10j3dag.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507346/auction_images/dgop0bl0p9ppy39lspkd.jpg',
+  'cancelled',
+  '2023-04-23 09:22:31'
+);
+
+-- Product 12 (Trang Sức)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  17,
+  'Dây chuyền bạc nữ đính đá Carbon tổng hợp cao cấp',
+  'Sưu tầm',
+  'Chiếc dây chuyền được làm từ bạc S925 đính đá Carbon tổng hợp cao cấp với thiết kế hình những bông hoa mặt trời nối tiếp nhau tỉ mỉ và tinh tế.',
+  8816504.04,
+  '15721116',
+  481650.4,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444529/auction_images/uskdpndlejalrg5gcfty.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444531/auction_images/mrjzvkwmnrnlzpxwwbwo.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444532/auction_images/htmzsk0hsdzvxiaaliyn.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444534/auction_images/cjy9pzewr8trebauelwz.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444536/auction_images/bvzxc7fmk21qf80srqbf.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444537/auction_images/t7dtosneaeiym3d6q0ih.jpg',
+  'sold',
+  '2025-03-03 09:22:31'
+);
+
+-- Product 13 (Điện tử)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  15,
+  'Router Wi-Fi 6 TP-Link',
+  'Điện tử',
+  'Router hỗ trợ chuẩn Wi-Fi 6, tốc độ 3000Mbps, nhiều băng tần, bảo mật WPA3.',
+  1408840.66,
+  '2776439',
+  140884.07,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440200/auction_images/m1uzpfoiw9evwyecptjc.jpg',
+  'approved',
+  '2025-01-07 09:22:31'
+);
+
+-- Product 14 (Xe cộ)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  20,
+  'Xe máy Honda Winner X',
+  'Xe cộ',
+  'Xe máy thể thao Honda, động cơ 150cc, thiết kế năng động, tiết kiệm nhiên liệu, thích hợp đi phố.',
+  26514076.14,
+  '3616311',
+  565140.71,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508057/auction_images/ltmroixi6hh8rsiwpjgl.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508062/auction_images/y4ejy1od426zu7ze9awo.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508067/auction_images/jq5makhu2gosxq9d9diw.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508071/auction_images/sujgzoqavzzlpgwborq5.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508074/auction_images/urjxruxj7pnaiv2gi6x0.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508078/auction_images/cqcwlwt3zmfucgbrq7lr.jpg',
+  'sold',
+  '2024-07-05 09:22:31'
+);
+
+-- Product 15 (Điện tử)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  19,
+  'Máy ảnh Canon EOS R6',
+  'Điện tử',
+  'Máy ảnh mirrorless, cảm biến full-frame, quay video 4K, thích hợp nhiếp ảnh chuyên nghiệp.',
+  2793287.11,
+  '1395202',
+  593286.71,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508334/auction_images/vdeuvjfphkpga4odatbb.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508336/auction_images/mpuckdkxjlidayn3i9rw.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508337/auction_images/pdrss8cfyy374khkykxh.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508338/auction_images/rhxanrpmknn2xm3ve7nm.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508340/auction_images/obadwsbmcf5g6fnml3la.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508341/auction_images/xuzgn5x8pwdcs2vd2qzs.jpg ',
+  'sold',
+  '2025-03-18 09:22:31'
+);
+
+-- Product 16 (Thời trang)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  12,
+  'Áo thun unisex',
+  'Thời trang',
+  'Áo thun cotton 100%, kiểu dáng unisex, màu sắc trẻ trung, phù hợp mặc hàng ngày.',
+  4256874.1,
+  '6295708',
+  425687.41,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508702/auction_images/qp53ebab49u3wz68wggm.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508704/auction_images/bhikzi4gddol1dxtyrlt.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508706/auction_images/h3gfuyvcjueprkymm4bd.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508708/auction_images/dzov0yvfryyebythaws0.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508711/auction_images/locmfroxr87sla3y1upz.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508712/auction_images/zyvdjmcvpxt24tvcjg8h.jpg',
+  'approved',
+  '2025-02-17 09:22:31'
+);
+
+-- Product 17 (Nội thất)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  16,
+  'Giường ngủ bọc da bò phong cách Ý',
+  'Nội thất',
+  'Giường được bọc bằng da bò thật nhập khẩu, đường nét tinh tế, tạo điểm nhấn thanh lịch cho không gian phòng ngủ.',
+  13207644.22,
+  '24630360',
+  320764.42,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446564/auction_images/xrnxejf1neevhb6to8oc.jpg',
+  'approved',
+  '2024-08-17 09:22:31'
+);
+
+-- Product 18 (Điện tử)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  11,
+  'Máy tính bảng iPad Pro M5 13 inch',
+  'Điện tử',
+  'iPad Pro màn hình Liquid Retina XDR 13 inch, chip M5 nhân 9, dung lượng 512GB, hỗ trợ Apple Pencil.',
+  29323515.85,
+  '36073931',
+  293351.59,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446129/auction_images/lpzdki8ysh9tjqha2qll.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446130/auction_images/zeagpmezvlghoxfxt4si.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446131/auction_images/upbt6jhrratfot3sp8ch.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446132/auction_images/dl1uvlgykgd9u5p7adzn.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446134/auction_images/a0gesiw3j2onoqfivvj1.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446135/auction_images/g2zvk9k4fmvjbvfsfppl.jpg',
+  'cancelled',
+  '2024-09-16 09:22:31'
+);
+
+-- Product 19 (Nội thất)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  9,
+  'Tủ quần áo 6 cánh',
+  'Nội thất',
+  'Tủ quần áo bằng MDF, 6 cánh mở, màu trắng hiện đại, ngăn kéo tiện lợi cùng bề mặt chống thấm.',
+  507009.96,
+  '633693',
+  50701.0,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443205/auction_images/vb62sdnecs76kgmrskal.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443207/auction_images/zwbmjaod5lsbadmqdbqc.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443209/auction_images/ktuau871dtcmuvskamsa.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443211/auction_images/wstfkdnxjjctvqynklw8.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443212/auction_images/z9dtjhiankg8uxmkfwhy.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443214/auction_images/tehyrpuatyinvq9s75aa.jpg',
+  'cancelled',
+  '2024-04-24 09:22:31'
+);
+
+-- Product 20 (Sưu tầm)
+INSERT INTO Product (seller_id, name, categories, description, start_price, estimate_price, deposit, image_url, status, created_at) 
+VALUES (
+  9,
+  'Đồng hồ cổ Seiko 1965',
+  'Sưu tầm',
+  'Đồng hồ Seiko cổ, còn hoạt động tốt, thiết kế kinh điển, giá trị sưu tầm cao.',
+  4819758.42,
+  '7571984',
+  481975.84,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507683/auction_images/yyoynf5cshjstbqpoput.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507685/auction_images/zkdvtstcp7pbozv8gir2.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507687/auction_images/lxlvznmojpkm6w189ytq.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507689/auction_images/beyhuyb2f1jas5kqtm5k.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507691/auction_images/elbup9wb025k3hpt51ls.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507694/auction_images/xbhgni4dpqeycxgxeauw.jpg',
+  'cancelled',
+  '2024-08-23 09:22:31'
+);
+
 
 -- (Image)
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://example.com/product_1.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://example.com/product_2.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://example.com/product_3.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://example.com/product_4.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://example.com/product_5.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://example.com/product_6.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://example.com/product_7.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://example.com/product_8.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://example.com/product_9.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://example.com/product_10.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://example.com/product_11.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://example.com/product_12.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://example.com/product_13.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://example.com/product_14.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://example.com/product_15.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://example.com/product_16.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://example.com/product_17.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://example.com/product_18.jpg', 0);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://example.com/product_19.jpg', 1);
-INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://example.com/product_20.jpg', 1);
+-- Product 1
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441194/auction_images/udxcgvfq9htxkvlcvgkr.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441195/auction_images/rmxqnljlhaxsoa9pbizk.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441198/auction_images/kzinchuhuhvj2c738x9v.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441200/auction_images/u8w1omzxamlettjstsaw.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441201/auction_images/jbfonr130muwmqwbmx70.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (1, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441203/auction_images/ehz51hkpme3eissie2vs.jpg', 0);
+
+-- Product 2
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441642/auction_images/ulc4m7mfnwlwgotabh0m.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441643/auction_images/bccxtuf5or36n0rc0vhx.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441645/auction_images/dgmn6plpadgsh5dmbino.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441648/auction_images/yc9jpwead3jkikxk7iwm.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441650/auction_images/of2jaarwp0bljrotorjk.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (2, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441652/auction_images/coszhhyrimtkmlzoin79.jpg', 0);
+
+-- Product 3
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447312/auction_images/cpce8cgwwrjscyhwrtst.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447314/auction_images/f40gchliupyofg6twufc.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447316/auction_images/wmvaou9bykecw3cefbum.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447317/auction_images/r2fj7twbbwdaxpkiwgmx.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447319/auction_images/wdbqwxzxiu4fqjfvkgl7.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (3, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447321/auction_images/icszk93t63ikblgfivd6.jpg', 0);
+
+-- Product 4
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477506/auction_images/av6ggt81so03jysbuvsz.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477508/auction_images/wmll0shpwvsiqogyg3j2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477511/auction_images/w71ogacx9l7xtkammjs8.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477513/auction_images/uyy4kbwteoohw5cylv0g.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477515/auction_images/rcmp1krhot3ke5p53rgl.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (4, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477517/auction_images/bbcksox2h7yn7b0imzad.jpg', 0);
+
+-- Product 5
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501778/auction_images/blg9l4ua6oey99sw4squ.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501781/auction_images/htuawd443pm6znigbzge.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501783/auction_images/bfs1fibpht0ebcnmco9o.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501784/auction_images/f6dy9d0ln1a0xgi4gut9.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501786/auction_images/nyebv4myighpdz76pqih.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (5, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501788/auction_images/uoxjgborh0vorphmfpy0.jpg', 0);
+
+-- Product 6
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502020/auction_images/uvlsicje6nbhj8sue7wu.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502026/auction_images/gpimoduu7gkf3l4eokrg.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502030/auction_images/grvxyocaltcxlcyhxftv.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502034/auction_images/xmtzesqvpzdrm7ild2gs.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502036/auction_images/g7fjcvjpq5yir57myaxw.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (6, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502038/auction_images/oia9omzx9barpunsn19s.jpg', 0);
+
+-- Product 7
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502367/auction_images/ooixfvmotqaq0m4ubj9u.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502373/auction_images/mlvzynhk4gedwxaf8nfl.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502375/auction_images/hqluaqdvqqggh8kigmuf.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502377/auction_images/pkxqpxqv3hu4zkg15yfv.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502380/auction_images/szenqxuvbeqyamcnh3ov.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (7, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502384/auction_images/belb3ylt4hmdupie27vs.jpg', 0);
+
+-- Product 8
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502651/auction_images/m3vpg2gglxgzk5sqlwl1.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502653/auction_images/dtyhmbu9ezddpocynrp0.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502655/auction_images/oqbjzazza7gu3hrcqo2x.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502658/auction_images/xgiwnhw5cunf2emgerua.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502660/auction_images/dykomkxi9we9yrubiubz.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (8, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502662/auction_images/dqubewykvu4xdzp7bm88.jpg', 0);
+
+-- Product 9
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445481/auction_images/shqjsthyjoka4skiy15n.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445484/auction_images/cyel0scnrkety37sgwks.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445486/auction_images/fgo1kl4refht0fv9i2mq.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445488/auction_images/chzairocxu5bzdnrficr.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445490/auction_images/jrocv0bizz8li177rman.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (9, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445491/auction_images/lbopdroyvbppr3xscyuh.jpg', 0);
+
+-- Product 10
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506811/auction_images/ocvchtv6jjsboiqpa21v.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506814/auction_images/xh7xn2dxqotfxkgsygoy.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506817/auction_images/fomodp8wliyizt14ljse.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506819/auction_images/ij2rk81wrv4ontp7w9ro.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506821/auction_images/s5nk8tbucavbd2mkcwu4.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (10, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506824/auction_images/nxv7axkpyatdpprepp4x.jpg', 0);
+
+-- Product 11
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507332/auction_images/jgzcsr6z9mdhvqh7nmwv.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507334/auction_images/hs2ncpnwlgwyq99uvnhp.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507337/auction_images/k8n2g0kyryfmfwlqlt8o.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507339/auction_images/wkqa5igdgnd4uc47ss8b.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507342/auction_images/sf0ruvi3qexwz10j3dag.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (11, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507346/auction_images/dgop0bl0p9ppy39lspkd.jpg', 0);
+
+-- Product 12
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444529/auction_images/uskdpndlejalrg5gcfty.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444531/auction_images/mrjzvkwmnrnlzpxwwbwo.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444532/auction_images/htmzsk0hsdzvxiaaliyn.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444534/auction_images/cjy9pzewr8trebauelwz.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444536/auction_images/bvzxc7fmk21qf80srqbf.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (12, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444537/auction_images/t7dtosneaeiym3d6q0ih.jpg', 0);
+
+-- Product 13
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440200/auction_images/m1uzpfoiw9evwyecptjc.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440202/auction_images/uau5lbwrpzjblxlooyqu.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440204/auction_images/umfagepnyvwdhgjqw1vh.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440207/auction_images/fycaoq7omjf8viml3eik.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440209/auction_images/k0nzlrj5ze56bzklljej.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (13, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766440212/auction_images/hlbn3ogprydrc3jk6r1t.jpg', 0);
+
+-- Product 14
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508057/auction_images/ltmroixi6hh8rsiwpjgl.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508062/auction_images/y4ejy1od426zu7ze9awo.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508067/auction_images/jq5makhu2gosxq9d9diw.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508071/auction_images/sujgzoqavzzlpgwborq5.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508074/auction_images/urjxruxj7pnaiv2gi6x0.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (14, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508078/auction_images/cqcwlwt3zmfucgbrq7lr.jpg', 0);
+
+-- Product 15
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508334/auction_images/vdeuvjfphkpga4odatbb.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508336/auction_images/mpuckdkxjlidayn3i9rw.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508337/auction_images/pdrss8cfyy374khkykxh.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508338/auction_images/rhxanrpmknn2xm3ve7nm.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508340/auction_images/obadwsbmcf5g6fnml3la.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (15, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508341/auction_images/xuzgn5x8pwdcs2vd2qzs.jpg', 0);
+
+-- Product 16
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508702/auction_images/qp53ebab49u3wz68wggm.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508704/auction_images/bhikzi4gddol1dxtyrlt.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508706/auction_images/h3gfuyvcjueprkymm4bd.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508708/auction_images/dzov0yvfryyebythaws0.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508711/auction_images/locmfroxr87sla3y1upz.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (16, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508712/auction_images/zyvdjmcvpxt24tvcjg8h.jpg', 0);
+
+-- Product 17
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446564/auction_images/xrnxejf1neevhb6to8oc.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446566/auction_images/rbebiv8pulkxnngbeulj.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446568/auction_images/huzpbtlgh1jubbsykeed.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446569/auction_images/pc3qj2qz0jbthhnam3ov.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446571/auction_images/vovmq0lisnafk4ksqmlf.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (17, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446573/auction_images/p0bfprfoe9a3fmimjo0k.jpg', 0);
+
+-- Product 18
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446129/auction_images/lpzdki8ysh9tjqha2qll.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446130/auction_images/zeagpmezvlghoxfxt4si.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446131/auction_images/upbt6jhrratfot3sp8ch.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446132/auction_images/dl1uvlgykgd9u5p7adzn.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446134/auction_images/a0gesiw3j2onoqfivvj1.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (18, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446135/auction_images/g2zvk9k4fmvjbvfsfppl.jpg', 0);
+
+-- Product 19
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443205/auction_images/vb62sdnecs76kgmrskal.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443207/auction_images/zwbmjaod5lsbadmqdbqc.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443209/auction_images/ktuau871dtcmuvskamsa.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443211/auction_images/wstfkdnxjjctvqynklw8.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443212/auction_images/z9dtjhiankg8uxmkfwhy.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (19, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443214/auction_images/tehyrpuatyinvq9s75aa.jpg', 0);
+
+-- Product 20
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507683/auction_images/yyoynf5cshjstbqpoput.jpg', 1);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507685/auction_images/zkdvtstcp7pbozv8gir2.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507687/auction_images/lxlvznmojpkm6w189ytq.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507689/auction_images/beyhuyb2f1jas5kqtm5k.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507691/auction_images/elbup9wb025k3hpt51ls.jpg', 0);
+INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507694/auction_images/xbhgni4dpqeycxgxeauw.jpg', 0);
 
 -- (Auction)
 INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (1, '2023-10-03 09:22:31', '2025-11-04 09:22:31', 'cancelled', 3740880, '50000', 18);
@@ -324,6 +784,7 @@ INSERT INTO permission (permission_name, api_path, method, module, description) 
 ('ADMIN_USER_TRANSACTIONS', '/api/superadmin/users/{id}/transactions', 'GET', 'admin-user', 'Lịch sử giao dịch user');
 
 -- Auctions (bổ sung)
+INSERT INTO permission (permission_name, api_path, method, module, description) VALUES
 ('AUCTION_APPROVE', '/api/auctions/{auctionId}/approve', 'PUT', 'auction', 'Duyệt phiên đấu giá'),
 ('AUCTION_ME', '/api/auctions/me', 'GET', 'auction', 'Danh sách auction của tôi'),
 -- Transactions after auction (bổ sung)

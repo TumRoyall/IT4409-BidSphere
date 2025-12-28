@@ -147,9 +147,9 @@ const AdminProductApprovalPage: React.FC = () => {
       <div className="pa-header">
         <div>
           <p className="pa-eyebrow">
-            Review and approve pending product submissions
+            Review and approve pending auction submissions
           </p>
-          <h1 className="pa-title">📋 Product Approvals</h1>
+          <h1 className="pa-title">📋 Auction Approvals</h1>
         </div>
         <div className="pa-pill">{pillText}</div>
       </div>

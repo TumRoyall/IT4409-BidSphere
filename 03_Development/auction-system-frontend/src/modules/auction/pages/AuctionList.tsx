@@ -19,15 +19,29 @@ export default function AuctionList() {
         try {
           const response = await auctionApi.getActiveAuctions();
           console.log("Active auctions:", response.data);
-          setAuctions(response.data || []);
+          let auctionList: AuctionResponse[] = [];
+          // Handle paginated response
+          if (response.data && 'content' in response.data) {
+            auctionList = response.data.content;
+          } else if (Array.isArray(response.data)) {
+            auctionList = response.data;
+          }
+          setAuctions(auctionList);
         } catch (err) {
           // Fallback to getting all auctions if active endpoint fails
           console.log("Failed to get active auctions, trying all auctions");
           const response = await auctionApi.getAllAuctions();
           console.log("All auctions:", response.data);
+          let auctionList: AuctionResponse[] = [];
+          // Handle both array and paginated response
+          if (Array.isArray(response.data)) {
+            auctionList = response.data;
+          } else if (response.data && 'content' in response.data) {
+            auctionList = response.data.content;
+          }
           // Filter to only show OPEN auctions
-          const activeAuctions = (response.data || []).filter(
-            (a) => a.status === "OPEN" || a.status === "open"
+          const activeAuctions = auctionList.filter(
+            (a: AuctionResponse) => a.status === "OPEN" || a.status === "open"
           );
           setAuctions(activeAuctions);
         }

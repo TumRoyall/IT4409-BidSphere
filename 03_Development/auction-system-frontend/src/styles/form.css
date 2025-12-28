@@ -3,50 +3,32 @@
    =================================================================== */
 
 :root {
-  /* Colors */
-  --form-primary: #667eea;
-  --form-primary-dark: #5a6fd8;
-  --form-secondary: #764ba2;
-  --form-success: #10b981;
-  --form-warning: #f59e0b;
-  --form-error: #ef4444;
-  --form-info: #3b82f6;
+  /* Local form-specific variable overrides (uses global as fallback) */
+  --form-primary: var(--primary);
+  --form-primary-dark: var(--primary-dark);
+  --form-secondary: var(--secondary);
+  --form-success: var(--success);
+  --form-warning: var(--warning);
+  --form-error: var(--error);
+  --form-info: var(--primary-light);
 
-  /* Neutrals */
-  --form-gray-50: #f9fafb;
-  --form-gray-100: #f3f4f6;
-  --form-gray-200: #e5e7eb;
-  --form-gray-300: #d1d5db;
-  --form-gray-600: #4b5563;
-  --form-gray-700: #374151;
-  --form-gray-900: #1f2937;
+  /* Border Radius (NOW USING GLOBAL SYSTEM) */
+  --form-radius-sm: var(--radius-sm);
+  --form-radius-md: var(--radius-md);
+  --form-radius-lg: var(--radius-lg);
 
-  /* Spacing */
-  --form-spacing-xs: 0.25rem;
-  --form-spacing-sm: 0.5rem;
-  --form-spacing-md: 1rem;
-  --form-spacing-lg: 1.5rem;
-  --form-spacing-xl: 2rem;
-
-  /* Border Radius */
-  --form-radius-sm: 0;
-  --form-radius-md: 0;
-  --form-radius-lg: 0;
-
-  /* Shadows */
-  --form-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --form-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --form-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+  /* Shadows (use global) */
+  --form-shadow-sm: var(--shadow-sm);
+  --form-shadow-md: var(--shadow-md);
+  --form-shadow-lg: var(--shadow-lg);
 
   /* Gradients */
-  --form-gradient: linear-gradient(
-    315deg,
-    var(--form-primary) 64.64%,
-    var(--form-secondary) 135.36%
-  );
+  --form-gradient: linear-gradient(315deg,
+      var(--form-primary) 64.64%,
+      var(--form-secondary) 135.36%);
 
   /* Transitions */
-  --form-transition: all 0.2s ease;
+  --form-transition: var(--transition-base);
 }
 
 /* ===== 🎬 ANIMATIONS ===== */
@@ -55,6 +37,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -66,6 +49,7 @@
     opacity: 0;
     transform: translateY(-1rem);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -77,6 +61,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -85,12 +70,13 @@
 
 /* ===== 📦 FORM CONTAINER ===== */
 .form-container {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
   padding: var(--form-spacing-md);
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .form-card {
@@ -331,7 +317,7 @@
   box-shadow: var(--form-shadow-md);
   max-height: 300px;
   overflow-y: auto;
-  z-index: 100;
+  z-index: var(--z-dropdown);
   animation: dropdownFade 0.2s ease-out;
 }
 
@@ -504,11 +490,9 @@
 .form-preview-section {
   padding: var(--form-spacing-lg);
   border-radius: var(--form-radius-md);
-  background: linear-gradient(
-    315deg,
-    rgba(102, 126, 234, 0.08) 64.64%,
-    rgba(118, 75, 162, 0.08) 135.36%
-  );
+  background: linear-gradient(315deg,
+      rgba(102, 126, 234, 0.08) 64.64%,
+      rgba(118, 75, 162, 0.08) 135.36%);
   display: flex;
   flex-direction: column;
   gap: var(--form-spacing-md);
@@ -769,6 +753,33 @@
     padding: var(--form-spacing-sm);
   }
 
+  /* Full Page Form Overrides to prevent double scrollbar */
+  .form-container.full-page-form {
+    padding: 0;
+    background: transparent;
+    align-items: flex-start;
+  }
+
+  .form-container.full-page-form .form-card {
+    max-width: 100%;
+    box-shadow: none;
+    height: auto;
+    overflow: visible;
+  }
+
+  .form-container.full-page-form .form-content {
+    max-height: none;
+    overflow: visible;
+    padding: var(--form-spacing-lg) 0;
+  }
+
+  .form-container.full-page-form .form-header {
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom: 2px solid var(--form-gray-100);
+  }
+
+
   .form-card {
     max-width: 100%;
   }
@@ -820,12 +831,10 @@
 }
 
 .form-skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--form-gray-200) 25%,
-    var(--form-gray-100) 50%,
-    var(--form-gray-200) 75%
-  );
+  background: linear-gradient(90deg,
+      var(--form-gray-200) 25%,
+      var(--form-gray-100) 50%,
+      var(--form-gray-200) 75%);
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
 }
@@ -834,6 +843,7 @@
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }

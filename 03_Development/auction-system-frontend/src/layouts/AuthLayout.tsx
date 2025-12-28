@@ -1,9 +1,14 @@
 import { Outlet } from "react-router-dom";
 import "@/styles/auth.css";
+import GlobalSnow from "@/components/christmas/GlobalSnow";
+import ReindeerScene from "@/components/christmas/ReindeerScene";
 
 export default function AuthLayout() {
   return (
     <div className="auth-layout">
+      <GlobalSnow />
+      <ReindeerScene />
+
       {/* Background */}
       <div className="auth-bg" />
       <div className="auth-overlay" />

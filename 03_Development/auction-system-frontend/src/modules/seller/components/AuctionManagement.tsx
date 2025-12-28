@@ -6,7 +6,7 @@ import { Package, X, TrendingUp } from "lucide-react";
 import auctionApi from "@/api/modules/auction.api";
 import BiddingHistory from "./BiddingHistory";
 import type { Product } from "../types/seller.types";
-import "@/styles/seller.css";
+import "@/styles/modules/seller/index.css";
 
 interface AuctionManagementProps {
   product?: Product | null;
@@ -34,24 +34,24 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
       setError(null);
       const response = await auctionApi.getAllAuctions();
       const auctionsList = Array.isArray(response.data) ? response.data : [];
-      
+
       // Filter by product if provided
       const filtered = product
         ? auctionsList.filter((a: any) => {
-            const legacyAuction = a as { product_id?: number };
-            const auctionProductId = a.productId ?? legacyAuction.product_id;
-            const selectedProductId = product.productId ?? (product as any)?.id;
-            return auctionProductId && selectedProductId
-              ? auctionProductId === selectedProductId
-              : false;
-          })
+          const legacyAuction = a as { product_id?: number };
+          const auctionProductId = a.productId ?? legacyAuction.product_id;
+          const selectedProductId = product.productId ?? (product as any)?.id;
+          return auctionProductId && selectedProductId
+            ? auctionProductId === selectedProductId
+            : false;
+        })
         : auctionsList;
-      
+
       // Debug logging
       console.log("Fetched auctions:", auctionsList);
       console.log("Product filter:", product);
       console.log("Filtered auctions:", filtered);
-      
+
       setAuctions(filtered);
     } catch (err: any) {
       setError(err.response?.data?.message || "Failed to load auctions");
@@ -75,7 +75,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
 
   const handleCloseAuction = async (auctionId: number) => {
     if (!window.confirm("Are you sure you want to close this auction?")) return;
-    
+
     try {
       setLoading(true);
       await auctionApi.closeAuction(auctionId);
@@ -89,7 +89,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
 
   const handleDeleteAuction = async (auctionId: number) => {
     if (!window.confirm("Are you sure you want to delete this auction?")) return;
-    
+
     try {
       setLoading(true);
       await auctionApi.deleteAuction(auctionId);
@@ -138,85 +138,6 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
 
   return (
     <div className="auction-management" style={{ padding: "20px 0" }}>
-      {/* Header with enhanced styling */}
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginBottom: "24px",
-        paddingBottom: "20px",
-        borderBottom: "2px solid #e2e8f0",
-        background: "linear-gradient(135deg, #f8fafc 0%, rgba(102, 126, 234, 0.03) 100%)",
-        padding: "16px",
-        marginLeft: "-16px",
-        marginRight: "-16px",
-        marginTop: "-16px",
-        paddingLeft: "16px",
-        paddingRight: "16px"
-      }}>
-        <div>
-          <h2 style={{
-            margin: 0,
-            fontSize: "20px",
-            fontWeight: 700,
-            color: "#1a202c",
-            display: "flex",
-            alignItems: "center",
-            gap: "12px"
-          }}>
-            <div style={{
-              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-              padding: "8px",
-              borderRadius: "8px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center"
-            }}>
-              <TrendingUp size={18} style={{ color: "white" }} />
-            </div>
-            {product ? `Auctions for "${product.name}"` : "All Auctions"}
-          </h2>
-          {product && (
-            <p style={{
-              margin: "6px 0 0 40px",
-              fontSize: "13px",
-              color: "#718096",
-              fontWeight: 500
-            }}>
-              Manage and monitor all auction sessions for this product
-            </p>
-          )}
-        </div>
-        {onClose && (
-          <button
-            onClick={onClose}
-            aria-label="Close auction management"
-            style={{
-              background: "transparent",
-              border: "none",
-              color: "#718096",
-              cursor: "pointer",
-              padding: "8px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "6px",
-              transition: "all 0.2s"
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#e2e8f0";
-              e.currentTarget.style.color = "#2d3748";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.color = "#718096";
-            }}
-          >
-            <X size={24} />
-          </button>
-        )}
-      </div>
-
       {/* Error message */}
       {error && (
         <div style={{
@@ -305,7 +226,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
             margin: 0,
             maxWidth: "300px"
           }}>
-            {product 
+            {product
               ? "Create an auction session for this product in the Product Management page"
               : "No active auctions at the moment"}
           </p>
@@ -313,8 +234,8 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           {auctions.map((auction: any) => (
-          <div
-          key={auction.auctionId}
+            <div
+              key={auction.auctionId}
               style={{
                 background: "white",
                 border: "1px solid #e2e8f0",
@@ -343,20 +264,20 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                 cursor: "pointer",
                 background: expandedAuction === auction.auctionId ? "#f7fafc" : "white",
                 transition: "background 0.2s"
-                }}
+              }}
                 onClick={() => setExpandedAuction(
-                expandedAuction === auction.auctionId ? null : auction.auctionId
+                  expandedAuction === auction.auctionId ? null : auction.auctionId
                 )}
               >
                 <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "12px" }}>
                   <div style={{
                     width: "4px",
                     height: "40px",
-                    background: getStatusBadgeClass(auction.status).includes("active") 
-                      ? "#10b981" 
+                    background: getStatusBadgeClass(auction.status).includes("active")
+                      ? "#10b981"
                       : getStatusBadgeClass(auction.status).includes("closed")
-                      ? "#6b7280"
-                      : "#f59e0b",
+                        ? "#6b7280"
+                        : "#f59e0b",
                     borderRadius: "2px"
                   }} />
                   <div>
@@ -380,16 +301,16 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                 <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                   <span style={{
                     padding: "4px 12px",
-                    background: getStatusBadgeClass(auction.status).includes("active") 
-                      ? "#d1fae5" 
+                    background: getStatusBadgeClass(auction.status).includes("active")
+                      ? "#d1fae5"
                       : getStatusBadgeClass(auction.status).includes("closed")
-                      ? "#f3f4f6"
-                      : "#fef3c7",
-                    color: getStatusBadgeClass(auction.status).includes("active") 
-                      ? "#065f46" 
+                        ? "#f3f4f6"
+                        : "#fef3c7",
+                    color: getStatusBadgeClass(auction.status).includes("active")
+                      ? "#065f46"
                       : getStatusBadgeClass(auction.status).includes("closed")
-                      ? "#374151"
-                      : "#92400e",
+                        ? "#374151"
+                        : "#92400e",
                     fontSize: "11px",
                     fontWeight: 600,
                     borderRadius: "6px",
@@ -402,7 +323,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                     onClick={(e) => {
                       e.stopPropagation();
                       setExpandedAuction(
-                      expandedAuction === auction.auctionId ? null : auction.auctionId
+                        expandedAuction === auction.auctionId ? null : auction.auctionId
                       );
                     }}
                     style={{
@@ -434,13 +355,13 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                 <div>
                   <p style={{ margin: 0, color: "#718096", fontWeight: 600, fontSize: "10px" }}>STARTS</p>
                   <p style={{ margin: "4px 0 0 0", color: "#2d3748", fontWeight: 600 }}>
-                  {new Date(auction.startTime).toLocaleDateString("vi-VN")}
+                    {new Date(auction.startTime).toLocaleDateString("vi-VN")}
                   </p>
                 </div>
                 <div>
                   <p style={{ margin: 0, color: "#718096", fontWeight: 600, fontSize: "10px" }}>ENDS</p>
                   <p style={{ margin: "4px 0 0 0", color: "#2d3748", fontWeight: 600 }}>
-                  {new Date(auction.endTime).toLocaleDateString("vi-VN")}
+                    {new Date(auction.endTime).toLocaleDateString("vi-VN")}
                   </p>
                 </div>
                 <div>
@@ -450,12 +371,12 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                   </p>
                 </div>
                 {auction.totalBids !== undefined && (
-                <div>
-                <p style={{ margin: 0, color: "#718096", fontWeight: 600, fontSize: "10px" }}>TOTAL BIDS</p>
-                <p style={{ margin: "4px 0 0 0", color: "#2d3748", fontWeight: 700, fontSize: "13px" }}>
-                {auction.totalBids}
-                </p>
-                </div>
+                  <div>
+                    <p style={{ margin: 0, color: "#718096", fontWeight: 600, fontSize: "10px" }}>TOTAL BIDS</p>
+                    <p style={{ margin: "4px 0 0 0", color: "#2d3748", fontWeight: 700, fontSize: "13px" }}>
+                      {auction.totalBids}
+                    </p>
+                  </div>
                 )}
               </div>
 
@@ -480,7 +401,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                     }}>
                       <p style={{ margin: 0, fontSize: "11px", fontWeight: 600, color: "#718096", textTransform: "uppercase" }}>Bid Step Amount</p>
                       <p style={{ margin: "6px 0 0 0", fontSize: "15px", fontWeight: 700, color: "#667eea" }}>
-                      {formatPrice(auction.bidStepAmount || 0)}
+                        {formatPrice(auction.bidStepAmount || 0)}
                       </p>
                     </div>
 
@@ -492,7 +413,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                     }}>
                       <p style={{ margin: 0, fontSize: "11px", fontWeight: 600, color: "#718096", textTransform: "uppercase" }}>Created</p>
                       <p style={{ margin: "6px 0 0 0", fontSize: "13px", fontWeight: 600, color: "#2d3748" }}>
-                      {formatDate(auction.createdAt || new Date().toISOString())}
+                        {formatDate(auction.createdAt || new Date().toISOString())}
                       </p>
                     </div>
 
@@ -506,7 +427,7 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
                       }}>
                         <p style={{ margin: 0, fontSize: "11px", fontWeight: 600, color: "#065f46", textTransform: "uppercase" }}>Winner</p>
                         <p style={{ margin: "6px 0 0 0", fontSize: "15px", fontWeight: 700, color: "#047857" }}>
-                        User ID: #{auction.winnerId}
+                          User ID: #{auction.winnerId}
                         </p>
                       </div>
                     )}
@@ -629,6 +550,20 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
           />
         )}
       </Modal>
+      {/* Footer Close Button */}
+      {onClose && (
+        <div className="action-buttons-section" style={{ display: "flex", justifyContent: "center", paddingTop: "24px", borderTop: "1px solid #e2e8f0", marginTop: "24px" }}>
+          <Button
+            type="button"
+            variant="outline"
+            className="cancel-button"
+            onClick={onClose}
+            style={{ width: "auto", minWidth: "140px" }}
+          >
+            Close
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

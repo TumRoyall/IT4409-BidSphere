@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import type { ProductResponse } from "@/api/modules/product.api";
-import "@/styles/product-list.css";
+import "@/styles/modules/product-list/index.css";
 
 interface ProductCardProps {
   product: ProductResponse;

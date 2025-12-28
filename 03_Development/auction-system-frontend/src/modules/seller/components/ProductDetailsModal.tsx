@@ -115,49 +115,51 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
           </button>
         </div>
 
-        {/* Product Image */}
-         <div 
-           className="details-image-container" 
-           onClick={() => {
-             if (product.images && product.images.length > 0) {
-               setGalleryOpen(true);
-               setCurrentImageIndex(0);
-             }
-           }}
-           style={{ cursor: product.images && product.images.length > 0 ? "pointer" : "default" }}
-         >
-           <img
-            src={
-              (product.images?.find((img: any) => img.isThumbnail || img.thumbnail)?.imageUrl || product.images?.find((img: any) => img.isThumbnail || img.thumbnail)?.url) ||
-              (product.images?.[0]?.imageUrl || product.images?.[0]?.url) ||
-              product.imageUrl || 
-              "/placeholder-product.png"
-            }
-           alt={product.name}
-             className="details-image"
-             onError={(e) => {
-               (e.target as HTMLImageElement).src = "/placeholder-product.png";
-             }}
-           />
-           {product.images && product.images.length > 1 && (
-             <div style={{
-               position: "absolute",
-               bottom: "12px",
-               right: "12px",
-               background: "rgba(0, 0, 0, 0.6)",
-               color: "white",
-               padding: "6px 12px",
-               borderRadius: "4px",
-               fontSize: "12px",
-               fontWeight: 600
-             }}>
-               +{product.images.length - 1} more
-             </div>
-           )}
-         </div>
+        {/* Image + Details Layout */}
+        <div className="details-layout">
+          {/* Product Image */}
+          <div 
+            className="details-image-container" 
+            onClick={() => {
+              if (product.images && product.images.length > 0) {
+                setGalleryOpen(true);
+                setCurrentImageIndex(0);
+              }
+            }}
+            style={{ cursor: product.images && product.images.length > 0 ? "pointer" : "default" }}
+          >
+            <img
+              src={
+                (product.images?.find((img: any) => img.isThumbnail || img.thumbnail)?.imageUrl || product.images?.find((img: any) => img.isThumbnail || img.thumbnail)?.url) ||
+                (product.images?.[0]?.imageUrl || product.images?.[0]?.url) ||
+                product.imageUrl || 
+                "/placeholder-product.png"
+              }
+              alt={product.name}
+              className="details-image"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = "/placeholder-product.png";
+              }}
+            />
+            {product.images && product.images.length > 1 && (
+              <div style={{
+                position: "absolute",
+                bottom: "12px",
+                right: "12px",
+                background: "rgba(0, 0, 0, 0.6)",
+                color: "white",
+                padding: "6px 12px",
+                borderRadius: "4px",
+                fontSize: "12px",
+                fontWeight: 600
+              }}>
+                +{product.images.length - 1} more
+              </div>
+            )}
+          </div>
 
-        {/* Product Details Content */}
-        <div className="details-content">
+          {/* Product Details Content */}
+          <div className="details-content">
           {/* Status and Basic Info */}
           <div className="details-header">
             <span
@@ -260,6 +262,7 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
           </div>
           </div>
           )}
+          </div>
         </div>
 
         {/* Action Buttons */}
