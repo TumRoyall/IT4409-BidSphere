@@ -121,35 +121,9 @@ export default function NotificationPage() {
         <div className="notification-list">
           {sorted.map((n) => (
             <div
-<<<<<<< HEAD
               key={n.notiId}
               onClick={() => handleNotificationClick(n)}
-              style={{
-                padding: 16,
-                background: n.isRead ? "white" : "#eff6ff",
-                border: `1px solid ${n.isRead ? "#e5e7eb" : "#bfdbfe"}`,
-                borderRadius: 8,
-                cursor: "pointer",
-                transition: "all 0.2s",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-              }}
-              onMouseEnter={(e) => {
-                if (!n.isRead) {
-                  (e.currentTarget as HTMLElement).style.background = "#dbeafe";
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!n.isRead) {
-                  (e.currentTarget as HTMLElement).style.background = "#eff6ff";
-                }
-              }}
-=======
-               key={n.notiId}
-               onClick={() => handleNotificationClick(n)}
-               className={`notification-item ${n.isRead ? 'read' : 'unread'}`}
->>>>>>> eca0ffcaf54bd33252c82fa3740fd04f7016cfe8
+              className={`notification-item ${n.isRead ? 'read' : 'unread'}`}
             >
               <div className="notification-content">
                 <div className="notification-header-row">
@@ -160,15 +134,9 @@ export default function NotificationPage() {
                     <span className="unread-badge" />
                   )}
                 </div>
-<<<<<<< HEAD
-                <p style={{ margin: 0, fontSize: 14, color: "#666", marginBottom: 8 }}>
+                <p className="notification-message">
                   {n.message}
                 </p>
-=======
-                <p className="notification-message">
-                   {n.message}
-                 </p>
->>>>>>> eca0ffcaf54bd33252c82fa3740fd04f7016cfe8
                 {n.actionLabel && (
                   <div className="notification-action">
                     <span className="action-badge">
@@ -176,8 +144,7 @@ export default function NotificationPage() {
                     </span>
                   </div>
                 )}
-<<<<<<< HEAD
-                <small style={{ color: "#999", fontSize: 12 }}>
+                <small className="notification-time">
                   {new Date(n.createdAt).toLocaleString("vi-VN", {
                     hour: "2-digit",
                     minute: "2-digit",
@@ -186,17 +153,6 @@ export default function NotificationPage() {
                     year: "numeric",
                   })}
                 </small>
-=======
-                 <small className="notification-time">
-                   {new Date(n.createdAt).toLocaleString("vi-VN", {
-                     hour: "2-digit",
-                     minute: "2-digit",
-                     day: "2-digit",
-                     month: "2-digit",
-                     year: "numeric",
-                   })}
-                 </small>
->>>>>>> eca0ffcaf54bd33252c82fa3740fd04f7016cfe8
               </div>
               {n.isRead && (
                 <div className="read-check">
