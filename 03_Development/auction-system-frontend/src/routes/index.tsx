@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "@/layouts/MainLayout";
 import AuthLayout from "@/layouts/AuthLayout";
 import ProtectedRoute from "./ProtectedRoute";
+import RoleBasedRoute from "./RoleBasedRoute";
+import { ROLES } from "@/constants/roles";
 
 // Main pages
 import HomePage from "@/modules/home/pages/HomePage";
@@ -41,7 +43,6 @@ import ProductDetail from "@/modules/product/pages/ProductDetail";
 
 // Admin pages (from HEAD - seller_profile branch)
 import AdminProductApprovalPage from "@/modules/admin/pages/ProductApprovalPage";
-import AdminAuctionApprovalPage from "@/modules/admin/pages/AuctionApprovalPage";
 
 // Payment & Orders pages (from main branch)
 import DepositPage from "@/modules/payment/pages/DepositPage";
@@ -139,33 +140,32 @@ export default function AppRoutes() {
           <Route path="/register" element={<RegisterPage />} />
         </Route>
 
-                        {/* ================= SUPER ADMIN ================= */}
+        {/* ================= SUPER ADMIN ================= */}
         <Route
           path="/superadmin"
           element={
-            <ProtectedRoute>
+            <RoleBasedRoute allowedRoles={[ROLES.ADMIN, ROLES.MODERATOR]}>
               <AdminLayout />
-            </ProtectedRoute>
+            </RoleBasedRoute>
           }
         >
-          <Route path="users" element={<AdminUsersPage />} />
+          <Route path="users" element={
+            <RoleBasedRoute allowedRoles={[ROLES.ADMIN]} redirectTo="/superadmin/dashboard">
+              <AdminUsersPage />
+            </RoleBasedRoute>
+          } />
           <Route path="dashboard" element={<AdminDashboardPage />} />
-          <Route path="user-reports" element={<AdminReportsPage />} />
-          <Route path="user-warnings" element={<AdminUserWarningPage />} />
-          </Route>
-
-
-        {/* ADMIN AREA (ProtectedRoute + MainLayout) */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <MainLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="products/approval" element={<AdminProductApprovalPage />} />
-          <Route path="auctions/approval" element={<AdminAuctionApprovalPage />} />
+          <Route path="user-reports" element={
+            <RoleBasedRoute allowedRoles={[ROLES.ADMIN]} redirectTo="/superadmin/dashboard">
+              <AdminReportsPage />
+            </RoleBasedRoute>
+          } />
+          <Route path="user-warnings" element={
+            <RoleBasedRoute allowedRoles={[ROLES.ADMIN]} redirectTo="/superadmin/dashboard">
+              <AdminUserWarningPage />
+            </RoleBasedRoute>
+          } />
+          <Route path="auction/approval" element={<AdminProductApprovalPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

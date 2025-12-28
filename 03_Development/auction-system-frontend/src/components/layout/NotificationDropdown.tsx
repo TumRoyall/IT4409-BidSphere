@@ -43,7 +43,7 @@ export default function NotificationDropdown() {
       case "SYSTEM":
         // Check category to differentiate between admin approval requests and seller notifications
         if (category === "AUCTION_PENDING_APPROVAL") {
-          navigate("/admin/products/approval");
+          navigate("/superadmin/auction/approval");
         }
         // AUCTION_APPROVED, AUCTION_REJECTED etc go to notification center (no navigation)
         break;

@@ -2,6 +2,7 @@ package vn.team9.auction_system.transaction.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vn.team9.auction_system.common.dto.product.WonProductResponse;
 import vn.team9.auction_system.common.dto.transaction.TransactionAfterAuctionResponse;
@@ -22,6 +23,7 @@ public class TransactionAfterAuctionController {
     // Buyer pays for transaction
     // ------------------------------------
     @PostMapping("/{txnId}/pay")
+    @PreAuthorize("hasAuthority('POST:/api/transactions/after-auction/{txnId}/pay')")
     public ResponseEntity<TransactionAfterAuctionResponse> payTransaction(
             @PathVariable Long txnId,
             @RequestParam Long buyerId) {
@@ -32,6 +34,7 @@ public class TransactionAfterAuctionController {
     // Update transaction status (e.g. SHIPPED, DONE)
     // ------------------------------------
     @PutMapping("/{txnId}/status")
+    @PreAuthorize("hasAuthority('PUT:/api/transactions/after-auction/{txnId}/status')")
     public ResponseEntity<TransactionAfterAuctionResponse> updateStatus(
             @PathVariable Long txnId,
             @RequestParam String status) {
@@ -42,6 +45,7 @@ public class TransactionAfterAuctionController {
     // Cancel transaction (only when PENDING)
     // ------------------------------------
     @PutMapping("/{txnId}/cancel")
+    @PreAuthorize("hasAuthority('PUT:/api/transactions/after-auction/{txnId}/cancel')")
     public ResponseEntity<TransactionAfterAuctionResponse> cancelTransaction(
             @PathVariable Long txnId,
             @RequestParam(required = false) String reason) {
@@ -52,6 +56,7 @@ public class TransactionAfterAuctionController {
     // Get all transactions of a user
     // ------------------------------------
     @GetMapping("/user/{userId}")
+    @PreAuthorize("hasAuthority('GET:/api/transactions/after-auction/user/{userId}')")
     public ResponseEntity<List<TransactionAfterAuctionResponse>> getTransactionsByUser(
             @PathVariable Long userId) {
         return ResponseEntity.ok(transactionService.getTransactionsByUser(userId));
@@ -70,6 +75,7 @@ public class TransactionAfterAuctionController {
     // Get transaction by auction
     // ------------------------------------
     @GetMapping("/auction/{auctionId}")
+    @PreAuthorize("hasAuthority('GET:/api/transactions/after-auction/auction/{auctionId}')")
     public ResponseEntity<TransactionAfterAuctionResponse> getTransactionByAuction(
             @PathVariable Long auctionId) {
         return ResponseEntity.ok(transactionService.getTransactionByAuction(auctionId));

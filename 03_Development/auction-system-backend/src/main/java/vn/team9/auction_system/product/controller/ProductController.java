@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vn.team9.auction_system.common.dto.product.*;
 import vn.team9.auction_system.common.service.IProductService;
@@ -26,14 +27,14 @@ public class ProductController {
 
 	// CRUD
 	@PostMapping
-	public ResponseEntity<ProductResponse> createProduct(
-			@RequestBody ProductCreateRequest request) {
-		return ResponseEntity.ok(productService.createProduct(request));
+	@PreAuthorize("hasAuthority('POST:/api/products')")
+	public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductCreateRequest request) {
+		return ResponseEntity.ok(productService.createProduct(Objects.requireNonNull(request)));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ProductResponse> updateProduct(
-			@PathVariable Long id,
+	@PreAuthorize("hasAuthority('PUT:/api/products/{id}')")
+	public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id,
 			@RequestBody ProductUpdateRequest request) {
 		return ResponseEntity.ok(productService.updateProduct(id, request));
 	}
@@ -44,6 +45,7 @@ public class ProductController {
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('DELETE:/api/products/{id}')")
 	public ResponseEntity<Map<String, Object>> deleteProduct(@PathVariable Long id) {
 		ProductResponse deleted = productService.deleteProduct(id);
 
@@ -73,30 +75,31 @@ public class ProductController {
 		return ResponseEntity.ok(productService.getProductsBySellerPage(Objects.requireNonNull(sellerId), page, size));
 	}
 
+	// Product list for current seller
+	@GetMapping("/seller/me/page")
+	@PreAuthorize("hasAuthority('GET:/api/products/seller/me/page')")
+	public ResponseEntity<Page<ProductResponse>> getMyProductsPage(
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size) {
+		Long sellerId = getCurrentUserId();
+		return ResponseEntity.ok(
+				productService.getProductsBySellerPage(sellerId, page, size));
+	}
+
 	// Admin only: Approve product and set deposit + estimatePrice
-	// TODO: Add @PreAuthorize("hasRole('ADMIN')") when RBAC is implemented
 	@PutMapping("/{id}/approve")
+	@PreAuthorize("hasAuthority('PUT:/api/products/{id}/approve')")
 	public ResponseEntity<ProductResponse> approveProduct(
 			@PathVariable Long id,
 			@RequestBody ProductApprovalRequest request) {
 		return ResponseEntity.ok(productService.approveProduct(Objects.requireNonNull(id), request));
 	}
 
-	// Product list for current seller
-	@GetMapping("/seller/me/page")
-	public ResponseEntity<Page<ProductResponse>> getMyProductsPage(
-			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size) {
-
-		Long sellerId = getCurrentUserId();
-		return ResponseEntity.ok(
-				productService.getProductsBySellerPage(sellerId, page, size));
-	}
-
-	// Seller submits product for admin approval
+	// Seller submits a product for admin approval (draft -> pending)
 	@PostMapping("/{id}/approval-request")
+	@PreAuthorize("hasAuthority('POST:/api/products/{id}/approval-request')")
 	public ResponseEntity<ProductResponse> requestApproval(@PathVariable Long id) {
-		return ResponseEntity.ok(productService.requestApproval(id));
+		return ResponseEntity.ok(productService.requestApproval(Objects.requireNonNull(id)));
 	}
 
 	// SECURITY

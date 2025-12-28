@@ -199,6 +199,7 @@ const ProductManagement = (): React.ReactElement => {
           <h2 className="section-title">Quản lý sản phẩm</h2>
           <div className="action-buttons-group">
             <button
+              id="btn-create-auction"
               className="btn-secondary"
               onClick={handleOpenCreateAuctionModal}
             >
@@ -215,6 +216,7 @@ const ProductManagement = (): React.ReactElement => {
               Tạo phiên đấu giá
             </button>
             <button
+              id="btn-create-product"
               className="btn-primary"
               onClick={handleOpenCreateModal}
             >
@@ -378,7 +380,7 @@ const ProductManagement = (): React.ReactElement => {
       >
         {selectedProduct && (
           <>
-          <div className="product-view-details-content">
+            <div className="product-view-details-content">
               {/* LEFT: Image Section */}
               <div className="product-view-images">
                 {/* Main Image */}

@@ -21,6 +21,7 @@ interface AuthContextType {
   register: (data: any) => Promise<void>;
   logout: () => void;
   setUser: (user: User | null) => void;
+  refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -32,6 +33,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("access_token")
   );
+
+  // 🔄 Refresh user data from backend API
+  const refreshUser = async () => {
+    if (!token) return;
+
+    try {
+      const userInfo = await userApi.getProfile();
+      console.log("🔄 Refreshed user from API:", userInfo);
+      const userObject = {
+        id: userInfo.userId,
+        username: userInfo.username,
+        fullName: userInfo.fullName,
+        email: userInfo.email,
+        gender: userInfo.gender,
+        avatarUrl: userInfo.avatarUrl,
+        role: userInfo.roleName,
+        roleName: userInfo.roleName,
+      };
+      localStorage.setItem("user", JSON.stringify(userObject));
+      setUser(userObject);
+    } catch (err) {
+      console.warn("Failed to refresh user:", err);
+    }
+  };
 
   // 🧩 Login
   const login = async (email: string, password: string) => {
@@ -98,19 +123,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(null);
   };
 
-  // 🔄 Khi reload, khôi phục từ localStorage
+  // 🔄 Khi reload, khôi phục từ localStorage và refresh từ API
   useEffect(() => {
     const savedToken = localStorage.getItem("access_token");
     const savedUser = localStorage.getItem("user");
     if (savedToken && savedUser) {
       setToken(savedToken);
       setUser(JSON.parse(savedUser));
+
+      // Refresh user data from API to sync role from database
+      userApi.getProfile().then(userInfo => {
+        const userObject = {
+          id: userInfo.userId,
+          username: userInfo.username,
+          fullName: userInfo.fullName,
+          email: userInfo.email,
+          gender: userInfo.gender,
+          avatarUrl: userInfo.avatarUrl,
+          role: userInfo.roleName,
+          roleName: userInfo.roleName,
+        };
+        localStorage.setItem("user", JSON.stringify(userObject));
+        setUser(userObject);
+        console.log("🔄 Role synced from DB:", userObject.role);
+      }).catch(err => {
+        console.warn("Could not refresh user on load:", err);
+      });
     }
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ user, token, login, register, logout, setUser }}
+      value={{ user, token, login, register, logout, setUser, refreshUser }}
     >
       {children}
     </AuthContext.Provider>
@@ -122,3 +166,4 @@ export const useAuthContext = () => {
   if (!ctx) throw new Error("useAuthContext must be used inside AuthProvider");
   return ctx;
 };
+

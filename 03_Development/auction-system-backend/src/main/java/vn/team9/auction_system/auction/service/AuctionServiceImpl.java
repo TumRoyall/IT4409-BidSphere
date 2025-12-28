@@ -111,7 +111,8 @@ public class AuctionServiceImpl implements IAuctionService {
         Auction auction = auctionRepository.findById(auctionId)
                 .orElseThrow(() -> new RuntimeException("Auction not found with id: " + auctionId));
 
-        if (!"PENDING".equals(auction.getStatus())) {
+        String currentStatus = auction.getStatus() != null ? auction.getStatus().toUpperCase() : "";
+        if (!"PENDING".equals(currentStatus)) {
             throw new RuntimeException("Only PENDING auctions can be started");
         }
 
@@ -140,7 +141,8 @@ public class AuctionServiceImpl implements IAuctionService {
             Auction auction = auctionRepository.findById(auctionId)
                     .orElseThrow(() -> new RuntimeException("Auction not found with id: " + auctionId));
 
-            if (!"OPEN".equals(auction.getStatus()))
+            String currentStatus = auction.getStatus() != null ? auction.getStatus().toUpperCase() : "";
+            if (!"OPEN".equals(currentStatus))
                 throw new RuntimeException("Auction must be OPEN to close");
 
             auction.setStatus("CLOSED");
@@ -228,7 +230,8 @@ public class AuctionServiceImpl implements IAuctionService {
         Auction auction = auctionRepository.findByIdWithSellerAndImages(auctionId)
                 .orElseThrow(() -> new RuntimeException("Auction not found with id: " + auctionId));
 
-        if (!"DRAFT".equals(auction.getStatus())) {
+        String auctionStatus = auction.getStatus() != null ? auction.getStatus().toUpperCase() : "";
+        if (!"DRAFT".equals(auctionStatus)) {
             throw new RuntimeException("Only DRAFT auctions can be approved or rejected");
         }
 

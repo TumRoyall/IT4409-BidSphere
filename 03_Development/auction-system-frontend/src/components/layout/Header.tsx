@@ -17,6 +17,7 @@ import logo from "@/assets/logo.png";
 import { useAuth } from "@/hooks/useAuth";
 import NotificationDropdown from "./NotificationDropdown";
 import { getAvatarUrl } from "@/utils/avatar";
+import { ROLES, hasRoleAccess } from "@/constants/roles";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -48,6 +49,9 @@ export default function Header() {
           <Link to="/help">Trợ giúp</Link>
           <Link to="/how-to-buy">Hướng dẫn mua</Link>
           <Link to="/seller/dashboard">Kênh người bán</Link>
+          {user && hasRoleAccess(user.role || user.roleName, [ROLES.ADMIN, ROLES.MODERATOR]) && (
+            <Link to="/superadmin/dashboard">Kênh Admin</Link>
+          )}
           <a href="#">
             Trò chuyện
           </a>

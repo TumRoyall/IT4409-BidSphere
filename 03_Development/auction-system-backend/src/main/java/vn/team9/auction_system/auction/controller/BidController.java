@@ -3,6 +3,7 @@ package vn.team9.auction_system.auction.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vn.team9.auction_system.auction.service.IAutoBidService;
 import vn.team9.auction_system.common.service.IBidService;
@@ -23,6 +24,7 @@ public class BidController {
 
     // Place a manual bid
     @PostMapping
+    @PreAuthorize("hasAuthority('POST:/api/bids')")
     public ResponseEntity<BidResponse> placeBid(@RequestBody BidRequest request) {
         log.warn("BidController.placeBid() called");
         BidResponse response = bidService.placeBid(request);
@@ -33,6 +35,7 @@ public class BidController {
 
     // Place an automatic bid
     @PostMapping("/auto")
+    @PreAuthorize("hasAuthority('POST:/api/bids/auto')")
     public ResponseEntity<BidResponse> placeAutoBid(@RequestBody BidRequest request) {
         log.warn("BidController.placeAutoBid() called");
         BidResponse response = autoBidService.placeAutoBid(request);
@@ -43,6 +46,7 @@ public class BidController {
 
     // Get bid list by auction session
     @GetMapping("/auction/{auctionId}")
+    @PreAuthorize("hasAuthority('GET:/api/bids/auction/{auctionId}')")
     public ResponseEntity<List<BidResponse>> getBidsByAuction(@PathVariable Long auctionId) {
         List<BidResponse> responses = bidService.getBidsByAuction(auctionId);
         log.warn("Got {} bids for auction {}", responses.size(), auctionId);
@@ -51,6 +55,7 @@ public class BidController {
 
     // Get the highest bid in the auction session
     @GetMapping("/auction/{auctionId}/highest")
+    @PreAuthorize("hasAuthority('GET:/api/bids/auction/{auctionId}/highest')")
     public ResponseEntity<BidResponse> getHighestBid(@PathVariable Long auctionId) {
         BidResponse response = bidService.getHighestBid(auctionId);
         log.warn("Highest bid response success: {}, bidAmount: {}",
@@ -60,6 +65,7 @@ public class BidController {
 
     // Get bid list of a user
     @GetMapping("/user/{userId}")
+    @PreAuthorize("hasAuthority('GET:/api/bids/user/{userId}')")
     public ResponseEntity<List<BidResponse>> getBidsByUser(@PathVariable Long userId) {
         List<BidResponse> responses = bidService.getBidsByUser(userId);
         log.warn("Got {} bids for user {}", responses.size(), userId);

@@ -1,355 +1,242 @@
-# BidSphere Frontend - Cấu trúc dự án
+# 🎨 BidSphere Frontend - Cấu Trúc Dự Án
 
-## 📁 Cây thư mục đầy đủ
+> **Updated:** 2025-12-23  
+> **Tech Stack:** React 19 | TypeScript 5.9 | Vite 7.1 | TailwindCSS 3.4
+
+---
+
+## 📁 Cây thư mục
 
 ```
 auction-system-frontend/
 │
-├── public/                          # Static files
-│   ├── favicon.ico
-│   └── logo.png
-│
-├── src/
-│   ├── api/                        # API Layer
-│   │   ├── axiosClient.ts         # Cấu hình axios, interceptors, base URL
-│   │   └── modules/               # API modules theo chức năng
-│   │       ├── auth.api.ts        # Member 1: Login, Register, Logout
-│   │       ├── user.api.ts        # Member 1: Profile, Balance, Transactions
-│   │       ├── product.api.ts     # Member 2: Products, Images
-│   │       ├── auction.api.ts     # Member 3: Auctions, Bids
-│   │       ├── payment.api.ts     # Member 4: Transactions after auction
-│   │       └── feedback.api.ts    # Member 5: Feedback, Notifications, AdminLog
-│   │
-│   ├── assets/                     # Tài nguyên tĩnh
-│   │   ├── images/
-│   │   └── icons/
-│   │
-│   ├── components/                 # Shared Components
-│   │   ├── common/                # Common reusable components
-│   │   │   ├── Button.tsx         # Button component với variants
-│   │   │   ├── Input.tsx          # Input field với validation
-│   │   │   ├── Modal.tsx          # Modal dialog
-│   │   │   ├── Loading.tsx        # Loading spinner
-│   │   │   └── index.ts           # Export tất cả common components
-│   │   │
-│   │   └── layout/                # Layout components
-│   │       ├── Header.tsx         # Navigation header
-│   │       ├── Footer.tsx         # Footer
-│   │       ├── Sidebar.tsx        # Dashboard sidebar
-│   │       └── index.ts           # Export layout components
-│   │
-│   ├── contexts/                   # React Contexts
-│   │   └── AuthContext.tsx        # Authentication context & provider
-│   │
-│   ├── hooks/                      # Custom Hooks
-│   │   ├── useAuth.ts             # Hook để sử dụng AuthContext
-│   │   └── useFetch.ts            # Hook để fetch data với loading/error states
-│   │
-│   ├── layouts/                    # Page Layouts
-│   │   ├── MainLayout.tsx         # Layout chính với header/footer
-│   │   ├── AuthLayout.tsx         # Layout cho trang login/register
-│   │   └── DashboardLayout.tsx    # Layout cho dashboard với sidebar
-│   │
-│   ├── modules/                    # Feature Modules (chia theo member)
-│   │   │
-│   │   ├── auth/                  # 👤 MEMBER 1 - Authentication
-│   │   │   ├── pages/
-│   │   │   │   ├── LoginPage.tsx          # Trang đăng nhập
-│   │   │   │   └── RegisterPage.tsx       # Trang đăng ký
-│   │   │   └── components/
-│   │   │       └── AuthForm.tsx           # Form component tái sử dụng
-│   │   │
-│   │   ├── user/                  # 👤 MEMBER 1 - User Management
-│   │   │   ├── pages/
-│   │   │   │   ├── Profile.tsx            # Trang profile (xem/sửa thông tin)
-│   │   │   │   └── Balance.tsx            # Trang quản lý số dư, nạp/rút tiền
-│   │   │   └── components/
-│   │   │       └── UserInfo.tsx           # Component hiển thị thông tin user
-│   │   │
-│   │   ├── product/               # 📦 MEMBER 2 - Product & Image
-│   │   │   ├── pages/
-│   │   │   │   ├── ProductList.tsx        # Danh sách sản phẩm
-│   │   │   │   ├── ProductDetail.tsx      # Chi tiết sản phẩm
-│   │   │   │   └── CreateProduct.tsx      # Tạo sản phẩm mới (seller)
-│   │   │   └── components/
-│   │   │       ├── ProductCard.tsx        # Card hiển thị sản phẩm
-│   │   │       └── ImageUpload.tsx        # Component upload ảnh
-│   │   │
-│   │   ├── auction/               # 🔨 MEMBER 3 - Auction & Bid
-│   │   │   ├── pages/
-│   │   │   │   ├── AuctionList.tsx        # Danh sách phiên đấu giá
-│   │   │   │   ├── AuctionDetail.tsx      # Chi tiết phiên đấu giá + đặt giá
-│   │   │   │   └── CreateAuction.tsx      # Tạo phiên đấu giá
-│   │   │   └── components/
-│   │   │       ├── AuctionCard.tsx        # Card hiển thị auction
-│   │   │       └── BidForm.tsx            # Form đặt giá thầu
-│   │   │
-│   │   ├── payment/               # 💳 MEMBER 4 - Transaction After Auction
-│   │   │   ├── pages/
-│   │   │   │   ├── DepositPage.tsx        # Trang nạp tiền
-│   │   │   │   └── PaymentHistory.tsx     # Lịch sử giao dịch
-│   │   │   └── components/
-│   │   │       └── DepositForm.tsx        # Form nạp tiền
-│   │   │
-│   │   └── feedback/              # ⭐ MEMBER 5 - Feedback & Notification
-│   │       ├── pages/
-│   │       │   ├── FeedbackList.tsx       # Danh sách feedback
-│   │       │   ├── CreateFeedback.tsx     # Tạo feedback mới
-│   │       │   └── NotificationList.tsx   # Danh sách thông báo
-│   │       └── components/
-│   │           ├── FeedbackCard.tsx       # Card hiển thị feedback
-│   │           └── NotificationItem.tsx   # Item notification
-│   │
-│   ├── routes/                     # React Router Configuration
-│   │   ├── index.tsx              # Cấu hình tất cả routes
-│   │   └── ProtectedRoute.tsx     # Component bảo vệ routes cần auth
-│   │
-│   ├── store/                      # State Management
-│   │   └── index.ts               # Redux/Zustand store (tuỳ chọn)
-│   │
-│   ├── utils/                      # Utility Functions
-│   │   ├── format.ts              # Format date, currency, text
-│   │   └── constants.ts           # Constants (API URLs, roles, status)
-│   │
-│   ├── App.tsx                     # Root component
-│   ├── main.tsx                    # Entry point
-│   └── index.css                   # Global styles
-│
-├── .env.example                    # Environment variables template
-├── .gitignore
+├── index.html
 ├── package.json
-├── tsconfig.json
 ├── vite.config.ts
-└── README.md
+├── tsconfig.json
+├── tailwind.config.cjs
+├── .env
+│
+└── src/
+    ├── main.tsx                      # Entry point
+    ├── App.tsx                       # Root component
+    ├── index.css                     # Global styles
+    │
+    ├── api/                          # 🌐 API Layer
+    │   ├── axiosClient.ts            # Axios config + interceptors
+    │   └── modules/
+    │       ├── auth.api.ts
+    │       ├── user.api.ts
+    │       ├── auction.api.ts
+    │       ├── bid.api.ts
+    │       ├── product.api.ts
+    │       ├── seller.api.ts
+    │       ├── payment.api.ts
+    │       ├── feedback.api.ts
+    │       ├── adminUser.api.ts
+    │       ├── adminAuction.api.ts
+    │       ├── adminUserReport.api.ts
+    │       └── adminUserWarning.api.ts
+    │
+    ├── contexts/
+    │   └── AuthContext.tsx           # Authentication state
+    │
+    ├── hooks/
+    │   ├── useAuth.ts
+    │   └── useFetch.ts
+    │
+    ├── layouts/
+    │   ├── MainLayout.tsx            # Header + Content + Footer
+    │   ├── AuthLayout.tsx            # Minimal (login/register)
+    │   ├── AdminLayout.tsx           # Admin panel
+    │   └── DashboardLayout.tsx
+    │
+    ├── routes/
+    │   ├── index.tsx                 # Route definitions
+    │   └── ProtectedRoute.tsx        # Auth guard
+    │
+    ├── components/
+    │   ├── common/                   # Reusable UI
+    │   │   ├── Button.tsx
+    │   │   ├── Input.tsx
+    │   │   ├── Modal.tsx
+    │   │   ├── Loading.tsx
+    │   │   ├── Card.tsx
+    │   │   ├── Badge.tsx
+    │   │   ├── Select.tsx
+    │   │   ├── Skeleton.tsx
+    │   │   └── ...
+    │   ├── layout/
+    │   │   ├── Header.tsx
+    │   │   ├── Footer.tsx
+    │   │   ├── Sidebar.tsx
+    │   │   └── NotificationDropdown.tsx
+    │   └── ...
+    │
+    ├── modules/                      # 📦 Feature Modules
+    │   ├── home/
+    │   ├── auth/
+    │   ├── user/
+    │   ├── product/
+    │   ├── auction/
+    │   ├── payment/
+    │   ├── feedback/
+    │   ├── seller/
+    │   ├── admin/
+    │   └── help/
+    │
+    ├── utils/
+    │   ├── format.ts
+    │   └── constants.ts
+    │
+    └── styles/
 ```
 
 ---
 
-## 🎯 Phân công Module theo Member
+## 🛣️ Routes
 
-### 👤 **Member 1 - User/Auth** (`/user`, `/auth`)
-**Bảng: User, AccountTransaction**
+### Public Routes (không cần login)
 
-**Nhiệm vụ:**
-- ✅ API: `auth.api.ts`, `user.api.ts`
-- ✅ Pages: `LoginPage`, `RegisterPage`, `Profile`, `Balance`
-- ✅ Components: `AuthForm`, `UserInfo`
-- ✅ Context: `AuthContext.tsx`
+```
+/                     → HomePage          (MainLayout)
+/auctions             → AuctionsPage      (MainLayout)
+/products             → ProductList       (MainLayout)
+/products/:id         → ProductDetail     (MainLayout)
+/help                 → HelpPage          (MainLayout)
+```
 
-**Luồng:**
-1. Đăng ký/Đăng nhập → JWT token
-2. Nạp/Rút tiền → AccountTransaction
-3. Quản lý profile, xem số dư
+### Auth Routes (AuthLayout)
 
----
+```
+/login                → LoginPage
+/register             → RegisterPage
+/verify-info          → VerifyInfoPage
+```
 
-### 📦 **Member 2 - Product/Image** (`/product`)
-**Bảng: Product, Image**
+### Protected Routes (yêu cầu login)
 
-**Nhiệm vụ:**
-- ✅ API: `product.api.ts`
-- ✅ Pages: `ProductList`, `ProductDetail`, `CreateProduct`
-- ✅ Components: `ProductCard`, `ImageUpload`
+```
+/auctions/:id         → AuctionDetailPage (MainLayout + Protected)
+```
 
-**Luồng:**
-1. Seller tạo sản phẩm → status = 'WAITING'
-2. Upload ảnh → lưu vào Image
-3. Admin duyệt → status = 'ONGOING'
+### User Area (ProfileLayout + Protected)
 
----
+```
+/user/account/profile           → ProfilePage
+/user/account/payment           → PaymentPage
+/user/account/reset-password    → ResetPasswordPage
+/user/notification/:category    → NotificationPage
+/user/bid/history-bid           → HistoryBidPage
+/user/bid/auction-current-joined → AuctionCurrentPage
+```
 
-### 🔨 **Member 3 - Auction/Bid** (`/auction`)
-**Bảng: Auction, Bid**
+### Seller Area (MainLayout + Protected)
 
-**Nhiệm vụ:**
-- ✅ API: `auction.api.ts`
-- ✅ Pages: `AuctionList`, `AuctionDetail`, `CreateAuction`
-- ✅ Components: `AuctionCard`, `BidForm`
+```
+/seller                    → ProductManagement
+/seller/products           → ProductManagement
+/seller/products/create    → CreateProduct
+/seller/products/:id/edit  → CreateProduct (edit mode)
+/seller/auctions           → AuctionList
+/seller/auctions/create    → CreateAuction
+```
 
-**Luồng:**
-1. Tạo phiên đấu giá từ Product
-2. User đặt giá → cập nhật highest_current_price
-3. Kết thúc → status = 'CLOSED', xác định winner
+### Admin Area (MainLayout + Protected)
 
----
+```
+/admin/products/approval   → ProductApprovalPage
+/admin/auctions/approval   → AuctionApprovalPage
+```
 
-### 💳 **Member 4 - Transaction After Auction** (`/payment`)
-**Bảng: TransactionAfterAuction, AccountTransaction**
+### Super Admin Area (AdminLayout + Protected)
 
-**Nhiệm vụ:**
-- ✅ API: `payment.api.ts`
-- ✅ Pages: `DepositPage`, `PaymentHistory`
-- ✅ Components: `DepositForm`
-
-**Luồng:**
-1. Auction kết thúc → tạo TransactionAfterAuction
-2. Buyer thanh toán → status = 'PAID'
-3. Seller gửi hàng → status = 'SHIPPED'
-4. Buyer xác nhận → status = 'DONE'
-
----
-
-### ⭐ **Member 5 - Feedback/Notification** (`/feedback`)
-**Bảng: Feedback, Notification, AdminLog**
-
-**Nhiệm vụ:**
-- ✅ API: `feedback.api.ts`
-- ✅ Pages: `FeedbackList`, `CreateFeedback`, `NotificationList`
-- ✅ Components: `FeedbackCard`, `NotificationItem`
-
-**Luồng:**
-1. Transaction hoàn tất → tạo Feedback
-2. Sự kiện xảy ra → tạo Notification
-3. Admin thao tác → ghi AdminLog
+```
+/superadmin/dashboard      → AdminDashboardPage
+/superadmin/users          → AdminUsersPage
+/superadmin/user-reports   → AdminReportsPage
+/superadmin/user-warnings  → AdminUserWarningPage
+```
 
 ---
 
-## 📦 Công nghệ sử dụng
+## 🔐 Authentication
 
-- **React 18** + **TypeScript**
-- **Vite** - Build tool
-- **React Router** - Routing
-- **Axios** - HTTP client
-- **TailwindCSS** - Styling (optional)
-- **Redux/Zustand** - State management (tuỳ chọn)
+**AuthContext cung cấp:**
+- `user` - Thông tin user hiện tại
+- `token` - JWT token
+- `login(email, password)` - Đăng nhập
+- `register(data)` - Đăng ký
+- `logout()` - Đăng xuất
+- `setUser(user)` - Cập nhật user
+
+**Token Storage:**
+- `localStorage.access_token` - JWT token
+- `localStorage.user` - User object (cached)
+
+**Axios Interceptors:**
+- Request: Auto-attach `Bearer ${token}` header
+- Response: Redirect to `/login` on 401
 
 ---
 
-## 🚀 Hướng dẫn bắt đầu
+## 🎯 Phân Công Module
 
-### 1. Clone repo và install dependencies
+**Member 1** - `auth`, `user`
+- Đăng ký, đăng nhập, profile, nạp tiền
+
+**Member 2** - `product`
+- CRUD sản phẩm, upload ảnh
+
+**Member 3** - `auction`
+- Tạo/quản lý đấu giá, đặt giá
+
+**Member 4** - `payment`
+- Giao dịch sau đấu giá
+
+**Member 5** - `feedback`
+- Đánh giá, thông báo
+
+---
+
+## 📦 Dependencies
+
+**Runtime:**
+- `react` 19.1.1 - UI Library
+- `react-dom` 19.1.1 - DOM rendering
+- `react-router-dom` 7.9.4 - Routing
+- `axios` 1.13.1 - HTTP client
+- `lucide-react` 0.548.0 - Icons
+- `clsx`, `tailwind-merge` - Class utilities
+
+**Dev:**
+- `vite` 7.1.7 - Build tool
+- `typescript` 5.9.3 - Type safety
+- `tailwindcss` 3.4.18 - Styling
+- `eslint` 9.36.0 - Linting
+
+---
+
+## 🚀 Chạy Frontend
+
 ```bash
-cd auction-system-frontend
+# Install
 npm install
-```
 
-### 2. Setup environment variables
-```bash
-cp .env.example .env
-# Chỉnh sửa VITE_API_BASE_URL trong .env
-```
-
-### 3. Install các package cần thiết (nếu chưa có)
-```bash
-npm install axios react-router-dom
-npm install -D @types/node
-```
-
-### 4. Chạy development server
-```bash
+# Development (http://localhost:5173)
 npm run dev
+
+# Build
+npm run build
+
+# Lint
+npm run lint
 ```
 
 ---
 
-## 📝 Quy tắc làm việc
+## 🔧 Environment
 
-### 1. **Đặt tên file/folder**
-- Component: PascalCase (`ProductCard.tsx`)
-- Util/API: camelCase (`format.ts`, `auth.api.ts`)
-- Folder: lowercase (`components`, `modules`)
-
-### 2. **Commit message**
+```env
+VITE_API_BASE_URL=http://localhost:8080/api
 ```
-[Member X] Module: Brief description
-
-VD: [Member 2] Product: Add ProductList page
-```
-
-### 3. **Branch naming**
-```
-feature/member-X-module-name
-
-VD: feature/member-2-product-list
-```
-
-### 4. **Mỗi member làm việc trên module của mình**
-- Member 1: `src/modules/auth/` + `src/modules/user/`
-- Member 2: `src/modules/product/`
-- Member 3: `src/modules/auction/`
-- Member 4: `src/modules/payment/`
-- Member 5: `src/modules/feedback/`
-
----
-
-## 🔧 Giải thích các file chính
-
-### `src/api/axiosClient.ts`
-- Cấu hình axios với baseURL
-- Interceptor để thêm token vào header
-- Xử lý refresh token khi hết hạn
-- Xử lý lỗi chung
-
-### `src/api/modules/*.api.ts`
-- Chứa các function gọi API cho từng module
-- Export các interface TypeScript cho request/response
-- Mỗi member implement API của module mình
-
-### `src/contexts/AuthContext.tsx`
-- Quản lý state authentication (user, token)
-- Provide methods: login, register, logout
-- Được sử dụng bởi useAuth hook
-
-### `src/components/common/`
-- Components dùng chung: Button, Input, Modal, Loading
-- Có thể customize thêm theo nhu cầu
-
-### `src/components/layout/`
-- Header: Navigation bar
-- Footer: Footer với links
-- Sidebar: Menu cho dashboard
-
-### `src/layouts/`
-- **MainLayout**: Header + Content + Footer
-- **AuthLayout**: Layout đơn giản cho login/register
-- **DashboardLayout**: Header + Sidebar + Content
-
-### `src/routes/index.tsx`
-- Định nghĩa tất cả routes của app
-- Gắn layout phù hợp cho từng route
-- VD: `/login` → AuthLayout, `/dashboard` → DashboardLayout
-
-### `src/routes/ProtectedRoute.tsx`
-- Component kiểm tra authentication
-- Redirect về /login nếu chưa đăng nhập
-- Dùng để bảo vệ các trang cần auth
-
-### `src/utils/format.ts`
-- Các function format: currency, date, text
-- VD: `formatCurrency(100000)` → "100,000 VND"
-
-### `src/utils/constants.ts`
-- Định nghĩa các constants: API_BASE_URL, USER_ROLES, STATUS
-- Tránh hardcode values
-
----
-
-## ✅ Checklist cho mỗi Member
-
-- [ ] Hiểu rõ luồng nghiệp vụ của module mình
-- [ ] Review các API đã được define sẵn
-- [ ] Implement pages theo TODO comments
-- [ ] Implement components theo TODO comments
-- [ ] Test các chức năng cơ bản
-- [ ] Commit và push code lên branch của mình
-- [ ] Tạo Pull Request để review
-
----
-
-## 🤝 Hợp tác giữa các Member
-
-- **Member 1** cung cấp AuthContext cho các member khác dùng
-- **Member 2** cung cấp ProductCard cho Member 3 dùng trong AuctionDetail
-- **Member 3** cung cấp dữ liệu auction cho Member 4, 5
-- **Member 4** xử lý payment sau khi auction của Member 3 kết thúc
-- **Member 5** tạo notification cho tất cả các sự kiện
-
----
-
-## 📞 Liên hệ
-
-Nếu có thắc mắc về cấu trúc hoặc phân công, liên hệ team lead hoặc tạo issue trên GitHub.
-
----
-
-**Happy Coding! 🚀**

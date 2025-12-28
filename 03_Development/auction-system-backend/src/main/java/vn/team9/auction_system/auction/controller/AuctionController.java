@@ -2,6 +2,7 @@ package vn.team9.auction_system.auction.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vn.team9.auction_system.common.service.IAuctionService;
 import vn.team9.auction_system.common.dto.auction.AuctionRequest;
@@ -19,6 +20,7 @@ public class AuctionController {
 
     // Create auctions
     @PostMapping
+    @PreAuthorize("hasAuthority('POST:/api/auctions')")
     public ResponseEntity<AuctionResponse> createAuction(@RequestBody AuctionRequest request) {
         return ResponseEntity.ok(auctionService.createAuction(request));
     }
@@ -56,12 +58,14 @@ public class AuctionController {
 
     // update auctions
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('PUT:/api/auctions/{id}')")
     public ResponseEntity<AuctionResponse> updateAuction(@PathVariable Long id, @RequestBody AuctionRequest request) {
         return ResponseEntity.ok(auctionService.updateAuction(id, request));
     }
 
     // delete auctions
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('DELETE:/api/auctions/{id}')")
     public ResponseEntity<Void> deleteAuction(@PathVariable Long id) {
         auctionService.deleteAuction(id);
         return ResponseEntity.noContent().build();
@@ -69,6 +73,7 @@ public class AuctionController {
 
     // Open auctions by manual (admin)
     @PostMapping("/{auctionId}/start")
+    @PreAuthorize("hasAuthority('POST:/api/auctions/{auctionId}/start')")
     public ResponseEntity<Void> startAuction(@PathVariable Long auctionId) {
         auctionService.startAuction(auctionId);
         return ResponseEntity.ok().build();
@@ -76,6 +81,7 @@ public class AuctionController {
 
     // Close auctions by manual (admin)
     @PostMapping("/{auctionId}/close")
+    @PreAuthorize("hasAuthority('POST:/api/auctions/{auctionId}/close')")
     public ResponseEntity<Void> closeAuction(@PathVariable Long auctionId) {
         auctionService.closeAuction(auctionId);
         return ResponseEntity.ok().build();
@@ -83,6 +89,7 @@ public class AuctionController {
 
     // Admin approve Draft -> Pending/Cancel
     @PutMapping("/{auctionId}/approve")
+    @PreAuthorize("hasAuthority('PUT:/api/auctions/{auctionId}/approve')")
     public ResponseEntity<AuctionResponse> approveAuction(
             @PathVariable Long auctionId,
             @RequestParam String status) {
@@ -91,6 +98,7 @@ public class AuctionController {
 
     // Get auctions from seller
     @GetMapping("/me")
+    @PreAuthorize("hasAuthority('GET:/api/auctions/me')")
     public ResponseEntity<?> getMyAuctions() {
         return ResponseEntity.ok(auctionService.getAuctionsByCurrentSeller());
     }

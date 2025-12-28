@@ -3,17 +3,60 @@ package vn.team9.auction_system.common.handler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import vn.team9.auction_system.common.exception.ApiException;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 
-    // Business error handler
+    // Lỗi phân quyền - Access Denied (từ @PreAuthorize)
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, Object>> handleAccessDeniedException(AccessDeniedException ex) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now().toString());
+        body.put("status", 403);
+        body.put("error", "Forbidden");
+        body.put("message", "Bạn không có quyền truy cập tài nguyên này");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body);
+    }
+
+    // Lỗi API tùy chỉnh
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<Map<String, Object>> handleApiException(ApiException ex) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now().toString());
+        body.put("status", ex.getStatus().value());
+        body.put("error", ex.getStatus().getReasonPhrase());
+        body.put("message", ex.getMessage());
+        return new ResponseEntity<>(body, ex.getStatus());
+    }
+
+    // Lỗi validation
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, Object>> handleValidationException(MethodArgumentNotValidException ex) {
+        Map<String, Object> body = new HashMap<>();
+        String message = ex.getBindingResult().getAllErrors().stream()
+                .filter(error -> error instanceof FieldError)
+                .map(error -> ((FieldError) error).getField() + " " + error.getDefaultMessage())
+                .findFirst()
+                .orElse("Validation error");
+        body.put("timestamp", LocalDateTime.now().toString());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("error", "Bad Request");
+        body.put("message", message);
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
+    // Lỗi nghiệp vụ (sai mật khẩu, không đủ tiền, ...)
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Map<String, Object>> handleBusinessException(BusinessException ex) {
         log.warn("Business error: {}", ex.getMessage());
@@ -22,8 +65,7 @@ public class GlobalExceptionHandler {
                 "timestamp", LocalDateTime.now().toString(),
                 "status", 400,
                 "error", "Business Error",
-                "message", ex.getMessage()
-        ));
+                "message", ex.getMessage()));
     }
 
     // System error handler
@@ -31,11 +73,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleSystemException(Exception ex) {
         log.error("System exception", ex);
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
-                "timestamp", LocalDateTime.now().toString(),
-                "status", 500,
-                "error", "Internal Server Error",
-                "message", "System is experiencing issues"
-        ));
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now().toString());
+        body.put("status", 500);
+        body.put("error", "Internal Server Error");
+        body.put("message", "Lỗi hệ thống");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
 }

@@ -1,54 +1,82 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FiHome, FiUsers, FiAlertTriangle, FiFlag } from 'react-icons/fi';
+import { FiHome, FiUsers, FiAlertTriangle, FiFlag, FiPackage } from 'react-icons/fi';
 import '@/modules/admin/styles/AdminSidebar.css';
+import { useAuth } from '@/hooks/useAuth';
+import { ROLES } from '@/constants/roles';
 
 const AdminSidebar: React.FC = () => {
+    const { user } = useAuth();
+    const userRole = user?.role || user?.roleName;
+    const isAdmin = userRole?.toUpperCase() === ROLES.ADMIN;
+    const isModerator = userRole?.toUpperCase() === ROLES.MODERATOR;
+
+    // Menu items visible to all (ADMIN + MODERATOR)
+    const commonMenuItems = [
+        {
+            to: "/superadmin/dashboard",
+            icon: FiHome,
+            label: "Dashboard",
+        },
+    ];
+
+    // Menu items only for ADMIN
+    const adminOnlyItems = [
+        {
+            to: "/superadmin/users",
+            icon: FiUsers,
+            label: "Users",
+        },
+        {
+            to: "/superadmin/user-warnings",
+            icon: FiAlertTriangle,
+            label: "Warnings",
+        },
+        {
+            to: "/superadmin/user-reports",
+            icon: FiFlag,
+            label: "Reports",
+        },
+    ];
+
+    // Menu items for MODERATOR (approval pages)
+    const moderatorItems = [
+        {
+            to: "/superadmin/auction/approval",
+            icon: FiPackage,
+            label: "Auction Approval",
+        },
+    ];
+
+    // Build menu based on role
+    let menuItems = [...commonMenuItems];
+
+    if (isAdmin) {
+        menuItems = [...menuItems, ...adminOnlyItems, ...moderatorItems];
+    } else if (isModerator) {
+        menuItems = [...menuItems, ...moderatorItems];
+    }
+
     return (
         <div className="admin-sidebar">
             <h2>Admin Panel</h2>
+            {isModerator && !isAdmin && (
+                <div className="sidebar-role-badge">MODERATOR</div>
+            )}
 
             <nav>
                 <ul>
-                    <li>
-                        <NavLink
-                            to="/superadmin/dashboard"
-                            className={({ isActive }) => isActive ? 'active' : ''}
-                        >
-                            <FiHome size={16} />
-                            <span>Dashboard</span>
-                        </NavLink>
-                    </li>
-
-                    <li>
-                        <NavLink
-                            to="/superadmin/users"
-                            className={({ isActive }) => isActive ? 'active' : ''}
-                        >
-                            <FiUsers size={16} />
-                            <span>Users</span>
-                        </NavLink>
-                    </li>
-
-                    <li>
-                        <NavLink
-                            to="/superadmin/user-warnings"
-                            className={({ isActive }) => isActive ? 'active' : ''}
-                        >
-                            <FiAlertTriangle size={16} />
-                            <span>Warnings</span>
-                        </NavLink>
-                    </li>
-
-                    <li>
-                        <NavLink
-                            to="/superadmin/user-reports"
-                            className={({ isActive }) => isActive ? 'active' : ''}
-                        >
-                            <FiFlag size={16} />
-                            <span>Reports</span>
-                        </NavLink>
-                    </li>
+                    {menuItems.map((item) => (
+                        <li key={item.to}>
+                            <NavLink
+                                to={item.to}
+                                className={({ isActive }) => isActive ? 'active' : ''}
+                            >
+                                <item.icon size={16} />
+                                <span>{item.label}</span>
+                            </NavLink>
+                        </li>
+                    ))}
                 </ul>
             </nav>
         </div>
@@ -56,3 +84,4 @@ const AdminSidebar: React.FC = () => {
 };
 
 export default AdminSidebar;
+

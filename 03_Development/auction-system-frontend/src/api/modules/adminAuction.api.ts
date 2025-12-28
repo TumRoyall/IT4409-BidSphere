@@ -7,7 +7,7 @@ export const adminAuctionApi = {
 
     // Lấy tất cả auctions cho admin (không chỉ status OPEN)
     getAllAdmin: (params?: any) =>
-        axiosClient.get("/auctions", { 
+        axiosClient.get("/auctions", {
             params: { ...params, status: null } // hoặc status: 'ALL'
         }),
 

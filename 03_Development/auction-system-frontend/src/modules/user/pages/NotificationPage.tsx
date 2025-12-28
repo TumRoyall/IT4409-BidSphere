@@ -13,18 +13,18 @@ export default function NotificationPage() {
   // Handle notification click - navigate based on actionUrl or type/category
   const handleNotificationClick = (n: any) => {
     markAsRead(n.notiId);
-    
+
     // Prefer actionUrl from notification if available
     if (n.actionUrl) {
       navigate(n.actionUrl);
       return;
     }
-    
+
     // Fallback to type-based routing
     switch (n.type) {
       case "SYSTEM":
         if (n.category === "AUCTION_PENDING_APPROVAL") {
-          navigate("/admin/products/approval");
+          navigate("/superadmin/auction/approval");
         }
         break;
       case "BID":
@@ -41,11 +41,11 @@ export default function NotificationPage() {
   // Map detailed category to main category
   const getCategoryGroup = (notificationCategory: string): string => {
     if (!notificationCategory) return "";
-    
+
     const bidCategories = ["BID_PLACED", "OUTBID", "AUCTION_ENDING_SOON", "LEADING_BID", "AUCTION_WON", "AUCTION_LOST"];
     const paymentCategories = ["PAYMENT_DUE", "PAYMENT_SUCCESS", "PAYMENT_FAILED", "SHIPMENT_CONFIRMED", "PAYMENT_RECEIVED"];
     const systemCategories = ["AUCTION_APPROVED", "AUCTION_REJECTED", "AUCTION_STARTED", "AUCTION_ENDED", "PRODUCT_APPROVED", "PRODUCT_REJECTED", "AUCTION_PENDING_APPROVAL", "HIGHEST_BID_CHANGED", "TRANSACTION_COMPLETED", "TRANSACTION_CANCELLED"];
-    
+
     const upper = notificationCategory.toUpperCase();
     if (bidCategories.includes(upper)) return "bid";
     if (paymentCategories.includes(upper)) return "payment";
@@ -121,9 +121,9 @@ export default function NotificationPage() {
         <div className="notification-list">
           {sorted.map((n) => (
             <div
-               key={n.notiId}
-               onClick={() => handleNotificationClick(n)}
-               className={`notification-item ${n.isRead ? 'read' : 'unread'}`}
+              key={n.notiId}
+              onClick={() => handleNotificationClick(n)}
+              className={`notification-item ${n.isRead ? 'read' : 'unread'}`}
             >
               <div className="notification-content">
                 <div className="notification-header-row">
@@ -135,8 +135,8 @@ export default function NotificationPage() {
                   )}
                 </div>
                 <p className="notification-message">
-                   {n.message}
-                 </p>
+                  {n.message}
+                </p>
                 {n.actionLabel && (
                   <div className="notification-action">
                     <span className="action-badge">
@@ -144,15 +144,15 @@ export default function NotificationPage() {
                     </span>
                   </div>
                 )}
-                 <small className="notification-time">
-                   {new Date(n.createdAt).toLocaleString("vi-VN", {
-                     hour: "2-digit",
-                     minute: "2-digit",
-                     day: "2-digit",
-                     month: "2-digit",
-                     year: "numeric",
-                   })}
-                 </small>
+                <small className="notification-time">
+                  {new Date(n.createdAt).toLocaleString("vi-VN", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })}
+                </small>
               </div>
               {n.isRead && (
                 <div className="read-check">
