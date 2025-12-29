@@ -54,7 +54,7 @@ export default function PaymentPage() {
             className="deposit-btn"
             onClick={() => navigate("/user/account/payment/deposit")}
           >
-            <span className="deposit-icon">←</span>
+            <span className="deposit-icon"></span>
             <span className="deposit-text">Nạp tiền</span>
           </button>
         </div>

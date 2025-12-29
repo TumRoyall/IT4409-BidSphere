@@ -68,7 +68,7 @@ export const useNotifications = () => {
 
   // Mark as read
   const markAsRead = useCallback(
-    async (notiId: number) => {
+    async (notiId: string | number) => {
       try {
         // Update local state immediately
         setNotifications((prev) =>
@@ -80,11 +80,9 @@ export const useNotifications = () => {
 
         // Use WebSocket if connected, otherwise use REST API
         if (wsConnected.current && wsService.isConnected()) {
-          console.log("📤 Marking as read via WebSocket:", notiId);
           wsService.markAsRead(notiId);
         } else {
-          console.log("📤 Marking as read via REST API:", notiId);
-          await notificationApi.markAsRead(notiId);
+          await notificationApi.markAsRead(String(notiId));
         }
       } catch (err: unknown) {
         console.error("Failed to mark as read:", err);
@@ -103,10 +101,8 @@ export const useNotifications = () => {
     try {
       // Use WebSocket if connected, otherwise use REST API
       if (wsConnected.current && wsService.isConnected()) {
-        console.log("📤 Marking all as read via WebSocket");
         wsService.markAllAsRead();
       } else {
-        console.log("📤 Marking all as read via REST API");
         await notificationApi.markAllAsRead();
       }
 

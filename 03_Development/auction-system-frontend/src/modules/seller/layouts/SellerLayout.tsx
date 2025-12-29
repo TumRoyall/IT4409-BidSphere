@@ -42,7 +42,6 @@ export default function SellerLayout() {
         setUpgrading(true);
         try {
             const response = await userApi.upgradeToSeller();
-            console.log("✅ Role upgraded to SELLER:", response);
 
             // Update local user state with new role
             if (user) {
@@ -99,9 +98,6 @@ export default function SellerLayout() {
         location.pathname.includes('/products/') && location.pathname.includes('/edit') ||
         location.pathname.includes('/auctions/create') ||
         location.pathname.includes('/auctions/') && location.pathname.includes('/edit');
-
-    console.log('SellerLayout - Current path:', location.pathname);
-    console.log('SellerLayout - User role:', userRole);
 
     if (isFormPage) {
         return (

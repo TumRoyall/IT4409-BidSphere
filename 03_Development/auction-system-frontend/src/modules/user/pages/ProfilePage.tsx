@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import { userApi } from "@/api/modules/user.api";
-import defaultAvatar from "@/assets/avatars/default-avatar.png";
-import maleAvatar from "@/assets/avatars/male.png";
-import femaleAvatar from "@/assets/avatars/female.png";
+import { getAvatarUrl } from "@/utils/avatar";
+import { useAuthContext } from "@/contexts/AuthContext";
 import "@/modules/user/styles/ProfilePage.css";
 
 export default function ProfilePage() {
+  const { refreshUser } = useAuthContext();
   const [user, setUser] = useState<any>(null);
   const [form, setForm] = useState({
     fullName: "",
@@ -14,7 +14,7 @@ export default function ProfilePage() {
     gender: "",
     status: "",
   });
-  const [avatar, setAvatar] = useState<string>(defaultAvatar);
+  const [avatar, setAvatar] = useState<string>(getAvatarUrl());
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState("");
@@ -25,6 +25,7 @@ export default function ProfilePage() {
     (async () => {
       try {
         const data = await userApi.getProfile();
+        console.log("[ProfilePage] /me response", data);
         setUser(data);
         setForm({
           fullName: data.fullName || "",
@@ -34,11 +35,14 @@ export default function ProfilePage() {
           status: data.status || "",
         });
 
-        // ảnh đại diện
-        if (data.avatarUrl) setAvatar(data.avatarUrl);
-        else if (data.gender === "male") setAvatar(maleAvatar);
-        else if (data.gender === "female") setAvatar(femaleAvatar);
-        else setAvatar(defaultAvatar);
+        // Chuẩn hóa URL (relative -> absolute) và fallback theo giới tính
+        const resolved = getAvatarUrl(data.avatarUrl, data.gender);
+        console.log("[ProfilePage] resolved avatar on load", {
+          raw: data.avatarUrl,
+          gender: data.gender,
+          resolved,
+        });
+        setAvatar(resolved);
       } catch {
         setMsg("Không thể tải hồ sơ người dùng");
       } finally {
@@ -80,10 +84,26 @@ export default function ProfilePage() {
 
     try {
       const res = await userApi.updateAvatar(formData);
-      // Nếu backend trả về đường dẫn tuyệt đối thì set trực tiếp, nếu trả về tương đối thì thêm baseURL
-      setAvatar(res.avatarUrl.startsWith("http") ? res.avatarUrl : `${import.meta.env.VITE_API_BASE_URL}${res.avatarUrl}`);
+      const resolvedUrl = getAvatarUrl(res.avatarUrl, form.gender || user?.gender);
+      console.log("[ProfilePage] avatar upload result", {
+        raw: res,
+        rawUrl: res.avatarUrl,
+        gender: form.gender || user?.gender,
+        resolvedUrl,
+        envBase: import.meta.env.VITE_API_BASE_URL,
+        locationOrigin: typeof window !== "undefined" ? window.location.origin : "",
+      });
+      // cache-bust to force browser reload the updated image immediately
+      setAvatar(`${resolvedUrl}?t=${Date.now()}`);
+      // refresh global auth user so other components (header, etc.) update without full page reload
+      try {
+        await refreshUser();
+      } catch (e) {
+        console.warn("[ProfilePage] refreshUser failed", e);
+      }
       setMsg("Ảnh đại diện đã được cập nhật!");
     } catch (err: any) {
+      console.error("[ProfilePage] upload avatar error", err);
       setMsg(err.message || "Lỗi khi cập nhật ảnh đại diện");
     }
   };

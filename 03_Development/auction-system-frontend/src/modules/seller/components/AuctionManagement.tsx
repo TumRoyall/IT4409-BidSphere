@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/common/Button";
 import { Modal } from "@/components/common/Modal";
-import { Package, X, TrendingUp } from "lucide-react";
+import { Package, TrendingUp } from "lucide-react";
 import auctionApi from "@/api/modules/auction.api";
 import BiddingHistory from "./BiddingHistory";
 import type { Product } from "../types/seller.types";
@@ -46,11 +46,6 @@ const AuctionManagement: React.FC<AuctionManagementProps> = ({
             : false;
         })
         : auctionsList;
-
-      // Debug logging
-      console.log("Fetched auctions:", auctionsList);
-      console.log("Product filter:", product);
-      console.log("Filtered auctions:", filtered);
 
       setAuctions(filtered);
     } catch (err: any) {

@@ -4,7 +4,7 @@ import { Button } from "@/components/common/Button";
 import { Input } from "@/components/common/Input";
 import { Textarea } from "@/components/common/TextArea";
 import CategorySelect from "@/components/common/CategorySelect";
-import { Edit2, DollarSign, Upload, Trash2, CheckCircle } from "lucide-react";
+import { DollarSign, Upload, Trash2, CheckCircle } from "lucide-react";
 import type { Product } from "../types/seller.types";
 
 interface EditProductModalProps {
@@ -98,11 +98,9 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
       // Handle images only if there are new uploads
       const uploadable = imagesList.filter((it) => it.file);
       if (uploadable.length > 0) {
-        console.log("📸 Uploading new images...");
-
         // Upload new files to get secure URLs
         const uploadPromises = uploadable.map((it) => productApi.uploadImage(it.file));
-        const responses = await Promise.all(uploadPromises);
+        const uploadResponses = await Promise.all(uploadPromises);
 
         // Build images array with correct field names for backend
         const imagesPayload = imagesList.map((it) => {
@@ -110,7 +108,6 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             // This is a newly uploaded file
             const resp: any = responses.shift();
             const secureUrl = resp?.data?.imageUrl || resp?.data?.url || resp?.url || "";
-            console.log("✅ Upload response:", resp?.data);
             return {
               url: secureUrl,  // Backend expects 'url'
               isThumbnail: !!it.isThumbnail,
@@ -126,7 +123,6 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
         payload.images = imagesPayload;
       }
 
-      console.log("📤 Submitting product update:", JSON.stringify(payload, null, 2));
       await onSubmit(product.productId, payload);
       onCancel();
 

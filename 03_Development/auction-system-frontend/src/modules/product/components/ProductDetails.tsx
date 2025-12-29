@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useState, useEffect, type FormEvent } from "react";
 import { UploadIcon, AlertCircle } from "lucide-react";
 import { Checkbox } from "@/components/common/CheckBox";
 import { Input } from "@/components/common/Input";
@@ -143,9 +143,6 @@ const ProductDetails = ({ onSubmit, loading }: ProductDetailsProps): React.React
         sellerId: currentUser.id,
         images: images, // Include images array in payload
       };
-      console.log("📤 Final payload before submit:", payload);
-      console.log("✅ Validation passed. Start price:", payload.startPrice, "Category:", payload.category);
-      console.log("📸 Images to upload:", images.length, "files");
       onSubmit(payload);
     }
   };

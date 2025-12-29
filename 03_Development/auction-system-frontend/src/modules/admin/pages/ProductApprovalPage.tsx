@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Filter, RefreshCw } from "lucide-react";
+import { toast } from "react-toastify";
 import { Button } from "@/components/common/Button";
 import ProductApprovalModal, {
   type ProductApprovalRequest,
@@ -56,7 +57,7 @@ const AdminProductApprovalPage: React.FC = () => {
       setTotalPages(pages);
     } catch (error) {
       console.error("Failed to load products:", error);
-      alert("❌ Failed to load products");
+      toast.error("Failed to load products");
     } finally {
       setLoading(false);
     }
@@ -79,13 +80,8 @@ const AdminProductApprovalPage: React.FC = () => {
     data: ProductApprovalRequest
   ) => {
     try {
-      console.log(
-        "📤 Sending approval request:",
-        JSON.stringify(data, null, 2)
-      );
       await productApi.approveProduct(productId, data);
-      console.log("✅ Product approved successfully!");
-      alert("✅ Product approved!");
+      toast.success("Product approved!");
       // Reload all products from API to reflect changes immediately
       await loadAllPendingProducts();
       setSelectedProduct(null);
@@ -105,13 +101,8 @@ const AdminProductApprovalPage: React.FC = () => {
         status: "rejected",
         rejectionReason: reason,
       };
-      console.log(
-        "📤 Sending rejection request:",
-        JSON.stringify(data, null, 2)
-      );
       await productApi.approveProduct(productId, data);
-      console.log("✅ Product rejected successfully!");
-      alert("✅ Product rejected!");
+      toast.success("Product rejected!");
       // Reload all products from API to reflect changes immediately
       await loadAllPendingProducts();
       setSelectedProduct(null);

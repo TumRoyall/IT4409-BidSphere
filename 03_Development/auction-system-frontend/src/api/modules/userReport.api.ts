@@ -4,12 +4,16 @@ export type UserReport = {
   id: number;
   userId: number;
   content: string;
+  auctionId?: number;
+  sellerId?: number;
   createdAt: string;
 };
 
 export type CreateUserReportRequest = {
   userId: number;
   content: string;
+  auctionId?: number;
+  sellerId?: number;
 };
 
 export const userReportApi = {

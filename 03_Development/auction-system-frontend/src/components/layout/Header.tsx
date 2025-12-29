@@ -30,14 +30,14 @@ export default function Header() {
   };
 
   const CATEGORY_MAP: Record<string, string> = {
-    "Xe cộ": "vehicle",
-    "Thời trang": "fashion",
-    "Điện tử": "electronics",
-    "Nhà cửa": "home",
-    "Nhà & Vườn": "garden",
-    "Trang sức": "jewelry",
-    "Tiêu dùng": "grocery",
-    "Khác": "other"
+    "Điện tử": "Điện tử",
+    "Thời trang": "Thời trang",
+    "Xe cộ": "Xe cộ",
+    "Nội thất": "Nội thất",
+    "Sưu tầm": "Sưu tầm",
+    "Tiêu dùng": "Tiêu dùng",
+    "Trang sức": "Trang sức",
+    "Khác": "Khác"
   };
 
 

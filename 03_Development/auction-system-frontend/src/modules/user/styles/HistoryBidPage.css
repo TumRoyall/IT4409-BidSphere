@@ -1,117 +1,257 @@
+/* HistoryBidPage.css */
+
 .bid-history-page {
-  background: white;
   padding: 24px;
-  border-radius: 16px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .bid-history-page h2 {
-  margin-bottom: 20px;
-  font-weight: 700;
-  font-size: 26px;
-  color: #0b2b4c;
-  letter-spacing: -0.3px;
+  color: #333;
+  font-size: 28px;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #eaeaea;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-/* ============ SEARCH ============ */
-.search-input {
-  padding: 10px 14px;
-  width: 100%;
-  max-width: 300px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  margin-bottom: 20px;
+.bid-history-page .bh-count-badge {
+  background: #3f51b5;
+  color: white;
   font-size: 14px;
-  transition: all 0.2s ease;
-  background: linear-gradient(135deg, #f8fafc, white);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: normal;
+  margin-top: 4px;
 }
 
-.search-input:focus {
+/* Toolbar styles */
+.bid-history-page .bh-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 32px;
+  align-items: center;
+}
+
+.bid-history-page .bh-search-input {
+  flex: 1;
+  min-width: 250px;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.bid-history-page .bh-search-input:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  background: white;
+  border-color: #3f51b5;
+  box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.1);
 }
 
-/* ============ TABLE ============ */
-.history-table {
-  width: 100%;
-  border-collapse: collapse;
+.bid-history-page .bh-filters {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
-.history-table th {
-  padding: 14px;
-  font-size: 13px;
-  background: linear-gradient(135deg, #f8fafc, #f0f4f8);
-  border-bottom: 2px solid #e5e7eb;
-  color: #0b2b4c;
-  text-align: left;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.history-table td {
-  padding: 12px 14px;
-  border-bottom: 1px solid #e5e7eb;
+.bid-history-page .bh-filter-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
-  color: #1f2937;
-}
-
-.history-table tr:hover {
-  background: linear-gradient(135deg, #f8fafc, #f0f4f8);
-}
-
-.center {
-  text-align: center;
-}
-
-/* ============ AUCTION LINK ============ */
-.auction-link {
-  color: #3b82f6;
-  font-weight: 700;
+  color: #555;
   cursor: pointer;
-  transition: all 0.2s ease;
-  text-decoration: none;
+  user-select: none;
 }
 
-.auction-link:hover {
-  color: #2563eb;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-/* ============ CHECKBOX ============ */
-.auto-checkbox {
-  display: inline-block;
-  vertical-align: middle;
+.bid-history-page .bh-filter-item input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: #3b82f6;
+  accent-color: #3f51b5;
   cursor: pointer;
 }
 
-/* ============ TOAST ============ */
-.toast {
+/* Loading and empty states */
+.bid-history-page .bh-loading {
+  text-align: center;
+  padding: 60px;
+  color: #666;
+  font-size: 16px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.bid-history-page .bh-empty {
+  text-align: center;
+  padding: 60px;
+  color: #888;
+  font-size: 16px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+/* Table styles */
+.bid-history-page .bh-history-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.bid-history-page .bh-history-table thead {
+  background: #f8f9fa;
+}
+
+.bid-history-page .bh-history-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.bid-history-page .bh-history-table tbody tr {
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+.bid-history-page .bh-history-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.bid-history-page .bh-history-table tbody tr:hover {
+  background-color: #f8f9ff;
+}
+
+.bid-history-page .bh-history-table td {
+  padding: 16px;
+  color: #333;
+  font-size: 14px;
+  vertical-align: top;
+}
+
+/* Auction link */
+.bid-history-page .bh-auction-link {
+  color: #3f51b5;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.bid-history-page .bh-auction-link:hover {
+  color: #303f9f;
+  background-color: rgba(63, 81, 181, 0.05);
+  text-decoration: underline;
+}
+
+/* Amount styles */
+.bid-history-page .bh-amount {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 15px;
+}
+
+.bid-history-page .bh-subtext {
+  font-size: 12px;
+  color: #7f8c8d;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* Type badges */
+.bid-history-page .bh-type-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bid-history-page .bh-type-badge.manual {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.bid-history-page .bh-type-badge.auto {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+
+/* Status chips */
+.bid-history-page .bh-status-chip {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Status color variations */
+.bid-history-page .bh-status-chip.open {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.bid-history-page .bh-status-chip.closed {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.bid-history-page .bh-status-chip.cancelled {
+  background-color: #f5f5f5;
+  color: #616161;
+}
+
+.bid-history-page .bh-status-chip.unknown {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+/* Toast notification */
+.bid-history-page .bh-toast {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background: linear-gradient(135deg, #0b2b4c, #133a66);
-  color: #fff;
-  padding: 14px 18px;
-  border-radius: 10px;
+  background: #323232;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   font-size: 14px;
-  font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 12px 32px rgba(11, 43, 76, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   animation: slideIn 0.3s ease;
+  z-index: 1000;
+  max-width: 350px;
+  transition: transform 0.2s ease;
+}
+
+.bid-history-page .bh-toast:hover {
+  transform: translateY(-2px);
 }
 
 @keyframes slideIn {
   from {
-    transform: translateX(400px);
+    transform: translateX(100%);
     opacity: 0;
   }
   to {
@@ -120,50 +260,98 @@
   }
 }
 
-/* ============ STATES ============ */
-.loading {
-  color: #6b7280;
-  font-style: italic;
-}
-
-.empty {
-  color: #9ca3af;
-  text-align: center;
-  padding: 40px 20px;
-}
-
-/* ============ TABLE COLUMNS ============ */
-.history-table th.center,
-.history-table td.center {
-  text-align: center;
-  vertical-align: middle;
-}
-
-/* ============ RESPONSIVE ============ */
+/* Responsive design */
 @media (max-width: 768px) {
   .bid-history-page {
     padding: 16px;
   }
-
-  .bid-history-page h2 {
-    font-size: 20px;
-    margin-bottom: 16px;
+  
+  .bid-history-page .bh-toolbar {
+    flex-direction: column;
+    align-items: stretch;
   }
-
-  .search-input {
-    max-width: 100%;
+  
+  .bid-history-page .bh-search-input {
+    width: 100%;
   }
-
-  .history-table th,
-  .history-table td {
-    padding: 10px 8px;
-    font-size: 13px;
+  
+  .bid-history-page .bh-filters {
+    justify-content: flex-start;
   }
-
-  .toast {
-    bottom: 16px;
+  
+  .bid-history-page .bh-history-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .bid-history-page .bh-history-table th,
+  .bid-history-page .bh-history-table td {
+    min-width: 120px;
+  }
+  
+  .bid-history-page .bh-toast {
+    left: 16px;
     right: 16px;
-    padding: 12px 14px;
-    font-size: 13px;
+    bottom: 16px;
+    text-align: center;
+  }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  .bid-history-page {
+    background: #1a1a1a;
+    color: #e0e0e0;
+  }
+  
+  .bid-history-page h2 {
+    color: #e0e0e0;
+    border-bottom-color: #333;
+  }
+  
+  .bid-history-page .bh-search-input {
+    background: #2d2d2d;
+    border-color: #444;
+    color: #e0e0e0;
+  }
+  
+  .bid-history-page .bh-history-table {
+    background: #2d2d2d;
+    color: #e0e0e0;
+  }
+  
+  .bid-history-page .bh-history-table thead {
+    background: #363636;
+  }
+  
+  .bid-history-page .bh-history-table th {
+    color: #b0b0b0;
+    border-bottom-color: #444;
+  }
+  
+  .bid-history-page .bh-history-table tbody tr {
+    border-bottom-color: #444;
+  }
+  
+  .bid-history-page .bh-history-table tbody tr:hover {
+    background-color: #363636;
+  }
+  
+  .bid-history-page .bh-auction-link {
+    color: #7986cb;
+  }
+  
+  .bid-history-page .bh-auction-link:hover {
+    color: #9fa8da;
+    background-color: rgba(121, 134, 203, 0.1);
+  }
+  
+  .bid-history-page .bh-amount {
+    color: #e0e0e0;
+  }
+  
+  .bid-history-page .bh-subtext {
+    color: #aaa;
   }
 }

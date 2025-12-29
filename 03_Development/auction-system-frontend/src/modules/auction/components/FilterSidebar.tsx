@@ -2,14 +2,14 @@ import "@/modules/auction/styles/filterSidebar.css";
 import { SlidersHorizontal } from "lucide-react";
 
 const CATEGORIES = [
-  { value: "electronics", label: "Điện tử" },
-  { value: "fashion", label: "Thời trang" },
-  { value: "vehicle", label: "Xe cộ" },
-  { value: "jewelry", label: "Trang sức" },
-  { value: "home", label: "Nhà cửa" },
-  { value: "garden", label: "Nhà & Vườn" },
-  { value: "grocery", label: "Tiêu dùng" },
-  { value: "other", label: "Khác" },
+  { value: "Điện tử", label: "Điện tử" },
+  { value: "Thời trang", label: "Thời trang" },
+  { value: "Xe cộ", label: "Xe cộ" },
+  { value: "Nội thất", label: "Nội thất" },
+  { value: "Sưu tầm", label: "Sưu tầm" },
+  { value: "Tiêu dùng", label: "Tiêu dùng" },
+  { value: "Trang sức", label: "Trang sức" },
+  { value: "Khác", label: "Khác" },
 ];
 
 const STATUS_MAP: Record<string, string> = {

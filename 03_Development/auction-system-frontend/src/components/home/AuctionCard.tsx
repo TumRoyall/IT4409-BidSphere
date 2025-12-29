@@ -27,6 +27,30 @@ function getCountdownColor(ms: number) {
 export default function AuctionCard({ auction, viewMode = "grid" }: any) {
   const isList = viewMode === "list";
 
+  // Favorite state
+  const [isFavorite, setIsFavorite] = useState(() => {
+    const favorites = JSON.parse(localStorage.getItem("favoriteAuctions") || "[]");
+    return favorites.includes(auction.auctionId);
+  });
+
+  const toggleFavorite = (e: any) => {
+    e.stopPropagation();
+    const favorites = JSON.parse(localStorage.getItem("favoriteAuctions") || "[]");
+    
+    if (isFavorite) {
+      const updated = favorites.filter((id: number) => id !== auction.auctionId);
+      localStorage.setItem("favoriteAuctions", JSON.stringify(updated));
+      setIsFavorite(false);
+    } else {
+      const updated = [...favorites, auction.auctionId];
+      localStorage.setItem("favoriteAuctions", JSON.stringify(updated));
+      setIsFavorite(true);
+    }
+
+    // Dispatch custom event to notify AuctionGrid
+    window.dispatchEvent(new Event("favoriteChanged"));
+  };
+
   // Images
   const images = auction.productImageUrls?.length
     ? auction.productImageUrls
@@ -70,8 +94,15 @@ export default function AuctionCard({ auction, viewMode = "grid" }: any) {
     <div className={`auction-card ${isList ? "list" : ""}`} onClick={goToDetail}>
 
       {/* SAVE / WISHLIST */}
-      <div className="fav-btn" onClick={(e) => e.stopPropagation()}>
-        <Star size={18} strokeWidth={1.8} />
+      <div 
+        className="fav-btn" 
+        onClick={toggleFavorite}
+        style={{
+          color: isFavorite ? "#fbbf24" : "#fff",
+          background: isFavorite ? "rgba(251, 191, 36, 0.2)" : "rgba(0,0,0,0.4)"
+        }}
+      >
+        <Star size={18} strokeWidth={1.8} fill={isFavorite ? "#fbbf24" : "none"} />
       </div>
 
       {/* IMAGE */}

@@ -40,8 +40,6 @@ const ProductManagement = (): React.ReactElement => {
 
   const handleSubmitProduct = async (formData: any) => {
     try {
-      console.log("📤 Sending product payload:", formData);
-
       // Extract images from formData
       const images: File[] = formData.images || [];
       const productDataWithoutImages = { ...formData };
@@ -51,7 +49,6 @@ const ProductManagement = (): React.ReactElement => {
       // then include those URLs in the createProduct payload so backend will persist Image records.
       let imageRequests: Array<any> | undefined = undefined;
       if (images.length > 0) {
-        console.log("📸 Uploading files to obtain secure URLs before creating product...");
         const uploadPromises = images.map((file: File) => productApi.uploadImage(file));
         const uploadResponses = await Promise.all(uploadPromises);
 
@@ -64,8 +61,6 @@ const ProductManagement = (): React.ReactElement => {
             isThumbnail: idx === 0,
           };
         });
-
-        console.log("✅ Obtained secure URLs:", imageRequests.map((i) => i.secure_url));
       }
 
       // Prepare final payload including images (if any) and create product
@@ -76,17 +71,13 @@ const ProductManagement = (): React.ReactElement => {
 
       const response = await createProduct(finalPayload);
       const productId = response?.productId || response?.id;
-      console.log("✅ Product created with ID:", productId);
 
       // Đóng modal
       handleCloseCreateModal();
 
       // Refresh both products list and statistics immediately
-      console.log("🔄 Refreshing products and stats...");
       refresh();
       refreshStats();
-
-      console.log("✅ Tạo sản phẩm thành công!");
     } catch (error: any) {
       console.error("❌ Lỗi tạo sản phẩm:", error);
       console.error("📋 Response data:", error?.response?.data);
@@ -118,18 +109,13 @@ const ProductManagement = (): React.ReactElement => {
 
   const handleSubmitEdit = async (productId: number, data: any) => {
     try {
-      console.log("📤 Updating product:", productId, JSON.stringify(data, null, 2));
       const resp = await updateProduct(productId, data);
-      console.log("✅ Update API response:", resp);
 
       setIsEditModalOpen(false);
       setSelectedProduct(null);
 
-      console.log("🔄 Refreshing products and stats after edit...");
       refresh();
       refreshStats();
-
-      console.log("✅ Cập nhật sản phẩm thành công!");
     } catch (error: any) {
       console.error("❌ Lỗi cập nhật sản phẩm:", error);
       // Show a visible error so users know update failed and we can inspect details
@@ -158,16 +144,12 @@ const ProductManagement = (): React.ReactElement => {
 
   const handleConfirmDelete = async (product: Product) => {
     try {
-      console.log("🗑️ Deleting product:", product.productId);
       await deleteProduct(product.productId);
       setIsDeleteConfirmOpen(false);
       setSelectedProduct(null);
 
-      console.log("🔄 Refreshing products and stats after delete...");
       refresh();
       refreshStats();
-
-      console.log("✅ Xóa sản phẩm thành công!");
     } catch (error: any) {
       console.error("❌ Lỗi xóa sản phẩm:", error);
       console.error("Response status:", error?.response?.status);
@@ -467,7 +449,7 @@ const ProductManagement = (): React.ReactElement => {
                       }).format(selectedProduct.startPrice)}
                     </p>
                   </div>
-                  {selectedProduct.estimatePrice && (
+                  {selectedProduct.status !== "draft" && selectedProduct.estimatePrice && (
                     <div className="product-view-price-item">
                       <span className="product-view-price-label">Estimate Price</span>
                       <p className="product-view-price-value secondary">

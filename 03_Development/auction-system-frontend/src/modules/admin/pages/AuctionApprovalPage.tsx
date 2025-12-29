@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { RefreshCw, Filter } from "lucide-react";
+import { toast } from "react-toastify";
 import { Button } from "@/components/common/Button";
 import auctionApi from "@/api/modules/auction.api";
 import AuctionApprovalModal from "@/modules/admin/components/AuctionApprovalModal";
@@ -30,7 +31,7 @@ const AdminAuctionApprovalPage: React.FC = () => {
       filterAuctions(list);
     } catch (err) {
       console.error("Failed to load auctions", err);
-      alert("Failed to load auctions");
+      toast.error("Failed to load auctions");
     } finally {
       setLoading(false);
     }
@@ -58,12 +59,12 @@ const AdminAuctionApprovalPage: React.FC = () => {
     try {
       // DRAFT -> PENDING (chờ đến giờ lên sàn)
       await auctionApi.approveAuction(auctionId, "PENDING");
-      alert("✅ Auction đã được duyệt! Sẽ tự động lên sàn khi đến giờ.");
+      toast.success("Auction đã được duyệt! Sẽ tự động lên sàn khi đến giờ.");
       loadPending();
       setSelected(null);
     } catch (err: any) {
       console.error("Approve failed", err);
-      alert(err?.response?.data?.message || err?.message || "Failed to approve");
+      toast.error(err?.response?.data?.message || err?.message || "Failed to approve");
     }
   };
 
@@ -71,12 +72,12 @@ const AdminAuctionApprovalPage: React.FC = () => {
     try {
       // DRAFT -> CANCELLED
       await auctionApi.approveAuction(auctionId, "CANCELLED");
-      alert("✅ Auction đã bị từ chối.");
+      toast.success("Auction đã bị từ chối.");
       loadPending();
       setSelected(null);
     } catch (err: any) {
       console.error("Reject failed", err);
-      alert(err?.response?.data?.message || err?.message || "Failed to reject");
+      toast.error(err?.response?.data?.message || err?.message || "Failed to reject");
     }
   };
 

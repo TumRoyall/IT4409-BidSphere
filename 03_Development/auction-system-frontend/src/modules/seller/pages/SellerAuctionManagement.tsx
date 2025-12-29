@@ -24,7 +24,6 @@ const SellerAuctionManagement = (): React.ReactElement => {
 
             // Lấy auctions của seller hiện tại (từ token)
             const response = await auctionApi.getMyAuctions();
-            console.log("🔎 My auctions response:", response);
 
             // Handle response data
             const resData = response.data as any;
@@ -34,12 +33,9 @@ const SellerAuctionManagement = (): React.ReactElement => {
             } else if (resData?.content && Array.isArray(resData.content)) {
                 data = resData.content;
             } else {
-                console.log("⚠️ Unexpected data format:", typeof resData);
                 setAuctions([]);
                 return;
             }
-
-            console.log("� Seller auctions:", data);
 
             // Filter theo tab status
             const filtered = data.filter((a: any) => {

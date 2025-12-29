@@ -28,7 +28,6 @@ class WebSocketService {
   connect(userId: string, token: string): Promise<void> {
     return new Promise((resolve, reject) => {
       if (this.connected && this.stompClient?.connected) {
-        console.log("WebSocket already connected");
         resolve();
         return;
       }
@@ -42,9 +41,6 @@ class WebSocketService {
           import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
         const baseUrl = apiBaseUrl.replace("/api", "");
         const wsUrl = `${baseUrl}/ws/notifications`;
-
-        console.log("🔌 Connecting to WebSocket:", wsUrl);
-        console.log("📋 User ID:", userId);
         
         const socket = new SockJS(wsUrl, null, {
           // SockJS options
@@ -74,11 +70,6 @@ class WebSocketService {
             clearTimeout(connectionTimeout);
             this.connected = true;
             this.reconnectAttempts = 0;
-            console.log("✓ WebSocket STOMP connected for user:", userId);
-            console.log("🔌 WebSocket state:", {
-              connected: this.connected,
-              stompConnected: this.stompClient?.connected,
-            });
 
             // Subscribe to user-specific notification queue
             this.subscribeToDestination(
@@ -131,8 +122,6 @@ class WebSocketService {
         console.error("Error parsing WebSocket message:", error);
       }
     });
-
-    console.log("Subscribed to:", destination);
   }
 
   /**
@@ -149,7 +138,7 @@ class WebSocketService {
   /**
    * Subscribe to mark as read confirmations
    */
-  onMarkAsRead(handler: (notiId: number) => void): void {
+  onMarkAsRead(handler: (notiId: string | number) => void): void {
     this.messageHandlers.set("markAsRead", (message) => {
       if (message.notiId) {
         handler(message.notiId);
@@ -161,8 +150,6 @@ class WebSocketService {
    * Handle incoming notification messages
    */
   private handleNotificationMessage(message: NotificationMessage): void {
-    console.log("📬 Notification message received:", message);
-
     if (message.status === "notification" && message.notification) {
       const handler = this.messageHandlers.get("notification");
       if (handler) handler(message);
@@ -194,13 +181,11 @@ class WebSocketService {
             return;
           }
 
-          console.log(`Retry ${retries}/${maxRetries}: Waiting for WebSocket...`);
           setTimeout(attemptSend, 500 * retries); // exponential backoff
           return;
         }
 
         try {
-          console.log("📤 Sending subscribe request");
           this.stompClient.send("/app/subscribe", {}, JSON.stringify({}));
           resolve();
         } catch (error: unknown) {
@@ -217,7 +202,7 @@ class WebSocketService {
   /**
    * Mark notification as read via WebSocket
    */
-  markAsRead(notiId: number): void {
+  markAsRead(notiId: string | number): void {
     if (!this.stompClient?.connected) {
       console.warn("WebSocket not connected, cannot mark as read");
       return;
@@ -260,7 +245,6 @@ class WebSocketService {
         this.connected = false;
         this.userId = null;
         this.token = null;
-        console.log("WebSocket disconnected");
       });
     }
   }
@@ -276,9 +260,6 @@ class WebSocketService {
 
     this.reconnectAttempts++;
     const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1);
-    console.log(
-      `Attempting to reconnect (${this.reconnectAttempts}/${this.maxReconnectAttempts}) in ${delay}ms`
-    );
 
     setTimeout(() => {
       if (this.userId && this.token) {

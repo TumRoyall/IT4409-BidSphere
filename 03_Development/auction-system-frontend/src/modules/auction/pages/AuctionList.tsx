@@ -18,7 +18,6 @@ export default function AuctionList() {
         // Try to get active auctions first
         try {
           const response = await auctionApi.getActiveAuctions();
-          console.log("Active auctions:", response.data);
           let auctionList: AuctionResponse[] = [];
           // Handle paginated response
           if (response.data && 'content' in response.data) {
@@ -29,9 +28,7 @@ export default function AuctionList() {
           setAuctions(auctionList);
         } catch (err) {
           // Fallback to getting all auctions if active endpoint fails
-          console.log("Failed to get active auctions, trying all auctions");
           const response = await auctionApi.getAllAuctions();
-          console.log("All auctions:", response.data);
           let auctionList: AuctionResponse[] = [];
           // Handle both array and paginated response
           if (Array.isArray(response.data)) {
