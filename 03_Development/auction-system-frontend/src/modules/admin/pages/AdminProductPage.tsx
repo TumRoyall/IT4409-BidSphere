@@ -4,23 +4,17 @@ import type { ProductResponse } from "@/api/modules/adminProduct.api";
 import "@/modules/admin/styles/AdminProductPage.css";
 
 const statusLabel: Record<string, string> = {
-  available: "Available",
-  auctioned: "Auctioned",
-  sold: "Sold",
   draft: "Draft",
   pending: "Pending",
   approved: "Approved",
-  rejected: "Rejected",
+  cancelled: "Cancelled",
 };
 
 const statusOrder: Record<string, number> = {
   pending: 1,
   draft: 2,
   approved: 3,
-  available: 4,
-  auctioned: 5,
-  sold: 6,
-  rejected: 7,
+  cancelled: 4,
 };
 
 const AdminProductPage: React.FC = () => {
@@ -38,7 +32,6 @@ const AdminProductPage: React.FC = () => {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [categories, setCategories] = useState<string[]>([]);
 
-  
   const pageSize = 10;
 
   const fetchProducts = async () => {
@@ -105,16 +98,15 @@ const AdminProductPage: React.FC = () => {
     currentPage * pageSize
   );
 
-  const formatDate = (dateStr?: string) => 
-    (dateStr ? new Date(dateStr).toLocaleString("vi-VN") : "-");
+  const formatDate = (dateStr?: string) =>
+    dateStr ? new Date(dateStr).toLocaleString("vi-VN") : "-";
 
   const getStatusKey = (status?: string) => status?.toLowerCase() || "unknown";
 
   return (
-    <div className="admin-users-page p-4">
+    <div className="admin-product-page">
       <h2>Admin Product Management</h2>
 
-      {/* Filter bar */}
       <div className="top-bar">
         <input
           type="text"
@@ -124,7 +116,7 @@ const AdminProductPage: React.FC = () => {
         />
 
         {/* Status filter */}
-        <div className="status-dropdown" style={{ position: "relative" }}>
+        <div className="status-dropdown">
           <button
             className={`dropdown-button ${selectedStatus !== "ALL" ? "active" : ""}`}
             onClick={() => setStatusOpen((prev) => !prev)}
@@ -159,7 +151,7 @@ const AdminProductPage: React.FC = () => {
         </div>
 
         {/* Category filter */}
-        <div className="category-dropdown" style={{ position: "relative" }}>
+        <div className="category-dropdown">
           <button
             className={`dropdown-button ${selectedCategory !== "ALL" ? "active" : ""}`}
             onClick={() => setCategoryOpen((prev) => !prev)}
@@ -177,22 +169,18 @@ const AdminProductPage: React.FC = () => {
               >
                 All Categories
               </div>
-              {categories.length > 0 ? (
-                categories.map((c) => (
-                  <div
-                    key={c}
-                    className={`dropdown-item ${selectedCategory === c ? "active" : ""}`}
-                    onClick={() => {
-                      setSelectedCategory(c);
-                      setCategoryOpen(false);
-                    }}
-                  >
-                    {c}
-                  </div>
-                ))
-              ) : (
-                <div className="dropdown-item">No categories</div>
-              )}
+              {categories.map((c) => (
+                <div
+                  key={c}
+                  className={`dropdown-item ${selectedCategory === c ? "active" : ""}`}
+                  onClick={() => {
+                    setSelectedCategory(c);
+                    setCategoryOpen(false);
+                  }}
+                >
+                  {c}
+                </div>
+              ))}
             </div>
           )}
         </div>
@@ -201,8 +189,8 @@ const AdminProductPage: React.FC = () => {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <>
-          <table className="min-w-full border">
+        <div className="table-wrapper">
+          <table>
             <thead>
               <tr>
                 <th>ID</th>
@@ -234,7 +222,7 @@ const AdminProductPage: React.FC = () => {
                   <td>{p.deposit?.toLocaleString() ?? "-"}₫</td>
                   <td>
                     {p.imageUrl ? (
-                      <img src={p.imageUrl} alt={p.name} className="w-16 h-16" />
+                      <img src={p.imageUrl} alt={p.name} className="thumbnail" />
                     ) : (
                       "No image"
                     )}
@@ -246,32 +234,34 @@ const AdminProductPage: React.FC = () => {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
 
-          {/* Pagination */}
-          <div className="pagination">
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            Prev
+          </button>
+          {[...Array(totalPages)].map((_, idx) => (
             <button
-              onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-              disabled={currentPage === 1}
+              key={idx}
+              className={currentPage === idx + 1 ? "active" : ""}
+              onClick={() => setCurrentPage(idx + 1)}
             >
-              Prev
+              {idx + 1}
             </button>
-            {[...Array(totalPages)].map((_, idx) => (
-              <button
-                key={idx}
-                className={currentPage === idx + 1 ? "active" : ""}
-                onClick={() => setCurrentPage(idx + 1)}
-              >
-                {idx + 1}
-              </button>
-            ))}
-            <button
-              onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </div>
-        </>
+          ))}
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
       )}
     </div>
   );

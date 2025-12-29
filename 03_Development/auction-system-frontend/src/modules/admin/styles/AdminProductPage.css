@@ -1,0 +1,155 @@
+/* AdminProductPage.css */
+
+.admin-product-page {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f7f8fa;
+  min-height: 100vh;
+}
+
+.admin-product-page h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+}
+
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.top-bar input[type="text"] {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  flex: 1 1 200px;
+}
+
+.status-dropdown, .category-dropdown {
+  position: relative;
+}
+
+.dropdown-button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+  min-width: 140px;
+  text-align: left;
+}
+
+.dropdown-button.active {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 100;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  min-width: 140px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdown-item {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover,
+.dropdown-item.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1200px; /* nếu màn hình nhỏ, sẽ scroll ngang */
+}
+
+th, td {
+  padding: 10px 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+  white-space: nowrap; /* giữ nội dung trên 1 dòng */
+}
+
+th {
+  background-color: #f0f0f0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.status-cell .status {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: white;
+  text-transform: capitalize;
+}
+
+.status.draft {
+  background-color: #6c757d;
+}
+.status.pending {
+  background-color: #ffc107;
+}
+.status.approved {
+  background-color: #28a745;
+}
+.status.cancelled {
+  background-color: #dc3545;
+}
+.status.unknown {
+  background-color: #343a40;
+}
+
+.thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.pagination {
+  display: flex;
+  gap: 5px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
