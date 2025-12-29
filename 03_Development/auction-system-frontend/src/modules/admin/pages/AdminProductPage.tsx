@@ -4,23 +4,17 @@ import type { ProductResponse } from "@/api/modules/adminProduct.api";
 import "@/modules/admin/styles/AdminProductPage.css";
 
 const statusLabel: Record<string, string> = {
-  available: "Available",
-  auctioned: "Auctioned",
-  sold: "Sold",
   draft: "Draft",
   pending: "Pending",
   approved: "Approved",
-  rejected: "Rejected",
+  cancelled: "Cancelled",
 };
 
 const statusOrder: Record<string, number> = {
   pending: 1,
   draft: 2,
   approved: 3,
-  available: 4,
-  auctioned: 5,
-  sold: 6,
-  rejected: 7,
+  cancelled: 4,
 };
 
 const AdminProductPage: React.FC = () => {
@@ -110,7 +104,7 @@ const AdminProductPage: React.FC = () => {
   const getStatusKey = (status?: string) => status?.toLowerCase() || "unknown";
 
   return (
-    <div className="admin-users-page p-4">
+    <div className="admin-product-page p-4">
       <h2>Admin Product Management</h2>
 
       {/* Filter bar */}

@@ -1,0 +1,175 @@
+/* AdminProductPage.css */
+
+.admin-product-page {
+  font-family: Arial, sans-serif;
+  background-color: #f5f6fa;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.admin-product-page h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+}
+
+/* Top bar */
+.admin-product-page .top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.admin-product-page .top-bar input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  flex: 1;
+  min-width: 200px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.admin-product-page .top-bar input[type="text"]:focus {
+  border-color: #007bff;
+}
+
+/* Dropdown buttons */
+.admin-product-page .dropdown-button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  min-width: 150px;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.admin-product-page .dropdown-button.active {
+  border-color: #007bff;
+  background-color: #e7f0ff;
+}
+
+/* Dropdown content */
+.admin-product-page .dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  width: max-content;
+  min-width: 150px;
+}
+
+.admin-product-page .dropdown-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.admin-product-page .dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.admin-product-page .dropdown-item.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Table */
+.admin-product-page table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.admin-product-page th, 
+.admin-product-page td {
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-product-page th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+}
+
+.admin-product-page tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Status badges */
+.admin-product-page .status-cell .status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+  text-transform: capitalize;
+}
+
+.admin-product-page .status.draft {
+  background-color: #ffeeba;
+  color: #856404;
+}
+
+.admin-product-page .status.pending {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.admin-product-page .status.approved {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.admin-product-page .status.cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Thumbnail images */
+.admin-product-page td img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Pagination */
+.admin-product-page .pagination {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.admin-product-page .pagination button {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-product-page .pagination button.active {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.admin-product-page .pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
