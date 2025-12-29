@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import auctionApi from "@/api/modules/auction.api";
 import type { AuctionResponse } from "@/api/modules/auction.api";
 import { userApi } from "@/api/modules/user.api";
+import { getAvatarUrl } from "@/utils/avatar";
 import {
   MapPin,
   Mail,
@@ -128,13 +129,11 @@ const SellerProfile = (): React.ReactElement => {
 
   const loadSellerAuctions = async (targetSellerId: number) => {
     try {
-      console.log("[SellerProfile] Loading auctions for sellerId:", targetSellerId);
       const response = await auctionApi.getAuctionsBySellerId(targetSellerId, {
         page: 0,
         size: 20,
         sort: "createdAt,DESC"
       });
-      console.log("[SellerProfile] API response:", response);
 
       const data: any = response.data;
       const auctionList: AuctionResponse[] = Array.isArray(data)
@@ -143,7 +142,6 @@ const SellerProfile = (): React.ReactElement => {
           ? data.content
           : [];
 
-      console.log("[SellerProfile] Final auctionList:", auctionList);
       setSellerAuctions(auctionList);
       setStats(calculateStats(auctionList));
     } catch (err: any) {
@@ -244,7 +242,7 @@ const SellerProfile = (): React.ReactElement => {
             <div className="avatar-section">
               <div className="avatar-wrapper">
                 <img
-                  src={sellerData.avatarUrl || "/placeholder-seller.png"}
+                  src={getAvatarUrl(sellerData.avatarUrl, sellerData.gender)}
                   alt={sellerData.fullName}
                   className="avatar"
                   onError={(e) => {

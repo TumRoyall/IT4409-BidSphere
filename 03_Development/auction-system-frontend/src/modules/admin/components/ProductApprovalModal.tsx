@@ -150,8 +150,6 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
       product?.productId ??
       (product as any)?.id ??
       (product as any)?.product_id;
-    console.log("🔵 handleApprove called, product:", product);
-    console.log("🔍 productId resolved to:", productId);
     if (!productId) {
       console.warn("❌ No product_id found in product object");
       return;
@@ -175,10 +173,7 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
         status: "approved",
       };
 
-      console.log("📤 Approving product:", JSON.stringify(payload, null, 2));
-      console.log("📞 Calling onApprove with productId:", productId);
       await onApprove(productId, payload);
-      console.log("✅ onApprove completed, calling onCancel");
       onCancel();
     } catch (error: any) {
       const errorMsg =
@@ -193,7 +188,6 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
       });
       setSubmitError(errorMsg);
     } finally {
-      console.log("🏁 handleApprove finally block, isSubmitting=false");
       setIsSubmitting(false);
     }
   };
@@ -203,8 +197,6 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
       product?.productId ??
       (product as any)?.id ??
       (product as any)?.product_id;
-    console.log("🔴 handleReject called, product:", product);
-    console.log("🔍 productId resolved to:", productId);
     if (!productId) {
       console.warn("❌ No product_id found in product object");
       return;
@@ -218,10 +210,7 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
         throw new Error("Please provide a rejection reason");
       }
 
-      console.log("❌ Rejecting product. Reason:", formData.rejectionReason);
-      console.log("📞 Calling onReject with productId:", productId);
       await onReject(productId, formData.rejectionReason);
-      console.log("✅ onReject completed, calling onCancel");
       onCancel();
     } catch (error: any) {
       const errorMsg =
@@ -236,7 +225,6 @@ const ProductApprovalModal: React.FC<ProductApprovalModalProps> = ({
       });
       setSubmitError(errorMsg);
     } finally {
-      console.log("🏁 handleReject finally block, isSubmitting=false");
       setIsSubmitting(false);
     }
   };

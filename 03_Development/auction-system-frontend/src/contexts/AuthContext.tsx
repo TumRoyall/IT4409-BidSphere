@@ -40,7 +40,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     try {
       const userInfo = await userApi.getProfile();
-      console.log("🔄 Refreshed user from API:", userInfo);
       const userObject = {
         id: userInfo.userId,
         username: userInfo.username,
@@ -77,7 +76,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // Fetch full user info (including role) from /users/me endpoint
     try {
       const userInfo = await userApi.getProfile();
-      console.log("📋 /users/me response:", userInfo);
       const userObject = {
         id: userInfo.userId,
         username: userInfo.username,
@@ -88,7 +86,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         role: userInfo.roleName, // Backend returns roleName
         roleName: userInfo.roleName,
       };
-      console.log("✅ Logged in successfully with role:", userObject.role);
       localStorage.setItem("user", JSON.stringify(userObject));
       setUser(userObject);
     } catch (err) {
@@ -145,7 +142,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         };
         localStorage.setItem("user", JSON.stringify(userObject));
         setUser(userObject);
-        console.log("🔄 Role synced from DB:", userObject.role);
       }).catch(err => {
         console.warn("Could not refresh user on load:", err);
       });

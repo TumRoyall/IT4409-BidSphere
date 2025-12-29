@@ -52,13 +52,13 @@ export default function AdminUserWarningPage() {
   return (
     <div className="admin-user-warning-page">
       <h2>
-        All User Warnings <span className="count-badge">{filteredWarnings.length}</span>
+        All User Warnings <span className="auw-count-badge">{filteredWarnings.length}</span>
       </h2>
 
-      <div className="filter-bar">
+      <div className="auw-filter-bar">
         <input
           type="text"
-          className="search-input"
+          className="auw-search-input"
           placeholder="Search..."
           value={searchText}
           onChange={(e) => {
@@ -69,9 +69,9 @@ export default function AdminUserWarningPage() {
       </div>
 
       {loading && <p>Đang tải dữ liệu...</p>}
-      {error && <p className="error">{error}</p>}
+      {error && <p className="auw-error">{error}</p>}
 
-      <div className="table-wrapper">
+      <div className="auw-table-wrapper">
         <table>
           <thead>
             <tr>
@@ -93,14 +93,14 @@ export default function AdminUserWarningPage() {
                   <td data-label="User ID">{w.userId}</td>
                   <td data-label="Transaction ID">{w.transactionId}</td>
                   <td data-label="Type">
-                    <span className={`type-badge ${w.type.toLowerCase()}`}>{w.type}</span>
+                    <span className={`auw-type-badge ${w.type.toLowerCase()}`}>{w.type}</span>
                   </td>
                   <td data-label="Status">
-                    <span className={`status-badge ${w.status.toLowerCase()}`}>{w.status}</span>
+                    <span className={`auw-status-badge ${w.status.toLowerCase()}`}>{w.status}</span>
                   </td>
                   <td data-label="Description">{w.description}</td>
                   <td data-label="Violation Count">
-                    <span className="violation-count">{w.violationCount}</span>
+                    <span className="auw-violation-count">{w.violationCount}</span>
                   </td>
                   <td data-label="Created At">
                     {new Date(w.createdAt).toLocaleString("vi-VN", {
@@ -115,7 +115,7 @@ export default function AdminUserWarningPage() {
               ))
             ) : (
               <tr>
-                <td colSpan={8} className="no-data">
+                <td colSpan={8} className="auw-no-data">
                   No warnings found.
                 </td>
               </tr>
@@ -126,7 +126,7 @@ export default function AdminUserWarningPage() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="pagination">
+        <div className="auw-pagination">
           {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i + 1}

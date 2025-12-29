@@ -70,7 +70,6 @@ export const useSellerProducts = (initialFilters?: Partial<ProductFilters>) => {
     try {
       setLoading(true);
       setError(null);
-      console.log("📦 Fetching products for seller:", user.id);
 
       // Lấy products của seller hiện tại (endpoint mới sử dụng token - /products/seller/me/page)
       const response = await productApi.getProductsBySellerMePage(filters.page - 1 || 0, filters.limit || 10);
@@ -85,8 +84,6 @@ export const useSellerProducts = (initialFilters?: Partial<ProductFilters>) => {
         productData = [];
       }
       
-      console.log("📥 Raw response data:", productData);
-
       // Ensure we only show products belonging to the logged-in seller.
       // This handles the case where the backend fallback returns all products
       // (e.g., when /products/seller/me/page is unavailable and we used /products/page).
@@ -117,7 +114,6 @@ export const useSellerProducts = (initialFilters?: Partial<ProductFilters>) => {
       }
       
       const transformedProducts = transformProducts(productData);
-      console.log("✅ Transformed products:", transformedProducts);
 
       setProducts(transformedProducts);
       
@@ -149,7 +145,6 @@ export const useSellerProducts = (initialFilters?: Partial<ProductFilters>) => {
   // Chỉ fetch khi component mount hoặc filter thay đổi
   useEffect(() => {
     if (user?.id) {
-      console.log("🔄 useSellerProducts: fetchProducts triggered");
       fetchProducts();
     }
   }, [user?.id, fetchProducts, refreshTrigger]);
@@ -163,7 +158,6 @@ export const useSellerProducts = (initialFilters?: Partial<ProductFilters>) => {
   };
 
   const refresh = useCallback(() => {
-    console.log("🔄 Refresh triggered - updating refreshTrigger");
     setRefreshTrigger(prev => prev + 1);
   }, []);
 
@@ -282,7 +276,6 @@ export const useSellerStatistics = () => {
     try {
       setLoading(true);
       setError(null);
-      console.log("📊 Fetching statistics for seller:", user.id);
       
       // Fetch both products and auctions for statistics
       const [productsResponse, auctionsResponse] = await Promise.all([
@@ -320,7 +313,6 @@ export const useSellerStatistics = () => {
         total_sold: products.filter((p: any) => p.status === 'sold').length,
       };
 
-      console.log("✅ Updated stats:", newStats);
       setStats(newStats);
     } catch (err: any) {
       const errorMsg = err.response?.data?.message || "Không thể tải thống kê";
@@ -333,7 +325,6 @@ export const useSellerStatistics = () => {
 
   useEffect(() => {
     if (user?.id) {
-      console.log("🔄 useSellerStatistics: Effect triggered for user", user.id);
       // Initial fetch on mount or user change
       fetchStatistics();
     }
@@ -344,7 +335,6 @@ export const useSellerStatistics = () => {
     loading,
     error,
     refresh: () => {
-      console.log("📊 Stats refresh triggered - updating refreshTrigger");
       setRefreshTrigger(prev => prev + 1);
     },
   };

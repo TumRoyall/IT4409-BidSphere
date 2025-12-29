@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import auctionApi from "@/api/modules/auction.api";
 import type { Product } from "@/api/modules/auction.api";
 import { useAuth } from "@/hooks/useAuth";
@@ -7,7 +8,6 @@ import { Label } from "@/components/common/Label";
 import { Input } from "@/components/common/Input";
 import { Search as SearchIcon, AlertCircle } from "lucide-react";
 import "@/styles/seller.css";
-import { Button } from "@/components/common/Button";
 
 interface FormData {
   productId: string | null;
@@ -47,13 +47,11 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
   // Load products
   const loadProducts = useCallback(async () => {
     if (!user?.id) {
-      console.log("User ID not available yet, skipping product load");
       return;
     }
     try {
       setIsLoadingProducts(true);
       const { default: productApi } = await import("@/api/modules/product.api");
-      console.log("Loading products eligible for auction (draft only)");
 
       // Load all pages to get all eligible products
       let eligibleProducts: any[] = [];
@@ -77,20 +75,10 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
         pageNum++;
       }
 
-      console.log("Eligible products loaded:", eligibleProducts);
-
       // Log product IDs for debugging
       if (eligibleProducts && Array.isArray(eligibleProducts)) {
         eligibleProducts.forEach((p, idx) => {
           const legacyProduct = p as any;
-          console.log(`Product ${idx}:`, {
-            id: p?.id,
-            productId: p?.productId,
-            legacyProductId: legacyProduct?.product_id,
-            name: p?.name,
-            status: p?.status,
-            fullObject: p,
-          });
         });
       }
 
@@ -136,17 +124,6 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
   const handleSelectProduct = useCallback((product: Product) => {
     // Backend returns camelCase, but also support snake_case and id
     const id = product?.productId ?? product?.id ?? (product as any)?.product_id;
-    console.log("Selected product:", product);
-    console.log(
-      "Product ID extracted:",
-      id,
-      "from fields: productId=",
-      product?.productId,
-      "legacy product_id=",
-      (product as any)?.product_id,
-      "id=",
-      product?.id
-    );
 
     if (!id || id <= 0) {
       console.error("Product has no valid ID:", product);
@@ -284,9 +261,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
         return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
       };
 
-      console.log("formData.productId before conversion:", formData.productId, typeof formData.productId);
       const productId = Number(formData.productId);
-      console.log("productId after conversion:", productId, "isNaN:", isNaN(productId));
 
       if (!productId || isNaN(productId)) {
         throw new Error(`Invalid product ID: ${formData.productId} (converted to ${productId})`);
@@ -299,7 +274,6 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
         bidStepAmount: formData.minBidIncrement,
       };
 
-      console.log("📤 Auction payload:", payload);
       const response = await auctionApi.createAuction(payload);
       const auctionId = response.data?.auctionId ?? response.data?.id;
 
@@ -308,7 +282,7 @@ export default function CreateAuctionSession({ onClose }: CreateAuctionSessionPr
       }
 
       // Thông báo thành công và quay về dashboard
-      alert("✅ Yêu cầu đấu giá đã được gửi thành công!\nVui lòng chờ admin duyệt.");
+      toast.success("Yêu cầu đấu giá đã được gửi thành công! Vui lòng chờ admin duyệt.");
       onClose?.();
       navigate("/seller/dashboard", {
         state: { message: "Yêu cầu đấu giá đã được gửi, chờ admin duyệt" },

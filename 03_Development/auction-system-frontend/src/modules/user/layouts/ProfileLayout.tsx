@@ -70,86 +70,96 @@ export default function ProfileLayout() {
           {/* Sidebar */}
           <aside className="w-full lg:w-80 flex-shrink-0">
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 shadow-lg sticky top-6 overflow-hidden">
-              {/* Header with gradient */}
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-white">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                    <User className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-bold tracking-tight">Quản lý tài khoản</h2>
-                    <p className="text-xs text-blue-100 mt-0.5">Cài đặt và tùy chỉnh</p>
-                  </div>
+            {/* Header */}
+            <div className="bg-gradient-to-r from-[#133A66] to-[#0F2F52] p-6 text-white">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                  <User className="w-6 h-6" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold tracking-tight">Quản lý tài khoản</h2>
+                  <p className="text-xs text-white/80 mt-0.5">Cài đặt và tùy chỉnh</p>
                 </div>
               </div>
-
-              <nav className="p-3">
-                {MENU_ITEMS.map((menu) => {
-                  const MenuIcon = menu.icon;
-                  const isOpen = openMenu === menu.id;
-
-                  return (
-                    <div key={menu.id} className="mb-2">
-                      {/* Menu Title */}
-                      <button
-                        onClick={() => toggleMenu(menu.id)}
-                        className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl transition-all duration-200 group ${
-                          isOpen
-                            ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
-                            : "text-gray-700 hover:bg-gray-50 hover:shadow-sm"
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className={`p-1.5 rounded-lg ${isOpen ? "bg-white/20" : "bg-gray-100 group-hover:bg-gray-200"}`}>
-                            <MenuIcon className="w-5 h-5" />
-                          </div>
-                          <span className="font-semibold text-sm">{menu.title}</span>
-                        </div>
-                        <ChevronDown
-                          className={`w-4 h-4 transition-transform duration-300 ${
-                            isOpen ? "rotate-180" : ""
-                          }`}
-                        />
-                      </button>
-
-                      {/* Sub Menu with animation */}
-                      {isOpen && (
-                        <div className="mt-2 ml-2 space-y-1 pl-4 border-l-2 border-blue-100">
-                          {menu.items.map((item) => {
-                            const ItemIcon = item.icon;
-
-                            return (
-                              <NavLink
-                                key={item.to}
-                                to={item.to}
-                                className={({ isActive }) =>
-                                  `w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200 group ${
-                                    isActive
-                                      ? "bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 font-semibold shadow-sm border border-emerald-200/50"
-                                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:translate-x-1"
-                                  }`
-                                }
-                              >
-                                {({ isActive }) => (
-                                  <>
-                                    <div className={`p-1.5 rounded-lg transition-colors ${
-                                      isActive ? "bg-emerald-100" : "bg-gray-100 group-hover:bg-gray-200"
-                                    }`}>
-                                      <ItemIcon className="w-4 h-4" />
-                                    </div>
-                                    <span>{item.label}</span>
-                                  </>
-                                )}
-                              </NavLink>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </nav>
             </div>
+
+            <nav className="p-3">
+              {MENU_ITEMS.map((menu) => {
+                const MenuIcon = menu.icon;
+                const isOpen = openMenu === menu.id;
+
+                return (
+                  <div key={menu.id} className="mb-2">
+                    {/* Menu Title */}
+                    <button
+                      onClick={() => toggleMenu(menu.id)}
+                      className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl transition-all duration-200 group ${
+                        isOpen
+                          ? "bg-gradient-to-r from-[#133A66] to-[#0F2F52] text-white shadow-md"
+                          : "text-gray-700 hover:bg-[#EAF1F8] hover:shadow-sm"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`p-1.5 rounded-lg ${
+                            isOpen
+                              ? "bg-white/20"
+                              : "bg-gray-100 group-hover:bg-[#DDE8F3]"
+                          }`}
+                        >
+                          <MenuIcon className="w-5 h-5" />
+                        </div>
+                        <span className="font-semibold text-sm">{menu.title}</span>
+                      </div>
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-300 ${
+                          isOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+
+                    {/* Sub Menu */}
+                    {isOpen && (
+                      <div className="mt-2 ml-2 space-y-1 pl-4 border-l-2 border-[#133A66]/20">
+                        {menu.items.map((item) => {
+                          const ItemIcon = item.icon;
+
+                          return (
+                            <NavLink
+                              key={item.to}
+                              to={item.to}
+                              className={({ isActive }) =>
+                                `w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200 group ${
+                                  isActive
+                                    ? "bg-[#EAF1F8] text-[#133A66] font-semibold shadow-sm border border-[#133A66]/20"
+                                    : "text-gray-600 hover:bg-gray-50 hover:text-[#133A66] hover:translate-x-1"
+                                }`
+                              }
+                            >
+                              {({ isActive }) => (
+                                <>
+                                  <div
+                                    className={`p-1.5 rounded-lg transition-colors ${
+                                      isActive
+                                        ? "bg-[#DDE8F3]"
+                                        : "bg-gray-100 group-hover:bg-[#EAF1F8]"
+                                    }`}
+                                  >
+                                    <ItemIcon className="w-4 h-4" />
+                                  </div>
+                                  <span>{item.label}</span>
+                                </>
+                              )}
+                            </NavLink>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </nav>
+          </div>
           </aside>
 
           {/* Content Area */}

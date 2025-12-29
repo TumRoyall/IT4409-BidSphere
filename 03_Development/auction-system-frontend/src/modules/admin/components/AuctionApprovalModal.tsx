@@ -40,7 +40,6 @@ const AuctionApprovalModal: React.FC<AuctionApprovalModalProps> = ({ auction, lo
     try {
       setIsSubmitting(true);
       setError(null);
-      console.log("📤 Approving auction:", id);
       await onApprove(id);
       onCancel();
     } catch (err: any) {
@@ -57,7 +56,6 @@ const AuctionApprovalModal: React.FC<AuctionApprovalModalProps> = ({ auction, lo
     try {
       setIsSubmitting(true);
       setError(null);
-      console.log("❌ Rejecting auction:", id);
       await onReject(id);
       onCancel();
     } catch (err: any) {

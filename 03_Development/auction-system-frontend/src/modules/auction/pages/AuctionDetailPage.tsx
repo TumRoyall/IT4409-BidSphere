@@ -116,7 +116,11 @@ export default function AuctionDetailPage() {
     }
     try {
       setReportSaving(true);
-      await userReportApi.create({ userId: user.userId, content });
+      await userReportApi.create({ 
+        userId: user.userId, 
+        content,
+        auctionId: auctionId 
+      });
       setIsReportOpen(false);
       setReportContent("");
       toast.success('Báo cáo đã được gửi thành công!');
@@ -244,7 +248,7 @@ export default function AuctionDetailPage() {
 
       {/* BOTTOM TABS */}
       <div className="auction-detail-bottom">
-        <div className="auction-tabs">
+        <div className="auction-detail-tabs">
           <div
             className={`auction-tab ${activeTab === "desc" ? "active" : ""}`}
             onClick={() => setActiveTab("desc")}

@@ -65,7 +65,7 @@
 .topBarLinks {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: start;
   gap: var(--space-3);
   row-gap: var(--space-2);
   flex-wrap: wrap;
@@ -84,6 +84,7 @@
   letter-spacing: 0.1px;
   transition: all var(--transition-fast);
   font-weight: 500;
+  margin-left: 30px;
 }
 
 .topBarLinks a:hover {
@@ -335,7 +336,6 @@
   padding: 8px 16px;
   border-radius: var(--radius-md);
   border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.05);
   line-height: 1.4;
   transition: all var(--transition-base);
   position: relative;

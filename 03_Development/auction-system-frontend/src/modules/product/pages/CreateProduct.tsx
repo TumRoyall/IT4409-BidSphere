@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Upload } from "lucide-react";
-import { FormLayout } from "@/components/form/FormLayout";
+import { toast } from "react-toastify";
 import { Button } from "@/components/common/Button";
 import { Input, Label } from "@/components/common";
 import CategorySelect from "@/components/common/CategorySelect";
@@ -37,13 +37,14 @@ export default function CreateProduct() {
   });
 
   const categories = [
-    "Electronics",
-    "Furniture",
-    "Clothing",
-    "Jewelry",
-    "Art",
-    "Collectibles",
-    "Other",
+    "Điện tử",
+    "Thời trang",
+    "Xe cộ",
+    "Nội thất",
+    "Sưu tầm",
+    "Tiêu dùng",
+    "Trang sức",
+    "Khác",
   ];
 
   // Load product if editing
@@ -132,12 +133,12 @@ export default function CreateProduct() {
 
     if (!validateForm()) {
       console.warn("Form validation failed:", errors);
-      alert("❌ Vui lòng điền đầy đủ thông tin!");
+      toast.error("Vui lòng điền đầy đủ thông tin!");
       return;
     }
 
     if (!user?.id) {
-      alert("❌ Không thể xác định người bán. Vui lòng đăng nhập lại.");
+      toast.error("Không thể xác định người bán. Vui lòng đăng nhập lại.");
       return;
     }
 
@@ -146,7 +147,6 @@ export default function CreateProduct() {
       if (formData.images.length === 0) throw new Error("Please select at least one image");
 
       // Upload all selected images and build images payload for backend
-      console.log("Uploading images...");
       const uploadPromises = formData.images.map((f) => productApi.uploadImage(f));
       const uploadResponses = await Promise.all(uploadPromises);
       const uploadedImages = uploadResponses
@@ -180,15 +180,12 @@ export default function CreateProduct() {
         images: imagesPayload,
       };
 
-      console.log("Product payload:", productPayload);
-
       if (isEditMode && id) {
         await productApi.updateProduct(Number(id), productPayload);
-        alert("✅ Product updated successfully!");
+        toast.success("Product updated successfully!");
       } else {
-        const response = await productApi.createProduct(productPayload);
-        console.log("Product created:", response);
-        alert("✅ Product created successfully!");
+        await productApi.createProduct(productPayload);
+        toast.success("Product created successfully!");
       }
 
       // Reset form data
@@ -211,7 +208,7 @@ export default function CreateProduct() {
         error?.message ||
         `Failed to ${isEditMode ? "update" : "create"} product`;
       console.error("Submit error:", error);
-      alert(`❌ ${errorMsg}`);
+      toast.error(`${errorMsg}`);
     } finally {
       setLoading(false);
     }
@@ -220,30 +217,6 @@ export default function CreateProduct() {
   const handleClose = () => {
     navigate("/seller");
   };
-
-  const footerContent = (
-    <div style={{ display: "flex", gap: "1rem" }}>
-      <Button
-        variant="outline"
-        onClick={handleClose}
-        disabled={loading}
-        className="form-btn form-btn-outline"
-      >
-        Cancel
-      </Button>
-      <Button
-        onClick={handleSubmit}
-        disabled={loading}
-        className="form-btn form-btn-primary"
-      >
-        {loading
-          ? "Creating..."
-          : isEditMode
-            ? "Update Product"
-            : "Create Product"}
-      </Button>
-    </div>
-  );
 
   return (
     <div className="max-w-4xl mx-auto p-4 md:p-8">

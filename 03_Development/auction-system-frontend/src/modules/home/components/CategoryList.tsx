@@ -1,10 +1,12 @@
 const mockCategories = [
-  { name: "Đồ điện tử", icon: "💻" },
+  { name: "Điện tử", icon: "💻" },
   { name: "Thời trang", icon: "👗" },
-  { name: "Đồ cổ", icon: "🏺" },
-  { name: "Nghệ thuật", icon: "🎨" },
   { name: "Xe cộ", icon: "🚗" },
+  { name: "Nội thất", icon: "🛋️" },
   { name: "Sưu tầm", icon: "📦" },
+  { name: "Tiêu dùng", icon: "🛒" },
+  { name: "Trang sức", icon: "💍" },
+  { name: "Khác", icon: "📌" },
 ];
 
 export default function CategoryList() {

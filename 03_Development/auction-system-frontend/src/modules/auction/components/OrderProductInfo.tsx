@@ -30,9 +30,6 @@ export default function OrderProductInfo({ order }: Props) {
   const [reportSaving, setReportSaving] = useState(false);
 
   const submitReport = async () => {
-    console.log('User object:', user);
-    console.log('User ID:', user?.id);
-    
     if (!reportContent.trim()) {
       toast.error('Vui lòng nhập nội dung báo cáo');
       return;
@@ -43,7 +40,11 @@ export default function OrderProductInfo({ order }: Props) {
     }
     try {
       setReportSaving(true);
-      await userReportApi.create({ userId: user.id, content: reportContent });
+      await userReportApi.create({ 
+        userId: user.id, 
+        content: reportContent.trim(),
+        sellerId: order.sellerId 
+      });
       toast.success('Báo cáo đã được gửi thành công!');
       setReportContent('');
       setIsReportOpen(false);

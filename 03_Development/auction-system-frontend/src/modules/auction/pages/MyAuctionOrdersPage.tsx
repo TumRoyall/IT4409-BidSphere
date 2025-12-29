@@ -101,7 +101,6 @@ export default function MyAuctionOrdersPage() {
               navigate(`/deposit?txn=${txnId}`);
             }}
             onDone={(txnId: string) => {
-              console.log("DONE txn:", txnId);
             }}
           />
         ))}

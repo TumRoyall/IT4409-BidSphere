@@ -86,12 +86,9 @@ const SellerOrders = (): React.ReactElement => {
     // Xác nhận giao hàng
     const handleConfirmShipped = async () => {
         if (!selectedTxn) {
-            console.log("No selectedTxn");
             return;
         }
         const txnId = selectedTxn.id || selectedTxn.txnId;
-        console.log("handleConfirmShipped - selectedTxn:", selectedTxn);
-        console.log("handleConfirmShipped - txnId:", txnId);
 
         if (!txnId) {
             alert("Không tìm thấy ID giao dịch");
@@ -100,9 +97,7 @@ const SellerOrders = (): React.ReactElement => {
 
         try {
             setUpdatingId(txnId);
-            console.log("Calling confirmShipped API with txnId:", txnId);
             const response = await transactionAfterAuctionApi.confirmShipped(txnId);
-            console.log("confirmShipped response:", response);
 
             setTransactions((prev) =>
                 prev.map((t) => ((t.id || t.txnId) === txnId ? { ...t, status: "SHIPPED" } : t))

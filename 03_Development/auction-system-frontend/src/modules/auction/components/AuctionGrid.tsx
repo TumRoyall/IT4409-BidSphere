@@ -1,17 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import AuctionCard from "@/components/home/AuctionCard";
 import SortBar from "@/modules/auction/components/SortBar.tsx"
 import  auctionApi  from "@/api/modules/auction.api";
 import "@/modules/auction/styles/auctionGrid.css";
 
 export default function AuctionGrid({ filters, onChange }: any) {
-  const [data, setData] = useState<any[]>([]);
+  const [rawData, setRawData] = useState<any[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     load();
   }, [filters]);
+
+  // Listen for favorite changes from localStorage
+  useEffect(() => {
+    const handleFavoriteChange = () => {
+      setRefreshKey(prev => prev + 1);
+    };
+
+    window.addEventListener("favoriteChanged", handleFavoriteChange);
+    return () => window.removeEventListener("favoriteChanged", handleFavoriteChange);
+  }, []);
 
   const load = async () => {
     const apiParams = {
@@ -20,11 +31,23 @@ export default function AuctionGrid({ filters, onChange }: any) {
     };
 
     const res = await auctionApi.getAuctions(apiParams);
-
     const data = res.data;
-    setData(data.content ?? []);
+    
+    setRawData(data.content ?? []);
     setTotalPages(data.totalPages ?? 1);
   };
+
+  // Auto sort with favorites on top whenever rawData or refreshKey changes
+  const sortedData = useMemo(() => {
+    const favorites = JSON.parse(localStorage.getItem("favoriteAuctions") || "[]");
+    return [...rawData].sort((a: any, b: any) => {
+      const aFav = favorites.includes(a.auctionId);
+      const bFav = favorites.includes(b.auctionId);
+      if (aFav && !bFav) return -1;
+      if (!aFav && bFav) return 1;
+      return 0;
+    });
+  }, [rawData, refreshKey]);
 
   return (
     <div>
@@ -38,8 +61,8 @@ export default function AuctionGrid({ filters, onChange }: any) {
 
       {/* GRID / LIST */}
       <div className={viewMode === "grid" ? "auction-grid" : "auction-list"}>
-        {data.length > 0 ? (
-          data.map((auction: any) => (
+        {sortedData.length > 0 ? (
+          sortedData.map((auction: any) => (
             <AuctionCard
               key={auction.auctionId}
               auction={auction}

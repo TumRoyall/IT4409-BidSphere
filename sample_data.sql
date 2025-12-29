@@ -828,6 +828,8 @@ INSERT INTO rolePermission (role_id, permission_id) VALUES
 (1, 58),  -- USER_CHANGE_PASSWORD
 (1, 59),  -- USER_UPDATE_AVATAR
 (1, 72);  -- USER_PARTICIPATING_AUCTIONS
+-- User reports - tạo report người dùng khác
+(1, 42);  -- USER_REPORT_CREATE
 -- ====================================
 -- SELLER (role_id = 2)
 -- Tất cả quyền BIDDER + tạo/sửa product, yêu cầu tạo auction
@@ -873,6 +875,8 @@ INSERT INTO rolePermission (role_id, permission_id) VALUES
 (2, 58),  -- USER_CHANGE_PASSWORD
 (2, 59),  -- USER_UPDATE_AVATAR
 (2, 72);  -- USER_PARTICIPATING_AUCTIONS
+-- User reports - tạo report người dùng khác
+(2, 42);  -- USER_REPORT_CREATE
 -- ====================================
 -- MODERATOR (role_id = 4)
 -- Quản lý product và auction: xóa, đóng, duyệt

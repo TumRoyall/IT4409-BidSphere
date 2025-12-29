@@ -4,6 +4,8 @@ export interface UserReport {
   id: number;
   userId: number;
   content: string;
+  auctionId?: number;
+  sellerId?: number;
   createdAt: string;
 }
 
