@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { FiHome, FiUsers, FiAlertTriangle, FiFlag, FiPackage } from 'react-icons/fi';
 import '@/modules/admin/styles/AdminSidebar.css';
 import { useAuth } from '@/hooks/useAuth';
@@ -64,7 +64,9 @@ const AdminSidebar: React.FC = () => {
 
     return (
         <div className="admin-sidebar">
-            <h2>Admin Panel</h2>
+            <Link to="/" className="admin-logo">
+                <h2>1xBid Admin</h2>
+            </Link>
             {isModerator && !isAdmin && (
                 <div className="sidebar-role-badge">MODERATOR</div>
             )}

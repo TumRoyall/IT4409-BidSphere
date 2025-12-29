@@ -113,10 +113,11 @@
 .pa-grid {
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
 
 .pa-card {
+  max-width: 420px; /* Prevent cards from becoming too wide */
   background: #ffffff;
   border: 1px solid #e7ecf2;
   border-radius: 18px;
