@@ -80,7 +80,7 @@ const AdminDashboardPage = () => {
         ...Array.from(new Set(auctions.map(a => a.categoryName).filter(Boolean))),
     ];
 
-    const statuses = ["ALL", "DRAFT", "PENDING", "OPEN", "CLOSED"];
+    const statuses = ["ALL", "DRAFT", "PENDING", "OPEN", "CLOSED", "CANCELLED"];
 
     const formatDate = (str: string) =>
         new Date(str).toLocaleString("vi-VN", {
@@ -110,12 +110,13 @@ const AdminDashboardPage = () => {
         return matchSearch && matchCategory && matchStatus;
     });
 
-    // Sort ưu tiên status: OPEN -> PENDING -> DRAFT -> CLOSED
+    // Sort ưu tiên status: OPEN -> PENDING -> DRAFT -> CLOSED -> CANCELLED
     const statusPriority: Record<string, number> = {
         "OPEN": 1,
         "PENDING": 2,
         "DRAFT": 3,
-        "CLOSED": 4
+        "CLOSED": 4,
+        "CANCELLED": 5
     };
 
     const sortedAuctions = [...filteredAuctions].sort((a, b) => {
@@ -181,6 +182,7 @@ const AdminDashboardPage = () => {
                 s === "DRAFT" ? "✏️ Draft" :
                 s === "PENDING" ? "⏳ Pending" :
                 s === "OPEN" ? "✅ Open" :
+                s === "CANCELLED" ? "⛔ Cancelled" :
                 "❌ Closed"}
                 </option>
             ))}
