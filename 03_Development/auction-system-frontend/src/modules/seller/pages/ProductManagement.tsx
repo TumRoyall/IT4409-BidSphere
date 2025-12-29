@@ -69,9 +69,7 @@ const ProductManagement = (): React.ReactElement => {
         images: imageRequests,
       };
 
-      const response = await createProduct(finalPayload);
-      const productId = response?.productId || response?.id;
-
+      await createProduct(finalPayload);
       // Đóng modal
       handleCloseCreateModal();
 
@@ -109,7 +107,7 @@ const ProductManagement = (): React.ReactElement => {
 
   const handleSubmitEdit = async (productId: number, data: any) => {
     try {
-      const resp = await updateProduct(productId, data);
+      await updateProduct(productId, data);
 
       setIsEditModalOpen(false);
       setSelectedProduct(null);

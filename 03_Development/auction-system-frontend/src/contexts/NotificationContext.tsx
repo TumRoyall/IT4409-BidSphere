@@ -46,8 +46,6 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
             return;
         }
 
-        let isCleaningUp = false;
-
         // Create STOMP Client
         const client = new Client({
             webSocketFactory: () => {
@@ -56,7 +54,7 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
             connectHeaders: {
                 Authorization: `Bearer ${token}`,
             },
-            debug: (str) => {
+            debug: () => {
                 // Uncomment for debugging: console.log(str);
             },
             reconnectDelay: 5000,
@@ -66,14 +64,14 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
             maxWebSocketChunkSize: 8 * 1024,
         });
 
-        client.onConnect = (frame) => {
+        client.onConnect = () => {
             console.log("✅ WebSocket CONNECTED!");
             setIsConnected(true);
 
             // Subscribe to User Specific Notifications with explicit user ID
             const userSpecificDestination = `/user/${user.id}/queue/notifications`;
 
-            const subscription = client.subscribe(userSpecificDestination, (message: IMessage) => {
+            client.subscribe(userSpecificDestination, (message: IMessage) => {
                 try {
                     const body = JSON.parse(message.body);
 
@@ -106,8 +104,8 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
 
         };
 
-        client.onStompError = (frame) => {
-            console.error("❌ STOMP ERROR:", frame.headers["message"] || frame.body);
+        client.onStompError = () => {
+            console.error("❌ STOMP ERROR");
             setIsConnected(false);
         };
 
@@ -115,11 +113,11 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
             setIsConnected(false);
         };
 
-        client.onWebSocketError = (event) => {
+        client.onWebSocketError = () => {
             setIsConnected(false);
         };
 
-        client.onWebSocketClose = (event) => {
+        client.onWebSocketClose = () => {
             setIsConnected(false);
         };
 
@@ -127,7 +125,6 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
         setStompClient(client);
 
         return () => {
-            isCleaningUp = true;
             if (client && client.active) {
                 client.deactivate();
             }
