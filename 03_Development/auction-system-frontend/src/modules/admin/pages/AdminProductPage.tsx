@@ -38,6 +38,7 @@ const AdminProductPage: React.FC = () => {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [categories, setCategories] = useState<string[]>([]);
 
+  
   const pageSize = 10;
 
   const fetchProducts = async () => {
