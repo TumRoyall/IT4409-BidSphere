@@ -15,6 +15,14 @@ interface AuctionResponse {
     totalBidders: number;
 }
 
+const statusLabel: Record<string, string> = {
+    DRAFT: "Draft",
+    PENDING: "Pending",
+    OPEN: "Open",
+    CLOSED: "Closed",
+    CANCELLED: "Cancelled"
+};
+
 const AdminDashboardPage = () => {
     const [searchText, setSearchText] = useState("");
     const [auctions, setAuctions] = useState<AuctionResponse[]>([]);
@@ -45,7 +53,7 @@ const AdminDashboardPage = () => {
             const data = res.data.content || [];
             setAuctions(data.map((a: any) => ({
                 ...a,
-                status: a.status.toUpperCase() === "CANCELLED" ? "CLOSED" : a.status.toUpperCase()
+                status: a.status.toUpperCase()
             })));
         } catch (error) {
             console.error("Lỗi khi load auctions:", error);
@@ -241,9 +249,10 @@ const AdminDashboardPage = () => {
                                     <td>{a.totalBidders}</td>
                                     <td>{formatDate(a.startTime)}</td>
                                     <td>{formatDate(a.endTime)}</td>
-                                    <td className="ad-status-cell">
-                                        <span className={`ad-status ${a.status.toLowerCase()}`}>
-                                            {a.status}
+                                    <td className="status-cell">
+                                        <span className={`status ${a.status.toLowerCase()}`}>
+                                            {statusLabel[a.status] ?? a.status}
+
                                         </span>
                                     </td>
                                     <td>{a.sellerName}</td>

@@ -354,24 +354,79 @@ const AdminUsersPage: React.FC = () => {
         ))}
         <button onClick={() => setCurrentPage(prev => Math.min(prev+1, totalPages))} disabled={currentPage===totalPages}>Next</button>
       </div>
+        {/* --- Modal edit / ban --- */}
+        {modalType && selectedUser && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              {modalType === "edit" && (
+                <>
+                  <h2>Edit User</h2>
 
-      {/* --- Modal edit / ban --- */}
-      {modalType && selectedUser && (
-        <div className="au-modal-overlay">
-          <div className="au-modal-content">
-            {modalType === "edit" && (
-              <>
-                <h2>Edit User</h2>
-                <div className="au-input-group"><label>Full Name</label><input type="text" value={selectedUser.fullName} onChange={e => setSelectedUser({...selectedUser, fullName:e.target.value})}/></div>
-                <div className="au-input-group"><label>Username</label><input type="text" value={selectedUser.username} onChange={e => setSelectedUser({...selectedUser, username:e.target.value})}/></div>
-                <div className="au-input-group"><label>Email</label><input type="email" value={selectedUser.email} onChange={e => setSelectedUser({...selectedUser, email:e.target.value})}/></div>
-                <div className="au-input-group"><label>Phone</label><input type="text" value={selectedUser.phone} onChange={e => setSelectedUser({...selectedUser, phone:e.target.value})}/></div>
-                <div className="au-modal-buttons">
-                  <button className="au-btn-save" onClick={async () => { try { await adminUserApi.update(selectedUser.userId, selectedUser); setModalType(null); fetchUsers(); } catch { alert("Cập nhật thất bại!"); } }}>Xác nhận</button>
-                  <button className="au-btn-cancel" onClick={() => setModalType(null)}>Hủy</button>
-                </div>
-              </>
-            )}
+                  <div className="input-group">
+                    <label>Full Name</label>
+                    <input
+                      type="text"
+                      value={selectedUser.fullName ?? ""}
+                      onChange={e =>
+                        setSelectedUser({ ...selectedUser, fullName: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <div className="input-group">
+                    <label>Username</label>
+                    <input
+                      type="text"
+                      value={selectedUser.username ?? ""}
+                      onChange={e =>
+                        setSelectedUser({ ...selectedUser, username: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <div className="input-group">
+                    <label>Email</label>
+                    <input
+                      type="email"
+                      value={selectedUser.email ?? ""}
+                      onChange={e =>
+                        setSelectedUser({ ...selectedUser, email: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <div className="input-group">
+                    <label>Phone</label>
+                    <input
+                      type="text"
+                      value={selectedUser.phone ?? ""}
+                      onChange={e =>
+                        setSelectedUser({ ...selectedUser, phone: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <div className="modal-buttons">
+                    <button
+                      className="save"
+                      onClick={async () => {
+                        try {
+                          await adminUserApi.update(selectedUser.userId, selectedUser);
+                          setModalType(null);
+                          fetchUsers();
+                        } catch {
+                          alert("Cập nhật thất bại!");
+                        }
+                      }}
+                    >
+                      Xác nhận
+                    </button>
+                    <button className="cancel" onClick={() => setModalType(null)}>
+                      Hủy
+                    </button>
+                  </div>
+                </>
+              )}
 
             {modalType === "ban" && (
               <>

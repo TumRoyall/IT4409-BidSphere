@@ -104,8 +104,8 @@ VALUES (
   3750598.04,
   '5902509',
   375059.8,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441194/auction_images/udxcgvfq9htxkvlcvgkr.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441195/auction_images/rmxqnljlhaxsoa9pbizk.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441198/auction_images/kzinchuhuhvj2c738x9v.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441200/auction_images/u8w1omzxamlettjstsaw.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441201/auction_images/jbfonr130muwmqwbmx70.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441203/auction_images/ehz51hkpme3eissie2vs.jpg',
-  'cancelled',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441194/auction_images/udxcgvfq9htxkvlcvgkr.jpg',
+  'approved',
   '2025-08-21 09:22:31'
 );
 
@@ -119,7 +119,7 @@ VALUES (
   4388954.75,
   '8184622',
   438895.48,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441194/auction_images/udxcgvfq9htxkvlcvgkr.jpg'  ,
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766441194/auction_images/udxcgvfq9htxkvlcvgkr.jpg',
   'approved',
   '2024-01-01 09:22:31'
 );
@@ -134,8 +134,8 @@ VALUES (
   1475846.1,
   '2417798',
   147584.61,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447312/auction_images/cpce8cgwwrjscyhwrtst.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447314/auction_images/f40gchliupyofg6twufc.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447316/auction_images/wmvaou9bykecw3cefbum.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447317/auction_images/r2fj7twbbwdaxpkiwgmx.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447319/auction_images/wdbqwxzxiu4fqjfvkgl7.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447321/auction_images/icszk93t63ikblgfivd6.jpg',
-  'sold',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766447312/auction_images/cpce8cgwwrjscyhwrtst.jpg',
+  'approved',
   '2025-03-21 09:22:31'
 );
 
@@ -149,8 +149,8 @@ VALUES (
   257087.23,
   '314243',
   25708.72,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477506/auction_images/av6ggt81so03jysbuvsz.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477508/auction_images/wmll0shpwvsiqogyg3j2.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477511/auction_images/w71ogacx9l7xtkammjs8.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477513/auction_images/uyy4kbwteoohw5cylv0g.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477515/auction_images/rcmp1krhot3ke5p53rgl.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477517/auction_images/bbcksox2h7yn7b0imzad.jpg',
-  'pending',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766477506/auction_images/av6ggt81so03jysbuvsz.jpg',
+  'approved',
   '2024-05-19 09:22:31'
 );
 
@@ -164,8 +164,8 @@ VALUES (
   3583916.77,
   '4154489',
   358391.68,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501778/auction_images/blg9l4ua6oey99sw4squ.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501781/auction_images/htuawd443pm6znigbzge.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501783/auction_images/bfs1fibpht0ebcnmco9o.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501784/auction_images/f6dy9d0ln1a0xgi4gut9.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501786/auction_images/nyebv4myighpdz76pqih.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501788/auction_images/uoxjgborh0vorphmfpy0.jpg',
-  'cancelled',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766501781/auction_images/htuawd443pm6znigbzge.jpg',
+  'approved',
   '2023-04-09 09:22:31'
 );
 
@@ -179,7 +179,7 @@ VALUES (
   2487313.5,
   '2843168',
   248731.35,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502020/auction_images/uvlsicje6nbhj8sue7wu.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502026/auction_images/gpimoduu7gkf3l4eokrg.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502030/auction_images/grvxyocaltcxlcyhxftv.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502034/auction_images/xmtzesqvpzdrm7ild2gs.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502036/auction_images/g7fjcvjpq5yir57myaxw.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502038/auction_images/oia9omzx9barpunsn19s.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502020/auction_images/uvlsicje6nbhj8sue7wu.jpg',
   'approved',
   '2025-08-02 09:22:31'
 );
@@ -194,7 +194,7 @@ VALUES (
   1310095.29,
   '1632905',
   131009.53,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502367/auction_images/ooixfvmotqaq0m4ubj9u.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502373/auction_images/mlvzynhk4gedwxaf8nfl.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502375/auction_images/hqluaqdvqqggh8kigmuf.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502377/auction_images/pkxqpxqv3hu4zkg15yfv.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502380/auction_images/szenqxuvbeqyamcnh3ov.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502384/auction_images/belb3ylt4hmdupie27vs.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502367/auction_images/ooixfvmotqaq0m4ubj9u.jpg',
   'approved',
   '2024-09-09 09:22:31'
 );
@@ -209,8 +209,8 @@ VALUES (
   2954481.45,
   '4132622',
   295448.15,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502651/auction_images/m3vpg2gglxgzk5sqlwl1.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502653/auction_images/dtyhmbu9ezddpocynrp0.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502655/auction_images/oqbjzazza7gu3hrcqo2x.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502658/auction_images/xgiwnhw5cunf2emgerua.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502660/auction_images/dykomkxi9we9yrubiubz.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502662/auction_images/dqubewykvu4xdzp7bm88.jpg',
-  'sold',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766502651/auction_images/m3vpg2gglxgzk5sqlwl1.jpg',
+  'approved',
   '2024-12-07 09:22:31'
 );
 
@@ -224,8 +224,8 @@ VALUES (
   4340734.17,
   '5986819',
   434073.42,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445481/auction_images/shqjsthyjoka4skiy15n.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445484/auction_images/cyel0scnrkety37sgwks.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445486/auction_images/fgo1kl4refht0fv9i2mq.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445488/auction_images/chzairocxu5bzdnrficr.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445490/auction_images/jrocv0bizz8li177rman.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445491/auction_images/lbopdroyvbppr3xscyuh.jpg',
-  'pending',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766445481/auction_images/shqjsthyjoka4skiy15n.jpg',
+  'approved',
   '2023-05-29 09:22:31'
 );
 
@@ -239,7 +239,7 @@ VALUES (
   2454366.06,
   '4819743',
   245436.61,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506811/auction_images/ocvchtv6jjsboiqpa21v.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506814/auction_images/xh7xn2dxqotfxkgsygoy.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506817/auction_images/fomodp8wliyizt14ljse.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506819/auction_images/ij2rk81wrv4ontp7w9ro.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506821/auction_images/s5nk8tbucavbd2mkcwu4.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506824/auction_images/nxv7axkpyatdpprepp4x.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766506811/auction_images/ocvchtv6jjsboiqpa21v.jpg',
   'approved',
   '2025-01-23 09:22:31'
 );
@@ -254,8 +254,8 @@ VALUES (
   6647060.24,
   '1159904',
   366470.62,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507332/auction_images/jgzcsr6z9mdhvqh7nmwv.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507334/auction_images/hs2ncpnwlgwyq99uvnhp.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507337/auction_images/k8n2g0kyryfmfwlqlt8o.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507339/auction_images/wkqa5igdgnd4uc47ss8b.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507342/auction_images/sf0ruvi3qexwz10j3dag.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507346/auction_images/dgop0bl0p9ppy39lspkd.jpg',
-  'cancelled',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507332/auction_images/jgzcsr6z9mdhvqh7nmwv.jpg',
+  'approved',
   '2023-04-23 09:22:31'
 );
 
@@ -269,8 +269,8 @@ VALUES (
   8816504.04,
   '15721116',
   481650.4,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444529/auction_images/uskdpndlejalrg5gcfty.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444531/auction_images/mrjzvkwmnrnlzpxwwbwo.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444532/auction_images/htmzsk0hsdzvxiaaliyn.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444534/auction_images/cjy9pzewr8trebauelwz.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444536/auction_images/bvzxc7fmk21qf80srqbf.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444537/auction_images/t7dtosneaeiym3d6q0ih.jpg',
-  'sold',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766444529/auction_images/uskdpndlejalrg5gcfty.jpg',
+  'approved',
   '2025-03-03 09:22:31'
 );
 
@@ -299,8 +299,8 @@ VALUES (
   26514076.14,
   '3616311',
   565140.71,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508057/auction_images/ltmroixi6hh8rsiwpjgl.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508062/auction_images/y4ejy1od426zu7ze9awo.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508067/auction_images/jq5makhu2gosxq9d9diw.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508071/auction_images/sujgzoqavzzlpgwborq5.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508074/auction_images/urjxruxj7pnaiv2gi6x0.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508078/auction_images/cqcwlwt3zmfucgbrq7lr.jpg',
-  'sold',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508057/auction_images/ltmroixi6hh8rsiwpjgl.jpg',
+  'approved',
   '2024-07-05 09:22:31'
 );
 
@@ -314,8 +314,8 @@ VALUES (
   2793287.11,
   '1395202',
   593286.71,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508334/auction_images/vdeuvjfphkpga4odatbb.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508336/auction_images/mpuckdkxjlidayn3i9rw.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508337/auction_images/pdrss8cfyy374khkykxh.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508338/auction_images/rhxanrpmknn2xm3ve7nm.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508340/auction_images/obadwsbmcf5g6fnml3la.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508341/auction_images/xuzgn5x8pwdcs2vd2qzs.jpg ',
-  'sold',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508334/auction_images/vdeuvjfphkpga4odatbb.jpg',
+  'approved',
   '2025-03-18 09:22:31'
 );
 
@@ -329,7 +329,7 @@ VALUES (
   4256874.1,
   '6295708',
   425687.41,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508702/auction_images/qp53ebab49u3wz68wggm.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508704/auction_images/bhikzi4gddol1dxtyrlt.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508706/auction_images/h3gfuyvcjueprkymm4bd.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508708/auction_images/dzov0yvfryyebythaws0.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508711/auction_images/locmfroxr87sla3y1upz.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508712/auction_images/zyvdjmcvpxt24tvcjg8h.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766508702/auction_images/qp53ebab49u3wz68wggm.jpg',
   'approved',
   '2025-02-17 09:22:31'
 );
@@ -359,7 +359,7 @@ VALUES (
   29323515.85,
   '36073931',
   293351.59,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446129/auction_images/lpzdki8ysh9tjqha2qll.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446130/auction_images/zeagpmezvlghoxfxt4si.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446131/auction_images/upbt6jhrratfot3sp8ch.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446132/auction_images/dl1uvlgykgd9u5p7adzn.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446134/auction_images/a0gesiw3j2onoqfivvj1.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446135/auction_images/g2zvk9k4fmvjbvfsfppl.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446130/auction_images/zeagpmezvlghoxfxt4si.jpg',
   'cancelled',
   '2024-09-16 09:22:31'
 );
@@ -374,7 +374,7 @@ VALUES (
   507009.96,
   '633693',
   50701.0,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443205/auction_images/vb62sdnecs76kgmrskal.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443207/auction_images/zwbmjaod5lsbadmqdbqc.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443209/auction_images/ktuau871dtcmuvskamsa.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443211/auction_images/wstfkdnxjjctvqynklw8.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443212/auction_images/z9dtjhiankg8uxmkfwhy.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443214/auction_images/tehyrpuatyinvq9s75aa.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443205/auction_images/vb62sdnecs76kgmrskal.jpg',
   'cancelled',
   '2024-04-24 09:22:31'
 );
@@ -389,7 +389,7 @@ VALUES (
   4819758.42,
   '7571984',
   481975.84,
-  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507683/auction_images/yyoynf5cshjstbqpoput.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507685/auction_images/zkdvtstcp7pbozv8gir2.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507687/auction_images/lxlvznmojpkm6w189ytq.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507689/auction_images/beyhuyb2f1jas5kqtm5k.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507691/auction_images/elbup9wb025k3hpt51ls.jpg,https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507694/auction_images/xbhgni4dpqeycxgxeauw.jpg',
+  'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507683/auction_images/yyoynf5cshjstbqpoput.jpg',
   'cancelled',
   '2024-08-23 09:22:31'
 );

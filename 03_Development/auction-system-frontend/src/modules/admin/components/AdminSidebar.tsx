@@ -37,6 +37,11 @@ const AdminSidebar: React.FC = () => {
             icon: FiFlag,
             label: "Reports",
         },
+        {
+            to: "/superadmin/products",
+            icon: FiPackage, // Bạn có thể đổi icon nếu muốn
+            label: "Products", // Đây là mục quản lý sản phẩm
+        },
     ];
 
     // Menu items for MODERATOR (approval pages)

@@ -55,6 +55,7 @@ import AdminUsersPage from "../modules/admin/pages/AdminUsersPage";
 import AdminDashboardPage from "../modules/admin/pages/AdminDashboardPage.tsx";
 import AdminReportsPage from "../modules/admin/pages/AdminReportsPage";
 import AdminUserWarningPage from "../modules/admin/pages/AdminUserWarningPage.tsx";
+import AdminProductPage from '../modules/admin/pages/AdminProductPage';
 
 export default function AppRoutes() {
   return (
@@ -165,6 +166,13 @@ export default function AppRoutes() {
               <AdminUserWarningPage />
             </RoleBasedRoute>
           } />
+          <Route
+            path="products"
+            element={
+              <RoleBasedRoute allowedRoles={[ROLES.ADMIN, ROLES.MODERATOR]} redirectTo="/superadmin/dashboard">
+                <AdminProductPage />
+              </RoleBasedRoute>
+            }/>
           <Route path="auction/approval" element={<AdminProductApprovalPage />} />
         </Route>
       </Routes>
