@@ -107,7 +107,6 @@ const AdminProductPage: React.FC = () => {
   const formatDate = (dateStr?: string) => 
     (dateStr ? new Date(dateStr).toLocaleString("vi-VN") : "-");
 
-  // Helper function to get normalized status
   const getStatusKey = (status?: string) => status?.toLowerCase() || "unknown";
 
   return (
@@ -124,7 +123,7 @@ const AdminProductPage: React.FC = () => {
         />
 
         {/* Status filter */}
-        <div className="status-dropdown">
+        <div className="status-dropdown" style={{ position: "relative" }}>
           <button
             className={`dropdown-button ${selectedStatus !== "ALL" ? "active" : ""}`}
             onClick={() => setStatusOpen((prev) => !prev)}
@@ -140,18 +139,18 @@ const AdminProductPage: React.FC = () => {
                   setStatusOpen(false);
                 }}
               >
-                <span className="status-pill">All Statuses</span>
+                All Statuses
               </div>
               {Object.keys(statusLabel).map((s) => (
                 <div
                   key={s}
-                  className={`dropdown-item ${selectedStatus === s ? "active" : ""} ${s}`}
+                  className={`dropdown-item ${selectedStatus === s ? "active" : ""}`}
                   onClick={() => {
                     setSelectedStatus(s);
                     setStatusOpen(false);
                   }}
                 >
-                  <span className="status-pill">{statusLabel[s]}</span>
+                  {statusLabel[s]}
                 </div>
               ))}
             </div>
@@ -159,7 +158,7 @@ const AdminProductPage: React.FC = () => {
         </div>
 
         {/* Category filter */}
-        <div className="category-dropdown">
+        <div className="category-dropdown" style={{ position: "relative" }}>
           <button
             className={`dropdown-button ${selectedCategory !== "ALL" ? "active" : ""}`}
             onClick={() => setCategoryOpen((prev) => !prev)}
@@ -177,18 +176,22 @@ const AdminProductPage: React.FC = () => {
               >
                 All Categories
               </div>
-              {categories.map((c) => (
-                <div
-                  key={c}
-                  className={`dropdown-item ${selectedCategory === c ? "active" : ""}`}
-                  onClick={() => {
-                    setSelectedCategory(c);
-                    setCategoryOpen(false);
-                  }}
-                >
-                  {c}
-                </div>
-              ))}
+              {categories.length > 0 ? (
+                categories.map((c) => (
+                  <div
+                    key={c}
+                    className={`dropdown-item ${selectedCategory === c ? "active" : ""}`}
+                    onClick={() => {
+                      setSelectedCategory(c);
+                      setCategoryOpen(false);
+                    }}
+                  >
+                    {c}
+                  </div>
+                ))
+              ) : (
+                <div className="dropdown-item">No categories</div>
+              )}
             </div>
           )}
         </div>
@@ -215,33 +218,31 @@ const AdminProductPage: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {displayedProducts.map((p) => {
-                return (
-                  <tr key={p.productId}>
-                    <td>{p.productId}</td>
-                    <td>{p.name}</td>
-                    <td>{p.category}</td>
-                    <td className="status-cell">
-                    <span className={`status ${p.status?.toLowerCase() || "unknown"}`}>
-                        {p.status ? statusLabel[p.status.toLowerCase()] || p.status : "-"}
+              {displayedProducts.map((p) => (
+                <tr key={p.productId}>
+                  <td>{p.productId}</td>
+                  <td>{p.name}</td>
+                  <td>{p.category}</td>
+                  <td className="status-cell">
+                    <span className={`status ${getStatusKey(p.status)}`}>
+                      {p.status ? statusLabel[p.status.toLowerCase()] || p.status : "-"}
                     </span>
-                    </td>
-                    <td>{p.startPrice?.toLocaleString()}₫</td>
-                    <td>{p.estimatePrice?.toLocaleString() ?? "-"}₫</td>
-                    <td>{p.deposit?.toLocaleString() ?? "-"}₫</td>
-                    <td>
-                      {p.imageUrl ? (
-                        <img src={p.imageUrl} alt={p.name} className="w-16 h-16" />
-                      ) : (
-                        "No image"
-                      )}
-                    </td>
-                    <td>{formatDate(p.createdAt)}</td>
-                    <td>{formatDate(p.deletedAt)}</td>
-                    <td>{p.sellerId}</td>
-                  </tr>
-                );
-              })}
+                  </td>
+                  <td>{p.startPrice?.toLocaleString()}₫</td>
+                  <td>{p.estimatePrice?.toLocaleString() ?? "-"}₫</td>
+                  <td>{p.deposit?.toLocaleString() ?? "-"}₫</td>
+                  <td>
+                    {p.imageUrl ? (
+                      <img src={p.imageUrl} alt={p.name} className="w-16 h-16" />
+                    ) : (
+                      "No image"
+                    )}
+                  </td>
+                  <td>{formatDate(p.createdAt)}</td>
+                  <td>{formatDate(p.deletedAt)}</td>
+                  <td>{p.sellerId}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
 
