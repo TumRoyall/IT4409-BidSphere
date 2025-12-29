@@ -133,7 +133,7 @@
   color: #155724;
 }
 
-.admin-product-page .status.cancelled {
+.admin-product-page .status.rejected {
   background-color: #f8d7da;
   color: #721c24;
 }

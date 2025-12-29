@@ -4,17 +4,17 @@ import type { ProductResponse } from "@/api/modules/adminProduct.api";
 import "@/modules/admin/styles/AdminProductPage.css";
 
 const statusLabel: Record<string, string> = {
-  draft: "Draft",
-  pending: "Pending",
-  approved: "Approved",
-  cancelled: "Cancelled",
+  DRAFT: "DRAFT",
+  PENDING: "PENDING",
+  APPROVED: "APPROVED",
+  REJECTED: "REJECTED",
 };
 
 const statusOrder: Record<string, number> = {
-  pending: 1,
-  draft: 2,
-  approved: 3,
-  cancelled: 4,
+  PENDING: 1,
+  DRAFT: 2,
+  APPROVED: 3,
+  REJECTED: 4,
 };
 
 const AdminProductPage: React.FC = () => {
@@ -81,8 +81,8 @@ const AdminProductPage: React.FC = () => {
     }
 
     filtered.sort((a, b) => {
-      const statusA = a.status?.toLowerCase() || "";
-      const statusB = b.status?.toLowerCase() || "";
+      const statusA = a.status?.toUpperCase() || ""; // để hoa
+      const statusB = b.status?.toUpperCase() || ""; // để hoa
       const statusDiff = (statusOrder[statusA] ?? 99) - (statusOrder[statusB] ?? 99);
       if (statusDiff !== 0) return statusDiff;
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();

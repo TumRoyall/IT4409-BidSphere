@@ -359,7 +359,7 @@ VALUES (
   '36073931',
   293351.59,
   'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446130/auction_images/zeagpmezvlghoxfxt4si.jpg',
-  'CANCELLED',
+  'REJECTED',
   '2024-09-16 09:22:31'
 );
 
@@ -374,7 +374,7 @@ VALUES (
   '633693',
   50701.0,
   'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443205/auction_images/vb62sdnecs76kgmrskal.jpg',
-  'CANCELLED',
+  'PENDING',
   '2024-04-24 09:22:31'
 );
 
@@ -389,7 +389,7 @@ VALUES (
   '7571984',
   481975.84,
   'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507683/auction_images/yyoynf5cshjstbqpoput.jpg',
-  'CANCELLED',
+  'REJECTED',
   '2024-08-23 09:22:31'
 );
 
