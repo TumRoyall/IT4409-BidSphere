@@ -556,26 +556,66 @@ INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res
 INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507694/auction_images/xbhgni4dpqeycxgxeauw.jpg', 0);
 
 -- (Auction)
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (1, '2023-10-03 09:22:31', '2025-11-04 09:22:31', 'CANCELLED', 3740880, '50000', 18);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (2, '2023-08-10 09:22:31', '2025-10-24 09:22:31', 'OPEN', 2048362, '20000', 7);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (3, '2024-06-07 09:22:31', '2025-10-29 09:22:31', 'OPEN', 4176339, '20000', 16);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (4, '2025-05-28 09:22:31', '2025-11-11 09:22:31', 'CANCELLED', 589978, '50000', 6);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (5, '2025-06-27 09:22:31', '2025-10-20 09:22:31', 'CANCELLED', 1693980, '20000', 6);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (6, '2023-04-08 09:22:31', '2025-10-19 09:22:31', 'CANCELLED', 3633135, '20000', 18);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (7, '2024-06-11 09:22:31', '2025-10-23 09:22:31', 'CANCELLED', 3247667, '20000', 16);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (8, '2024-11-06 09:22:31', '2025-11-07 09:22:31', 'CLOSED', 1662254, '10000', 8);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (9, '2023-11-16 09:22:31', '2025-11-01 09:22:31', 'OPEN', 1844351, '50000', 16);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (10, '2025-07-23 09:22:31', '2025-10-27 09:22:31', 'CLOSED', 1821751, '50000', 18);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (11, '2024-05-26 09:22:31', '2025-11-11 09:22:31', 'CLOSED', 2370632, '50000', 12);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (12, '2023-10-03 09:22:31', '2025-10-24 09:22:31', 'OPEN', 4936073, '10000', 16);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (13, '2023-07-13 09:22:31', '2025-10-25 09:22:31', 'OPEN', 1089639, '10000', 9);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (14, '2024-10-31 09:22:31', '2025-11-10 09:22:31', 'CANCELLED', 4241822, '20000', 9);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (15, '2025-05-12 09:22:31', '2025-10-29 09:22:31', 'OPEN', 4655830, '50000', 6);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (16, '2025-04-23 09:22:31', '2025-10-18 09:22:31', 'CANCELLED', 4003335, '50000', 16);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (17, '2024-09-17 09:22:31', '2025-10-18 09:22:31', 'OPEN', 3843770, '10000', 7);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (18, '2023-11-30 09:22:31', '2025-10-24 09:22:31', 'OPEN', 3598574, '50000', 17);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (19, '2023-10-01 09:22:31', '2025-10-27 09:22:31', 'OPEN', 1982122, '50000', 1);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (20, '2025-01-19 09:22:31', '2025-10-19 09:22:31', 'CANCELLED', 2606085, '10000', 16);
+-- (Auction)
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (1, '2023-10-03 09:22:31', '2026-02-28 09:22:31', 'CANCELLED', 3740880, '50000', 18);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (2, '2023-08-10 09:22:31', '2026-02-28 09:22:31', 'OPEN', 2048362, '20000', 7);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (3, '2024-06-07 09:22:31', '2026-02-28 09:22:31', 'OPEN', 4176339, '20000', 16);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (4, '2025-05-28 09:22:31', '2026-02-28 09:22:31', 'CANCELLED', 589978, '50000', 6);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (5, '2025-06-27 09:22:31', '2026-02-28 09:22:31', 'CANCELLED', 1693980, '20000', 6);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (6, '2023-04-08 09:22:31', '2026-02-28 09:22:31', 'CANCELLED', 3633135, '20000', 18);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (7, '2024-06-11 09:22:31', '2026-02-28 09:22:31', 'CANCELLED', 3247667, '20000', 16);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (8, '2024-11-06 09:22:31', '2026-02-28 09:22:31', 'CLOSED', 1662254, '10000', 8);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (9, '2023-11-16 09:22:31', '2026-02-28 09:22:31', 'OPEN', 1844351, '50000', 16);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (10, '2025-07-23 09:22:31', '2026-02-28 09:22:31', 'CLOSED', 1821751, '50000', 18);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (11, '2024-05-26 09:22:31', '2026-02-28 09:22:31', 'CLOSED', 2370632, '50000', 12);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (12, '2023-10-03 09:22:31', '2026-02-28 09:22:31', 'OPEN', 4936073, '10000', 16);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (13, '2023-07-13 09:22:31', '2026-02-28 09:22:31', 'OPEN', 1089639, '10000', 9);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (14, '2024-10-31 09:22:31', '2026-02-28 09:22:31', 'CANCELLED', 4241822, '20000', 9);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (15, '2025-05-12 09:22:31', '2026-02-28 09:22:31', 'OPEN', 4655830, '50000', 6);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (16, '2025-04-23 09:22:31', '2026-02-28 09:22:31', 'CANCELLED', 4003335, '50000', 16);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (17, '2024-09-17 09:22:31', '2026-02-28 09:22:31', 'OPEN', 3843770, '10000', 7);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (18, '2023-11-30 09:22:31', '2026-02-28 09:22:31', 'OPEN', 3598574, '50000', 17);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (19, '2023-10-01 09:22:31', '2026-02-28 09:22:31', 'OPEN', 1982122, '50000', 1);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (20, '2025-01-19 09:22:31', '2026-02-28 09:22:31', 'CANCELLED', 2606085, '10000', 16);
 
 -- (Bid)
 INSERT INTO Bid (auction_id, bidder_id, bid_amount, created_at, max_autobid_amount, step_autobid_amount, is_auto, is_highest) VALUES (17, 18, 7156591.28, '2024-08-27 09:22:31', 8128156.28, 25017, 1, 0);
