@@ -4,7 +4,18 @@
     color: #e5e7eb;
     min-height: 100vh;
     padding: 20px 16px;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.15);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Logo Link */
+.admin-logo {
+    text-decoration: none;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.admin-logo:hover {
+    transform: scale(1.05);
 }
 
 /* Title */
@@ -60,6 +71,6 @@
 }
 
 /* Optional: section spacing */
-.admin-sidebar nav ul + ul {
+.admin-sidebar nav ul+ul {
     margin-top: 16px;
 }

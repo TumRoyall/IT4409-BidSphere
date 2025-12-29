@@ -42,9 +42,42 @@ export default function NotificationPage() {
   const getCategoryGroup = (notificationCategory: string): string => {
     if (!notificationCategory) return "";
 
-    const bidCategories = ["BID_PLACED", "OUTBID", "AUCTION_ENDING_SOON", "LEADING_BID", "AUCTION_WON", "AUCTION_LOST"];
-    const paymentCategories = ["PAYMENT_DUE", "PAYMENT_SUCCESS", "PAYMENT_FAILED", "SHIPMENT_CONFIRMED", "PAYMENT_RECEIVED"];
-    const systemCategories = ["AUCTION_APPROVED", "AUCTION_REJECTED", "AUCTION_STARTED", "AUCTION_ENDED", "PRODUCT_APPROVED", "PRODUCT_REJECTED", "AUCTION_PENDING_APPROVAL", "HIGHEST_BID_CHANGED", "TRANSACTION_COMPLETED", "TRANSACTION_CANCELLED"];
+    // Bidder notifications: bid-related actions
+    const bidCategories = [
+      "BID_PLACED",
+      "OUTBID",
+      "AUCTION_ENDING_SOON",
+      "LEADING_BID",
+      "AUCTION_WON",
+      "AUCTION_LOST",
+      // Seller auction notifications (moved from system)
+      "AUCTION_STARTED",      // Seller: auction has started
+      "AUCTION_ENDED",        // Seller: auction has ended
+      "HIGHEST_BID_CHANGED"   // Seller: new highest bid
+    ];
+
+    // Payment-related notifications for both buyer and seller
+    const paymentCategories = [
+      "PAYMENT_DUE",
+      "PAYMENT_SUCCESS",
+      "PAYMENT_FAILED",
+      "SHIPMENT_CONFIRMED",
+      "PAYMENT_RECEIVED",
+      "PAYMENT_CONFIRMED",
+      "PAYMENT_PENDING",
+      "TRANSACTION_COMPLETED",
+      "TRANSACTION_CANCELLED"
+    ];
+
+    // System/Admin notifications only
+    const systemCategories = [
+      "AUCTION_APPROVED",           // Seller: auction approved by admin
+      "AUCTION_REJECTED",           // Seller: auction rejected by admin
+      "PRODUCT_APPROVED",           // Seller: product approved
+      "PRODUCT_REJECTED",           // Seller: product rejected
+      "AUCTION_PENDING_APPROVAL",   // Admin: needs to approve auction
+      "ANNOUNCEMENT"                // System announcements
+    ];
 
     const upper = notificationCategory.toUpperCase();
     if (bidCategories.includes(upper)) return "bid";
