@@ -33,6 +33,12 @@ export default function AuctionCard({ auction, viewMode = "grid" }: any) {
     return favorites.includes(auction.auctionId);
   });
 
+  // Sync favorite state when auction changes (e.g., after sorting)
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem("favoriteAuctions") || "[]");
+    setIsFavorite(favorites.includes(auction.auctionId));
+  }, [auction.auctionId]);
+
   const toggleFavorite = (e: any) => {
     e.stopPropagation();
     const favorites = JSON.parse(localStorage.getItem("favoriteAuctions") || "[]");

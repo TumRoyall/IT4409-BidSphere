@@ -42,8 +42,11 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
 
     useEffect(() => {
         if (!token || !user) {
+            setIsConnected(false);
             return;
         }
+
+        let isCleaningUp = false;
 
         // Create STOMP Client
         const client = new Client({
@@ -54,37 +57,32 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
                 Authorization: `Bearer ${token}`,
             },
             debug: (str) => {
+                // Uncomment for debugging: console.log(str);
             },
             reconnectDelay: 5000,
             heartbeatIncoming: 4000,
             heartbeatOutgoing: 4000,
+            // Giảm số lần retry khi connection fail
+            maxWebSocketChunkSize: 8 * 1024,
         });
 
         client.onConnect = (frame) => {
-            console.log("✅ WebSocket CONNECTED!", frame);
+            console.log("✅ WebSocket CONNECTED!");
             setIsConnected(true);
 
             // Subscribe to User Specific Notifications with explicit user ID
             const userSpecificDestination = `/user/${user.id}/queue/notifications`;
-            console.log("📡 Subscribing to:", userSpecificDestination);
 
             const subscription = client.subscribe(userSpecificDestination, (message: IMessage) => {
-                console.log("🔔 NEW NOTIFICATION RECEIVED via WebSocket!");
-                console.log("Raw message:", message);
-                console.log("Message body:", message.body);
-
                 try {
                     const body = JSON.parse(message.body);
-                    console.log("Parsed body:", body);
 
                     let noti: Notification;
                     // Handle wrapped message structure if necessary
                     if (body.status === "notification" && body.notification) {
                         noti = body.notification;
-                        console.log("Using wrapped notification:", noti);
                     } else {
                         noti = body;
-                        console.log("Using direct notification:", noti);
                     }
 
                     // Show Toast
@@ -98,58 +96,39 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
                     });
 
                     // Update State
-                    setNotifications((prev) => {
-                        console.log("Updating notifications state. Previous count:", prev.length);
-                        return [noti, ...prev];
-                    });
-                    setUnreadCount((prev) => {
-                        console.log("Updating unread count from", prev, "to", prev + 1);
-                        return prev + 1;
-                    });
+                    setNotifications((prev) => [noti, ...prev]);
+                    setUnreadCount((prev) => prev + 1);
 
                 } catch (error) {
                     console.error("❌ Error parsing notification:", error);
                 }
             });
 
-            console.log("✅ Subscribed to", userSpecificDestination, subscription);
         };
 
         client.onStompError = (frame) => {
-            console.error("❌❌❌ STOMP ERROR!");
-            console.error("Broker reported error: " + frame.headers["message"]);
-            console.error("Additional details: " + frame.body);
-            console.error("Full frame:", frame);
+            console.error("❌ STOMP ERROR:", frame.headers["message"] || frame.body);
             setIsConnected(false);
         };
 
         client.onDisconnect = () => {
-            console.log("🔌 WebSocket DISCONNECTED");
             setIsConnected(false);
         };
 
         client.onWebSocketError = (event) => {
-            console.error("❌❌❌ WebSocket ERROR!");
-            console.error("Event:", event);
-            console.error("Event type:", event.type);
-            console.error("Event target:", event.target);
-
-            // Check if it's a connection error
-            if (event.target && (event.target as any).readyState) {
-                console.error("WebSocket readyState:", (event.target as any).readyState);
-                console.error("0=CONNECTING, 1=OPEN, 2=CLOSING, 3=CLOSED");
-            }
+            setIsConnected(false);
         };
 
-        console.log("🚀 Activating STOMP client...");
-        console.log("WebSocket URL: http://localhost:8080/ws/notifications");
-        console.log("Token:", token ? "Present (length: " + token.length + ")" : "Missing");
+        client.onWebSocketClose = (event) => {
+            setIsConnected(false);
+        };
 
         client.activate();
         setStompClient(client);
 
         return () => {
-            if (client) {
+            isCleaningUp = true;
+            if (client && client.active) {
                 client.deactivate();
             }
         };

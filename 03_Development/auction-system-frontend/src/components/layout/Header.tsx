@@ -23,10 +23,19 @@ export default function Header() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [showMenu, setShowMenu] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   const handleNavigate = (path: string) => {
     navigate(path);
     setShowMenu(false);
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchKeyword.trim()) {
+      navigate(`/auctions?keyword=${encodeURIComponent(searchKeyword.trim())}&sort=startTime,desc&page=1`);
+      setSearchKeyword("");
+    }
   };
 
   const CATEGORY_MAP: Record<string, string> = {
@@ -69,12 +78,17 @@ export default function Header() {
           </Link>
 
           {/* Ô tìm kiếm */}
-          <div className={styles.search}>
-            <input type="text" placeholder="Tìm kiếm sản phẩm đấu giá..." />
-            <button>
+          <form className={styles.search} onSubmit={handleSearch}>
+            <input 
+              type="text" 
+              placeholder="Tìm kiếm sản phẩm đấu giá..." 
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+            />
+            <button type="submit">
               <Search size={18} />
             </button>
-          </div>
+          </form>
 
           {/* Actions bên phải */}
           <div className={styles.actions}>

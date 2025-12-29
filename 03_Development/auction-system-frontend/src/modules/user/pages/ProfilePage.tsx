@@ -25,7 +25,6 @@ export default function ProfilePage() {
     (async () => {
       try {
         const data = await userApi.getProfile();
-        console.log("[ProfilePage] /me response", data);
         setUser(data);
         setForm({
           fullName: data.fullName || "",
@@ -37,11 +36,6 @@ export default function ProfilePage() {
 
         // Chuẩn hóa URL (relative -> absolute) và fallback theo giới tính
         const resolved = getAvatarUrl(data.avatarUrl, data.gender);
-        console.log("[ProfilePage] resolved avatar on load", {
-          raw: data.avatarUrl,
-          gender: data.gender,
-          resolved,
-        });
         setAvatar(resolved);
       } catch {
         setMsg("Không thể tải hồ sơ người dùng");
@@ -85,25 +79,16 @@ export default function ProfilePage() {
     try {
       const res = await userApi.updateAvatar(formData);
       const resolvedUrl = getAvatarUrl(res.avatarUrl, form.gender || user?.gender);
-      console.log("[ProfilePage] avatar upload result", {
-        raw: res,
-        rawUrl: res.avatarUrl,
-        gender: form.gender || user?.gender,
-        resolvedUrl,
-        envBase: import.meta.env.VITE_API_BASE_URL,
-        locationOrigin: typeof window !== "undefined" ? window.location.origin : "",
-      });
       // cache-bust to force browser reload the updated image immediately
       setAvatar(`${resolvedUrl}?t=${Date.now()}`);
       // refresh global auth user so other components (header, etc.) update without full page reload
       try {
         await refreshUser();
       } catch (e) {
-        console.warn("[ProfilePage] refreshUser failed", e);
+        // Silent fail
       }
       setMsg("Ảnh đại diện đã được cập nhật!");
     } catch (err: any) {
-      console.error("[ProfilePage] upload avatar error", err);
       setMsg(err.message || "Lỗi khi cập nhật ảnh đại diện");
     }
   };

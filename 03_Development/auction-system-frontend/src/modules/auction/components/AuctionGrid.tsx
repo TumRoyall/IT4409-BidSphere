@@ -6,23 +6,52 @@ import "@/modules/auction/styles/auctionGrid.css";
 
 export default function AuctionGrid({ filters, onChange }: any) {
   const [rawData, setRawData] = useState<any[]>([]);
+  const [favoriteItems, setFavoriteItems] = useState<any[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     load();
+    loadFavorites();
   }, [filters]);
 
   // Listen for favorite changes from localStorage
   useEffect(() => {
     const handleFavoriteChange = () => {
       setRefreshKey(prev => prev + 1);
+      loadFavorites();
     };
 
     window.addEventListener("favoriteChanged", handleFavoriteChange);
     return () => window.removeEventListener("favoriteChanged", handleFavoriteChange);
   }, []);
+
+  const loadFavorites = async () => {
+    const favorites = JSON.parse(localStorage.getItem("favoriteAuctions") || "[]");
+    if (favorites.length === 0) {
+      setFavoriteItems([]);
+      return;
+    }
+
+    try {
+      // Fetch all favorites without pagination to get them all
+      const res = await auctionApi.getAuctions({
+        page: 0,
+        size: 100, // Large enough to get all favorites
+        sort: filters.sort || "startTime,desc"
+      });
+      
+      // Filter only favorited items
+      const favItems = (res.data.content || []).filter((a: any) => 
+        favorites.includes(a.auctionId)
+      );
+      
+      setFavoriteItems(favItems);
+    } catch (error) {
+      setFavoriteItems([]);
+    }
+  };
 
   const load = async () => {
     const apiParams = {
@@ -37,17 +66,21 @@ export default function AuctionGrid({ filters, onChange }: any) {
     setTotalPages(data.totalPages ?? 1);
   };
 
-  // Auto sort with favorites on top whenever rawData or refreshKey changes
+  // Merge favorites with current page data, favorites always on top
   const sortedData = useMemo(() => {
     const favorites = JSON.parse(localStorage.getItem("favoriteAuctions") || "[]");
-    return [...rawData].sort((a: any, b: any) => {
-      const aFav = favorites.includes(a.auctionId);
-      const bFav = favorites.includes(b.auctionId);
-      if (aFav && !bFav) return -1;
-      if (!aFav && bFav) return 1;
-      return 0;
-    });
-  }, [rawData, refreshKey]);
+    
+    // Remove duplicates: if favorite item is already in rawData, don't add it again
+    const rawDataIds = new Set(rawData.map((a: any) => a.auctionId));
+    const uniqueFavorites = favoriteItems.filter((a: any) => !rawDataIds.has(a.auctionId));
+    
+    // Get favorites from current page
+    const currentPageFavs = rawData.filter((a: any) => favorites.includes(a.auctionId));
+    const currentPageNonFavs = rawData.filter((a: any) => !favorites.includes(a.auctionId));
+    
+    // Merge: favorites from other pages + favorites from current page + non-favorites from current page
+    return [...uniqueFavorites, ...currentPageFavs, ...currentPageNonFavs];
+  }, [rawData, favoriteItems, refreshKey]);
 
   return (
     <div>
