@@ -4,23 +4,17 @@ import type { ProductResponse } from "@/api/modules/adminProduct.api";
 import "@/modules/admin/styles/AdminProductPage.css";
 
 const statusLabel: Record<string, string> = {
-  available: "Available",
-  auctioned: "Auctioned",
-  sold: "Sold",
-  draft: "Draft",
-  pending: "Pending",
-  approved: "Approved",
-  rejected: "Rejected",
+  DRAFT: "DRAFT",
+  PENDING: "PENDING",
+  APPROVED: "APPROVED",
+  REJECTED: "REJECTED",
 };
 
 const statusOrder: Record<string, number> = {
-  pending: 1,
-  draft: 2,
-  approved: 3,
-  available: 4,
-  auctioned: 5,
-  sold: 6,
-  rejected: 7,
+  PENDING: 1,
+  DRAFT: 2,
+  APPROVED: 3,
+  REJECTED: 4,
 };
 
 const AdminProductPage: React.FC = () => {
@@ -71,7 +65,6 @@ const AdminProductPage: React.FC = () => {
           p.status,
           p.startPrice,
           p.estimatePrice,
-          p.deposit,
           p.sellerId,
         ]
           .map((v) => (v != null ? v.toString().toLowerCase() : ""))
@@ -87,8 +80,8 @@ const AdminProductPage: React.FC = () => {
     }
 
     filtered.sort((a, b) => {
-      const statusA = a.status?.toLowerCase() || "";
-      const statusB = b.status?.toLowerCase() || "";
+      const statusA = a.status?.toUpperCase() || ""; // để hoa
+      const statusB = b.status?.toUpperCase() || ""; // để hoa
       const statusDiff = (statusOrder[statusA] ?? 99) - (statusOrder[statusB] ?? 99);
       if (statusDiff !== 0) return statusDiff;
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -110,7 +103,7 @@ const AdminProductPage: React.FC = () => {
   const getStatusKey = (status?: string) => status?.toLowerCase() || "unknown";
 
   return (
-    <div className="admin-users-page p-4">
+    <div className="admin-product-page p-4">
       <h2>Admin Product Management</h2>
 
       {/* Filter bar */}
@@ -210,7 +203,6 @@ const AdminProductPage: React.FC = () => {
                 <th>Status</th>
                 <th>Start Price</th>
                 <th>Estimate Price</th>
-                <th>Deposit</th>
                 <th>Thumbnail</th>
                 <th>Created At</th>
                 <th>Deleted At</th>
@@ -225,12 +217,11 @@ const AdminProductPage: React.FC = () => {
                   <td>{p.category}</td>
                   <td className="status-cell">
                     <span className={`status ${getStatusKey(p.status)}`}>
-                      {p.status ? statusLabel[p.status.toLowerCase()] || p.status : "-"}
+                      {p.status ? statusLabel[p.status.toUpperCase()] || p.status : "-"}
                     </span>
                   </td>
-                  <td>{p.startPrice?.toLocaleString()}₫</td>
-                  <td>{p.estimatePrice?.toLocaleString() ?? "-"}₫</td>
-                  <td>{p.deposit?.toLocaleString() ?? "-"}₫</td>
+                  <td>{p.startPrice?.toLocaleString()}</td>
+                  <td>{p.estimatePrice?.toLocaleString() ?? "-"}</td>
                   <td>
                     {p.imageUrl ? (
                       <img src={p.imageUrl} alt={p.name} className="w-16 h-16" />

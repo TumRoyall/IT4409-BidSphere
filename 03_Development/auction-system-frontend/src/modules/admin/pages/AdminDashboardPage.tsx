@@ -80,7 +80,7 @@ const AdminDashboardPage = () => {
         ...Array.from(new Set(auctions.map(a => a.categoryName).filter(Boolean))),
     ];
 
-    const statuses = ["ALL", "DRAFT", "PENDING", "OPEN", "CLOSED"];
+    const statuses = ["ALL", "DRAFT", "PENDING", "OPEN", "CLOSED", "CANCELLED"];
 
     const formatDate = (str: string) =>
         new Date(str).toLocaleString("vi-VN", {
@@ -110,12 +110,12 @@ const AdminDashboardPage = () => {
         return matchSearch && matchCategory && matchStatus;
     });
 
-    // Sort ưu tiên status: OPEN -> PENDING -> DRAFT -> CLOSED
     const statusPriority: Record<string, number> = {
         "OPEN": 1,
         "PENDING": 2,
         "DRAFT": 3,
-        "CLOSED": 4
+        "CLOSED": 4,
+        "CANCELLED": 5
     };
 
     const sortedAuctions = [...filteredAuctions].sort((a, b) => {
@@ -139,212 +139,210 @@ const AdminDashboardPage = () => {
     };
 
     return (
-        <div className="ad-dashboard">
-            <div className="ad-header">
+        <div className="admin-dashboard">
+            <div className="dashboard-container">
                 <h2>All Auctions (Admin)</h2>
-                <span className="ad-result-badge">{sortedAuctions.length} kết quả</span>
-            </div>
 
-            {/* Filter bar */}
-            <div className="ad-filter-bar">
-                <div className="ad-search-group">
-                    {/* Search input */}
-                    <input
-                        type="text"
-                        className="ad-search-input"
-                        placeholder="Search..."
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                    />
+                {/* Filter bar */}
+                <div className="filter-bar">
+                    <div className="search-filter-group">
+                        <input
+                            type="text"
+                            className="search-input"
+                            placeholder="🔍 Search..."
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                        />
 
-                    {/* Category select */}
+                        <select
+                            className="category-select colorful-select"
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            data-type="category"
+                        >
+                            {categories.map(c => (
+                                <option key={c} value={c}>
+                                    {c === "ALL" ? "📦 All Categories" : ` ${c}`}
+                                </option>
+                            ))}
+                        </select>
+
+                        <select
+                            className="status-select colorful-select"
+                            value={selectedStatus}
+                            onChange={(e) => setSelectedStatus(e.target.value)}
+                            data-type="status"
+                        >
+                            {statuses.map(s => (
+                                <option key={s} value={s}>
+                                    {s === "ALL" ? "📝 All Statuses" :
+                                    s === "DRAFT" ? "✏️ Draft" :
+                                    s === "PENDING" ? "⏳ Pending" :
+                                    s === "OPEN" ? "✅ Open" :
+                                    s === "CANCELLED" ? "⛔ Cancelled" :
+                                    "❌ Closed"}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
                     <select
-                        className="ad-category-select ad-colorful-select"
-                        value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
-                        data-type="category"
+                        className="sort-select colorful-select"
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value as any)}
+                        data-type="sort"
                     >
-                        {categories.map(c => (
-                            <option key={c} value={c}>
-                                {c === "ALL" ? "All Categories" : c}
-                            </option>
-                        ))}
+                        <option value="endTime">⏰ End Time</option>
+                        <option value="highestBid">💰 Highest Bid</option>
                     </select>
 
-                    {/* Status select */}
-                    <select
-                        className="ad-status-select ad-colorful-select"
-                        value={selectedStatus}
-                        onChange={(e) => setSelectedStatus(e.target.value)}
-                        data-type="status"
+                    <button
+                        className="clear-btn"
+                        onClick={() => {
+                            setSearchText("");
+                            setSelectedCategory("ALL");
+                            setSelectedStatus("ALL");
+                            setSortBy("endTime");
+                            setCurrentPage(1);
+                        }}
                     >
-                        {statuses.map(s => (
-                            <option key={s} value={s}>
-                                {s === "ALL" ? "All Statuses" :
-                                s === "DRAFT" ? "Draft" :
-                                s === "PENDING" ? "Pending" :
-                                s === "OPEN" ? "Open" :
-                                "Closed"}
-                            </option>
-                        ))}
-                    </select>
+                        🧹 Clear
+                    </button>
                 </div>
 
-                {/* Sort select */}
-                <select
-                    className="ad-sort-select ad-colorful-select"
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value as any)}
-                    data-type="sort"
-                >
-                    <option value="endTime">End Time</option>
-                    <option value="highestBid">Highest Bid</option>
-                </select>
+                <div className="result-bar">
+                    <span className="result-badge">{sortedAuctions.length} kết quả</span>
+                </div>
 
-                {/* Clear button */}
-                <button
-                    className="ad-clear-btn"
-                    onClick={() => {
-                        setSearchText("");
-                        setSelectedCategory("ALL");
-                        setSelectedStatus("ALL");
-                        setSortBy("endTime");
-                        setCurrentPage(1);
-                    }}
-                >
-                    Clear
-                </button>
-            </div>
-
-            {loading ? (
-                <p>Loading...</p>
-            ) : sortedAuctions.length === 0 ? (
-                <p>Không có phiên đấu giá phù hợp.</p>
-            ) : (
-                <>
-                    <table className="ad-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Product</th>
-                                <th>Category</th>
-                                <th>Start Price</th>
-                                <th>Current Price</th>
-                                <th>Bidders</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Status</th>
-                                <th>Seller</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currentAuctions.map(a => (
-                                <tr key={a.auctionId}>
-                                    <td>{a.auctionId}</td>
-                                    <td>{a.productName}</td>
-                                    <td>{a.categoryName}</td>
-                                    <td>{a.startPrice.toLocaleString("vi-VN")} đ</td>
-                                    <td>{a.highestBid.toLocaleString("vi-VN")} đ</td>
-                                    <td>{a.totalBidders}</td>
-                                    <td>{formatDate(a.startTime)}</td>
-                                    <td>{formatDate(a.endTime)}</td>
-                                    <td className="status-cell">
-                                        <span className={`status ${a.status.toLowerCase()}`}>
-                                            {statusLabel[a.status] ?? a.status}
-
-                                        </span>
-                                    </td>
-                                    <td>{a.sellerName}</td>
-                                    <td>
-                                        {a.status === "OPEN" && (
-                                            <button
-                                                onClick={() => handleActionClick(a)}
-                                                className="ad-action-btn close"
-                                            >
-                                                Close
-                                            </button>
-                                        )}
-                                        {a.status === "PENDING" && (
-                                            <button
-                                                onClick={() => handleActionClick(a)}
-                                                className="ad-action-btn open"
-                                            >
-                                                Open
-                                            </button>
-                                        )}
-                                    </td>
+                {loading ? (
+                    <p>Loading...</p>
+                ) : sortedAuctions.length === 0 ? (
+                    <p>Không có phiên đấu giá phù hợp.</p>
+                ) : (
+                    <>
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Start Price</th>
+                                    <th>Current Price</th>
+                                    <th>Bidders</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Status</th>
+                                    <th>Seller</th>
+                                    <th>Action</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                {currentAuctions.map(a => (
+                                    <tr key={a.auctionId}>
+                                        <td>{a.auctionId}</td>
+                                        <td>{a.productName}</td>
+                                        <td>{a.categoryName}</td>
+                                        <td>{a.startPrice.toLocaleString("vi-VN")} </td>
+                                        <td>{a.highestBid.toLocaleString("vi-VN")} </td>
+                                        <td>{a.totalBidders}</td>
+                                        <td>{formatDate(a.startTime)}</td>
+                                        <td>{formatDate(a.endTime)}</td>
+                                        <td className="status-cell">
+                                            <span className={`status ${a.status.toLowerCase()}`}>
+                                                {statusLabel[a.status] ?? a.status}
+                                            </span>
+                                        </td>
+                                        <td>{a.sellerName}</td>
+                                        <td>
+                                            {a.status === "OPEN" && (
+                                                <button
+                                                    onClick={() => handleActionClick(a)}
+                                                    className="action-btn close"
+                                                >
+                                                    Close
+                                                </button>
+                                            )}
+                                            {a.status === "PENDING" && (
+                                                <button
+                                                    onClick={() => handleActionClick(a)}
+                                                    className="action-btn open"
+                                                >
+                                                    Open
+                                                </button>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+
+                        <div className="pagination">
+                            <button
+                                onClick={() => goToPage(currentPage - 1)}
+                                disabled={currentPage === 1}
+                            >
+                                &laquo; Prev
+                            </button>
+
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                                <button
+                                    key={page}
+                                    className={page === currentPage ? "active" : ""}
+                                    onClick={() => goToPage(page)}
+                                >
+                                    {page}
+                                </button>
                             ))}
-                        </tbody>
-                    </table>
 
-                    <div className="ad-pagination">
-                        <button
-                            onClick={() => goToPage(currentPage - 1)}
-                            disabled={currentPage === 1}
-                        >
-                            &laquo; Prev
-                        </button>
-
-                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                             <button
-                                key={page}
-                                className={page === currentPage ? "active" : ""}
-                                onClick={() => goToPage(page)}
+                                onClick={() => goToPage(currentPage + 1)}
+                                disabled={currentPage === totalPages}
                             >
-                                {page}
-                            </button>
-                        ))}
-
-                        <button
-                            onClick={() => goToPage(currentPage + 1)}
-                            disabled={currentPage === totalPages}
-                        >
-                            Next &raquo;
-                        </button>
-                    </div>
-                </>
-            )}
-
-            {showConfirmModal && modalAuction && modalAction && (
-                <div className="ad-modal-overlay">
-                    <div className="ad-modal-content">
-                        <h3>Xác nhận</h3>
-                        <p>
-                            Bạn có chắc muốn {modalAction === "OPEN" ? "mở" : "đóng"} phiên đấu giá #
-                            {modalAuction.auctionId}?
-                        </p>
-                        <div className="ad-modal-buttons">
-                            <button
-                                className="ad-btn-cancel"
-                                onClick={() => setShowConfirmModal(false)}
-                            >
-                                Hủy
-                            </button>
-                            <button
-                                className="ad-btn-confirm"
-                                onClick={async () => {
-                                    try {
-                                        if (modalAction === "OPEN") {
-                                            await adminAuctionApi.startAuction(modalAuction.auctionId);
-                                        } else {
-                                            await adminAuctionApi.closeAuction(modalAuction.auctionId);
-                                        }
-                                        fetchAllAuctions();
-                                    } catch (error) {
-                                        console.error("Lỗi khi cập nhật trạng thái auction:", error);
-                                    } finally {
-                                        setShowConfirmModal(false);
-                                    }
-                                }}
-                            >
-                                Xác nhận
+                                Next &raquo;
                             </button>
                         </div>
+                    </>
+                )}
+
+                {showConfirmModal && modalAuction && modalAction && (
+                    <div className="modal-overlay">
+                        <div className="modal-content">
+                            <h3>Xác nhận</h3>
+                            <p>
+                                Bạn có chắc muốn {modalAction === "OPEN" ? "mở" : "đóng"} phiên đấu giá #
+                                {modalAuction.auctionId}?
+                            </p>
+                            <div className="modal-buttons">
+                                <button
+                                    className="btn-cancel"
+                                    onClick={() => setShowConfirmModal(false)}
+                                >
+                                    Hủy
+                                </button>
+                                <button
+                                    className="btn-confirm"
+                                    onClick={async () => {
+                                        try {
+                                            if (modalAction === "OPEN") {
+                                                await adminAuctionApi.startAuction(modalAuction.auctionId);
+                                            } else {
+                                                await adminAuctionApi.closeAuction(modalAuction.auctionId);
+                                            }
+                                            fetchAllAuctions();
+                                        } catch (error) {
+                                            console.error("Lỗi khi cập nhật trạng thái auction:", error);
+                                        } finally {
+                                            setShowConfirmModal(false);
+                                        }
+                                    }}
+                                >
+                                    Xác nhận
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 };

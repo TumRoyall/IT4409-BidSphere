@@ -1,0 +1,267 @@
+/* ========== ADMIN PRODUCT PAGE STYLES ========== */
+.admin-product-page {
+    padding: 24px;
+    background: #f8fafc;
+    min-height: 100vh;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.admin-product-page h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-product-page h2::before {
+    content: "📦";
+    font-size: 24px;
+}
+
+/* ========== FILTER BAR ========== */
+.admin-product-page .top-bar {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+.admin-product-page .top-bar input {
+    flex: 1;
+    height: 44px;
+    padding: 0 16px;
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+}
+
+.dropdown-button {
+    height: 44px;
+    padding: 0 16px;
+    min-width: 160px;
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+}
+
+.dropdown-button.active {
+    border-color: #2563eb;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    z-index: 50;
+}
+
+.dropdown-item {
+    padding: 10px 14px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background: #f1f5f9;
+}
+
+.dropdown-item.active {
+    background: #eff6ff;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+/* ========== TABLE ========== */
+.admin-product-page table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    table-layout: auto; /* FIX CẮT CHỮ */
+}
+
+.admin-product-page table thead {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.admin-product-page table th {
+    padding: 16px 12px;
+    font-size: 13px;
+    color: white;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* ==== COLUMN WIDTHS ==== */
+.admin-product-page table th:nth-child(1)  { width: 4%; }   /* ID */
+.admin-product-page table th:nth-child(2)  { width: 16%; }  /* Name */
+.admin-product-page table th:nth-child(3)  { width: 9%; }   /* Category */
+.admin-product-page table th:nth-child(4)  { width: 9%; }   /* Status */
+.admin-product-page table th:nth-child(5)  { width: 9%; }   /* Start Price */
+.admin-product-page table th:nth-child(6)  { width: 11%; }  /* Estimate Price */
+.admin-product-page table th:nth-child(7)  { width: 9%; }   /* Thumbnail */
+.admin-product-page table th:nth-child(8)  { width: 14%; }  /* Created At */
+.admin-product-page table th:nth-child(9)  { width: 10%; }  /* Deleted At */
+.admin-product-page table th:nth-child(10) { width: 6%; }   /* Seller ID */
+
+/* RESET ellipsis global */
+.admin-product-page table td {
+    padding: 14px 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+    overflow: visible;
+    white-space: nowrap;
+}
+
+/* NAME – wrap */
+.admin-product-page table td:nth-child(2) {
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* CATEGORY – FULL TEXT */
+.admin-product-page table td:nth-child(3) {
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* STATUS */
+.admin-product-page table td:nth-child(4) {
+    text-align: center;
+    overflow: visible;
+}
+
+/* PRICE */
+.admin-product-page table td:nth-child(5),
+.admin-product-page table td:nth-child(6) {
+    text-align: right;
+    font-family: monospace;
+    font-weight: 600;
+}
+
+/* IMAGE */
+.admin-product-page table td:nth-child(7) {
+    text-align: center;
+}
+
+.admin-product-page table td:nth-child(7) img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+    margin: auto;
+}
+
+/* TIME */
+.admin-product-page table td:nth-child(8),
+.admin-product-page table td:nth-child(9) {
+    font-family: monospace;
+    font-size: 12px;
+}
+
+/* SELLER */
+.admin-product-page table td:nth-child(10) {
+    text-align: center;
+    font-weight: 600;
+    color: #2563eb;
+    overflow: visible;
+}
+
+/* ROW HOVER */
+.admin-product-page table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* ========== STATUS BADGE ========== */
+.status {
+    display: inline-block;
+    min-width: 92px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+}
+
+.status.draft {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.status.pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status.approved {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.status.rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.status.unknown {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+/* ========== PAGINATION ========== */
+.pagination {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pagination button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: white;
+}
+
+.pagination button.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1200px) {
+    .admin-product-page table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 700px) {
+    /* Hide Deleted At */
+    .admin-product-page table th:nth-child(9),
+    .admin-product-page table td:nth-child(9) {
+        display: none;
+    }
+}

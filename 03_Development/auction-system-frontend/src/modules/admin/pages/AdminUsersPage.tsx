@@ -186,7 +186,7 @@ const AdminUsersPage: React.FC = () => {
       <h1>Quản lý Users</h1>
 
       {/* --- Search + Filter --- */}
-      <div className="au-top-bar">
+      <div className="top-bar">
         <input
           type="text"
           placeholder="Search by ID, username, email, phone"
@@ -194,20 +194,20 @@ const AdminUsersPage: React.FC = () => {
           onChange={e => setSearchText(e.target.value)}
         />
 
-<div className="au-status-dropdown" ref={dropdownRef}>
+<div className="status-dropdown" ref={dropdownRef}>
   <div
-    className="au-dropdown-button"
+    className="dropdown-button"
     onClick={() => setDropdownOpen(!dropdownOpen)}
   >
     Status {selectedStatuses.length > 0 ? `(${selectedStatuses.length})` : ""}
   </div>
 
   {dropdownOpen && (
-    <div className="au-dropdown-content">
+    <div className="dropdown-content">
       {STATUSES.map(status => (
         <div
           key={status}
-          className={`au-dropdown-item ${status}`}
+          className={`dropdown-item ${status}`}
           onClick={() => toggleStatus(status)}
         >
           <input
@@ -215,7 +215,7 @@ const AdminUsersPage: React.FC = () => {
             checked={selectedStatuses.includes(status)}
             readOnly
           />
-          <span className={`au-status-pill ${status}`}>
+          <span className={`status-pill ${status}`}>
             {status.charAt(0).toUpperCase() + status.slice(1)}
           </span>
         </div>
@@ -227,27 +227,27 @@ const AdminUsersPage: React.FC = () => {
       </div>
 
       {/* ⭐ NEW: Statistics cards */}
-      <div className="au-user-stats">
-        <div className={`au-stat-card ${selectedStatuses.length===0?"selected":""}`} onClick={()=>handleStatClick("all")}>
-          <div className="au-stat-title">All Users</div>
-          <div className="au-stat-value">{totalUsers}</div>
+      <div className="user-stats">
+        <div className={`stat-card ${selectedStatuses.length===0?"selected":""}`} onClick={()=>handleStatClick("all")}>
+          <div className="stat-title">All Users</div>
+          <div className="stat-value">{totalUsers}</div>
         </div>
-        <div className={`au-stat-card active ${selectedStatuses.includes("active")?"selected":""}`} onClick={()=>handleStatClick("active")}>
-          <div className="au-stat-title">Active Users</div>
-          <div className="au-stat-value">{activeUsers}</div>
+        <div className={`stat-card active ${selectedStatuses.includes("active")?"selected":""}`} onClick={()=>handleStatClick("active")}>
+          <div className="stat-title">Active Users</div>
+          <div className="stat-value">{activeUsers}</div>
         </div>
-        <div className={`au-stat-card pending ${selectedStatuses.includes("pending")?"selected":""}`} onClick={()=>handleStatClick("pending")}>
-          <div className="au-stat-title">Pending Users</div>
-          <div className="au-stat-value">{pendingUsers}</div>
+        <div className={`stat-card pending ${selectedStatuses.includes("pending")?"selected":""}`} onClick={()=>handleStatClick("pending")}>
+          <div className="stat-title">Pending Users</div>
+          <div className="stat-value">{pendingUsers}</div>
         </div>
-        <div className={`au-stat-card banned ${selectedStatuses.includes("banned")?"selected":""}`} onClick={()=>handleStatClick("banned")}>
-          <div className="au-stat-title">Banned Users</div>
-          <div className="au-stat-value">{bannedUsers}</div>
+        <div className={`stat-card banned ${selectedStatuses.includes("banned")?"selected":""}`} onClick={()=>handleStatClick("banned")}>
+          <div className="stat-title">Banned Users</div>
+          <div className="stat-value">{bannedUsers}</div>
         </div>
       </div>
 
       {loading && <div>Đang tải dữ liệu...</div>}
-      {error && <div className="au-error">{error}</div>}
+      {error && <div className="error">{error}</div>}
 
       {/* --- Table hiển thị users --- */}
       <table>
@@ -273,7 +273,7 @@ const AdminUsersPage: React.FC = () => {
                 <tr>
                   <td>{user.userId}</td>
                   <td>
-                    <button className="au-username-link" onClick={() => handleViewTransactions(user)}>
+                    <button className="username-link" onClick={() => handleViewTransactions(user)}>
                       {user.username}
                     </button>
                   </td>
@@ -281,21 +281,21 @@ const AdminUsersPage: React.FC = () => {
                   <td>{user.email}</td>
                   <td>{user.phone}</td>
                   <td>
-                    <span className={`au-status ${frontendStatus.toLowerCase()}`}>
+                    <span className={`status ${frontendStatus.toLowerCase()}`}>
                       {frontendStatus}
                     </span>
                   </td>
                   {/* Hiển thị lý do và thời gian ban nếu user đang banned */}
                   <td>{showBanInfo ? user.reason : "—"}</td>
                   <td>{showBanInfo && user.bannedUntil ? new Date(user.bannedUntil).toLocaleString('vi-VN') : "—"}</td>
-                  <td className="au-actions">
+                  <td className="actions">
                     {/* Action menu */}
                     <button onClick={() => setOpenActionId(openActionId === user.userId ? null : user.userId)}>📝</button>
                     {openActionId === user.userId && (
                       <div>
-                        <button className="au-action-edit" onClick={() => { setSelectedUser(user); setModalType("edit"); setOpenActionId(null); }}>Edit</button>
+                        <button className="edit" onClick={() => { setSelectedUser(user); setModalType("edit"); setOpenActionId(null); }}>Edit</button>
                         {["Active","Pending"].includes(frontendStatus) && (
-                          <button className="au-action-ban" onClick={() => { 
+                          <button className="ban" onClick={() => { 
                             setSelectedUser(user); 
                             setBanReason(""); 
                             setBanDate(""); 
@@ -304,8 +304,8 @@ const AdminUsersPage: React.FC = () => {
                             setOpenActionId(null); 
                           }}>Ban</button>
                         )}
-                        {frontendStatus === "Banned" && <button className="au-action-unban" onClick={() => handleUnban(user)}>Unban</button>}
-                        <button className="au-action-delete" onClick={() => handleSoftDelete(user.userId)}>Delete</button>
+                        {frontendStatus === "Banned" && <button className="unban" onClick={() => handleUnban(user)}>Unban</button>}
+                        <button className="delete" onClick={() => handleSoftDelete(user.userId)}>Delete</button>
                       </div>
                     )}
                   </td>
@@ -313,9 +313,9 @@ const AdminUsersPage: React.FC = () => {
 
                 {/* Hiển thị transaction nếu user đang mở */}
                 {showTransactionsId === user.userId && selectedTransactions && (
-                  <tr className="au-transaction-row">
+                  <tr className="transaction-row">
                     <td colSpan={9}>
-                      <table className="au-transaction-table">
+                      <table className="transaction-table">
                         <thead>
                           <tr>
                             <th>ID</th>
@@ -347,13 +347,14 @@ const AdminUsersPage: React.FC = () => {
       </table>
 
       {/* --- Pagination --- */}
-      <div className="au-pagination">
+      <div className="pagination">
         <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage===1}>Prev</button>
         {[...Array(totalPages)].map((_, idx) => (
           <button key={idx} className={currentPage===idx+1?"active":""} onClick={() => setCurrentPage(idx+1)}>{idx+1}</button>
         ))}
         <button onClick={() => setCurrentPage(prev => Math.min(prev+1, totalPages))} disabled={currentPage===totalPages}>Next</button>
       </div>
+
         {/* --- Modal edit / ban --- */}
         {modalType && selectedUser && (
           <div className="modal-overlay">
@@ -431,12 +432,12 @@ const AdminUsersPage: React.FC = () => {
             {modalType === "ban" && (
               <>
                 <h2>Ban User</h2>
-                <div className="au-input-group">
+                <div className="input-group">
                   <label>Reason</label>
                   <input type="text" value={banReason} onChange={e => setBanReason(e.target.value)} />
                 </div>
 
-                <div className="au-input-group">
+                <div className="input-group">
                   <label>Chọn ngày</label>
                   <input 
                     type="date" 
@@ -445,7 +446,7 @@ const AdminUsersPage: React.FC = () => {
                     min={minBanDate} 
                   />
                 </div>
-                <div className="au-input-group">
+                <div className="input-group">
                   <label>Chọn giờ</label>
                   <input 
                     type="time" 
@@ -456,9 +457,9 @@ const AdminUsersPage: React.FC = () => {
                   />
                 </div>
 
-                <div className="au-modal-buttons">
-                  <button className="au-btn-save" onClick={handleBanConfirm}>Xác nhận</button>
-                  <button className="au-btn-cancel" onClick={() => setModalType(null)}>Hủy</button>
+                <div className="modal-buttons">
+                  <button className="save" onClick={handleBanConfirm}>Xác nhận</button>
+                  <button className="cancel" onClick={() => setModalType(null)}>Hủy</button>
                 </div>
               </>
             )}
