@@ -10,64 +10,64 @@ VALUES
 
 -- (User)
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('nguyenvana123', 'Nguyen Van A', 'aa77dcf3dc8e327a40950c09d8d772a720ae3d4e2fa25a2a87426efc00a552f6', 'nguyenvana@gmail.com', '0906059826', 2, 8755465.14, 'ACTIVE', '2023-11-24 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('tranthibich456', 'Tran Thi Bich', 'dce789a2b1e560ac2c7f995774557a0b0121e6e7e5dcdf2ef30ab5887ceba1ae', 'tranthibich@gmail.com', '0902376946', 2, 810151.87, 'BANNED', '2026-06-29 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
-VALUES ('lehoangnam789', 'Le Hoang Nam', 'a7c75fc69cc970b2dc33cb5daf417b93d617215597952ca4cab4af98f49dfddf', '0909247366', 1, 8234969.85, 'PENDING', '2024-04-16 09:22:31');
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
+VALUES ('lehoangnam789', 'Le Hoang Nam', 'a7c75fc69cc970b2dc33cb5daf417b93d617215597952ca4cab4af98f49dfddf', 'lehoangnam@gmail.com', '0909247366', 1, 8234969.85, 'PENDING', '2024-04-16 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('phamthilanabc', 'Pham Thi Lan', '1d91730ee2cbb5cfc6064562f87bcbc49951529c09d27a02d71521ee3f67a5f0', 'phamthilan@gmail.com', '0905816710', 1, 7960870.05, 'BANNED', '2026-07-28 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('vominhtuan123', 'Vo Minh Tuan', '24c57b81657fcefdc9fadbd00e39f3248f53a209cb9e66534b101d682b910853', 'vominhtuan@gmail.com', '0904412087', 1, 6083306.84, 'ACTIVE', '2024-03-10 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('dangthanhson456', 'Dang Thanh Son', '875109af682dc553750f1c924ae2bb49288ef09d72a96e7d3834f291ea79ce1a', 'dangthanhson@gmail.com', '0906603367', 3, 6963678.9, 'ACTIVE', '2023-07-17 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('nguyenthuha789', 'Nguyen Thu Ha', '8c3595b573feb3a0635bc593a92335d1ae2acbd067b771469b411523ac413b9f', 'nguyenthuha@gmail.com', '0904829476', 2, 8721229.94, 'ACTIVE', '2023-05-20 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('buiducanhxyz', 'Bui Duc Anh', '1756a1918b626bee0da6b1f96162d808c9933b53a6c8f49f1d7c4c543dfc897c', 'buiducanh@gmail.com', '0907321817', 2, 1761040.27, 'PENDING', '2025-06-06 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('phamquanghai123', 'Pham Quang Hai', 'a1f6c0a15019f9d7cd65ae33f531530877d22618cea384175fc444fe556acf43', 'phamquanghai@gmail.com', '0904355934', 2, 3045521.1, 'BANNED', '2026-05-13 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('trankhanhlinh456', 'Tran Khanh Linh', '848244c3188b3bfc15473564ef7f0fad3d90f094ed33a22b459e5c105781dbaf', 'trankhanhlinh@gmail.com', '0903764831', 2, 569302.92, 'BANNED', '2026-09-13 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('hoangminhquan789', 'Hoang Minh Quan', 'a598a006b9d162f432e35b2014c274165e9a7f0968ead27b8ab45b26aa1384ee', 'hoangminhquan@gmail.com', '0903562008', 3, 1374273.73, 'BANNED', '2026-06-28 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('doanhthuongabc', 'Doan Thuong', 'c45f5884947ce6d0b75f909a25bb9660800e9cb675df3c2efda822bbb818f5f6', 'doanhthuong@gmail.com', '0903096981', 3, 2135387.07, 'PENDING', '2023-04-24 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('luongtuananh123', 'Luong Tuan Anh', '7b10d61e75b2d728c6d8fefac96ebfb6b153802feb53c0c837f83a7a19c379d9', 'luongtuananh@gmail.com', '0909158712', 1, 4705648.92, 'BANNED', '2024-12-08 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('nguyenphuongthao456', 'Nguyen Phuong Thao', 'ffb60b98d325729d305ffa377dacc4b6917d874f6c1a5a38a5c37b1bfb470665', 'nguyenphuongthao@gmail.com', '0902588889', 2, 2152791.52, 'BANNED', '2026-09-24 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('phamductrungxyz', 'Pham Duc Trung', '4034b526b3904fbe89367f9709ecdb9fe4629ff5142fb35e02e2d9ca13de72ac', 'phamductrung@gmail.com', '0908048002', 1, 9228732.73, 'ACTIVE', '2024-01-30 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('tranhoainam123', 'Tran Hoai Nam', '8bb38d410b9925255a6a35ac4f2925aed868e224322af665e8ef14282abe7f2f', 'tranhoainam@gmail.com', '0909861084', 2, 2041390.33, 'PENDING', '2025-05-14 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('vuquocviet456', 'Vu Quoc Viet', '1206ca9a614919e8e06119403acdac4b67c80abb6fdf73bdeba17f30fea77da7', 'vuquocviet@gmail.com', '0903144117', 2, 3337677.42, 'PENDING', '2025-07-12 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('nguyenthanhdat789', 'Nguyen Thanh Dat', '0c105699355ab70ef62d5562adfc9af526e9f17430e0a9f9ad64cf157b7c1982', 'nguyenthanhdat@gmail.com', '0908704126', 2, 9058717.19, 'ACTIVE', '2024-06-19 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('leminhtriabc', 'Le Minh Tri', 'f36c6d2692826bf6fd0e69a789f3fba2397ffc93902c32c8056e062d938b4a6b', 'leminhtri@gmail.com', '0901492493', 2, 6230250.17, 'BANNED', '2026-01-12 09:22:31');
 
-INSERT INTO User (username, fullname, password_hash, email, phone, role_id, balance, status, created_at)
+INSERT INTO User (username, full_name, password_hash, email, phone, role_id, balance, status, created_at)
 VALUES ('danghoanglong123', 'Dang Hoang Long', 'c2b6496549a8d243c97335836f90e0f1d767fd20a808d9f2d44036f25bdc7e62', 'danghoanglong@gmail.com', '0903668795', 1, 7385479.66, 'PENDING', '2024-05-28 09:22:31');
 
 -- (AccountTransaction)
@@ -359,7 +359,7 @@ VALUES (
   '36073931',
   293351.59,
   'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766446130/auction_images/zeagpmezvlghoxfxt4si.jpg',
-  'CANCELLED',
+  'REJECTED',
   '2024-09-16 09:22:31'
 );
 
@@ -374,7 +374,7 @@ VALUES (
   '633693',
   50701.0,
   'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766443205/auction_images/vb62sdnecs76kgmrskal.jpg',
-  'CANCELLED',
+  'PENDING',
   '2024-04-24 09:22:31'
 );
 
@@ -389,7 +389,7 @@ VALUES (
   '7571984',
   481975.84,
   'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507683/auction_images/yyoynf5cshjstbqpoput.jpg',
-  'CANCELLED',
+  'REJECTED',
   '2024-08-23 09:22:31'
 );
 
@@ -556,26 +556,66 @@ INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res
 INSERT INTO Image (product_id, image_url, is_thumbnail) VALUES (20, 'https://res.cloudinary.com/dzoz7ngp5/image/upload/v1766507694/auction_images/xbhgni4dpqeycxgxeauw.jpg', 0);
 
 -- (Auction)
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (1, '2023-10-03 09:22:31', '2025-11-04 09:22:31', 'CANCELLED', 3740880, '50000', 18);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (2, '2023-08-10 09:22:31', '2025-10-24 09:22:31', 'OPEN', 2048362, '20000', 7);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (3, '2024-06-07 09:22:31', '2025-10-29 09:22:31', 'OPEN', 4176339, '20000', 16);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (4, '2025-05-28 09:22:31', '2025-11-11 09:22:31', 'CANCELLED', 589978, '50000', 6);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (5, '2025-06-27 09:22:31', '2025-10-20 09:22:31', 'CANCELLED', 1693980, '20000', 6);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (6, '2023-04-08 09:22:31', '2025-10-19 09:22:31', 'CANCELLED', 3633135, '20000', 18);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (7, '2024-06-11 09:22:31', '2025-10-23 09:22:31', 'CANCELLED', 3247667, '20000', 16);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (8, '2024-11-06 09:22:31', '2025-11-07 09:22:31', 'CLOSED', 1662254, '10000', 8);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (9, '2023-11-16 09:22:31', '2025-11-01 09:22:31', 'OPEN', 1844351, '50000', 16);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (10, '2025-07-23 09:22:31', '2025-10-27 09:22:31', 'CLOSED', 1821751, '50000', 18);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (11, '2024-05-26 09:22:31', '2025-11-11 09:22:31', 'CLOSED', 2370632, '50000', 12);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (12, '2023-10-03 09:22:31', '2025-10-24 09:22:31', 'OPEN', 4936073, '10000', 16);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (13, '2023-07-13 09:22:31', '2025-10-25 09:22:31', 'OPEN', 1089639, '10000', 9);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (14, '2024-10-31 09:22:31', '2025-11-10 09:22:31', 'CANCELLED', 4241822, '20000', 9);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (15, '2025-05-12 09:22:31', '2025-10-29 09:22:31', 'OPEN', 4655830, '50000', 6);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (16, '2025-04-23 09:22:31', '2025-10-18 09:22:31', 'CANCELLED', 4003335, '50000', 16);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (17, '2024-09-17 09:22:31', '2025-10-18 09:22:31', 'OPEN', 3843770, '10000', 7);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (18, '2023-11-30 09:22:31', '2025-10-24 09:22:31', 'OPEN', 3598574, '50000', 17);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (19, '2023-10-01 09:22:31', '2025-10-27 09:22:31', 'OPEN', 1982122, '50000', 1);
-INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) VALUES (20, '2025-01-19 09:22:31', '2025-10-19 09:22:31', 'CANCELLED', 2606085, '10000', 16);
+-- (Auction)
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (1, '2023-10-03 09:22:31', '2026-01-07 09:22:31', 'CANCELLED', 3740880, '50000', 18);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (2, '2023-08-10 09:22:31', '2026-01-07 09:22:31', 'OPEN', 2048362, '20000', 7);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (3, '2024-06-07 09:22:31', '2026-01-08 09:22:31', 'OPEN', 4176339, '20000', 16);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (4, '2025-05-28 09:22:31', '2026-01-09 09:22:31', 'CANCELLED', 589978, '50000', 6);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (5, '2025-06-27 09:22:31', '2026-01-08 09:22:31', 'CANCELLED', 1693980, '20000', 6);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (6, '2023-04-08 09:22:31', '2026-01-08 09:22:31', 'CANCELLED', 3633135, '20000', 18);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (7, '2024-06-11 09:22:31', '2026-01-08 09:22:31', 'CANCELLED', 3247667, '20000', 16);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (8, '2024-11-06 09:22:31', '2026-01-08 09:22:31', 'CLOSED', 1662254, '10000', 8);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (9, '2023-11-16 09:22:31', '2026-01-08 09:22:31', 'OPEN', 1844351, '50000', 16);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (10, '2025-07-23 09:22:31', '2026-01-08 09:22:31', 'CLOSED', 1821751, '50000', 18);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (11, '2024-05-26 09:22:31', '2026-01-08 09:22:31', 'CLOSED', 2370632, '50000', 12);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (12, '2023-10-03 09:22:31', '2026-01-08 09:22:31', 'OPEN', 4936073, '10000', 16);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (13, '2023-07-13 09:22:31', '2026-01-08 09:22:31', 'OPEN', 1089639, '10000', 9);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (14, '2024-10-31 09:22:31', '2026-01-08 09:22:31', 'CANCELLED', 4241822, '20000', 9);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (15, '2025-05-12 09:22:31', '2026-01-05 09:22:31', 'OPEN', 4655830, '50000', 6);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (16, '2025-04-23 09:22:31', '2026-01-07 09:22:31', 'CANCELLED', 4003335, '50000', 16);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (17, '2024-09-17 09:22:31', '2026-01-06 09:22:31', 'OPEN', 3843770, '10000', 7);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (18, '2023-11-30 09:22:31', '2026-01-08 09:22:31', 'OPEN', 3598574, '50000', 17);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (19, '2023-10-01 09:22:31', '2026-01-08 09:22:31', 'OPEN', 1982122, '50000', 1);
+
+INSERT INTO Auction (product_id, start_time, end_time, status, highest_current_price, bid_step_amount, winner_id) 
+VALUES (20, '2025-01-19 09:22:31', '2026-01-08 09:22:31', 'CANCELLED', 2606085, '10000', 16);
 
 -- (Bid)
 INSERT INTO Bid (auction_id, bidder_id, bid_amount, created_at, max_autobid_amount, step_autobid_amount, is_auto, is_highest) VALUES (17, 18, 7156591.28, '2024-08-27 09:22:31', 8128156.28, 25017, 1, 0);
@@ -828,7 +868,6 @@ INSERT INTO rolePermission (role_id, permission_id) VALUES
 (1, 59),  -- USER_UPDATE_AVATAR
 (1, 72);  -- USER_PARTICIPATING_AUCTIONS
 -- User reports - tạo report người dùng khác
-(1, 42);  -- USER_REPORT_CREATE
 -- ====================================
 -- SELLER (role_id = 2)
 -- Tất cả quyền BIDDER + tạo/sửa product, yêu cầu tạo auction
@@ -875,7 +914,6 @@ INSERT INTO rolePermission (role_id, permission_id) VALUES
 (2, 59),  -- USER_UPDATE_AVATAR
 (2, 72);  -- USER_PARTICIPATING_AUCTIONS
 -- User reports - tạo report người dùng khác
-(2, 42);  -- USER_REPORT_CREATE
 -- ====================================
 -- MODERATOR (role_id = 4)
 -- Quản lý product và auction: xóa, đóng, duyệt
